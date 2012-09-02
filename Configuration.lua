@@ -15,21 +15,42 @@ Configuration =
 
 	----------------------------------------
 
-	ActionBar =
+	ActionBars =
 	{
-		anchor = 'BOTTOM',
-		buttons = 10,
-		height = 24,
-		width = 48,
-		x = 0,
-		y = 108,
-
-		TextureCoordinate =
+		Pet =
 		{
-			bottom = 0.7,
-			left = 0.1,
-			right = 0.9,
-			top = 0.3
+			anchor = 'BOTTOM',
+			buttons = 10,
+			height = 24,
+			width = 48,
+			x = 0,
+			y = 28,
+
+			TextureCoordinate =
+			{
+				bottom = 0.7,
+				left = 0.1,
+				right = 0.9,
+				top = 0.3
+			}
+		},
+
+		Player =
+		{
+			anchor = 'BOTTOM',
+			buttons = 10,
+			height = 24,
+			width = 48,
+			x = 0,
+			y = 108,
+
+			TextureCoordinate =
+			{
+				bottom = 0.7,
+				left = 0.1,
+				right = 0.9,
+				top = 0.3
+			}
 		}
 	},
 
@@ -76,7 +97,7 @@ Configuration =
 		height = 24,
 		width = 256,
 		x = -130,
-		y = 136,
+		y = 164,
 
 		BurningEmbersBar =
 		{
@@ -203,7 +224,7 @@ Configuration =
 		height = 24,
 		width = 256,
 		x = 130,
-		y = 136,
+		y = 164,
 
 		CastingBar =
 		{

@@ -114,7 +114,7 @@ oUF:Factory(
 
 		self:SetActiveStyle('SnailUI')
 
-		if Configuration.ActionBar then
+		if Configuration.ActionBars then
 			frames =
 			{
 				'AchievementMicroButton',
@@ -137,7 +137,6 @@ oUF:Factory(
 				'MultiBarLeft',
 				'MultiBarRight',
 				'LFDMicroButton',
-				'PetActionBarFrame',
 				'PVPMicroButton',
 				'QuestLogMicroButton',
 				'ReputationWatchBar',
@@ -151,6 +150,15 @@ oUF:Factory(
 			StanceBarFrame:ClearAllPoints()
 			StanceBarFrame:SetAlpha(0)
 			StanceBarFrame:SetPoint('TOPLEFT', -100, 100)
+
+			if not Configuration.ActionBars.Pet then
+				PetActionBarFrame:Hide()
+				PetActionBarFrame:SetScript('OnShow',
+					function(self)
+						self:Hide()
+					end
+				)
+			end
 
 			for i = 1, #frames do
 				_G[frames[i]]:Hide()
@@ -169,15 +177,91 @@ oUF:Factory(
 				'MainMenuBarTexture0',
 				'MainMenuBarTexture1',
 				'MainMenuBarTexture2',
-				'MainMenuBarTexture3'
+				'MainMenuBarTexture3',
+				'SlidingActionBarTexture0',
+				'SlidingActionBarTexture1'
 			}
 
 			for i = 1, #textures do
 				_G[textures[i]]:Hide()
+				_G[textures[i]]:SetAlpha(0)
 			end
 
-			if Configuration.ActionBar.buttons < NUM_ACTIONBAR_BUTTONS then
-				for i = (Configuration.ActionBar.buttons + 1), NUM_ACTIONBAR_BUTTONS do
+			if Configuration.ActionBars.Pet then
+				if Configuration.ActionBars.Pet.buttons < NUM_PET_ACTION_SLOTS then
+					for i = (Configuration.ActionBars.Pet.buttons + 1), NUM_PET_ACTION_SLOTS do
+						_G['PetActionButton' .. i]:Hide()
+						_G['PetActionButton' .. i]:SetScript('OnShow',
+							function(self)
+								self:Hide()
+							end
+						)
+					end
+				end
+
+				PetActionBarFrame:ClearAllPoints()
+				PetActionBarFrame:SetSize((Configuration.ActionBars.Pet.buttons * Configuration.ActionBars.Pet.width) + ((Configuration.ActionBars.Pet.buttons - 1) * 4), Configuration.ActionBars.Pet.height)
+				PetActionBarFrame:SetPoint(Configuration.ActionBars.Pet.anchor, Configuration.ActionBars.Pet.x, Configuration.ActionBars.Pet.y)
+				PetActionBarFrame.SetPoint = function(self)
+				end
+
+				for i = 1, Configuration.ActionBars.Pet.buttons do
+					_G['PetActionButton' .. i]:ClearAllPoints()
+					_G['PetActionButton' .. i]:SetNormalTexture(nil)
+					_G['PetActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBars.Pet.width) + ((i - 1) * 4) + 3, 0)
+					_G['PetActionButton' .. i]:SetSize(Configuration.ActionBars.Pet.width - 6, Configuration.ActionBars.Pet.height - 6)
+					_G['PetActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Pet.TextureCoordinate.left, Configuration.ActionBars.Pet.TextureCoordinate.right, Configuration.ActionBars.Pet.TextureCoordinate.top, Configuration.ActionBars.Pet.TextureCoordinate.bottom)
+
+					_G['PetActionButton' .. i].SetNormalTexture = function(self)
+					end
+
+					_G['PetActionButton' .. i].backgroundBottom = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
+					_G['PetActionButton' .. i].backgroundBottom:SetSize(Configuration.ActionBars.Pet.width - 2, 1)
+					_G['PetActionButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+					_G['PetActionButton' .. i].backgroundLeft = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
+					_G['PetActionButton' .. i].backgroundLeft:SetSize(1, Configuration.ActionBars.Pet.height - 4)
+					_G['PetActionButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+					_G['PetActionButton' .. i].backgroundRight = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
+					_G['PetActionButton' .. i].backgroundRight:SetSize(1, Configuration.ActionBars.Pet.height - 4)
+					_G['PetActionButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+					_G['PetActionButton' .. i].backgroundTop = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
+					_G['PetActionButton' .. i].backgroundTop:SetSize(Configuration.ActionBars.Pet.width - 2, 1)
+					_G['PetActionButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+									
+					_G['PetActionButton' .. i].borderBottom = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
+					_G['PetActionButton' .. i].borderBottom:SetSize(Configuration.ActionBars.Pet.width, 3)
+					_G['PetActionButton' .. i].borderBottom:SetTexture(0, 0, 0)
+
+					_G['PetActionButton' .. i].borderLeft = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
+					_G['PetActionButton' .. i].borderLeft:SetSize(3, Configuration.ActionBars.Pet.height - 2)
+					_G['PetActionButton' .. i].borderLeft:SetTexture(0, 0, 0)
+
+					_G['PetActionButton' .. i].borderRight = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
+					_G['PetActionButton' .. i].borderRight:SetSize(3, Configuration.ActionBars.Pet.height - 2)
+					_G['PetActionButton' .. i].borderRight:SetTexture(0, 0, 0)
+
+					_G['PetActionButton' .. i].borderTop = _G['PetActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+					_G['PetActionButton' .. i].borderTop:SetPoint('TOP', 0, 3)
+					_G['PetActionButton' .. i].borderTop:SetSize(Configuration.ActionBars.Pet.width, 3)
+					_G['PetActionButton' .. i].borderTop:SetTexture(0, 0, 0)
+
+					_G['PetActionButton' .. i .. 'AutoCastable']:SetAlpha(0)
+					_G['PetActionButton' .. i .. 'Shine']:SetAllPoints(_G['PetActionButton' .. i])
+				end
+			end
+
+			if Configuration.ActionBars.Player.buttons < NUM_ACTIONBAR_BUTTONS then
+				for i = (Configuration.ActionBars.Player.buttons + 1), NUM_ACTIONBAR_BUTTONS do
 					_G['ActionButton' .. i]:Hide()
 					_G['ActionButton' .. i]:SetScript('OnShow',
 						function(self)
@@ -188,54 +272,54 @@ oUF:Factory(
 			end
 
 			MainMenuBar:ClearAllPoints()
-			MainMenuBar:SetSize((Configuration.ActionBar.buttons * Configuration.ActionBar.width) + ((Configuration.ActionBar.buttons - 1) * 4), Configuration.ActionBar.height)
-			MainMenuBar:SetPoint(Configuration.ActionBar.anchor, Configuration.ActionBar.x, Configuration.ActionBar.y)
+			MainMenuBar:SetSize((Configuration.ActionBars.Player.buttons * Configuration.ActionBars.Player.width) + ((Configuration.ActionBars.Player.buttons - 1) * 4), Configuration.ActionBars.Player.height)
+			MainMenuBar:SetPoint(Configuration.ActionBars.Player.anchor, Configuration.ActionBars.Player.x, Configuration.ActionBars.Player.y)
 
-			for i = 1, Configuration.ActionBar.buttons do
+			for i = 1, Configuration.ActionBars.Player.buttons do
 				_G['ActionButton' .. i]:ClearAllPoints()
 				_G['ActionButton' .. i]:SetNormalTexture(nil)
-				_G['ActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBar.width) + ((i - 1) * 4) + 3, 0)
-				_G['ActionButton' .. i]:SetSize(Configuration.ActionBar.width - 6, Configuration.ActionBar.height - 6)
-				_G['ActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBar.TextureCoordinate.left, Configuration.ActionBar.TextureCoordinate.right, Configuration.ActionBar.TextureCoordinate.top, Configuration.ActionBar.TextureCoordinate.bottom)
+				_G['ActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBars.Player.width) + ((i - 1) * 4) + 3, 0)
+				_G['ActionButton' .. i]:SetSize(Configuration.ActionBars.Player.width - 6, Configuration.ActionBars.Player.height - 6)
+				_G['ActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Player.TextureCoordinate.left, Configuration.ActionBars.Player.TextureCoordinate.right, Configuration.ActionBars.Player.TextureCoordinate.top, Configuration.ActionBars.Player.TextureCoordinate.bottom)
 
 				_G['ActionButton' .. i].backgroundBottom = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
-				_G['ActionButton' .. i].backgroundBottom:SetSize(Configuration.ActionBar.width - 2, 1)
+				_G['ActionButton' .. i].backgroundBottom:SetSize(Configuration.ActionBars.Player.width - 2, 1)
 				_G['ActionButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
 				_G['ActionButton' .. i].backgroundLeft = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
-				_G['ActionButton' .. i].backgroundLeft:SetSize(1, Configuration.ActionBar.height - 4)
+				_G['ActionButton' .. i].backgroundLeft:SetSize(1, Configuration.ActionBars.Player.height - 4)
 				_G['ActionButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
 				_G['ActionButton' .. i].backgroundRight = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
-				_G['ActionButton' .. i].backgroundRight:SetSize(1, Configuration.ActionBar.height - 4)
+				_G['ActionButton' .. i].backgroundRight:SetSize(1, Configuration.ActionBars.Player.height - 4)
 				_G['ActionButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
 				_G['ActionButton' .. i].backgroundTop = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
-				_G['ActionButton' .. i].backgroundTop:SetSize(Configuration.ActionBar.width - 2, 1)
+				_G['ActionButton' .. i].backgroundTop:SetSize(Configuration.ActionBars.Player.width - 2, 1)
 				_G['ActionButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 								
 				_G['ActionButton' .. i].borderBottom = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
-				_G['ActionButton' .. i].borderBottom:SetSize(Configuration.ActionBar.width, 3)
+				_G['ActionButton' .. i].borderBottom:SetSize(Configuration.ActionBars.Player.width, 3)
 				_G['ActionButton' .. i].borderBottom:SetTexture(0, 0, 0)
 
 				_G['ActionButton' .. i].borderLeft = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
-				_G['ActionButton' .. i].borderLeft:SetSize(3, Configuration.ActionBar.height - 2)
+				_G['ActionButton' .. i].borderLeft:SetSize(3, Configuration.ActionBars.Player.height - 2)
 				_G['ActionButton' .. i].borderLeft:SetTexture(0, 0, 0)
 
 				_G['ActionButton' .. i].borderRight = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
-				_G['ActionButton' .. i].borderRight:SetSize(3, Configuration.ActionBar.height - 2)
+				_G['ActionButton' .. i].borderRight:SetSize(3, Configuration.ActionBars.Player.height - 2)
 				_G['ActionButton' .. i].borderRight:SetTexture(0, 0, 0)
 
 				_G['ActionButton' .. i].borderTop = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
 				_G['ActionButton' .. i].borderTop:SetPoint('TOP', 0, 3)
-				_G['ActionButton' .. i].borderTop:SetSize(Configuration.ActionBar.width, 3)
+				_G['ActionButton' .. i].borderTop:SetSize(Configuration.ActionBars.Player.width, 3)
 				_G['ActionButton' .. i].borderTop:SetTexture(0, 0, 0)
 
 				_G['ActionButton' .. i .. 'Count']:SetAlpha(0)
