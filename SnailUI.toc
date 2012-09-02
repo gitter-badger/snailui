@@ -1,0 +1,9 @@
+## Author: Snail
+## Dependencies: oUF, oUF_SpellRange, oUF_WarlockSpecBars
+## Interface: 50400
+## Notes: Snail's minimalistic UI.
+## Title: SnailUI
+## Version: 0.2.1
+
+Configuration.lua
+SnailUI.lua
