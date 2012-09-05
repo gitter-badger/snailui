@@ -1,5 +1,5 @@
 ## Author: Snail
-## Dependencies: oUF, oUF_SpellRange, oUF_WarlockSpecBars
+## Dependencies: oUF, oUF_SpellRange
 ## Interface: 50400
 ## Notes: Snail's minimalistic UI.
 ## Title: SnailUI

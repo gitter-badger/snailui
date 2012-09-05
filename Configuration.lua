@@ -17,24 +17,6 @@ Configuration =
 
 	ActionBars =
 	{
-		Pet =
-		{
-			anchor = 'BOTTOM',
-			buttons = 10,
-			height = 24,
-			width = 48,
-			x = 0,
-			y = 28,
-
-			TextureCoordinate =
-			{
-				bottom = 0.7,
-				left = 0.1,
-				right = 0.9,
-				top = 0.3
-			}
-		},
-
 		Player =
 		{
 			anchor = 'BOTTOM',
@@ -97,52 +79,7 @@ Configuration =
 		height = 24,
 		width = 256,
 		x = -130,
-		y = 164,
-
-		BurningEmbersBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 24,
-			width = 516,
-			x = 1,
-			y = 27,
-
-			[1] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 127,
-				x = 2,
-				y = -2
-			},
-
-			[2] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 128,
-				x = -64,
-				y = -2
-			},
-
-			[3] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 128,
-				x = 65,
-				y = -2
-			},
-
-			[4] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 126,
-				x = -2,
-				y = -2
-			}
-		},
+		y = 136,
 
 		CastingBar =
 		{
@@ -151,16 +88,16 @@ Configuration =
 			orientation = 'HORIZONTAL',
 			width = 516,
 			x = 3,
-			y = 53
+			y = 25
 		},
 
 		HealthBar =
 		{
-			anchor = 'CENTER',
-			height = 20,
+			anchor = 'TOP',
+			height = 15,
 			width = 252,
 			x = 0,
-			y = 0,
+			y = -3,
 
 			Text =
 			{
@@ -172,11 +109,74 @@ Configuration =
 
 		PowerBar =
 		{
+			anchor = 'BOTTOM',
+			height = 4,
+			width = 252,
+			x = 0,
+			y = 3
+		},
+
+		RuneBar =
+		{
 			anchor = 'TOPLEFT',
-			height = 6,
-			width = 512,
-			x = 3,
-			y = 11
+			height = 24,
+			width = 516,
+			x = 1,
+			y = 27,
+
+			[1] =
+			{
+				anchor = 'TOPLEFT',
+				height = 13,
+				width = 85,
+				x = 2,
+				y = -2
+			},
+
+			[2] =
+			{
+				anchor = 'TOPLEFT',
+				height = 13,
+				width = 84,
+				x = 88,
+				y = -2
+			},
+
+			[3] =
+			{
+				anchor = 'TOP',
+				height = 13,
+				width = 84,
+				x = -43,
+				y = -2
+			},
+
+			[4] =
+			{
+				anchor = 'TOP',
+				height = 13,
+				width = 84,
+				x = 42,
+				y = -2
+			},
+
+			[5] =
+			{
+				anchor = 'TOPRIGHT',
+				height = 13,
+				width = 85,
+				x = -88,
+				y = -2
+			},
+
+			[6] =
+			{
+				anchor = 'TOPRIGHT',
+				height = 13,
+				width = 85,
+				x = -2,
+				y = -2
+			}
 		}
 	},
 
@@ -224,16 +224,16 @@ Configuration =
 		height = 24,
 		width = 256,
 		x = 130,
-		y = 164,
+		y = 136,
 
 		CastingBar =
 		{
-			anchor = 'BOTTOM',
-			height = 16,
-			orientation = 'HORIZONTAL',
-			width = 256,
-			x = 0,
-			y = -17
+			anchor = 'TOPRIGHT',
+			height = 52,
+			orientation = 'VERTICAL',
+			width = 8,
+			x = 9,
+			y = -3
 		},
 
 		HealthBar =
