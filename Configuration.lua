@@ -88,16 +88,70 @@ Configuration =
 			orientation = 'HORIZONTAL',
 			width = 516,
 			x = 3,
-			y = 25
+			y = 53
+		},
+
+		ComboPointsBar =
+		{
+			anchor = 'TOPLEFT',
+			height = 24,
+			width = 516,
+			x = 1,
+			y = 27,
+
+			[1] =
+			{
+				anchor = 'TOPLEFT',
+				height = 13,
+				width = 102,
+				x = 2,
+				y = -2
+			},
+
+			[2] =
+			{
+				anchor = 'TOPLEFT',
+				height = 13,
+				width = 102,
+				x = 105,
+				y = -2
+			},
+
+			[3] =
+			{
+				anchor = 'TOP',
+				height = 13,
+				width = 100,
+				x = 0,
+				y = -2
+			},
+
+			[4] =
+			{
+				anchor = 'TOPRIGHT',
+				height = 13,
+				width = 102,
+				x = -105,
+				y = -2
+			},
+
+			[5] =
+			{
+				anchor = 'TOPRIGHT',
+				height = 13,
+				width = 102,
+				x = -2,
+				y = -2
+			}
 		},
 
 		HealthBar =
 		{
-			anchor = 'TOP',
-			height = 15,
+			anchor = 'CENTER',
+			height = 20,
 			width = 252,
 			x = 0,
-			y = -3,
+			y = 0,
 
 			Text =
 			{
@@ -107,13 +161,49 @@ Configuration =
 			}
 		},
 
+		HolyPowerBar =
+		{
+			anchor = 'TOPLEFT',
+			height = 24,
+			width = 516,
+			x = 0,
+			y = 28,
+
+			[1] =
+			{
+				anchor = 'TOPLEFT',
+				height = 13,
+				width = 170,
+				x = 3,
+				y = -3
+			},
+
+			[2] =
+			{
+				anchor = 'TOP',
+				height = 13,
+				width = 170,
+				x = 0,
+				y = -3
+			},
+
+			[3] =
+			{
+				anchor = 'TOPRIGHT',
+				height = 13,
+				width = 170,
+				x = -3,
+				y = -3
+			}
+		},
+
 		PowerBar =
 		{
-			anchor = 'BOTTOM',
-			height = 4,
-			width = 252,
-			x = 0,
-			y = 3
+			anchor = 'TOPLEFT',
+			height = 6,
+			width = 512,
+			x = 3,
+			y = 11
 		},
 
 		RuneBar =
@@ -177,7 +267,43 @@ Configuration =
 				x = -2,
 				y = -2
 			}
-		}
+		},
+
+		ShadowOrbsBar =
+		{
+			anchor = 'TOPLEFT',
+			height = 24,
+			width = 516,
+			x = 0,
+			y = 28,
+
+			[1] =
+			{
+				anchor = 'TOPLEFT',
+				height = 13,
+				width = 170,
+				x = 3,
+				y = -3
+			},
+
+			[2] =
+			{
+				anchor = 'TOP',
+				height = 13,
+				width = 170,
+				x = 0,
+				y = -3
+			},
+
+			[3] =
+			{
+				anchor = 'TOPRIGHT',
+				height = 13,
+				width = 170,
+				x = -3,
+				y = -3
+			}
+		},
 	},
 
 	Raid =
@@ -229,11 +355,11 @@ Configuration =
 		CastingBar =
 		{
 			anchor = 'TOPRIGHT',
-			height = 52,
+			height = 80,
 			orientation = 'VERTICAL',
 			width = 8,
 			x = 9,
-			y = -3
+			y = 25
 		},
 
 		HealthBar =
