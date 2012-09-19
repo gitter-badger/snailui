@@ -858,6 +858,7 @@ oUF:RegisterStyle('SnailUI',
 
                 self.Health = CreateFrame('StatusBar', nil, self)
                 self.Health.frequentUpdates = true
+                self.Health:SetOrientation(Configuration[self.frame].HealthBar.orientation)
                 self.Health:SetPoint(Configuration[self.frame].HealthBar.anchor, Configuration[self.frame].HealthBar.x, Configuration[self.frame].HealthBar.y)
                 self.Health:SetSize(Configuration[self.frame].HealthBar.width - 2, Configuration[self.frame].HealthBar.height - 2)
                 self.Health:SetStatusBarTexture(Configuration.texture)
@@ -924,6 +925,7 @@ oUF:RegisterStyle('SnailUI',
             if Configuration[self.frame].PowerBar then
                 self.Power = CreateFrame('StatusBar', nil, self)
                 self.Power.frequentUpdates = true
+                self.Power:SetOrientation(Configuration[self.frame].PowerBar.orientation)
                 self.Power:SetPoint(Configuration[self.frame].PowerBar.anchor, Configuration[self.frame].PowerBar.x, Configuration[self.frame].PowerBar.y)
                 self.Power:SetStatusBarTexture(Configuration.texture)
 

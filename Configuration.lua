@@ -203,6 +203,7 @@ Configuration =
         {
             anchor = 'CENTER',
             height = 20,
+            orientation = 'HORIZONTAL',
             width = 252,
             x = 0,
             y = 0,
@@ -255,6 +256,7 @@ Configuration =
         {
             anchor = 'TOPLEFT',
             height = 6,
+            orientation = 'HORIZONTAL',
             width = 512,
             x = 3,
             y = 11
@@ -377,7 +379,7 @@ Configuration =
         showPlayer = true,
         showRaid = true,
         showSolo = true,
-        width = 100,
+        width = 24,
         x = 4,
         y = 0,
 
@@ -385,16 +387,10 @@ Configuration =
         {
             anchor = 'CENTER',
             height = 20,
-            width = 96,
+            orientation = 'VERTICAL',
+            width = 20,
             x = 0,
             y = 0,
-
-            Text =
-            {
-                anchor ='CENTER',
-                x = 1,
-                y = 0
-            }
         }
     },
 
@@ -420,6 +416,7 @@ Configuration =
         {
             anchor = 'TOP',
             height = 15,
+            orientation = 'HORIZONTAL',
             width = 252,
             x = 0,
             y = -3,
@@ -436,6 +433,7 @@ Configuration =
         {
             anchor = 'BOTTOM',
             height = 4,
+            orientation = 'HORIZONTAL',
             width = 252,
             x = 0,
             y = 3
