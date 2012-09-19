@@ -3,388 +3,442 @@
 
 Configuration =
 {
-	inactiveAlpha = 0.1,
-	texture = [[Interface\AddOns\SnailUI\SnailUI]],
+    inactiveAlpha = 0.1,
+    texture = [[Interface\AddOns\SnailUI\SnailUI]],
 
-	Font =
-	{
-		name = [[Interface\AddOns\SnailUI\SnailUI.ttf]],
-		outline = 'MONOCHROME, OUTLINE',
-		size = 8,
-	},
+    Font =
+    {
+        name = [[Interface\AddOns\SnailUI\SnailUI.ttf]],
+        outline = 'MONOCHROME, OUTLINE',
+        size = 8,
+    },
 
-	----------------------------------------
+    ----------------------------------------
 
-	ActionBars =
-	{
-		Player =
-		{
-			anchor = 'BOTTOM',
-			buttons = 10,
-			height = 24,
-			width = 48,
-			x = 0,
-			y = 108,
+    ActionBars =
+    {
+        Player =
+        {
+            anchor = 'BOTTOM',
+            buttons = 10,
+            height = 24,
+            width = 48,
+            x = 0,
+            y = 108,
 
-			TextureCoordinate =
-			{
-				bottom = 0.7,
-				left = 0.1,
-				right = 0.9,
-				top = 0.3
-			}
-		}
-	},
+            TextureCoordinate =
+            {
+                bottom = 0.7,
+                left = 0.1,
+                right = 0.9,
+                top = 0.3
+            }
+        }
+    },
 
-	Minimap =
-	{
-		anchor = 'TOPRIGHT',
-		height = 192,
-		width = 192,
-		x = -7,
-		y = -7,
+    Chat =
+    {
+        anchor = 'BOTTOM',
+        height = 100,
+        width = 256,
+        x = -130,
+        y = 9
+    },
 
-		Clock =
-		{
-			anchor ='BOTTOM',
-			x = 2,
-			y = 6
-		},
+    Minimap =
+    {
+        anchor = 'BOTTOM',
+        height = 100,
+        width = 100,
+        x = 208,
+        y = 7,
 
-		MailButton =
-		{
-			anchor ='BOTTOMRIGHT',
-			x = 1,
-			y = -2
-		},
+        Clock =
+        {
+            anchor ='BOTTOM',
+            x = 2,
+            y = 6
+        },
 
-		TrackingButton =
-		{
-			anchor ='TOPLEFT',
-			x = -1,
-			y = 0
-		},
+        MailButton =
+        {
+            anchor ='BOTTOMRIGHT',
+            x = 1,
+            y = -2
+        },
 
-		QueueStatusButton =
-		{
-			anchor ='BOTTOMLEFT',
-			x = 0,
-			y = 0
-		},
-	},
-	
-	Player =
-	{
-		anchor = 'BOTTOM',
-		height = 24,
-		width = 256,
-		x = -130,
-		y = 136,
+        TrackingButton =
+        {
+            anchor ='TOPLEFT',
+            x = -1,
+            y = 0
+        },
 
-		CastingBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 24,
-			orientation = 'HORIZONTAL',
-			width = 516,
-			x = 3,
-			y = 53
-		},
+        QueueStatusButton =
+        {
+            anchor ='BOTTOMLEFT',
+            x = 0,
+            y = 0
+        },
+    },
+    
+    Player =
+    {
+        anchor = 'BOTTOM',
+        height = 24,
+        width = 256,
+        x = -130,
+        y = 136,
 
-		ComboPointsBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 24,
-			width = 516,
-			x = 1,
-			y = 27,
+        BurningEmbersBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 24,
+            width = 516,
+            x = 1,
+            y = 27,
 
-			[1] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 102,
-				x = 2,
-				y = -2
-			},
+            [1] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 127,
+                x = 2,
+                y = -2
+            },
 
-			[2] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 102,
-				x = 105,
-				y = -2
-			},
+            [2] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 128,
+                x = -64,
+                y = -2
+            },
 
-			[3] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 100,
-				x = 0,
-				y = -2
-			},
+            [3] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 128,
+                x = 65,
+                y = -2
+            },
 
-			[4] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 102,
-				x = -105,
-				y = -2
-			},
+            [4] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 126,
+                x = -2,
+                y = -2
+            }
+        },
 
-			[5] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 102,
-				x = -2,
-				y = -2
-			}
-		},
+        CastingBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 24,
+            orientation = 'HORIZONTAL',
+            width = 516,
+            x = 3,
+            y = 53
+        },
 
-		HealthBar =
-		{
-			anchor = 'CENTER',
-			height = 20,
-			width = 252,
-			x = 0,
-			y = 0,
+        ComboPointsBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 24,
+            width = 516,
+            x = 1,
+            y = 27,
 
-			Text =
-			{
-				anchor ='CENTER',
-				x = 1,
-				y = 0
-			}
-		},
+            [1] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 102,
+                x = 2,
+                y = -2
+            },
 
-		HolyPowerBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 24,
-			width = 516,
-			x = 0,
-			y = 28,
+            [2] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 102,
+                x = 105,
+                y = -2
+            },
 
-			[1] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 170,
-				x = 3,
-				y = -3
-			},
+            [3] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 100,
+                x = 0,
+                y = -2
+            },
 
-			[2] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 170,
-				x = 0,
-				y = -3
-			},
+            [4] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 102,
+                x = -105,
+                y = -2
+            },
 
-			[3] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 170,
-				x = -3,
-				y = -3
-			}
-		},
+            [5] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 102,
+                x = -2,
+                y = -2
+            }
+        },
 
-		PowerBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 6,
-			width = 512,
-			x = 3,
-			y = 11
-		},
+        HealthBar =
+        {
+            anchor = 'CENTER',
+            height = 20,
+            width = 252,
+            x = 0,
+            y = 0,
 
-		RuneBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 24,
-			width = 516,
-			x = 1,
-			y = 27,
+            Text =
+            {
+                anchor ='CENTER',
+                x = 1,
+                y = 0
+            }
+        },
 
-			[1] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 85,
-				x = 2,
-				y = -2
-			},
+        HolyPowerBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 24,
+            width = 516,
+            x = 0,
+            y = 28,
 
-			[2] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 84,
-				x = 88,
-				y = -2
-			},
+            [1] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 170,
+                x = 3,
+                y = -3
+            },
 
-			[3] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 84,
-				x = -43,
-				y = -2
-			},
+            [2] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 170,
+                x = 0,
+                y = -3
+            },
 
-			[4] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 84,
-				x = 42,
-				y = -2
-			},
+            [3] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 170,
+                x = -3,
+                y = -3
+            }
+        },
 
-			[5] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 85,
-				x = -88,
-				y = -2
-			},
+        PowerBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 6,
+            width = 512,
+            x = 3,
+            y = 11
+        },
 
-			[6] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 85,
-				x = -2,
-				y = -2
-			}
-		},
+        RuneBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 24,
+            width = 516,
+            x = 1,
+            y = 27,
 
-		ShadowOrbsBar =
-		{
-			anchor = 'TOPLEFT',
-			height = 24,
-			width = 516,
-			x = 0,
-			y = 28,
+            [1] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 85,
+                x = 2,
+                y = -2
+            },
 
-			[1] =
-			{
-				anchor = 'TOPLEFT',
-				height = 13,
-				width = 170,
-				x = 3,
-				y = -3
-			},
+            [2] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 84,
+                x = 88,
+                y = -2
+            },
 
-			[2] =
-			{
-				anchor = 'TOP',
-				height = 13,
-				width = 170,
-				x = 0,
-				y = -3
-			},
+            [3] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 84,
+                x = -43,
+                y = -2
+            },
 
-			[3] =
-			{
-				anchor = 'TOPRIGHT',
-				height = 13,
-				width = 170,
-				x = -3,
-				y = -3
-			}
-		},
-	},
+            [4] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 84,
+                x = 42,
+                y = -2
+            },
 
-	Raid =
-	{
-		anchor = 'LEFT',
-		columnAnchor = 'LEFT',
-		columns = 1,
-		columnSpacing = 4,
-		columnX = 4,
-		columnY = -4,
-		groupBy = 'GROUP',
-		groupOrder = '1, 2, 3, 4, 5, 6, 7, 8',
-		healthThreshold = 90,
-		height = 24,
-		rows = 40,
-		showParty = true,
-		showPlayer = true,
-		showRaid = true,
-		showSolo = true,
-		width = 100,
-		x = 4,
-		y = 0,
+            [5] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 85,
+                x = -88,
+                y = -2
+            },
 
-		HealthBar =
-		{
-			anchor = 'CENTER',
-			height = 20,
-			width = 96,
-			x = 0,
-			y = 0,
+            [6] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 85,
+                x = -2,
+                y = -2
+            }
+        },
 
-			Text =
-			{
-				anchor ='CENTER',
-				x = 1,
-				y = 0
-			}
-		}
-	},
+        ShadowOrbsBar =
+        {
+            anchor = 'TOPLEFT',
+            height = 24,
+            width = 516,
+            x = 0,
+            y = 28,
 
-	Target =
-	{
-		anchor = 'BOTTOM',
-		height = 24,
-		width = 256,
-		x = 130,
-		y = 136,
+            [1] =
+            {
+                anchor = 'TOPLEFT',
+                height = 13,
+                width = 170,
+                x = 3,
+                y = -3
+            },
 
-		CastingBar =
-		{
-			anchor = 'TOPRIGHT',
-			height = 80,
-			orientation = 'VERTICAL',
-			width = 8,
-			x = 9,
-			y = 25
-		},
+            [2] =
+            {
+                anchor = 'TOP',
+                height = 13,
+                width = 170,
+                x = 0,
+                y = -3
+            },
 
-		HealthBar =
-		{
-			anchor = 'TOP',
-			height = 15,
-			width = 252,
-			x = 0,
-			y = -3,
+            [3] =
+            {
+                anchor = 'TOPRIGHT',
+                height = 13,
+                width = 170,
+                x = -3,
+                y = -3
+            }
+        },
+    },
 
-			Text =
-			{
-				anchor ='CENTER',
-				x = 1,
-				y = 0
-			}
-		},
+    Raid =
+    {
+        anchor = 'LEFT',
+        columnAnchor = 'LEFT',
+        columns = 1,
+        columnSpacing = 4,
+        columnX = 4,
+        columnY = -4,
+        groupBy = 'GROUP',
+        groupOrder = '1, 2, 3, 4, 5, 6, 7, 8',
+        healthThreshold = 90,
+        height = 24,
+        rows = 40,
+        showParty = true,
+        showPlayer = true,
+        showRaid = true,
+        showSolo = true,
+        width = 100,
+        x = 4,
+        y = 0,
 
-		PowerBar =
-		{
-			anchor = 'BOTTOM',
-			height = 4,
-			width = 252,
-			x = 0,
-			y = 3
-		}
-	}
+        HealthBar =
+        {
+            anchor = 'CENTER',
+            height = 20,
+            width = 96,
+            x = 0,
+            y = 0,
+
+            Text =
+            {
+                anchor ='CENTER',
+                x = 1,
+                y = 0
+            }
+        }
+    },
+
+    Target =
+    {
+        anchor = 'BOTTOM',
+        height = 24,
+        width = 256,
+        x = 130,
+        y = 136,
+
+        CastingBar =
+        {
+            anchor = 'TOPRIGHT',
+            height = 80,
+            orientation = 'VERTICAL',
+            width = 8,
+            x = 9,
+            y = 25
+        },
+
+        HealthBar =
+        {
+            anchor = 'TOP',
+            height = 15,
+            width = 252,
+            x = 0,
+            y = -3,
+
+            Text =
+            {
+                anchor ='CENTER',
+                x = 1,
+                y = 0
+            }
+        },
+
+        PowerBar =
+        {
+            anchor = 'BOTTOM',
+            height = 4,
+            width = 252,
+            x = 0,
+            y = 3
+        }
+    }
 }
