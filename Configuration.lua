@@ -52,6 +52,16 @@ Configuration =
         y = 9
     },
 
+    ExtraButton =
+    {
+        anchor = 'TOP',
+        height = 24,
+        hoverToShow = true,
+        width = 204,
+        x = 0,
+        y = -6
+    },
+
     Minimap =
     {
         anchor = 'BOTTOM',
@@ -59,6 +69,13 @@ Configuration =
         width = 100,
         x = 208,
         y = 7,
+
+        Calender =
+        {
+            anchor ='TOPRIGHT',
+            x = 0,
+            y = 0
+        },
 
         Clock =
         {

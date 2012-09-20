@@ -134,8 +134,11 @@ oUF:Factory(
         SLASH_SnailUI1 = '/SnailUI'
         SLASH_SnailUI2 = '/SUI'
 
-        SetCVar("consolidateBuffs", '0')
+        SetCVar('consolidateBuffs', '0')
+
         UIErrorsFrame:Hide()
+        WatchFrame:Hide()
+        WorldStateAlwaysUpFrame:Hide()
 
         CompactRaidFrameManager:UnregisterAllEvents()
         CompactRaidFrameManager:Hide()
@@ -384,7 +387,7 @@ oUF:Factory(
 
         if Configuration.Buffs then
             AuraButton_UpdateDuration = function(self, timeLeft)         
-                if (SHOW_BUFF_DURATIONS == "1") and timeLeft then
+                if (SHOW_BUFF_DURATIONS == '1') and timeLeft then
                     self.duration:SetFormattedText(SecondsToTimeAbbrev(timeLeft));
                     text = self.duration:GetText()
 
@@ -401,7 +404,9 @@ oUF:Factory(
                 end
             end
 
-            OriginalBuffFrame_Update = BuffFrame_Update            
+            BuffFrame:Hide()
+            OriginalBuffFrame_Update = BuffFrame_Update    
+
             BuffFrame_Update = function(self)
                 OriginalBuffFrame_Update(self)
 
@@ -719,6 +724,76 @@ oUF:Factory(
             ChatFrame1EditBox:SetPoint('TOPLEFT', ChatFrame1, 'TOPLEFT', -5, 6)
         end
 
+        if Configuration.ExtraButton then
+            extraButton = CreateFrame('Button', nil, UIParent)
+            extraButton:RegisterForClicks('AnyUp')
+            extraButton:SetPoint(Configuration.ExtraButton.anchor, Configuration.ExtraButton.x, Configuration.ExtraButton.y)
+            extraButton:SetSize(Configuration.ExtraButton.width - 4, Configuration.ExtraButton.height - 4)
+            extraButton:SetScript('OnClick',
+                function(self)
+                    if BuffFrame:IsShown() then
+                        BuffFrame:Hide()
+                        raidFrame:Hide()
+                        WatchFrame:Hide()
+                        WorldStateAlwaysUpFrame:Hide()
+
+                        self.Bar.text:SetText('Show Misc Frames')
+                    else
+                        BuffFrame:Show()
+                        raidFrame:Show()
+                        WatchFrame:Show()
+                        WorldStateAlwaysUpFrame:Show()
+
+                        self.Bar.text:SetText('Hide Misc Frames')
+                    end
+                end
+            )
+
+            if Configuration.ExtraButton.hoverToShow then
+                extraButton:SetAlpha(0)
+                extraButton:SetScript('OnEnter',
+                    function(self)
+                        self:SetAlpha(1)
+                    end
+                )
+
+                extraButton:SetScript('OnLeave',
+                    function(self)
+                        self:SetAlpha(0)
+                    end
+                )
+            end
+
+            extraButton.background = extraButton:CreateTexture(nil, 'LOW')
+            extraButton.background:SetPoint('TOPLEFT', -1, 1)
+            extraButton.background:SetSize(Configuration.ExtraButton.width - 2, Configuration.ExtraButton.height - 2)
+            extraButton.background:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+            extraButton.border = extraButton:CreateTexture(nil, 'BACKGROUND')
+            extraButton.border:SetPoint('TOPLEFT', -2, 2)
+            extraButton.border:SetSize(Configuration.ExtraButton.width, Configuration.ExtraButton.height)
+            extraButton.border:SetTexture(0, 0, 0)
+
+            extraButton.Bar = CreateFrame('StatusBar', nil, extraButton)
+            extraButton.Bar:SetPoint('CENTER')
+            extraButton.Bar:SetSize(Configuration.ExtraButton.width - 6, Configuration.ExtraButton.height - 6)
+            extraButton.Bar:SetStatusBarTexture(Configuration.texture)
+            extraButton.Bar:SetStatusBarColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+            extraButton.Bar.border = extraButton.Bar:CreateTexture(nil, 'BACKGROUND')
+            extraButton.Bar.border:SetPoint('TOPLEFT', -1, 1)
+            extraButton.Bar.border:SetSize(Configuration.ExtraButton.width - 4, Configuration.ExtraButton.height - 4)
+            extraButton.Bar.border:SetTexture(0, 0, 0)
+
+            extraButton.Bar.text = extraButton.Bar:CreateFontString(nil, 'OVERLAY')
+            extraButton.Bar.text.frequentUpdates = true
+            extraButton.Bar.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+            extraButton.Bar.text:SetPoint('CENTER', 1, 0)
+            extraButton.Bar.text:SetText('Show Misc Frames')
+            extraButton.Bar.text:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+        end
+
         if Configuration.Focus then
             focusFrame = self:Spawn('Focus')
             focusFrame:SetPoint(Configuration.Focus.anchor, Configuration.Focus.x, Configuration.Focus.y)
@@ -733,11 +808,9 @@ oUF:Factory(
             MinimapCluster:Hide()
 
             minimapFrame = CreateFrame('Minimap', nil, UIParent)
-            minimapFrame:SetFrameStrata('HIGH')
             minimapFrame:SetMaskTexture([[Interface\Buttons\WHITE8X8]])
             minimapFrame:SetPoint(Configuration.Minimap.anchor, Configuration.Minimap.x, Configuration.Minimap.y)
             minimapFrame:SetSize(Configuration.Minimap.width - 6, Configuration.Minimap.height - 6)
-
             minimapFrame:SetScript('OnMouseWheel',
                 function(self, zoom)
                     if zoom > 0 then
@@ -788,13 +861,32 @@ oUF:Factory(
             minimapFrame.borderTop:SetSize(Configuration.Minimap.width, 3)
             minimapFrame.borderTop:SetTexture(0, 0, 0)
 
+            if Configuration.Minimap.Calender then
+                GameTimeFrame:ClearAllPoints()
+                GameTimeFrame:SetParent(minimapFrame)
+                GameTimeFrame:SetPoint(Configuration.Minimap.Calender.anchor, Configuration.Minimap.Calender.x, Configuration.Minimap.Calender.y)
+                GameTimeFrame:SetSize(32, 32)
+
+                GameTimeFrame.text = GameTimeFrame:CreateFontString(nil, 'OVERLAY')
+                GameTimeFrame.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                GameTimeFrame.text:SetPoint('CENTER', 1, -1)
+
+                GameTimeFrame_SetDate = function(self)
+                    _, _, day = CalendarGetDate()
+                    GameTimeFrame.text:SetText(day)
+                end
+
+                GameTimeFrame:SetText(nil)
+            end
+
             if Configuration.Minimap.Clock then
                 TimeManagerClockButton:ClearAllPoints()
                 TimeManagerClockButton:GetRegions():Hide()
                 TimeManagerClockButton:SetParent(minimapFrame)
                 TimeManagerClockButton:SetPoint(Configuration.Minimap.Clock.anchor, Configuration.Minimap.Clock.x, Configuration.Minimap.Clock.y)
-                TimeManagerClockTicker:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
                 TimeManagerClockButton:SetSize(TimeManagerClockTicker:GetWidth(), TimeManagerClockTicker:GetHeight())
+
+                TimeManagerClockTicker:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
                 TimeManagerClockTicker:SetPoint('CENTER', TimeManagerClockButton)
                 TimeManagerClockTicker:SetShadowOffset(0, 0)
             end
@@ -850,8 +942,8 @@ oUF:Factory(
                 'yOffset', Configuration.Raid.columnY
             )
 
+            raidFrame:Hide()
             raidFrame:SetPoint(Configuration.Raid.anchor, Configuration.Raid.x, Configuration.Raid.y)
-            raidFrame:Show()
         end
 
         if Configuration.Target then
@@ -873,7 +965,14 @@ oUF:RegisterStyle('SnailUI',
         if Configuration[unit] then            
             self.frame = unit
             self.menu = function(self)
-                ToggleDropDownMenu(1, nil, _G[self.unit:gsub('(.)', string.upper, 1) .. 'FrameDropDown'], self, 0, 0)
+                if self.unit:match('^party') then
+                    ToggleDropDownMenu(1, nil, _G['PartyMemberFrame' .. self.id .. 'DropDown'], 'cursor', 0, 0)
+                elseif self.unit:match('^raid') then
+                    self.name = self.unit
+                    RaidGroupButton_ShowMenu(self)
+                else
+                    ToggleDropDownMenu(1, nil, _G[self.unit:gsub('(.)', string.upper, 1) .. 'FrameDropDown'], 'cursor', 0, 0)
+                end
             end
 
             self.background = self:CreateTexture(nil, 'LOW')
@@ -884,6 +983,7 @@ oUF:RegisterStyle('SnailUI',
             self.border:SetPoint('TOPLEFT')
             self.border:SetSize(Configuration[self.frame].width, Configuration[self.frame].height)
             self.border:SetTexture(0, 0, 0)
+
             self.PostUpdate = function(self)
                 if UnitClass(self.unit) then
                     self.classColor = RAID_CLASS_COLORS[select(2, UnitClass(self.unit))]
@@ -1008,6 +1108,11 @@ oUF:RegisterStyle('SnailUI',
             self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', self.PostUpdate)
             self:RegisterForClicks('AnyUp')
             self:SetSize(Configuration[self.frame].width, Configuration[self.frame].height)
+            self:SetScript('OnEnter',
+                function(self)
+                    UnitFrame_UpdateTooltip(self)
+                end
+            )
 
             if Configuration[self.frame].healthThreshold then
                 self:RegisterEvent('UNIT_HEALTH',
