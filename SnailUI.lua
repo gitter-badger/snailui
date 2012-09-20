@@ -24,13 +24,23 @@ function trim(string1, string2)
     return string1
 end
 
+function trim2(string)
+    if string:len() > 3 then
+        return string:sub(1, 3)
+    end
+
+    return string
+end
+
 -- Tags
 
 oUF.Tags.Events['SnailUI:Health'] = 'UNIT_HEALTH UNIT_HEAL_PREDICTION'
+oUF.Tags.Events['SnailUI:SmallHealth'] = 'UNIT_HEALTH UNIT_HEAL_PREDICTION'
+
 oUF.Tags.Methods['SnailUI:Health'] = function(unit)
     health = trim(GetUnitName(unit, false))
 
-    if InCombatLockdown() or (math.floor(((UnitHealth(unit) / UnitHealthMax(unit)) * 100) + 0.5) < 100) then
+    if math.floor(((UnitHealth(unit) / UnitHealthMax(unit)) * 100) + 0.5) < 100 then
         if UnitGetIncomingHeals(unit) then
             health = math.floor((((UnitHealth(unit) + UnitGetIncomingHeals(unit)) / UnitHealthMax(unit)) * 100) + 0.5) .. '%'
         else
@@ -57,14 +67,44 @@ oUF.Tags.Methods['SnailUI:Health'] = function(unit)
     return health
 end
 
+oUF.Tags.Methods['SnailUI:SmallHealth'] = function(unit)
+    health = trim2(GetUnitName(unit, false))
+
+    if math.floor(((UnitHealth(unit) / UnitHealthMax(unit)) * 100) + 0.5) < 100 then
+        if UnitGetIncomingHeals(unit) then
+            health = math.floor((((UnitHealth(unit) + UnitGetIncomingHeals(unit)) / UnitHealthMax(unit)) * 100) + 0.5) .. '%'
+        else
+            health = math.floor(((UnitHealth(unit) / UnitHealthMax(unit)) * 100) + 0.5) .. '%'
+        end
+    end
+
+    if UnitIsDead(unit) then
+        health = 'DEA'
+    end
+
+    if UnitIsGhost(unit) then
+        health = 'GHO'
+    end
+
+    if UnitIsAFK(unit) then
+        health = 'AFK'
+    end
+
+    if not UnitIsConnected(unit) then
+        health = 'D/C'
+    end
+
+    return health
+end
+
 -- Layout
 
 oUF:Factory(
     function(self)
-         category = CreateFrame('Frame', nil, UIParent)
-         category.name = 'SnailUI'
+        category = CreateFrame('Frame', nil, UIParent)
+        category.name = 'SnailUI'
 
-         category.label1 = category:CreateFontString(nil, 'OVERLAY', 'GameFontNormalLarge')
+        category.label1 = category:CreateFontString(nil, 'OVERLAY', 'GameFontNormalLarge')
         category.label1:SetPoint('TOPLEFT', 16, -16)
         category.label1:SetText('SnailUI ' .. version)
 
@@ -73,8 +113,8 @@ oUF:Factory(
         category.label2:SetText('Snail\'s minimalistic UI.')
 
         generalSubcategory = CreateFrame('Frame', nil, category)
-         generalSubcategory.name = 'General'
-         generalSubcategory.parent = category.name
+        generalSubcategory.name = 'General'
+        generalSubcategory.parent = category.name
 
         generalSubcategory.label1 = generalSubcategory:CreateFontString(nil, 'OVERLAY', 'GameFontNormalLarge')
         generalSubcategory.label1:SetPoint('TOPLEFT', 16, -16)
@@ -84,8 +124,8 @@ oUF:Factory(
         generalSubcategory.label2:SetPoint('TOPLEFT', 16, -36)
         generalSubcategory.label2:SetText('General options for SnailUI.')
 
-         InterfaceOptions_AddCategory(category)
-         InterfaceOptions_AddCategory(generalSubcategory)
+        InterfaceOptions_AddCategory(category)
+        InterfaceOptions_AddCategory(generalSubcategory)
 
         SlashCmdList['SnailUI'] = function(command)
             InterfaceOptionsFrame_OpenToCategory(category)
@@ -94,6 +134,7 @@ oUF:Factory(
         SLASH_SnailUI1 = '/SnailUI'
         SLASH_SnailUI2 = '/SUI'
 
+        SetCVar("consolidateBuffs", '0')
         UIErrorsFrame:Hide()
 
         CompactRaidFrameManager:UnregisterAllEvents()
@@ -215,8 +256,6 @@ oUF:Factory(
                     _G['PetActionButton' .. i]:SetNormalTexture(nil)
                     _G['PetActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBars.Pet.width) + ((i - 1) * 4) + 3, 0)
                     _G['PetActionButton' .. i]:SetSize(Configuration.ActionBars.Pet.width - 6, Configuration.ActionBars.Pet.height - 6)
-                    _G['PetActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Pet.TextureCoordinate.left, Configuration.ActionBars.Pet.TextureCoordinate.right, Configuration.ActionBars.Pet.TextureCoordinate.top, Configuration.ActionBars.Pet.TextureCoordinate.bottom)
-
                     _G['PetActionButton' .. i].SetNormalTexture = function(self)
                     end
 
@@ -261,6 +300,7 @@ oUF:Factory(
                     _G['PetActionButton' .. i].borderTop:SetTexture(0, 0, 0)
 
                     _G['PetActionButton' .. i .. 'AutoCastable']:SetAlpha(0)
+                    _G['PetActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Pet.TextureCoordinate.left, Configuration.ActionBars.Pet.TextureCoordinate.right, Configuration.ActionBars.Pet.TextureCoordinate.top, Configuration.ActionBars.Pet.TextureCoordinate.bottom)
                     _G['PetActionButton' .. i .. 'Shine']:SetAllPoints(_G['PetActionButton' .. i])
                 end
             end
@@ -288,8 +328,7 @@ oUF:Factory(
                 _G['ActionButton' .. i]:SetNormalTexture(nil)
                 _G['ActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBars.Player.width) + ((i - 1) * 4) + 3, 0)
                 _G['ActionButton' .. i]:SetSize(Configuration.ActionBars.Player.width - 6, Configuration.ActionBars.Player.height - 6)
-                _G['ActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Player.TextureCoordinate.left, Configuration.ActionBars.Player.TextureCoordinate.right, Configuration.ActionBars.Player.TextureCoordinate.top, Configuration.ActionBars.Player.TextureCoordinate.bottom)
-
+                
                 _G['ActionButton' .. i].backgroundBottom = _G['ActionButton' .. i]:CreateTexture(nil, 'LOW')
                 _G['ActionButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
                 _G['ActionButton' .. i].backgroundBottom:SetSize(Configuration.ActionBars.Player.width - 2, 1)
@@ -335,10 +374,237 @@ oUF:Factory(
                 _G['ActionButton' .. i .. 'Border'].SetVertexColor = function(self)
                 end
 
+                _G['ActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Player.TextureCoordinate.left, Configuration.ActionBars.Player.TextureCoordinate.right, Configuration.ActionBars.Player.TextureCoordinate.top, Configuration.ActionBars.Player.TextureCoordinate.bottom)
                 _G['ActionButton' .. i .. 'FlyoutBorder']:SetAlpha(0)
                 _G['ActionButton' .. i .. 'FlyoutBorderShadow']:SetAlpha(0)
                 _G['ActionButton' .. i .. 'HotKey']:SetAlpha(0)
                 _G['ActionButton' .. i .. 'Name']:SetAlpha(0)
+            end
+        end
+
+        if Configuration.Buffs then
+            AuraButton_UpdateDuration = function(self, timeLeft)         
+                if (SHOW_BUFF_DURATIONS == "1") and timeLeft then
+                    self.duration:SetFormattedText(SecondsToTimeAbbrev(timeLeft));
+                    text = self.duration:GetText()
+
+                    if timeLeft < BUFF_DURATION_WARNING_TIME then
+                        self.duration:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+                    else
+                        self.duration:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+                    end
+
+                    self.duration:SetText(text:gsub(' ', ''))
+                    self.duration:Show();
+                else
+                    self.duration:Hide();
+                end
+            end
+
+            OriginalBuffFrame_Update = BuffFrame_Update            
+            BuffFrame_Update = function(self)
+                OriginalBuffFrame_Update(self)
+
+                BuffFrame:ClearAllPoints()
+                BuffFrame:SetPoint(Configuration.Buffs.anchor, Configuration.Buffs.x, Configuration.Buffs.y)
+
+                greaterBuff = BUFF_ACTUAL_DISPLAY
+
+                if DEBUFF_ACTUAL_DISPLAY > greaterBuff then
+                    greaterBuff = DEBUFF_ACTUAL_DISPLAY
+                end
+
+                if BuffFrame.numEnchants > greaterBuff then
+                    greaterBuff = BuffFrame.numEnchants
+                end
+
+                if DEBUFF_ACTUAL_DISPLAY > 0 then
+                    BuffFrame:SetSize((Configuration.Buffs.width * 2) + 4, greaterBuff * Configuration.Buffs.height)
+                else
+                    BuffFrame:SetSize(Configuration.Buffs.width, greaterBuff * Configuration.Buffs.height)
+                end
+
+                for i = 1, BUFF_ACTUAL_DISPLAY do
+                    _G['BuffButton' .. i]:ClearAllPoints()
+                    _G['BuffButton' .. i]:SetPoint('TOPRIGHT', -3, -(((i - 1) * Configuration.Buffs.height) + ((i - 1) * 4) + 3))
+                    _G['BuffButton' .. i]:SetSize(Configuration.Buffs.width - 6, Configuration.Buffs.height - 6)
+
+                    if not  _G['BuffButton' .. i].backgroundBottom then
+                        _G['BuffButton' .. i].backgroundBottom = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['BuffButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
+                        _G['BuffButton' .. i].backgroundBottom:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['BuffButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['BuffButton' .. i].backgroundLeft = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['BuffButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
+                        _G['BuffButton' .. i].backgroundLeft:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['BuffButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['BuffButton' .. i].backgroundRight = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['BuffButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
+                        _G['BuffButton' .. i].backgroundRight:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['BuffButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['BuffButton' .. i].backgroundTop = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['BuffButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
+                        _G['BuffButton' .. i].backgroundTop:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['BuffButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+                                        
+                        _G['BuffButton' .. i].borderBottom = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['BuffButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
+                        _G['BuffButton' .. i].borderBottom:SetSize(Configuration.Buffs.width, 3)
+                        _G['BuffButton' .. i].borderBottom:SetTexture(0, 0, 0)
+
+                        _G['BuffButton' .. i].borderLeft = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['BuffButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
+                        _G['BuffButton' .. i].borderLeft:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['BuffButton' .. i].borderLeft:SetTexture(0, 0, 0)
+
+                        _G['BuffButton' .. i].borderRight = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['BuffButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
+                        _G['BuffButton' .. i].borderRight:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['BuffButton' .. i].borderRight:SetTexture(0, 0, 0)
+
+                        _G['BuffButton' .. i].borderTop = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['BuffButton' .. i].borderTop:SetPoint('TOP', 0, 3)
+                        _G['BuffButton' .. i].borderTop:SetSize(Configuration.Buffs.width, 3)
+                        _G['BuffButton' .. i].borderTop:SetTexture(0, 0, 0)
+                    end
+
+                    _G['BuffButton' .. i .. 'Count']:ClearAllPoints()
+                    _G['BuffButton' .. i .. 'Count']:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    _G['BuffButton' .. i .. 'Count']:SetPoint('BOTTOMRIGHT', 1, 0)
+
+                    _G['BuffButton' .. i .. 'Duration']:ClearAllPoints()
+                    _G['BuffButton' .. i .. 'Duration']:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    _G['BuffButton' .. i .. 'Duration']:SetPoint('CENTER', 1, 0)
+                    _G['BuffButton' .. i .. 'Duration']:SetShadowOffset(0, 0)
+
+                    _G['BuffButton' .. i .. 'Icon']:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+                end
+
+                 for i = 1, DEBUFF_ACTUAL_DISPLAY do
+                    _G['DebuffButton' .. i]:ClearAllPoints()
+                    _G['DebuffButton' .. i]:SetPoint('TOPLEFT', 3, -(((i - 1) * Configuration.Buffs.height) + ((i - 1) * 4) + 3))
+                    _G['DebuffButton' .. i]:SetSize(Configuration.Buffs.width - 6, Configuration.Buffs.height - 6)
+
+                    if not  _G['DebuffButton' .. i].backgroundBottom then
+                        _G['DebuffButton' .. i].backgroundBottom = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['DebuffButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
+                        _G['DebuffButton' .. i].backgroundBottom:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['DebuffButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['DebuffButton' .. i].backgroundLeft = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['DebuffButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
+                        _G['DebuffButton' .. i].backgroundLeft:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['DebuffButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['DebuffButton' .. i].backgroundRight = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['DebuffButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
+                        _G['DebuffButton' .. i].backgroundRight:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['DebuffButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['DebuffButton' .. i].backgroundTop = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
+                        _G['DebuffButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
+                        _G['DebuffButton' .. i].backgroundTop:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['DebuffButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+                                        
+                        _G['DebuffButton' .. i].borderBottom = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['DebuffButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
+                        _G['DebuffButton' .. i].borderBottom:SetSize(Configuration.Buffs.width, 3)
+                        _G['DebuffButton' .. i].borderBottom:SetTexture(0, 0, 0)
+
+                        _G['DebuffButton' .. i].borderLeft = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['DebuffButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
+                        _G['DebuffButton' .. i].borderLeft:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['DebuffButton' .. i].borderLeft:SetTexture(0, 0, 0)
+
+                        _G['DebuffButton' .. i].borderRight = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['DebuffButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
+                        _G['DebuffButton' .. i].borderRight:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['DebuffButton' .. i].borderRight:SetTexture(0, 0, 0)
+
+                        _G['DebuffButton' .. i].borderTop = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['DebuffButton' .. i].borderTop:SetPoint('TOP', 0, 3)
+                        _G['DebuffButton' .. i].borderTop:SetSize(Configuration.Buffs.width, 3)
+                        _G['DebuffButton' .. i].borderTop:SetTexture(0, 0, 0)
+                    end
+
+                    _G['DebuffButton' .. i .. 'Border']:Hide()
+
+                    _G['DebuffButton' .. i .. 'Count']:ClearAllPoints()
+                    _G['DebuffButton' .. i .. 'Count']:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    _G['DebuffButton' .. i .. 'Count']:SetPoint('BOTTOMRIGHT', 1, 0)
+
+                    _G['DebuffButton' .. i .. 'Duration']:ClearAllPoints()
+                    _G['DebuffButton' .. i .. 'Duration']:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    _G['DebuffButton' .. i .. 'Duration']:SetPoint('CENTER', 1, 0)
+                    _G['DebuffButton' .. i .. 'Duration']:SetShadowOffset(0, 0)
+
+                    _G['DebuffButton' .. i .. 'Icon']:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+                end
+
+                for i = 1, BuffFrame.numEnchants do
+                    _G['TempEnchant' .. i]:ClearAllPoints()
+                    _G['TempEnchant' .. i]:SetParent(BuffFrame)
+                    _G['TempEnchant' .. i]:SetPoint('TOPLEFT', -33, -(((i - 1) * Configuration.Buffs.height) + ((i - 1) * 4) + 3))
+                    _G['TempEnchant' .. i]:SetSize(Configuration.Buffs.width - 6, Configuration.Buffs.height - 6)
+
+                    if not  _G['TempEnchant' .. i].backgroundBottom then
+                        _G['TempEnchant' .. i].backgroundBottom = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
+                        _G['TempEnchant' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
+                        _G['TempEnchant' .. i].backgroundBottom:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['TempEnchant' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['TempEnchant' .. i].backgroundLeft = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
+                        _G['TempEnchant' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
+                        _G['TempEnchant' .. i].backgroundLeft:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['TempEnchant' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['TempEnchant' .. i].backgroundRight = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
+                        _G['TempEnchant' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
+                        _G['TempEnchant' .. i].backgroundRight:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['TempEnchant' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                        _G['TempEnchant' .. i].backgroundTop = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
+                        _G['TempEnchant' .. i].backgroundTop:SetPoint('TOP', 0, 2)
+                        _G['TempEnchant' .. i].backgroundTop:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['TempEnchant' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+                                        
+                        _G['TempEnchant' .. i].borderBottom = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['TempEnchant' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
+                        _G['TempEnchant' .. i].borderBottom:SetSize(Configuration.Buffs.width, 3)
+                        _G['TempEnchant' .. i].borderBottom:SetTexture(0, 0, 0)
+
+                        _G['TempEnchant' .. i].borderLeft = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['TempEnchant' .. i].borderLeft:SetPoint('LEFT', -3, 0)
+                        _G['TempEnchant' .. i].borderLeft:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['TempEnchant' .. i].borderLeft:SetTexture(0, 0, 0)
+
+                        _G['TempEnchant' .. i].borderRight = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['TempEnchant' .. i].borderRight:SetPoint('RIGHT', 3, 0)
+                        _G['TempEnchant' .. i].borderRight:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['TempEnchant' .. i].borderRight:SetTexture(0, 0, 0)
+
+                        _G['TempEnchant' .. i].borderTop = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
+                        _G['TempEnchant' .. i].borderTop:SetPoint('TOP', 0, 3)
+                        _G['TempEnchant' .. i].borderTop:SetSize(Configuration.Buffs.width, 3)
+                        _G['TempEnchant' .. i].borderTop:SetTexture(0, 0, 0)
+                    end
+
+                    _G['TempEnchant' .. i .. 'Border']:Hide()
+
+                    _G['TempEnchant' .. i .. 'Count']:ClearAllPoints()
+                    _G['TempEnchant' .. i .. 'Count']:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    _G['TempEnchant' .. i .. 'Count']:SetPoint('BOTTOMRIGHT', 1, 0)
+
+                    _G['TempEnchant' .. i .. 'Duration']:ClearAllPoints()
+                    _G['TempEnchant' .. i .. 'Duration']:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    _G['TempEnchant' .. i .. 'Duration']:SetPoint('CENTER', 1, 0)
+                    _G['TempEnchant' .. i .. 'Duration']:SetShadowOffset(0, 0)
+
+                    _G['TempEnchant' .. i .. 'Icon']:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+                end
             end
         end
 
@@ -890,7 +1156,12 @@ oUF:RegisterStyle('SnailUI',
                     self.Health.text.frequentUpdates = true
                     self.Health.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
                     self.Health.text:SetPoint(Configuration[self.frame].HealthBar.Text.anchor, Configuration[self.frame].HealthBar.Text.x, Configuration[self.frame].HealthBar.Text.y)
-                    self:Tag(self.Health.text, '[SnailUI:Health]')
+
+                    if Configuration[self.frame].HealthBar.smallText then
+                        self:Tag(self.Health.text, '[SnailUI:SmallHealth]')
+                    else
+                        self:Tag(self.Health.text, '[SnailUI:Health]')
+                    end
                 end
             end
 

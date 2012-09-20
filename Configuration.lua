@@ -13,8 +13,6 @@ Configuration =
         size = 8,
     },
 
-    ----------------------------------------
-
     ActionBars =
     {
         Player =
@@ -34,6 +32,15 @@ Configuration =
                 top = 0.3
             }
         }
+    },
+
+    Buffs =
+    {
+        anchor = 'RIGHT',
+        height = 32,
+        width = 32,
+        x = -4,
+        y = 0
     },
 
     Chat =
@@ -373,24 +380,32 @@ Configuration =
         groupBy = 'GROUP',
         groupOrder = '1, 2, 3, 4, 5, 6, 7, 8',
         healthThreshold = 90,
-        height = 24,
+        height = 32,
         rows = 40,
         showParty = true,
         showPlayer = true,
         showRaid = true,
         showSolo = true,
-        width = 24,
+        width = 32,
         x = 4,
         y = 0,
 
         HealthBar =
         {
             anchor = 'CENTER',
-            height = 20,
+            height = 28,
             orientation = 'VERTICAL',
-            width = 20,
+            smallText = true,
+            width = 28,
             x = 0,
             y = 0,
+
+            Text =
+            {
+                anchor ='CENTER',
+                x = 1,
+                y = 0
+            }
         }
     },
 
