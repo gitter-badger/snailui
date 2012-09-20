@@ -671,9 +671,14 @@ oUF:Factory(
             OriginalChatEdit_OnEscapePressed = ChatEdit_OnEscapePressed
             ChatEdit_OnEscapePressed = function(self)
             	OriginalChatEdit_OnEscapePressed(self)
-
             	self:Hide()
         	end
+
+            OriginalChatEdit_SetLastActiveWindow = ChatEdit_SetLastActiveWindow
+            ChatEdit_SetLastActiveWindow = function(self)
+                OriginalChatEdit_SetLastActiveWindow(self)
+                self:Hide()
+            end
 
         	ChatFrame1:ClearAllPoints()
         	ChatFrame1:SetClampedToScreen(false)
