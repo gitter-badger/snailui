@@ -136,6 +136,7 @@ oUF:Factory(
 
         SetCVar('consolidateBuffs', '0')
 
+        RaidBossEmoteFrame:Hide()
         UIErrorsFrame:Hide()
         WatchFrame:Hide()
         WorldStateAlwaysUpFrame:Hide()
