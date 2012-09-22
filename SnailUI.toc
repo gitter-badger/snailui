@@ -1,6 +1,6 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## Interface: 50400
+## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
 ## Version: 0.2.1
