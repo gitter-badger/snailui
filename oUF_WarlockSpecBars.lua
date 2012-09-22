@@ -67,7 +67,6 @@ end
 
 local function Visibility(self, event, unit)
 	local wsb = self.WarlockSpecBars
-	local spacing = select(4, wsb[4]:GetPoint())
 	local w = wsb:GetWidth()
 	local s = 0
 	
@@ -78,7 +77,7 @@ local function Visibility(self, event, unit)
 		end
 		
 		if LATEST_SPEC ~= spec then
-			for i = 1, 4 do
+			for i = 1, #wsb do
 				local max = select(2, wsb[i]:GetMinMaxValues())
 				if spec == SPEC_WARLOCK_AFFLICTION then
 					wsb[i]:SetValue(max)
@@ -131,9 +130,9 @@ local function Visibility(self, event, unit)
 			
 			if maxshards == 3 then wsb[4]:Hide() else wsb[4]:Show() end
 		elseif spec == SPEC_WARLOCK_DEMONOLOGY then
-			wsb[2]:Hide()
-			wsb[3]:Hide()
-			wsb[4]:Hide()
+			--wsb[2]:Hide()
+			--wsb[3]:Hide()
+			--wsb[4]:Hide()
 			--wsb[1]:SetWidth(wsb:GetWidth())	
 			--wsb[1]:SetStatusBarColor(unpack(Colors[SPEC_WARLOCK_DEMONOLOGY]))
 			--if wsb[1].bg then wsb[1].bg:SetAlpha(0.15) wsb[1].bg:SetTexture(unpack(Colors[SPEC_WARLOCK_DEMONOLOGY])) end
@@ -172,7 +171,7 @@ local function Enable(self)
 		wsb.Visibility:RegisterEvent("PLAYER_TALENT_UPDATE")
 		wsb.Visibility:SetScript("OnEvent", function(frame, event, unit) Visibility(self, event, unit) end)
 
-		for i = 1, 4 do
+		for i = 1, #wsb do
 			local Point = wsb[i]
 			if not Point:GetStatusBarTexture() then
 				Point:SetStatusBarTexture([=[Interface\TargetingFrame\UI-StatusBar]=])

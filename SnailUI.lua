@@ -6,6 +6,22 @@ version = '0.2.1'
 
 -- Functions
 
+function getConfiguration()
+    if Configuration[class] then
+        if spec then
+            if Configuration[class][spec] then
+                return Configuration[class][spec]
+            else
+                return Configuration[class]
+            end
+        else
+            return Configuration[class]
+        end
+    end
+
+    return Configuration
+end
+
 function trim(string1, string2)
     if string2 then
         if string2:len() > 0 then
@@ -101,6 +117,16 @@ end
 
 oUF:Factory(
     function(self)
+        warlockCheckForSacrifice()
+        spec = GetSpecialization()
+
+        if spec then
+            spec = select(2, GetSpecializationInfo(spec))
+            spec = spec:gsub('(.)', string.upper)
+        else
+            spec = nil
+        end
+
         category = CreateFrame('Frame', nil, UIParent)
         category.name = 'SnailUI'
 
@@ -135,6 +161,7 @@ oUF:Factory(
         SLASH_SnailUI2 = '/SUI'
 
         SetCVar('consolidateBuffs', '0')
+        SetCVar('useUiScale', '0')
 
         RaidBossEmoteFrame:Hide()
         UIErrorsFrame:Hide()
@@ -159,7 +186,7 @@ oUF:Factory(
 
         self:SetActiveStyle('SnailUI')
 
-        if Configuration.ActionBars then
+        if getConfiguration().ActionBars then
             frames =
             {
                 'AchievementMicroButton',
@@ -195,7 +222,7 @@ oUF:Factory(
 
             StanceBarFrame:SetPoint('TOPLEFT', UIParent, -500, 500)
 
-            if not Configuration.ActionBars.Pet then
+            if not getConfiguration().ActionBars.Pet then
                 PetActionBarFrame:Hide()
                 PetActionBarFrame:SetScript('OnShow',
                     function(self)
@@ -234,9 +261,9 @@ oUF:Factory(
                 _G[textures[i]]:SetAlpha(0)
             end
 
-            if Configuration.ActionBars.Pet then
-                if Configuration.ActionBars.Pet.buttons < NUM_PET_ACTION_SLOTS then
-                    for i = (Configuration.ActionBars.Pet.buttons + 1), NUM_PET_ACTION_SLOTS do
+            if getConfiguration().ActionBars.Pet then
+                if getConfiguration().ActionBars.Pet.buttons < NUM_PET_ACTION_SLOTS then
+                    for i = (getConfiguration().ActionBars.Pet.buttons + 1), NUM_PET_ACTION_SLOTS do
                         _G['PetActionButton' .. i]:Hide()
                         _G['PetActionButton' .. i]:SetScript('OnShow',
                             function(self)
@@ -250,67 +277,69 @@ oUF:Factory(
                 end
 
                 PetActionBarFrame:ClearAllPoints()
-                PetActionBarFrame:SetSize((Configuration.ActionBars.Pet.buttons * Configuration.ActionBars.Pet.width) + ((Configuration.ActionBars.Pet.buttons - 1) * 4), Configuration.ActionBars.Pet.height)
-                PetActionBarFrame:SetPoint(Configuration.ActionBars.Pet.anchor, Configuration.ActionBars.Pet.x, Configuration.ActionBars.Pet.y)
+                PetActionBarFrame:SetSize((getConfiguration().ActionBars.Pet.buttons * getConfiguration().ActionBars.Pet.width) + ((getConfiguration().ActionBars.Pet.buttons - 1) * 4), getConfiguration().ActionBars.Pet.height)
+                PetActionBarFrame:SetPoint(getConfiguration().ActionBars.Pet.anchor, getConfiguration().ActionBars.Pet.x, getConfiguration().ActionBars.Pet.y)
                 PetActionBarFrame.SetPoint = function(self)
                 end
 
-                for i = 1, Configuration.ActionBars.Pet.buttons do
+                for i = 1, getConfiguration().ActionBars.Pet.buttons do
                     _G['PetActionButton' .. i]:ClearAllPoints()
                     _G['PetActionButton' .. i]:SetNormalTexture(nil)
-                    _G['PetActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBars.Pet.width) + ((i - 1) * 4) + 3, 0)
-                    _G['PetActionButton' .. i]:SetSize(Configuration.ActionBars.Pet.width - 6, Configuration.ActionBars.Pet.height - 6)
+                    _G['PetActionButton' .. i]:SetPoint('LEFT', ((i - 1) * getConfiguration().ActionBars.Pet.width) + ((i - 1) * 4) + 3, 0)
+                    _G['PetActionButton' .. i]:SetSize(getConfiguration().ActionBars.Pet.width - 6, getConfiguration().ActionBars.Pet.height - 6)
                     _G['PetActionButton' .. i].SetNormalTexture = function(self)
                     end
 
                     _G['PetActionButton' .. i].backgroundBottom = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                    _G['PetActionButton' .. i].backgroundBottom:SetSize(Configuration.ActionBars.Pet.width - 2, 1)
+                    _G['PetActionButton' .. i].backgroundBottom:SetSize(getConfiguration().ActionBars.Pet.width - 2, 1)
                     _G['PetActionButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                     _G['PetActionButton' .. i].backgroundLeft = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
-                    _G['PetActionButton' .. i].backgroundLeft:SetSize(1, Configuration.ActionBars.Pet.height - 4)
+                    _G['PetActionButton' .. i].backgroundLeft:SetSize(1, getConfiguration().ActionBars.Pet.height - 4)
                     _G['PetActionButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                     _G['PetActionButton' .. i].backgroundRight = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
-                    _G['PetActionButton' .. i].backgroundRight:SetSize(1, Configuration.ActionBars.Pet.height - 4)
+                    _G['PetActionButton' .. i].backgroundRight:SetSize(1, getConfiguration().ActionBars.Pet.height - 4)
                     _G['PetActionButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                     _G['PetActionButton' .. i].backgroundTop = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
-                    _G['PetActionButton' .. i].backgroundTop:SetSize(Configuration.ActionBars.Pet.width - 2, 1)
+                    _G['PetActionButton' .. i].backgroundTop:SetSize(getConfiguration().ActionBars.Pet.width - 2, 1)
                     _G['PetActionButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                     
                     _G['PetActionButton' .. i].borderBottom = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
-                    _G['PetActionButton' .. i].borderBottom:SetSize(Configuration.ActionBars.Pet.width, 3)
+                    _G['PetActionButton' .. i].borderBottom:SetSize(getConfiguration().ActionBars.Pet.width, 3)
                     _G['PetActionButton' .. i].borderBottom:SetTexture(0, 0, 0)
 
                     _G['PetActionButton' .. i].borderLeft = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
-                    _G['PetActionButton' .. i].borderLeft:SetSize(3, Configuration.ActionBars.Pet.height - 2)
+                    _G['PetActionButton' .. i].borderLeft:SetSize(3, getConfiguration().ActionBars.Pet.height - 2)
                     _G['PetActionButton' .. i].borderLeft:SetTexture(0, 0, 0)
 
                     _G['PetActionButton' .. i].borderRight = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
-                    _G['PetActionButton' .. i].borderRight:SetSize(3, Configuration.ActionBars.Pet.height - 2)
+                    _G['PetActionButton' .. i].borderRight:SetSize(3, getConfiguration().ActionBars.Pet.height - 2)
                     _G['PetActionButton' .. i].borderRight:SetTexture(0, 0, 0)
 
                     _G['PetActionButton' .. i].borderTop = _G['PetActionButton' .. i]:CreateTexture(nil, 'LOW')
                     _G['PetActionButton' .. i].borderTop:SetPoint('TOP', 0, 3)
-                    _G['PetActionButton' .. i].borderTop:SetSize(Configuration.ActionBars.Pet.width, 3)
+                    _G['PetActionButton' .. i].borderTop:SetSize(getConfiguration().ActionBars.Pet.width, 3)
                     _G['PetActionButton' .. i].borderTop:SetTexture(0, 0, 0)
 
                     _G['PetActionButton' .. i .. 'AutoCastable']:SetAlpha(0)
-                    _G['PetActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Pet.TextureCoordinate.left, Configuration.ActionBars.Pet.TextureCoordinate.right, Configuration.ActionBars.Pet.TextureCoordinate.top, Configuration.ActionBars.Pet.TextureCoordinate.bottom)
+                    _G['PetActionButton' .. i .. 'Cooldown']:SetSize(getConfiguration().ActionBars.Pet.width - 6, getConfiguration().ActionBars.Pet.height - 6)
+                    _G['PetActionButton' .. i .. 'Cooldown']:SetPoint('CENTER')
+                    _G['PetActionButton' .. i .. 'Icon']:SetTexCoord(getConfiguration().ActionBars.Pet.TextureCoordinate.left, getConfiguration().ActionBars.Pet.TextureCoordinate.right, getConfiguration().ActionBars.Pet.TextureCoordinate.top, getConfiguration().ActionBars.Pet.TextureCoordinate.bottom)
                     _G['PetActionButton' .. i .. 'Shine']:SetAllPoints(_G['PetActionButton' .. i])
                 end
             end
 
-            if Configuration.ActionBars.Player.buttons < NUM_ACTIONBAR_BUTTONS then
-                for i = (Configuration.ActionBars.Player.buttons + 1), NUM_ACTIONBAR_BUTTONS do
+            if getConfiguration().ActionBars.Player.buttons < NUM_ACTIONBAR_BUTTONS then
+                for i = (getConfiguration().ActionBars.Player.buttons + 1), NUM_ACTIONBAR_BUTTONS do
                     _G['ActionButton' .. i]:Hide()
                     _G['ActionButton' .. i]:SetScript('OnShow',
                         function(self)
@@ -324,53 +353,53 @@ oUF:Factory(
             end
 
             MainMenuBar:ClearAllPoints()
-            MainMenuBar:SetSize((Configuration.ActionBars.Player.buttons * Configuration.ActionBars.Player.width) + ((Configuration.ActionBars.Player.buttons - 1) * 4), Configuration.ActionBars.Player.height)
-            MainMenuBar:SetPoint(Configuration.ActionBars.Player.anchor, Configuration.ActionBars.Player.x, Configuration.ActionBars.Player.y)
+            MainMenuBar:SetSize((getConfiguration().ActionBars.Player.buttons * getConfiguration().ActionBars.Player.width) + ((getConfiguration().ActionBars.Player.buttons - 1) * 4), getConfiguration().ActionBars.Player.height)
+            MainMenuBar:SetPoint(getConfiguration().ActionBars.Player.anchor, getConfiguration().ActionBars.Player.x, getConfiguration().ActionBars.Player.y)
 
-            for i = 1, Configuration.ActionBars.Player.buttons do
+            for i = 1, getConfiguration().ActionBars.Player.buttons do
                 _G['ActionButton' .. i]:ClearAllPoints()
                 _G['ActionButton' .. i]:SetNormalTexture(nil)
-                _G['ActionButton' .. i]:SetPoint('LEFT', ((i - 1) * Configuration.ActionBars.Player.width) + ((i - 1) * 4) + 3, 0)
-                _G['ActionButton' .. i]:SetSize(Configuration.ActionBars.Player.width - 6, Configuration.ActionBars.Player.height - 6)
+                _G['ActionButton' .. i]:SetPoint('LEFT', ((i - 1) * getConfiguration().ActionBars.Player.width) + ((i - 1) * 4) + 3, 0)
+                _G['ActionButton' .. i]:SetSize(getConfiguration().ActionBars.Player.width - 6, getConfiguration().ActionBars.Player.height - 6)
                 
                 _G['ActionButton' .. i].backgroundBottom = _G['ActionButton' .. i]:CreateTexture(nil, 'LOW')
                 _G['ActionButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                _G['ActionButton' .. i].backgroundBottom:SetSize(Configuration.ActionBars.Player.width - 2, 1)
+                _G['ActionButton' .. i].backgroundBottom:SetSize(getConfiguration().ActionBars.Player.width - 2, 1)
                 _G['ActionButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 _G['ActionButton' .. i].backgroundLeft = _G['ActionButton' .. i]:CreateTexture(nil, 'LOW')
                 _G['ActionButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
-                _G['ActionButton' .. i].backgroundLeft:SetSize(1, Configuration.ActionBars.Player.height - 4)
+                _G['ActionButton' .. i].backgroundLeft:SetSize(1, getConfiguration().ActionBars.Player.height - 4)
                 _G['ActionButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 _G['ActionButton' .. i].backgroundRight = _G['ActionButton' .. i]:CreateTexture(nil, 'LOW')
                 _G['ActionButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
-                _G['ActionButton' .. i].backgroundRight:SetSize(1, Configuration.ActionBars.Player.height - 4)
+                _G['ActionButton' .. i].backgroundRight:SetSize(1, getConfiguration().ActionBars.Player.height - 4)
                 _G['ActionButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 _G['ActionButton' .. i].backgroundTop = _G['ActionButton' .. i]:CreateTexture(nil, 'LOW')
                 _G['ActionButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
-                _G['ActionButton' .. i].backgroundTop:SetSize(Configuration.ActionBars.Player.width - 2, 1)
+                _G['ActionButton' .. i].backgroundTop:SetSize(getConfiguration().ActionBars.Player.width - 2, 1)
                 _G['ActionButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                 
                 _G['ActionButton' .. i].borderBottom = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                 _G['ActionButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
-                _G['ActionButton' .. i].borderBottom:SetSize(Configuration.ActionBars.Player.width, 3)
+                _G['ActionButton' .. i].borderBottom:SetSize(getConfiguration().ActionBars.Player.width, 3)
                 _G['ActionButton' .. i].borderBottom:SetTexture(0, 0, 0)
 
                 _G['ActionButton' .. i].borderLeft = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                 _G['ActionButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
-                _G['ActionButton' .. i].borderLeft:SetSize(3, Configuration.ActionBars.Player.height - 2)
+                _G['ActionButton' .. i].borderLeft:SetSize(3, getConfiguration().ActionBars.Player.height - 2)
                 _G['ActionButton' .. i].borderLeft:SetTexture(0, 0, 0)
 
                 _G['ActionButton' .. i].borderRight = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                 _G['ActionButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
-                _G['ActionButton' .. i].borderRight:SetSize(3, Configuration.ActionBars.Player.height - 2)
+                _G['ActionButton' .. i].borderRight:SetSize(3, getConfiguration().ActionBars.Player.height - 2)
                 _G['ActionButton' .. i].borderRight:SetTexture(0, 0, 0)
 
                 _G['ActionButton' .. i].borderTop = _G['ActionButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                 _G['ActionButton' .. i].borderTop:SetPoint('TOP', 0, 3)
-                _G['ActionButton' .. i].borderTop:SetSize(Configuration.ActionBars.Player.width, 3)
+                _G['ActionButton' .. i].borderTop:SetSize(getConfiguration().ActionBars.Player.width, 3)
                 _G['ActionButton' .. i].borderTop:SetTexture(0, 0, 0)
 
                 _G['ActionButton' .. i .. 'Count']:SetAlpha(0)
@@ -378,7 +407,7 @@ oUF:Factory(
                 _G['ActionButton' .. i .. 'Border'].SetVertexColor = function(self)
                 end
 
-                _G['ActionButton' .. i .. 'Icon']:SetTexCoord(Configuration.ActionBars.Player.TextureCoordinate.left, Configuration.ActionBars.Player.TextureCoordinate.right, Configuration.ActionBars.Player.TextureCoordinate.top, Configuration.ActionBars.Player.TextureCoordinate.bottom)
+                _G['ActionButton' .. i .. 'Icon']:SetTexCoord(getConfiguration().ActionBars.Player.TextureCoordinate.left, getConfiguration().ActionBars.Player.TextureCoordinate.right, getConfiguration().ActionBars.Player.TextureCoordinate.top, getConfiguration().ActionBars.Player.TextureCoordinate.bottom)
                 _G['ActionButton' .. i .. 'FlyoutBorder']:SetAlpha(0)
                 _G['ActionButton' .. i .. 'FlyoutBorderShadow']:SetAlpha(0)
                 _G['ActionButton' .. i .. 'HotKey']:SetAlpha(0)
@@ -386,7 +415,7 @@ oUF:Factory(
             end
         end
 
-        if Configuration.Buffs then
+        if getConfiguration().Buffs then
             AuraButton_UpdateDuration = function(self, timeLeft)         
                 if (SHOW_BUFF_DURATIONS == '1') and timeLeft then
                     self.duration:SetFormattedText(SecondsToTimeAbbrev(timeLeft));
@@ -412,7 +441,7 @@ oUF:Factory(
                 OriginalBuffFrame_Update(self)
 
                 BuffFrame:ClearAllPoints()
-                BuffFrame:SetPoint(Configuration.Buffs.anchor, Configuration.Buffs.x, Configuration.Buffs.y)
+                BuffFrame:SetPoint(getConfiguration().Buffs.anchor, getConfiguration().Buffs.x, getConfiguration().Buffs.y)
 
                 greaterBuff = BUFF_ACTUAL_DISPLAY
 
@@ -425,55 +454,55 @@ oUF:Factory(
                 end
 
                 if DEBUFF_ACTUAL_DISPLAY > 0 then
-                    BuffFrame:SetSize((Configuration.Buffs.width * 2) + 4, greaterBuff * Configuration.Buffs.height)
+                    BuffFrame:SetSize((getConfiguration().Buffs.width * 2) + 4, greaterBuff * getConfiguration().Buffs.height)
                 else
-                    BuffFrame:SetSize(Configuration.Buffs.width, greaterBuff * Configuration.Buffs.height)
+                    BuffFrame:SetSize(getConfiguration().Buffs.width, greaterBuff * getConfiguration().Buffs.height)
                 end
 
                 for i = 1, BUFF_ACTUAL_DISPLAY do
                     _G['BuffButton' .. i]:ClearAllPoints()
-                    _G['BuffButton' .. i]:SetPoint('TOPRIGHT', -3, -(((i - 1) * Configuration.Buffs.height) + ((i - 1) * 4) + 3))
-                    _G['BuffButton' .. i]:SetSize(Configuration.Buffs.width - 6, Configuration.Buffs.height - 6)
+                    _G['BuffButton' .. i]:SetPoint('TOPRIGHT', -3, -(((i - 1) * getConfiguration().Buffs.height) + ((i - 1) * 4) + 3))
+                    _G['BuffButton' .. i]:SetSize(getConfiguration().Buffs.width - 6, getConfiguration().Buffs.height - 6)
 
                     if not  _G['BuffButton' .. i].backgroundBottom then
                         _G['BuffButton' .. i].backgroundBottom = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['BuffButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                        _G['BuffButton' .. i].backgroundBottom:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['BuffButton' .. i].backgroundBottom:SetSize(getConfiguration().Buffs.width - 2, 1)
                         _G['BuffButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['BuffButton' .. i].backgroundLeft = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['BuffButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
-                        _G['BuffButton' .. i].backgroundLeft:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['BuffButton' .. i].backgroundLeft:SetSize(1, getConfiguration().Buffs.height - 4)
                         _G['BuffButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['BuffButton' .. i].backgroundRight = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['BuffButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
-                        _G['BuffButton' .. i].backgroundRight:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['BuffButton' .. i].backgroundRight:SetSize(1, getConfiguration().Buffs.height - 4)
                         _G['BuffButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['BuffButton' .. i].backgroundTop = _G['BuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['BuffButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
-                        _G['BuffButton' .. i].backgroundTop:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['BuffButton' .. i].backgroundTop:SetSize(getConfiguration().Buffs.width - 2, 1)
                         _G['BuffButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                         
                         _G['BuffButton' .. i].borderBottom = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['BuffButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
-                        _G['BuffButton' .. i].borderBottom:SetSize(Configuration.Buffs.width, 3)
+                        _G['BuffButton' .. i].borderBottom:SetSize(getConfiguration().Buffs.width, 3)
                         _G['BuffButton' .. i].borderBottom:SetTexture(0, 0, 0)
 
                         _G['BuffButton' .. i].borderLeft = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['BuffButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
-                        _G['BuffButton' .. i].borderLeft:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['BuffButton' .. i].borderLeft:SetSize(3, getConfiguration().Buffs.height - 2)
                         _G['BuffButton' .. i].borderLeft:SetTexture(0, 0, 0)
 
                         _G['BuffButton' .. i].borderRight = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['BuffButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
-                        _G['BuffButton' .. i].borderRight:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['BuffButton' .. i].borderRight:SetSize(3, getConfiguration().Buffs.height - 2)
                         _G['BuffButton' .. i].borderRight:SetTexture(0, 0, 0)
 
                         _G['BuffButton' .. i].borderTop = _G['BuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['BuffButton' .. i].borderTop:SetPoint('TOP', 0, 3)
-                        _G['BuffButton' .. i].borderTop:SetSize(Configuration.Buffs.width, 3)
+                        _G['BuffButton' .. i].borderTop:SetSize(getConfiguration().Buffs.width, 3)
                         _G['BuffButton' .. i].borderTop:SetTexture(0, 0, 0)
                     end
 
@@ -491,48 +520,48 @@ oUF:Factory(
 
                  for i = 1, DEBUFF_ACTUAL_DISPLAY do
                     _G['DebuffButton' .. i]:ClearAllPoints()
-                    _G['DebuffButton' .. i]:SetPoint('TOPLEFT', 3, -(((i - 1) * Configuration.Buffs.height) + ((i - 1) * 4) + 3))
-                    _G['DebuffButton' .. i]:SetSize(Configuration.Buffs.width - 6, Configuration.Buffs.height - 6)
+                    _G['DebuffButton' .. i]:SetPoint('TOPLEFT', 3, -(((i - 1) * getConfiguration().Buffs.height) + ((i - 1) * 4) + 3))
+                    _G['DebuffButton' .. i]:SetSize(getConfiguration().Buffs.width - 6, getConfiguration().Buffs.height - 6)
 
                     if not  _G['DebuffButton' .. i].backgroundBottom then
                         _G['DebuffButton' .. i].backgroundBottom = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['DebuffButton' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                        _G['DebuffButton' .. i].backgroundBottom:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['DebuffButton' .. i].backgroundBottom:SetSize(getConfiguration().Buffs.width - 2, 1)
                         _G['DebuffButton' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['DebuffButton' .. i].backgroundLeft = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['DebuffButton' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
-                        _G['DebuffButton' .. i].backgroundLeft:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['DebuffButton' .. i].backgroundLeft:SetSize(1, getConfiguration().Buffs.height - 4)
                         _G['DebuffButton' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['DebuffButton' .. i].backgroundRight = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['DebuffButton' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
-                        _G['DebuffButton' .. i].backgroundRight:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['DebuffButton' .. i].backgroundRight:SetSize(1, getConfiguration().Buffs.height - 4)
                         _G['DebuffButton' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['DebuffButton' .. i].backgroundTop = _G['DebuffButton' .. i]:CreateTexture(nil, 'LOW')
                         _G['DebuffButton' .. i].backgroundTop:SetPoint('TOP', 0, 2)
-                        _G['DebuffButton' .. i].backgroundTop:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['DebuffButton' .. i].backgroundTop:SetSize(getConfiguration().Buffs.width - 2, 1)
                         _G['DebuffButton' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                         
                         _G['DebuffButton' .. i].borderBottom = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['DebuffButton' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
-                        _G['DebuffButton' .. i].borderBottom:SetSize(Configuration.Buffs.width, 3)
+                        _G['DebuffButton' .. i].borderBottom:SetSize(getConfiguration().Buffs.width, 3)
                         _G['DebuffButton' .. i].borderBottom:SetTexture(0, 0, 0)
 
                         _G['DebuffButton' .. i].borderLeft = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['DebuffButton' .. i].borderLeft:SetPoint('LEFT', -3, 0)
-                        _G['DebuffButton' .. i].borderLeft:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['DebuffButton' .. i].borderLeft:SetSize(3, getConfiguration().Buffs.height - 2)
                         _G['DebuffButton' .. i].borderLeft:SetTexture(0, 0, 0)
 
                         _G['DebuffButton' .. i].borderRight = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['DebuffButton' .. i].borderRight:SetPoint('RIGHT', 3, 0)
-                        _G['DebuffButton' .. i].borderRight:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['DebuffButton' .. i].borderRight:SetSize(3, getConfiguration().Buffs.height - 2)
                         _G['DebuffButton' .. i].borderRight:SetTexture(0, 0, 0)
 
                         _G['DebuffButton' .. i].borderTop = _G['DebuffButton' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['DebuffButton' .. i].borderTop:SetPoint('TOP', 0, 3)
-                        _G['DebuffButton' .. i].borderTop:SetSize(Configuration.Buffs.width, 3)
+                        _G['DebuffButton' .. i].borderTop:SetSize(getConfiguration().Buffs.width, 3)
                         _G['DebuffButton' .. i].borderTop:SetTexture(0, 0, 0)
                     end
 
@@ -553,48 +582,48 @@ oUF:Factory(
                 for i = 1, BuffFrame.numEnchants do
                     _G['TempEnchant' .. i]:ClearAllPoints()
                     _G['TempEnchant' .. i]:SetParent(BuffFrame)
-                    _G['TempEnchant' .. i]:SetPoint('TOPLEFT', -33, -(((i - 1) * Configuration.Buffs.height) + ((i - 1) * 4) + 3))
-                    _G['TempEnchant' .. i]:SetSize(Configuration.Buffs.width - 6, Configuration.Buffs.height - 6)
+                    _G['TempEnchant' .. i]:SetPoint('TOPLEFT', -33, -(((i - 1) * getConfiguration().Buffs.height) + ((i - 1) * 4) + 3))
+                    _G['TempEnchant' .. i]:SetSize(getConfiguration().Buffs.width - 6, getConfiguration().Buffs.height - 6)
 
                     if not  _G['TempEnchant' .. i].backgroundBottom then
                         _G['TempEnchant' .. i].backgroundBottom = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
                         _G['TempEnchant' .. i].backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                        _G['TempEnchant' .. i].backgroundBottom:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['TempEnchant' .. i].backgroundBottom:SetSize(getConfiguration().Buffs.width - 2, 1)
                         _G['TempEnchant' .. i].backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['TempEnchant' .. i].backgroundLeft = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
                         _G['TempEnchant' .. i].backgroundLeft:SetPoint('LEFT', -2, 0)
-                        _G['TempEnchant' .. i].backgroundLeft:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['TempEnchant' .. i].backgroundLeft:SetSize(1, getConfiguration().Buffs.height - 4)
                         _G['TempEnchant' .. i].backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['TempEnchant' .. i].backgroundRight = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
                         _G['TempEnchant' .. i].backgroundRight:SetPoint('RIGHT', 2, 0)
-                        _G['TempEnchant' .. i].backgroundRight:SetSize(1, Configuration.Buffs.height - 4)
+                        _G['TempEnchant' .. i].backgroundRight:SetSize(1, getConfiguration().Buffs.height - 4)
                         _G['TempEnchant' .. i].backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                         _G['TempEnchant' .. i].backgroundTop = _G['TempEnchant' .. i]:CreateTexture(nil, 'LOW')
                         _G['TempEnchant' .. i].backgroundTop:SetPoint('TOP', 0, 2)
-                        _G['TempEnchant' .. i].backgroundTop:SetSize(Configuration.Buffs.width - 2, 1)
+                        _G['TempEnchant' .. i].backgroundTop:SetSize(getConfiguration().Buffs.width - 2, 1)
                         _G['TempEnchant' .. i].backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                         
                         _G['TempEnchant' .. i].borderBottom = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['TempEnchant' .. i].borderBottom:SetPoint('BOTTOM', 0, -3)
-                        _G['TempEnchant' .. i].borderBottom:SetSize(Configuration.Buffs.width, 3)
+                        _G['TempEnchant' .. i].borderBottom:SetSize(getConfiguration().Buffs.width, 3)
                         _G['TempEnchant' .. i].borderBottom:SetTexture(0, 0, 0)
 
                         _G['TempEnchant' .. i].borderLeft = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['TempEnchant' .. i].borderLeft:SetPoint('LEFT', -3, 0)
-                        _G['TempEnchant' .. i].borderLeft:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['TempEnchant' .. i].borderLeft:SetSize(3, getConfiguration().Buffs.height - 2)
                         _G['TempEnchant' .. i].borderLeft:SetTexture(0, 0, 0)
 
                         _G['TempEnchant' .. i].borderRight = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['TempEnchant' .. i].borderRight:SetPoint('RIGHT', 3, 0)
-                        _G['TempEnchant' .. i].borderRight:SetSize(3, Configuration.Buffs.height - 2)
+                        _G['TempEnchant' .. i].borderRight:SetSize(3, getConfiguration().Buffs.height - 2)
                         _G['TempEnchant' .. i].borderRight:SetTexture(0, 0, 0)
 
                         _G['TempEnchant' .. i].borderTop = _G['TempEnchant' .. i]:CreateTexture(nil, 'BACKGROUND')
                         _G['TempEnchant' .. i].borderTop:SetPoint('TOP', 0, 3)
-                        _G['TempEnchant' .. i].borderTop:SetSize(Configuration.Buffs.width, 3)
+                        _G['TempEnchant' .. i].borderTop:SetSize(getConfiguration().Buffs.width, 3)
                         _G['TempEnchant' .. i].borderTop:SetTexture(0, 0, 0)
                     end
 
@@ -614,7 +643,7 @@ oUF:Factory(
             end
         end
 
-        if Configuration.Chat then
+        if getConfiguration().Chat then
         	for i = 1, NUM_CHAT_WINDOWS do
                 _G['ChatFrame' .. i .. 'ButtonFrame']:Hide()
                 _G['ChatFrame' .. i .. 'ButtonFrame']:SetScript('OnShow',
@@ -674,88 +703,88 @@ oUF:Factory(
             	self:Hide()
         	end
 
-            OriginalChatEdit_SetLastActiveWindow = ChatEdit_SetLastActiveWindow
-            ChatEdit_SetLastActiveWindow = function(self)
-                OriginalChatEdit_SetLastActiveWindow(self)
-                self:Hide()
-            end
-
         	ChatFrame1:ClearAllPoints()
         	ChatFrame1:SetClampedToScreen(false)
         	ChatFrame1:SetFont([[Fonts\FRIZQT__.TTF]], 10)
-        	ChatFrame1:SetPoint(Configuration.Chat.anchor, Configuration.Chat.x, Configuration.Chat.y)
-        	ChatFrame1:SetSize(Configuration.Chat.width - 10, Configuration.Chat.height - 10)
+        	ChatFrame1:SetPoint(getConfiguration().Chat.anchor, getConfiguration().Chat.x, getConfiguration().Chat.y)
+        	ChatFrame1:SetSize(getConfiguration().Chat.width - 10, getConfiguration().Chat.height - 10)
         	ChatFrame1:SetUserPlaced(true)
 
         	ChatFrame1.backgroundBottom = ChatFrame1:CreateTexture(nil, 'LOW')
             ChatFrame1.backgroundBottom:SetPoint('BOTTOM', 0, -4)
-            ChatFrame1.backgroundBottom:SetSize(Configuration.Chat.width - 2, 1)
+            ChatFrame1.backgroundBottom:SetSize(getConfiguration().Chat.width - 2, 1)
             ChatFrame1.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             ChatFrame1.backgroundLeft = ChatFrame1:CreateTexture(nil, 'LOW')
             ChatFrame1.backgroundLeft:SetPoint('LEFT', -4, 0)
-            ChatFrame1.backgroundLeft:SetSize(1, Configuration.Chat.height - 4)
+            ChatFrame1.backgroundLeft:SetSize(1, getConfiguration().Chat.height - 4)
             ChatFrame1.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             ChatFrame1.backgroundRight = ChatFrame1:CreateTexture(nil, 'LOW')
             ChatFrame1.backgroundRight:SetPoint('RIGHT', 4, 0)
-            ChatFrame1.backgroundRight:SetSize(1, Configuration.Chat.height - 4)
+            ChatFrame1.backgroundRight:SetSize(1, getConfiguration().Chat.height - 4)
             ChatFrame1.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             ChatFrame1.backgroundTop = ChatFrame1:CreateTexture(nil, 'LOW')
             ChatFrame1.backgroundTop:SetPoint('TOP', 0, 4)
-            ChatFrame1.backgroundTop:SetSize(Configuration.Chat.width - 2, 1)
+            ChatFrame1.backgroundTop:SetSize(getConfiguration().Chat.width - 2, 1)
             ChatFrame1.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                 
             ChatFrame1.borderBottom = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
             ChatFrame1.borderBottom:SetPoint('BOTTOM', 0, -5)
-            ChatFrame1.borderBottom:SetSize(Configuration.Chat.width, 3)
+            ChatFrame1.borderBottom:SetSize(getConfiguration().Chat.width, 3)
             ChatFrame1.borderBottom:SetTexture(0, 0, 0)
 
             ChatFrame1.borderLeft = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
             ChatFrame1.borderLeft:SetPoint('LEFT', -5, 0)
-            ChatFrame1.borderLeft:SetSize(3, Configuration.Chat.height - 2)
+            ChatFrame1.borderLeft:SetSize(3, getConfiguration().Chat.height - 2)
             ChatFrame1.borderLeft:SetTexture(0, 0, 0)
 
             ChatFrame1.borderRight = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
             ChatFrame1.borderRight:SetPoint('RIGHT', 5, 0)
-            ChatFrame1.borderRight:SetSize(3, Configuration.Chat.height - 2)
+            ChatFrame1.borderRight:SetSize(3, getConfiguration().Chat.height - 2)
              ChatFrame1.borderRight:SetTexture(0, 0, 0)
 
             ChatFrame1.borderTop = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
             ChatFrame1.borderTop:SetPoint('TOP', 0, 5)
-            ChatFrame1.borderTop:SetSize(Configuration.Chat.width, 3)
+            ChatFrame1.borderTop:SetSize(getConfiguration().Chat.width, 3)
             ChatFrame1.borderTop:SetTexture(0, 0, 0)
 
             ChatFrame1EditBox:SetPoint('TOPLEFT', ChatFrame1, 'TOPLEFT', -5, 6)
         end
 
-        if Configuration.ExtraButton then
+        if getConfiguration().ExtraButton then
             extraButton = CreateFrame('Button', nil, UIParent)
             extraButton:RegisterForClicks('AnyUp')
-            extraButton:SetPoint(Configuration.ExtraButton.anchor, Configuration.ExtraButton.x, Configuration.ExtraButton.y)
-            extraButton:SetSize(Configuration.ExtraButton.width - 4, Configuration.ExtraButton.height - 4)
+            extraButton:SetPoint(getConfiguration().ExtraButton.anchor, getConfiguration().ExtraButton.x, getConfiguration().ExtraButton.y)
+            extraButton:SetSize(getConfiguration().ExtraButton.width - 4, getConfiguration().ExtraButton.height - 4)
             extraButton:SetScript('OnClick',
                 function(self)
                     if BuffFrame:IsShown() then
                         BuffFrame:Hide()
-                        raidFrame:Hide()
                         WatchFrame:Hide()
                         WorldStateAlwaysUpFrame:Hide()
+
+                        if not getConfiguration().Raid.shown then
+                            raidFrame:Hide()
+                        end
 
                         self.Bar.text:SetText('Show Misc Frames')
                     else
                         BuffFrame:Show()
-                        raidFrame:Show()
                         WatchFrame:Show()
                         WorldStateAlwaysUpFrame:Show()
+
+                        if not getConfiguration().Raid.shown then
+                            raidFrame:Show()
+                        end
 
                         self.Bar.text:SetText('Hide Misc Frames')
                     end
                 end
             )
 
-            if Configuration.ExtraButton.hoverToShow then
+            if getConfiguration().ExtraButton.hoverToShow then
                 extraButton:SetAlpha(0)
                 extraButton:SetScript('OnEnter',
                     function(self)
@@ -772,23 +801,23 @@ oUF:Factory(
 
             extraButton.background = extraButton:CreateTexture(nil, 'LOW')
             extraButton.background:SetPoint('TOPLEFT', -1, 1)
-            extraButton.background:SetSize(Configuration.ExtraButton.width - 2, Configuration.ExtraButton.height - 2)
+            extraButton.background:SetSize(getConfiguration().ExtraButton.width - 2, getConfiguration().ExtraButton.height - 2)
             extraButton.background:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             extraButton.border = extraButton:CreateTexture(nil, 'BACKGROUND')
             extraButton.border:SetPoint('TOPLEFT', -2, 2)
-            extraButton.border:SetSize(Configuration.ExtraButton.width, Configuration.ExtraButton.height)
+            extraButton.border:SetSize(getConfiguration().ExtraButton.width, getConfiguration().ExtraButton.height)
             extraButton.border:SetTexture(0, 0, 0)
 
             extraButton.Bar = CreateFrame('StatusBar', nil, extraButton)
             extraButton.Bar:SetPoint('CENTER')
-            extraButton.Bar:SetSize(Configuration.ExtraButton.width - 6, Configuration.ExtraButton.height - 6)
+            extraButton.Bar:SetSize(getConfiguration().ExtraButton.width - 6, getConfiguration().ExtraButton.height - 6)
             extraButton.Bar:SetStatusBarTexture(Configuration.texture)
             extraButton.Bar:SetStatusBarColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             extraButton.Bar.border = extraButton.Bar:CreateTexture(nil, 'BACKGROUND')
             extraButton.Bar.border:SetPoint('TOPLEFT', -1, 1)
-            extraButton.Bar.border:SetSize(Configuration.ExtraButton.width - 4, Configuration.ExtraButton.height - 4)
+            extraButton.Bar.border:SetSize(getConfiguration().ExtraButton.width - 4, getConfiguration().ExtraButton.height - 4)
             extraButton.Bar.border:SetTexture(0, 0, 0)
 
             extraButton.Bar.text = extraButton.Bar:CreateFontString(nil, 'OVERLAY')
@@ -800,23 +829,23 @@ oUF:Factory(
 
         end
 
-        if Configuration.Focus then
+        if getConfiguration().Focus then
             focusFrame = self:Spawn('Focus')
-            focusFrame:SetPoint(Configuration.Focus.anchor, Configuration.Focus.x, Configuration.Focus.y)
+            focusFrame:SetPoint(getConfiguration().Focus.anchor, getConfiguration().Focus.x, getConfiguration().Focus.y)
         end
 
-        if Configuration.FocusTarget then
+        if getConfiguration().FocusTarget then
             focusTargetFrame = self:Spawn('FocusTarget')
-            focusTargetFrame:SetPoint(Configuration.FocusTarget.anchor, Configuration.FocusTarget.x, Configuration.FocusTarget.y)
+            focusTargetFrame:SetPoint(getConfiguration().FocusTarget.anchor, getConfiguration().FocusTarget.x, getConfiguration().FocusTarget.y)
         end
 
-        if Configuration.Minimap then
+        if getConfiguration().Minimap then
             MinimapCluster:Hide()
 
             minimapFrame = CreateFrame('Minimap', nil, UIParent)
             minimapFrame:SetMaskTexture([[Interface\Buttons\WHITE8X8]])
-            minimapFrame:SetPoint(Configuration.Minimap.anchor, Configuration.Minimap.x, Configuration.Minimap.y)
-            minimapFrame:SetSize(Configuration.Minimap.width - 6, Configuration.Minimap.height - 6)
+            minimapFrame:SetPoint(getConfiguration().Minimap.anchor, getConfiguration().Minimap.x, getConfiguration().Minimap.y)
+            minimapFrame:SetSize(getConfiguration().Minimap.width - 6, getConfiguration().Minimap.height - 6)
             minimapFrame:SetScript('OnMouseWheel',
                 function(self, zoom)
                     if zoom > 0 then
@@ -829,53 +858,54 @@ oUF:Factory(
 
             minimapFrame.backgroundBottom = minimapFrame:CreateTexture(nil, 'LOW')
             minimapFrame.backgroundBottom:SetPoint('BOTTOM', 0, -2)
-            minimapFrame.backgroundBottom:SetSize(Configuration.Minimap.width - 2, 1)
+            minimapFrame.backgroundBottom:SetSize(getConfiguration().Minimap.width - 2, 1)
             minimapFrame.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             minimapFrame.backgroundLeft = minimapFrame:CreateTexture(nil, 'LOW')
             minimapFrame.backgroundLeft:SetPoint('LEFT', -2, 0)
-            minimapFrame.backgroundLeft:SetSize(1, Configuration.Minimap.height - 4)
+            minimapFrame.backgroundLeft:SetSize(1, getConfiguration().Minimap.height - 4)
             minimapFrame.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             minimapFrame.backgroundRight = minimapFrame:CreateTexture(nil, 'LOW')
             minimapFrame.backgroundRight:SetPoint('RIGHT', 2, 0)
-            minimapFrame.backgroundRight:SetSize(1, Configuration.Minimap.height - 4)
+            minimapFrame.backgroundRight:SetSize(1, getConfiguration().Minimap.height - 4)
             minimapFrame.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
             minimapFrame.backgroundTop = minimapFrame:CreateTexture(nil, 'LOW')
             minimapFrame.backgroundTop:SetPoint('TOP', 0, 2)
-            minimapFrame.backgroundTop:SetSize(Configuration.Minimap.width - 2, 1)
+            minimapFrame.backgroundTop:SetSize(getConfiguration().Minimap.width - 2, 1)
             minimapFrame.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                 
             minimapFrame.borderBottom = minimapFrame:CreateTexture(nil, 'BACKGROUND')
             minimapFrame.borderBottom:SetPoint('BOTTOM', 0, -3)
-            minimapFrame.borderBottom:SetSize(Configuration.Minimap.width, 3)
+            minimapFrame.borderBottom:SetSize(getConfiguration().Minimap.width, 3)
             minimapFrame.borderBottom:SetTexture(0, 0, 0)
 
             minimapFrame.borderLeft = minimapFrame:CreateTexture(nil, 'BACKGROUND')
             minimapFrame.borderLeft:SetPoint('LEFT', -3, 0)
-            minimapFrame.borderLeft:SetSize(3, Configuration.Minimap.height - 2)
+            minimapFrame.borderLeft:SetSize(3, getConfiguration().Minimap.height - 2)
             minimapFrame.borderLeft:SetTexture(0, 0, 0)
 
             minimapFrame.borderRight = minimapFrame:CreateTexture(nil, 'BACKGROUND')
             minimapFrame.borderRight:SetPoint('RIGHT', 3, 0)
-            minimapFrame.borderRight:SetSize(3, Configuration.Minimap.height - 2)
+            minimapFrame.borderRight:SetSize(3, getConfiguration().Minimap.height - 2)
             minimapFrame.borderRight:SetTexture(0, 0, 0)
 
             minimapFrame.borderTop = minimapFrame:CreateTexture(nil, 'BACKGROUND')
             minimapFrame.borderTop:SetPoint('TOP', 0, 3)
-            minimapFrame.borderTop:SetSize(Configuration.Minimap.width, 3)
+            minimapFrame.borderTop:SetSize(getConfiguration().Minimap.width, 3)
             minimapFrame.borderTop:SetTexture(0, 0, 0)
 
-            if Configuration.Minimap.Calender then
+            if getConfiguration().Minimap.Calender then
                 GameTimeFrame:ClearAllPoints()
                 GameTimeFrame:SetParent(minimapFrame)
-                GameTimeFrame:SetPoint(Configuration.Minimap.Calender.anchor, Configuration.Minimap.Calender.x, Configuration.Minimap.Calender.y)
+                GameTimeFrame:SetPoint(getConfiguration().Minimap.Calender.anchor, getConfiguration().Minimap.Calender.x, getConfiguration().Minimap.Calender.y)
                 GameTimeFrame:SetSize(32, 32)
 
                 GameTimeFrame.text = GameTimeFrame:CreateFontString(nil, 'OVERLAY')
-                GameTimeFrame.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
-                GameTimeFrame.text:SetPoint('CENTER', 1, -1)
+                GameTimeFrame.text:SetFont([[Fonts\FRIZQT__.TTF]], Configuration.Font.size)
+                GameTimeFrame.text:SetPoint('CENTER', 0, -2)
+                GameTimeFrame.text:SetTextColor(0, 0, 0)
 
                 GameTimeFrame_SetDate = function(self)
                     _, _, day = CalendarGetDate()
@@ -885,11 +915,11 @@ oUF:Factory(
                 GameTimeFrame:SetText(nil)
             end
 
-            if Configuration.Minimap.Clock then
+            if getConfiguration().Minimap.Clock then
                 TimeManagerClockButton:ClearAllPoints()
                 TimeManagerClockButton:GetRegions():Hide()
                 TimeManagerClockButton:SetParent(minimapFrame)
-                TimeManagerClockButton:SetPoint(Configuration.Minimap.Clock.anchor, Configuration.Minimap.Clock.x, Configuration.Minimap.Clock.y)
+                TimeManagerClockButton:SetPoint(getConfiguration().Minimap.Clock.anchor, getConfiguration().Minimap.Clock.x, getConfiguration().Minimap.Clock.y)
                 TimeManagerClockButton:SetSize(TimeManagerClockTicker:GetWidth(), TimeManagerClockTicker:GetHeight())
 
                 TimeManagerClockTicker:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
@@ -897,69 +927,74 @@ oUF:Factory(
                 TimeManagerClockTicker:SetShadowOffset(0, 0)
             end
 
-            if Configuration.Minimap.MailButton then
+            if getConfiguration().Minimap.MailButton then
                 MiniMapMailBorder:Hide()
                 MiniMapMailFrame:ClearAllPoints()
                 MiniMapMailFrame:SetParent(minimapFrame)
-                MiniMapMailFrame:SetPoint(Configuration.Minimap.MailButton.anchor, Configuration.Minimap.MailButton.x, Configuration.Minimap.MailButton.y)
+                MiniMapMailFrame:SetPoint(getConfiguration().Minimap.MailButton.anchor, getConfiguration().Minimap.MailButton.x, getConfiguration().Minimap.MailButton.y)
                 MiniMapMailIcon:SetTexture([[Interface\Minimap\Tracking\Mailbox]])
             end
 
-            if Configuration.Minimap.TrackingButton then
+            if getConfiguration().Minimap.TrackingButton then
                 MiniMapTracking:ClearAllPoints()
                 MiniMapTracking:SetParent(minimapFrame)
-                MiniMapTracking:SetPoint(Configuration.Minimap.TrackingButton.anchor, Configuration.Minimap.TrackingButton.x, Configuration.Minimap.TrackingButton.y)
+                MiniMapTracking:SetPoint(getConfiguration().Minimap.TrackingButton.anchor, getConfiguration().Minimap.TrackingButton.x, getConfiguration().Minimap.TrackingButton.y)
                 MiniMapTrackingBackground:Hide()
                 MiniMapTrackingButtonBorder:Hide()
                 MiniMapTrackingIconOverlay:SetTexture(nil)
             end
 
-            if Configuration.Minimap.QueueStatusButton then
+            if getConfiguration().Minimap.QueueStatusButton then
                 QueueStatusMinimapButton:ClearAllPoints()
                 QueueStatusMinimapButton:SetParent(minimapFrame)
-                QueueStatusMinimapButton:SetPoint(Configuration.Minimap.QueueStatusButton.anchor, Configuration.Minimap.QueueStatusButton.x, Configuration.Minimap.QueueStatusButton.y)
+                QueueStatusMinimapButton:SetPoint(getConfiguration().Minimap.QueueStatusButton.anchor, getConfiguration().Minimap.QueueStatusButton.x, getConfiguration().Minimap.QueueStatusButton.y)
                 QueueStatusMinimapButtonBorder:Hide()
             end
         end
 
-        if Configuration.Pet then
+        if getConfiguration().Pet then
             petFrame = self:Spawn('Pet')
-            petFrame:SetPoint(Configuration.Pet.anchor, Configuration.Pet.x, Configuration.Pet.y)
+            petFrame:SetPoint(getConfiguration().Pet.anchor, getConfiguration().Pet.x, getConfiguration().Pet.y)
         end
 
-        if Configuration.Player then
+        if getConfiguration().Player then
             playerFrame = self:Spawn('Player')
-            playerFrame:SetPoint(Configuration.Player.anchor, Configuration.Player.x, Configuration.Player.y)
+            playerFrame:SetPoint(getConfiguration().Player.anchor, getConfiguration().Player.x, getConfiguration().Player.y)
         end
 
-        if Configuration.Raid then
+        if getConfiguration().Raid then
             raidFrame = self:SpawnHeader(nil, nil, nil,
-                'columnAnchorPoint', Configuration.Raid.columnAnchor,
-                'columnSpacing', Configuration.Raid.columnSpacing,
-                'groupBy', Configuration.Raid.groupBy,
-                'groupingOrder', Configuration.Raid.groupOrder,
-                'maxColumns', Configuration.Raid.columns,
-                'showParty', Configuration.Raid.showParty,
-                'showPlayer', Configuration.Raid.showPlayer,
-                'showRaid', Configuration.Raid.showRaid,
-                'showSolo', Configuration.Raid.showSolo,
-                'unitsPerColumn', Configuration.Raid.rows,
-                'xOffset', Configuration.Raid.columnX,
-                'yOffset', Configuration.Raid.columnY
+                'columnAnchorPoint', getConfiguration().Raid.columnAnchor,
+                'columnSpacing', getConfiguration().Raid.columnSpacing,
+                'groupBy', getConfiguration().Raid.groupBy,
+                'groupingOrder', getConfiguration().Raid.groupOrder,
+                'maxColumns', getConfiguration().Raid.columns,
+                'showParty', getConfiguration().Raid.showParty,
+                'showPlayer', getConfiguration().Raid.showPlayer,
+                'showRaid', getConfiguration().Raid.showRaid,
+                'showSolo', getConfiguration().Raid.showSolo,
+                'unitsPerColumn', getConfiguration().Raid.rows,
+                'xOffset', getConfiguration().Raid.columnX,
+                'yOffset', getConfiguration().Raid.columnY
             )
 
-            raidFrame:Hide()
-            raidFrame:SetPoint(Configuration.Raid.anchor, Configuration.Raid.x, Configuration.Raid.y)
+            raidFrame:SetPoint(getConfiguration().Raid.anchor, getConfiguration().Raid.x, getConfiguration().Raid.y)
+
+            if getConfiguration().Raid.shown then
+                raidFrame:Show()
+            else
+                raidFrame:Hide()
+            end
         end
 
-        if Configuration.Target then
+        if getConfiguration().Target then
             targetFrame = self:Spawn('Target')
-            targetFrame:SetPoint(Configuration.Target.anchor, Configuration.Target.x, Configuration.Target.y)
+            targetFrame:SetPoint(getConfiguration().Target.anchor, getConfiguration().Target.x, getConfiguration().Target.y)
         end
 
-        if Configuration.TargetTarget then
+        if getConfiguration().TargetTarget then
             targetTargetFrame = self:Spawn('TargetTarget')
-            targetTargetFrame:SetPoint(Configuration.TargetTarget.anchor, Configuration.TargetTarget.x, Configuration.TargetTarget.y)
+            targetTargetFrame:SetPoint(getConfiguration().TargetTarget.anchor, getConfiguration().TargetTarget.x, getConfiguration().TargetTarget.y)
         end
     end
 )
@@ -968,7 +1003,7 @@ oUF:RegisterStyle('SnailUI',
     function(self, unit)
         unit = unit:gsub('(.)', string.upper, 1)
         
-        if Configuration[unit] then            
+        if getConfiguration()[unit] then            
             self.frame = unit
             self.menu = function(self)
                 if self.unit:match('^party') then
@@ -983,11 +1018,11 @@ oUF:RegisterStyle('SnailUI',
 
             self.background = self:CreateTexture(nil, 'LOW')
             self.background:SetPoint('TOPLEFT', 1, -1)
-            self.background:SetSize(Configuration[self.frame].width - 2, Configuration[self.frame].height - 2)
+            self.background:SetSize(getConfiguration()[self.frame].width - 2, getConfiguration()[self.frame].height - 2)
 
             self.border = self:CreateTexture(nil, 'BACKGROUND')
             self.border:SetPoint('TOPLEFT')
-            self.border:SetSize(Configuration[self.frame].width, Configuration[self.frame].height)
+            self.border:SetSize(getConfiguration()[self.frame].width, getConfiguration()[self.frame].height)
             self.border:SetTexture(0, 0, 0)
 
             self.PostUpdate = function(self)
@@ -1004,7 +1039,7 @@ oUF:RegisterStyle('SnailUI',
 
                 self.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
 
-                if UnitThreatSituation(self.unit) and (self.frame == 'Raid') and Configuration[self.frame].colorByThreatLevel then
+                if UnitThreatSituation(self.unit) and (self.frame == 'Raid') and getConfiguration()[self.frame].colorByThreatLevel then
                     if UnitThreatSituation(self.unit) > 0 then
                         self.threatColor =
                         {
@@ -1098,8 +1133,8 @@ oUF:RegisterStyle('SnailUI',
                             self:SetAlpha(1)
                             self.inRange = inRange
 
-                            if Configuration[self.frame].healthThreshold then
-                                if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) >= Configuration[self.frame].healthThreshold then
+                            if getConfiguration()[self.frame].healthThreshold then
+                                if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) >= getConfiguration()[self.frame].healthThreshold then
                                     self:SetAlpha(Configuration.inactiveAlpha)
                                 end
                             end
@@ -1113,19 +1148,19 @@ oUF:RegisterStyle('SnailUI',
 
             self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', self.PostUpdate)
             self:RegisterForClicks('AnyUp')
-            self:SetSize(Configuration[self.frame].width, Configuration[self.frame].height)
+            self:SetSize(getConfiguration()[self.frame].width, getConfiguration()[self.frame].height)
             self:SetScript('OnEnter',
                 function(self)
                     UnitFrame_UpdateTooltip(self)
                 end
             )
 
-            if Configuration[self.frame].healthThreshold then
+            if getConfiguration()[self.frame].healthThreshold then
                 self:RegisterEvent('UNIT_HEALTH',
                     function(self)
                         self:SetAlpha(Configuration.inactiveAlpha)
 
-                        if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) < Configuration[self.frame].healthThreshold then
+                        if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) < getConfiguration()[self.frame].healthThreshold then
                             if self.inRange then
                                 self:SetAlpha(1)
                             end
@@ -1134,98 +1169,127 @@ oUF:RegisterStyle('SnailUI',
                 )
             end
 
-            if Configuration[self.frame].BurningEmbersBar and (unit == 'Player') then
-                if select(2, UnitClass(unit)) == 'WARLOCK' then
+            if getConfiguration()[self.frame].BurningEmbersBar and (unit == 'Player') then
+                if (class == 'WARLOCK') and (spec == 'DESTRUCTION') then
                     self.WarlockSpecBars = CreateFrame('Frame', nil, self)
-                    self.WarlockSpecBars:SetPoint(Configuration[self.frame].BurningEmbersBar.anchor, Configuration[self.frame].BurningEmbersBar.x, Configuration[self.frame].BurningEmbersBar.y)
-                    self.WarlockSpecBars:SetSize(Configuration[self.frame].BurningEmbersBar.width - 2, Configuration[self.frame].BurningEmbersBar.height - 2)
+                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].BurningEmbersBar.anchor, getConfiguration()[self.frame].BurningEmbersBar.x, getConfiguration()[self.frame].BurningEmbersBar.y)
+                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width - 2, getConfiguration()[self.frame].BurningEmbersBar.height - 2)
 
                     self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
                     self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
-                    self.warlockSpecBarsBackground:SetSize(Configuration[self.frame].BurningEmbersBar.width - 2, Configuration[self.frame].BurningEmbersBar.height - 2)
+                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width - 2, getConfiguration()[self.frame].BurningEmbersBar.height - 2)
 
                     self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
                     self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
-                    self.warlockSpecBarsBorder:SetSize(Configuration[self.frame].BurningEmbersBar.width, Configuration[self.frame].BurningEmbersBar.height)
+                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width, getConfiguration()[self.frame].BurningEmbersBar.height)
                     self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
 
-                    for i = 1, #Configuration[self.frame].BurningEmbersBar do
+                    for i = 1, #getConfiguration()[self.frame].BurningEmbersBar do
                         self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
-                        self.WarlockSpecBars[i]:SetPoint(Configuration[self.frame].BurningEmbersBar[i].anchor, self.WarlockSpecBars, Configuration[self.frame].BurningEmbersBar[i].x, Configuration[self.frame].BurningEmbersBar[i].y)
-                        self.WarlockSpecBars[i]:SetSize(Configuration[self.frame].BurningEmbersBar[i].width - 2, Configuration[self.frame].BurningEmbersBar[i].height - 2)
+                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].BurningEmbersBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].BurningEmbersBar[i].x, getConfiguration()[self.frame].BurningEmbersBar[i].y)
+                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].BurningEmbersBar[i].width - 2, getConfiguration()[self.frame].BurningEmbersBar[i].height - 2)
                         self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
 
                         self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
                         self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
-                        self.warlockSpecBarsBorder[i]:SetSize(Configuration[self.frame].BurningEmbersBar[i].width, Configuration[self.frame].BurningEmbersBar[i].height)
+                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].BurningEmbersBar[i].width, getConfiguration()[self.frame].BurningEmbersBar[i].height)
                         self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
                     end
                 end
             end
 
-            if Configuration[self.frame].CastingBar then
+            if getConfiguration()[self.frame].CastingBar then
                 self.Castbar = CreateFrame('StatusBar', nil, self)
-                self.Castbar:SetOrientation(Configuration[self.frame].CastingBar.orientation)
-                self.Castbar:SetPoint(Configuration[self.frame].CastingBar.anchor, Configuration[self.frame].CastingBar.x, Configuration[self.frame].CastingBar.y)
-                self.Castbar:SetSize(Configuration[self.frame].CastingBar.width - 6, Configuration[self.frame].CastingBar.height - 6)
+                self.Castbar:SetOrientation(getConfiguration()[self.frame].CastingBar.orientation)
+                self.Castbar:SetPoint(getConfiguration()[self.frame].CastingBar.anchor, getConfiguration()[self.frame].CastingBar.x, getConfiguration()[self.frame].CastingBar.y)
+                self.Castbar:SetSize(getConfiguration()[self.frame].CastingBar.width - 6, getConfiguration()[self.frame].CastingBar.height - 6)
                 self.Castbar:SetStatusBarTexture(Configuration.texture)
 
                 self.Castbar.backgroundBottom = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                self.Castbar.backgroundBottom:SetSize(Configuration[self.frame].CastingBar.width - 2, 1)
+                self.Castbar.backgroundBottom:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
                 self.Castbar.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 self.Castbar.backgroundLeft = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundLeft:SetPoint('LEFT', -2, 0)
-                self.Castbar.backgroundLeft:SetSize(1, Configuration[self.frame].CastingBar.height - 4)
+                self.Castbar.backgroundLeft:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
                 self.Castbar.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 self.Castbar.backgroundRight = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundRight:SetPoint('RIGHT', 2, 0)
-                self.Castbar.backgroundRight:SetSize(1, Configuration[self.frame].CastingBar.height - 4)
+                self.Castbar.backgroundRight:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
                 self.Castbar.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 self.Castbar.backgroundTop = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundTop:SetPoint('TOP', 0, 2)
-                self.Castbar.backgroundTop:SetSize(Configuration[self.frame].CastingBar.width - 2, 1)
+                self.Castbar.backgroundTop:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
                 self.Castbar.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                 
                 self.Castbar.border = self.Castbar:CreateTexture(nil, 'BACKGROUND')
                 self.Castbar.border:SetPoint('TOPLEFT', -3, 3)
-                self.Castbar.border:SetSize(Configuration[self.frame].CastingBar.width, Configuration[self.frame].CastingBar.height)
+                self.Castbar.border:SetSize(getConfiguration()[self.frame].CastingBar.width, getConfiguration()[self.frame].CastingBar.height)
                 self.Castbar.border:SetTexture(0, 0, 0)
             end
 
-            if Configuration[self.frame].ComboPointsBar and (unit == 'Player') then
-                if select(2, UnitClass(unit)) == 'ROGUE' then
+            if getConfiguration()[self.frame].ComboPointsBar and (unit == 'Player') then
+                if (class == 'ROGUE') or ((class == 'DRUID') and (spec == 'FERAL')) then
                     self.CPoints = CreateFrame('Frame', nil, self)
-                    self.CPoints:SetPoint(Configuration[self.frame].ComboPointsBar.anchor, Configuration[self.frame].ComboPointsBar.x, Configuration[self.frame].ComboPointsBar.y)
-                    self.CPoints:SetSize(Configuration[self.frame].ComboPointsBar.width - 2, Configuration[self.frame].ComboPointsBar.height - 2)
+                    self.CPoints:SetPoint(getConfiguration()[self.frame].ComboPointsBar.anchor, getConfiguration()[self.frame].ComboPointsBar.x, getConfiguration()[self.frame].ComboPointsBar.y)
+                    self.CPoints:SetSize(getConfiguration()[self.frame].ComboPointsBar.width - 2, getConfiguration()[self.frame].ComboPointsBar.height - 2)
 
                     self.CPoints.background = self.CPoints:CreateTexture(nil, 'BACKGROUND')
                     self.CPoints.background:SetPoint('TOPLEFT')
-                    self.CPoints.background:SetSize(Configuration[self.frame].ComboPointsBar.width - 2, Configuration[self.frame].ComboPointsBar.height - 2)
+                    self.CPoints.background:SetSize(getConfiguration()[self.frame].ComboPointsBar.width - 2, getConfiguration()[self.frame].ComboPointsBar.height - 2)
 
                     self.CPoints.border = self.CPoints:CreateTexture(nil, 'BACKGROUND')
                     self.CPoints.border:SetPoint('TOPLEFT', -1, 1)
-                    self.CPoints.border:SetSize(Configuration[self.frame].ComboPointsBar.width, Configuration[self.frame].ComboPointsBar.height)
+                    self.CPoints.border:SetSize(getConfiguration()[self.frame].ComboPointsBar.width, getConfiguration()[self.frame].ComboPointsBar.height)
                     self.CPoints.border:SetTexture(0, 0, 0)
 
-                    for i = 1, #Configuration[self.frame].ComboPointsBar do
+                    for i = 1, #getConfiguration()[self.frame].ComboPointsBar do
                         self.CPoints[i] = CreateFrame('StatusBar', nil, self)
-                        self.CPoints[i]:SetPoint(Configuration[self.frame].ComboPointsBar[i].anchor, self.CPoints, Configuration[self.frame].ComboPointsBar[i].x, Configuration[self.frame].ComboPointsBar[i].y)
-                        self.CPoints[i]:SetSize(Configuration[self.frame].ComboPointsBar[i].width - 2, Configuration[self.frame].ComboPointsBar[i].height - 2)
+                        self.CPoints[i]:SetPoint(getConfiguration()[self.frame].ComboPointsBar[i].anchor, self.CPoints, getConfiguration()[self.frame].ComboPointsBar[i].x, getConfiguration()[self.frame].ComboPointsBar[i].y)
+                        self.CPoints[i]:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width - 2, getConfiguration()[self.frame].ComboPointsBar[i].height - 2)
                         self.CPoints[i]:SetStatusBarTexture(Configuration.texture)
 
                         self.CPoints[i].border = self.CPoints:CreateTexture(nil, 'LOW')
                         self.CPoints[i].border:SetPoint('TOPLEFT', self.CPoints[i], -1, 1)
-                        self.CPoints[i].border:SetSize(Configuration[self.frame].ComboPointsBar[i].width, Configuration[self.frame].ComboPointsBar[i].height)
+                        self.CPoints[i].border:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width, getConfiguration()[self.frame].ComboPointsBar[i].height)
                         self.CPoints[i].border:SetTexture(0, 0, 0)
                     end
                 end
             end
 
-            if Configuration[self.frame].HealthBar then
+            if getConfiguration()[self.frame].DemonicFuryBar and (unit == 'Player') then
+                if (class == 'WARLOCK') and (spec == 'DEMONOLOGY') then
+                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
+                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].DemonicFuryBar.anchor, getConfiguration()[self.frame].DemonicFuryBar.x, getConfiguration()[self.frame].DemonicFuryBar.y)
+                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width - 2, getConfiguration()[self.frame].DemonicFuryBar.height - 2)
+
+                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
+                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width - 2, getConfiguration()[self.frame].DemonicFuryBar.height - 2)
+
+                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
+                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width, getConfiguration()[self.frame].DemonicFuryBar.height)
+                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].DemonicFuryBar do
+                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
+                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].DemonicFuryBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].DemonicFuryBar[i].x, getConfiguration()[self.frame].DemonicFuryBar[i].y)
+                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].DemonicFuryBar[i].width - 2, getConfiguration()[self.frame].DemonicFuryBar[i].height - 2)
+                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
+                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
+                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].DemonicFuryBar[i].width, getConfiguration()[self.frame].DemonicFuryBar[i].height)
+                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].HealthBar then
                 self:RegisterEvent('UNIT_HEAL_PREDICTION',
                     function(self)
                         self.HealPrediction.myBar:SetAlpha(self:GetAlpha() / 2)
@@ -1235,14 +1299,14 @@ oUF:RegisterStyle('SnailUI',
 
                 self.Health = CreateFrame('StatusBar', nil, self)
                 self.Health.frequentUpdates = true
-                self.Health:SetOrientation(Configuration[self.frame].HealthBar.orientation)
-                self.Health:SetPoint(Configuration[self.frame].HealthBar.anchor, Configuration[self.frame].HealthBar.x, Configuration[self.frame].HealthBar.y)
-                self.Health:SetSize(Configuration[self.frame].HealthBar.width - 2, Configuration[self.frame].HealthBar.height - 2)
+                self.Health:SetOrientation(getConfiguration()[self.frame].HealthBar.orientation)
+                self.Health:SetPoint(getConfiguration()[self.frame].HealthBar.anchor, getConfiguration()[self.frame].HealthBar.x, getConfiguration()[self.frame].HealthBar.y)
+                self.Health:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
                 self.Health:SetStatusBarTexture(Configuration.texture)
                 
                 self.Health.border = self.Health:CreateTexture(nil, 'LOW')
                 self.Health.border:SetPoint('TOPLEFT', -1, 1)
-                self.Health.border:SetSize(Configuration[self.frame].HealthBar.width, Configuration[self.frame].HealthBar.height)
+                self.Health.border:SetSize(getConfiguration()[self.frame].HealthBar.width, getConfiguration()[self.frame].HealthBar.height)
                 self.Health.border:SetTexture(0, 0, 0)
 
                 self.HealPrediction =
@@ -1254,21 +1318,21 @@ oUF:RegisterStyle('SnailUI',
 
                 self.HealPrediction.myBar:SetPoint('TOPLEFT', self.Health:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
                 self.HealPrediction.myBar:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
-                self.HealPrediction.myBar:SetSize(Configuration[self.frame].HealthBar.width - 2, Configuration[self.frame].HealthBar.height - 2)
+                self.HealPrediction.myBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
                 self.HealPrediction.myBar:SetStatusBarTexture(Configuration.texture)
 
                 self.HealPrediction.otherBar:SetPoint('TOPLEFT', self.HealPrediction.myBar:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
                 self.HealPrediction.otherBar:SetPoint('BOTTOMLEFT', self.HealPrediction.myBar:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
-                self.HealPrediction.otherBar:SetSize(Configuration[self.frame].HealthBar.width - 2, Configuration[self.frame].HealthBar.height - 2)
+                self.HealPrediction.otherBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
                 self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.texture)
 
-                if Configuration[self.frame].HealthBar.Text then
+                if getConfiguration()[self.frame].HealthBar.Text then
                     self.Health.text = self.Health:CreateFontString(nil, 'OVERLAY')
                     self.Health.text.frequentUpdates = true
                     self.Health.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
-                    self.Health.text:SetPoint(Configuration[self.frame].HealthBar.Text.anchor, Configuration[self.frame].HealthBar.Text.x, Configuration[self.frame].HealthBar.Text.y)
+                    self.Health.text:SetPoint(getConfiguration()[self.frame].HealthBar.Text.anchor, getConfiguration()[self.frame].HealthBar.Text.x, getConfiguration()[self.frame].HealthBar.Text.y)
 
-                    if Configuration[self.frame].HealthBar.smallText then
+                    if getConfiguration()[self.frame].HealthBar.smallText then
                         self:Tag(self.Health.text, '[SnailUI:SmallHealth]')
                     else
                         self:Tag(self.Health.text, '[SnailUI:Health]')
@@ -1276,131 +1340,160 @@ oUF:RegisterStyle('SnailUI',
                 end
             end
 
-            if Configuration[self.frame].HolyPowerBar and (unit == 'Player') then
-                if select(2, UnitClass(unit)) == 'PALADIN' then
+            if getConfiguration()[self.frame].HolyPowerBar and (unit == 'Player') then
+                if class == 'PALADIN' then
                     self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
-                    self.ClassIcons:SetPoint(Configuration[self.frame].HolyPowerBar.anchor, Configuration[self.frame].HolyPowerBar.x, Configuration[self.frame].HolyPowerBar.y)
-                    self.ClassIcons:SetSize(Configuration[self.frame].HolyPowerBar.width, Configuration[self.frame].HolyPowerBar.height)
+                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].HolyPowerBar.anchor, getConfiguration()[self.frame].HolyPowerBar.x, getConfiguration()[self.frame].HolyPowerBar.y)
+                    self.ClassIcons:SetSize(getConfiguration()[self.frame].HolyPowerBar.width, getConfiguration()[self.frame].HolyPowerBar.height)
                     self.ClassIcons:SetTexture(0, 0, 0)
 
                     self.ClassIcons.background = self:CreateTexture(nil, 'BACKGROUND')
                     self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
-                    self.ClassIcons.background:SetSize(Configuration[self.frame].HolyPowerBar.width - 2, Configuration[self.frame].HolyPowerBar.height - 2)
+                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].HolyPowerBar.width - 2, getConfiguration()[self.frame].HolyPowerBar.height - 2)
 
                     for i = 1, 5 do
                         self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
 
-                        if i <= #Configuration[self.frame].HolyPowerBar then
-                            self.ClassIcons[i]:SetPoint(Configuration[self.frame].HolyPowerBar[i].anchor, self.ClassIcons, Configuration[self.frame].HolyPowerBar[i].x, Configuration[self.frame].HolyPowerBar[i].y)
-                            self.ClassIcons[i]:SetSize(Configuration[self.frame].HolyPowerBar[i].width - 2, Configuration[self.frame].HolyPowerBar[i].height - 2)
+                        if i <= #getConfiguration()[self.frame].HolyPowerBar then
+                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].HolyPowerBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].HolyPowerBar[i].x, getConfiguration()[self.frame].HolyPowerBar[i].y)
+                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].HolyPowerBar[i].width - 2, getConfiguration()[self.frame].HolyPowerBar[i].height - 2)
                             self.ClassIcons[i]:SetTexture(Configuration.texture)
 
                             self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
                             self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
-                            self.ClassIcons[i].border:SetSize(Configuration[self.frame].HolyPowerBar[i].width, Configuration[self.frame].HolyPowerBar[i].height)
+                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].HolyPowerBar[i].width, getConfiguration()[self.frame].HolyPowerBar[i].height)
                             self.ClassIcons[i].border:SetTexture(0, 0, 0)
                         end
                     end
                 end
             end
 
-            if Configuration[self.frame].PowerBar then
+            if getConfiguration()[self.frame].PowerBar then
                 self.Power = CreateFrame('StatusBar', nil, self)
                 self.Power.frequentUpdates = true
-                self.Power:SetOrientation(Configuration[self.frame].PowerBar.orientation)
-                self.Power:SetPoint(Configuration[self.frame].PowerBar.anchor, Configuration[self.frame].PowerBar.x, Configuration[self.frame].PowerBar.y)
+                self.Power:SetOrientation(getConfiguration()[self.frame].PowerBar.orientation)
+                self.Power:SetPoint(getConfiguration()[self.frame].PowerBar.anchor, getConfiguration()[self.frame].PowerBar.x, getConfiguration()[self.frame].PowerBar.y)
                 self.Power:SetStatusBarTexture(Configuration.texture)
 
-                if Configuration[self.frame].PowerBar.border then
-                    self.Power:SetSize(Configuration[self.frame].PowerBar.width - 6, Configuration[self.frame].PowerBar.height - 6)
+                if getConfiguration()[self.frame].PowerBar.border then
+                    self.Power:SetSize(getConfiguration()[self.frame].PowerBar.width - 6, getConfiguration()[self.frame].PowerBar.height - 6)
 
                     self.Power.backgroundBottom = self.Power:CreateTexture(nil, 'LOW')
                     self.Power.backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                    self.Power.backgroundBottom:SetSize(Configuration[self.frame].PowerBar.width - 2, 1)
+                    self.Power.backgroundBottom:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, 1)
                     self.Power.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                     self.Power.backgroundLeft = self.Power:CreateTexture(nil, 'LOW')
                     self.Power.backgroundLeft:SetPoint('LEFT', -2, 0)
-                    self.Power.backgroundLeft:SetSize(1, Configuration[self.frame].PowerBar.height - 4)
+                    self.Power.backgroundLeft:SetSize(1, getConfiguration()[self.frame].PowerBar.height - 4)
                     self.Power.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                     self.Power.backgroundRight = self.Power:CreateTexture(nil, 'LOW')
                     self.Power.backgroundRight:SetPoint('RIGHT', 2, 0)
-                    self.Power.backgroundRight:SetSize(1, Configuration[self.frame].PowerBar.height - 4)
+                    self.Power.backgroundRight:SetSize(1, getConfiguration()[self.frame].PowerBar.height - 4)
                     self.Power.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                     self.Power.backgroundTop = self.Power:CreateTexture(nil, 'LOW')
                     self.Power.backgroundTop:SetPoint('TOP', 0, 2)
-                    self.Power.backgroundTop:SetSize(Configuration[self.frame].PowerBar.width - 2, 1)
+                    self.Power.backgroundTop:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, 1)
                     self.Power.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
                                     
                     self.Power.border = self.Power:CreateTexture(nil, 'BACKGROUND')
                     self.Power.border:SetPoint('TOPLEFT', -3, 3)
-                    self.Power.border:SetSize(Configuration[self.frame].PowerBar.width, Configuration[self.frame].PowerBar.height)
+                    self.Power.border:SetSize(getConfiguration()[self.frame].PowerBar.width, getConfiguration()[self.frame].PowerBar.height)
                     self.Power.border:SetTexture(0, 0, 0)
                 else
-                    self.Power:SetSize(Configuration[self.frame].PowerBar.width - 2, Configuration[self.frame].PowerBar.height - 2)                    
+                    self.Power:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, getConfiguration()[self.frame].PowerBar.height - 2)                    
                 
                     self.Power.innerBorder = self.Power:CreateTexture(nil, 'LOW')
                     self.Power.innerBorder:SetPoint('TOPLEFT', -1, 1)
-                    self.Power.innerBorder:SetSize(Configuration[self.frame].PowerBar.width, Configuration[self.frame].PowerBar.height)
+                    self.Power.innerBorder:SetSize(getConfiguration()[self.frame].PowerBar.width, getConfiguration()[self.frame].PowerBar.height)
                     self.Power.innerBorder:SetTexture(0, 0, 0)
                 end
             end
 
-            if Configuration[self.frame].RuneBar and (unit == 'Player') then
-                if select(2, UnitClass(unit)) == 'DEATHKNIGHT' then
+            if getConfiguration()[self.frame].RuneBar and (unit == 'Player') then
+                if class == 'DEATHKNIGHT' then
                     self.Runes = CreateFrame('Frame', nil, self)
-                    self.Runes:SetPoint(Configuration[self.frame].RuneBar.anchor, Configuration[self.frame].RuneBar.x, Configuration[self.frame].RuneBar.y)
-                    self.Runes:SetSize(Configuration[self.frame].RuneBar.width - 2, Configuration[self.frame].RuneBar.height - 2)
+                    self.Runes:SetPoint(getConfiguration()[self.frame].RuneBar.anchor, getConfiguration()[self.frame].RuneBar.x, getConfiguration()[self.frame].RuneBar.y)
+                    self.Runes:SetSize(getConfiguration()[self.frame].RuneBar.width - 2, getConfiguration()[self.frame].RuneBar.height - 2)
 
                     self.Runes.background = self.Runes:CreateTexture(nil, 'BACKGROUND')
                     self.Runes.background:SetPoint('TOPLEFT')
-                    self.Runes.background:SetSize(Configuration[self.frame].RuneBar.width - 2, Configuration[self.frame].RuneBar.height - 2)
+                    self.Runes.background:SetSize(getConfiguration()[self.frame].RuneBar.width - 2, getConfiguration()[self.frame].RuneBar.height - 2)
 
                     self.Runes.border = self.Runes:CreateTexture(nil, 'BACKGROUND')
                     self.Runes.border:SetPoint('TOPLEFT', -1, 1)
-                    self.Runes.border:SetSize(Configuration[self.frame].RuneBar.width, Configuration[self.frame].RuneBar.height)
+                    self.Runes.border:SetSize(getConfiguration()[self.frame].RuneBar.width, getConfiguration()[self.frame].RuneBar.height)
                     self.Runes.border:SetTexture(0, 0, 0)
 
-                    for i = 1, #Configuration[self.frame].RuneBar do
+                    for i = 1, #getConfiguration()[self.frame].RuneBar do
                         self.Runes[i] = CreateFrame('StatusBar', nil, self)
-                        self.Runes[i]:SetPoint(Configuration[self.frame].RuneBar[i].anchor, self.Runes, Configuration[self.frame].RuneBar[i].x, Configuration[self.frame].RuneBar[i].y)
-                        self.Runes[i]:SetSize(Configuration[self.frame].RuneBar[i].width - 2, Configuration[self.frame].RuneBar[i].height - 2)
+                        self.Runes[i]:SetPoint(getConfiguration()[self.frame].RuneBar[i].anchor, self.Runes, getConfiguration()[self.frame].RuneBar[i].x, getConfiguration()[self.frame].RuneBar[i].y)
+                        self.Runes[i]:SetSize(getConfiguration()[self.frame].RuneBar[i].width - 2, getConfiguration()[self.frame].RuneBar[i].height - 2)
                         self.Runes[i]:SetStatusBarTexture(Configuration.texture)
 
                         self.Runes[i].border = self.Runes:CreateTexture(nil, 'LOW')
                         self.Runes[i].border:SetPoint('TOPLEFT', self.Runes[i], -1, 1)
-                        self.Runes[i].border:SetSize(Configuration[self.frame].RuneBar[i].width, Configuration[self.frame].RuneBar[i].height)
+                        self.Runes[i].border:SetSize(getConfiguration()[self.frame].RuneBar[i].width, getConfiguration()[self.frame].RuneBar[i].height)
                         self.Runes[i].border:SetTexture(0, 0, 0)
                     end
                 end
             end
 
-            if Configuration[self.frame].ShadowOrbsBar and (unit == 'Player') then
-                if select(2, UnitClass(unit)) == 'PRIEST' then
+            if getConfiguration()[self.frame].ShadowOrbsBar and (unit == 'Player') then
+                if (class == 'PRIEST') and (spec == 'SHADOW') then
                     self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
-                    self.ClassIcons:SetPoint(Configuration[self.frame].ShadowOrbsBar.anchor, Configuration[self.frame].ShadowOrbsBar.x, Configuration[self.frame].ShadowOrbsBar.y)
-                    self.ClassIcons:SetSize(Configuration[self.frame].ShadowOrbsBar.width, Configuration[self.frame].ShadowOrbsBar.height)
+                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].ShadowOrbsBar.anchor, getConfiguration()[self.frame].ShadowOrbsBar.x, getConfiguration()[self.frame].ShadowOrbsBar.y)
+                    self.ClassIcons:SetSize(getConfiguration()[self.frame].ShadowOrbsBar.width, getConfiguration()[self.frame].ShadowOrbsBar.height)
                     self.ClassIcons:SetTexture(0, 0, 0)
 
                     self.ClassIcons.background = self:CreateTexture(nil, 'LOW')
                     self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
-                    self.ClassIcons.background:SetSize(Configuration[self.frame].ShadowOrbsBar.width - 2, Configuration[self.frame].ShadowOrbsBar.height - 2)
+                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].ShadowOrbsBar.width - 2, getConfiguration()[self.frame].ShadowOrbsBar.height - 2)
 
                     for i = 1, 5 do
                         self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
 
-                        if i <= #Configuration[self.frame].ShadowOrbsBar then
-                            self.ClassIcons[i]:SetPoint(Configuration[self.frame].ShadowOrbsBar[i].anchor, self.ClassIcons, Configuration[self.frame].ShadowOrbsBar[i].x, Configuration[self.frame].ShadowOrbsBar[i].y)
-                            self.ClassIcons[i]:SetSize(Configuration[self.frame].ShadowOrbsBar[i].width - 2, Configuration[self.frame].ShadowOrbsBar[i].height - 2)
+                        if i <= #getConfiguration()[self.frame].ShadowOrbsBar then
+                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].ShadowOrbsBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].ShadowOrbsBar[i].x, getConfiguration()[self.frame].ShadowOrbsBar[i].y)
+                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].ShadowOrbsBar[i].width - 2, getConfiguration()[self.frame].ShadowOrbsBar[i].height - 2)
                             self.ClassIcons[i]:SetTexture(Configuration.texture)
 
                             self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
                             self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
-                            self.ClassIcons[i].border:SetSize(Configuration[self.frame].ShadowOrbsBar[i].width, Configuration[self.frame].ShadowOrbsBar[i].height)
+                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].ShadowOrbsBar[i].width, getConfiguration()[self.frame].ShadowOrbsBar[i].height)
                             self.ClassIcons[i].border:SetTexture(0, 0, 0)
                         end
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].SoulShardsBar and (unit == 'Player') then
+                if (class == 'WARLOCK') and (spec == 'AFFLICTION') then
+                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
+                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].SoulShardsBar.anchor, getConfiguration()[self.frame].SoulShardsBar.x, getConfiguration()[self.frame].SoulShardsBar.y)
+                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].SoulShardsBar.width - 2, getConfiguration()[self.frame].SoulShardsBar.height - 2)
+
+                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
+                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].SoulShardsBar.width - 2, getConfiguration()[self.frame].SoulShardsBar.height - 2)
+
+                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
+                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].SoulShardsBar.width, getConfiguration()[self.frame].SoulShardsBar.height)
+                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].SoulShardsBar do
+                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
+                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].SoulShardsBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].SoulShardsBar[i].x, getConfiguration()[self.frame].SoulShardsBar[i].y)
+                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].SoulShardsBar[i].width - 2, getConfiguration()[self.frame].SoulShardsBar[i].height - 2)
+                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
+                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
+                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].SoulShardsBar[i].width, getConfiguration()[self.frame].SoulShardsBar[i].height)
+                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
                     end
                 end
             end
