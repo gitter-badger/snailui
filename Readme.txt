@@ -24,7 +24,7 @@ Features
 
 Download
 
-You can download this release here: http://www.wowinterface.com/download...d20900-SnailUI
+You can download this release here: http://www.wowinterface.com/downloads/info20900-SnailUI.html
 
 Mirrors of all of the SnailUI releases can be found here: https://github.com/1Snail/SnailUI/downloads
 
