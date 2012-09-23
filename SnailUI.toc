@@ -3,7 +3,7 @@
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.2.1
+## Version: 0.2.2
 
 Configuration.lua
 
