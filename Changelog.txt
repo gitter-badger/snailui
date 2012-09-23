@@ -1,0 +1,24 @@
+Changelog.txt
+Written by Snail
+
+------------------------------------------------------------------------------ 
+
+Change log for SnailUI
+
+This is where I will document the changes made for SnailUI in each release.
+
+------------------------------------------------------------------------------ 
+
+Version 0.2.2
+- Readme.txt and Changelog.txt added
+
+------------------------------------------------------------------------------ 
+
+Version 0.2.1
+- Updated for MoP
+- Too many features to list added
+
+------------------------------------------------------------------------------ 
+
+Version 0.1.1
+- Initial release
