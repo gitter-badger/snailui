@@ -10,6 +10,7 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------ 
 
 Version 0.2.2
+- Eclipse bar added for Balance Druids
 - Readme.txt and Changelog.txt added
 
 ------------------------------------------------------------------------------ 

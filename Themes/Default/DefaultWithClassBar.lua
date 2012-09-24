@@ -102,6 +102,24 @@ DefaultWithClassBar.Player.ComboPointsBar =
     }
 }
 
+DefaultWithClassBar.Player.EclipseBar =
+{
+    anchor = 'TOPLEFT',
+    height = 24,
+    width = 516,
+    x = 1,
+    y = 27,
+
+    [1] =
+    {
+        anchor = 'TOP',
+        height = 13,
+        width = 512,
+        x = 0,
+        y = -2
+    }
+}
+
 DefaultWithClassBar.Player.DemonicFuryBar =
 {
     anchor = 'TOPLEFT',

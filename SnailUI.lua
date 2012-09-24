@@ -50,8 +50,21 @@ end
 
 -- Tags
 
+oUF.Tags.Events['SnailUI:EclipseDirection'] = 'ECLIPSE_DIRECTION_CHANGE'
 oUF.Tags.Events['SnailUI:Health'] = 'UNIT_HEALTH UNIT_HEAL_PREDICTION'
 oUF.Tags.Events['SnailUI:SmallHealth'] = 'UNIT_HEALTH UNIT_HEAL_PREDICTION'
+
+oUF.Tags.Methods['SnailUI:EclipseDirection'] = function(unit)
+    direction = GetEclipseDirection()
+
+    if direction == 'moon' then
+        return '<-'
+    elseif direction == 'sun' then
+        return '->'
+    end
+
+    return nil
+end
 
 oUF.Tags.Methods['SnailUI:Health'] = function(unit)
     health = trim(GetUnitName(unit, false))
@@ -1077,6 +1090,10 @@ oUF:RegisterStyle('SnailUI',
                     end
                 end
 
+                if self.EclipseBar then
+                    self.EclipseBar.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                end
+
                 if self.Health then
                     self.Health:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
 
@@ -1257,6 +1274,48 @@ oUF:RegisterStyle('SnailUI',
                         self.CPoints[i].border:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width, getConfiguration()[self.frame].ComboPointsBar[i].height)
                         self.CPoints[i].border:SetTexture(0, 0, 0)
                     end
+                end
+            end
+
+            if getConfiguration()[self.frame].EclipseBar and (unit == 'Player') then
+                if (class == 'DRUID') and (spec == 'BALANCE') then
+                    self.EclipseBar = CreateFrame('Frame', nil, self)
+                    self.EclipseBar:SetPoint(getConfiguration()[self.frame].EclipseBar.anchor, getConfiguration()[self.frame].EclipseBar.x, getConfiguration()[self.frame].EclipseBar.y)
+                    self.EclipseBar:SetSize(getConfiguration()[self.frame].EclipseBar.width - 2, getConfiguration()[self.frame].EclipseBar.height - 2)
+
+                    self.EclipseBar.background = self.EclipseBar:CreateTexture(nil, 'BACKGROUND')
+                    self.EclipseBar.background:SetPoint('TOPLEFT')
+                    self.EclipseBar.background:SetSize(getConfiguration()[self.frame].EclipseBar.width - 2, getConfiguration()[self.frame].EclipseBar.height - 2)
+
+                    self.EclipseBar.border = self.EclipseBar:CreateTexture(nil, 'BACKGROUND')
+                    self.EclipseBar.border:SetPoint('TOPLEFT', -1, 1)
+                    self.EclipseBar.border:SetSize(getConfiguration()[self.frame].EclipseBar.width, getConfiguration()[self.frame].EclipseBar.height)
+                    self.EclipseBar.border:SetTexture(0, 0, 0)
+
+                    self.EclipseBar.innerBorder = self.EclipseBar:CreateTexture(nil, 'LOW')
+                    self.EclipseBar.innerBorder:SetPoint('TOPLEFT', 1, -1)
+                    self.EclipseBar.innerBorder:SetSize(getConfiguration()[self.frame].EclipseBar[1].width, getConfiguration()[self.frame].EclipseBar[1].height)
+                    self.EclipseBar.innerBorder:SetTexture(0, 0, 0)
+
+                    self.EclipseBar.LunarBar = CreateFrame('StatusBar', nil, self)
+                    self.EclipseBar.LunarBar:SetPoint(getConfiguration()[self.frame].EclipseBar[1].anchor, self.EclipseBar, getConfiguration()[self.frame].EclipseBar[1].x, getConfiguration()[self.frame].EclipseBar[1].y)
+                    self.EclipseBar.LunarBar:SetSize(getConfiguration()[self.frame].EclipseBar[1].width - 2, getConfiguration()[self.frame].EclipseBar[1].height - 2)
+                    self.EclipseBar.LunarBar:SetStatusBarTexture(Configuration.texture)
+                    self.EclipseBar.LunarBar:SetStatusBarColor(0.3, 0.52, 0.9)
+
+                    self.EclipseBar.SolarBar = CreateFrame('StatusBar', nil, self)
+                    self.EclipseBar.SolarBar:SetPoint('LEFT', self.EclipseBar.LunarBar:GetStatusBarTexture(), 'RIGHT')
+                    self.EclipseBar.SolarBar:SetSize(getConfiguration()[self.frame].EclipseBar[1].width - 2, getConfiguration()[self.frame].EclipseBar[1].height - 2)
+                    self.EclipseBar.SolarBar:SetStatusBarTexture(Configuration.texture)
+                    self.EclipseBar.SolarBar:SetStatusBarColor(0.8, 0.82, 0.6)
+
+                    self.EclipseBar.text = self.EclipseBar:CreateFontString(nil, 'OVERLAY')
+                    self.EclipseBar.text.frequentUpdates = true
+                    self.EclipseBar.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.EclipseBar.text:SetPoint('CENTER', self.EclipseBar.innerBorder, 1, 0)
+                    self.EclipseBar.text:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                    self:Tag(self.EclipseBar.text, '[SnailUI:EclipseDirection]')
                 end
             end
 

@@ -4,6 +4,7 @@
 Configuration['DEATHKNIGHT'] = DefaultWithClassBar
 Configuration['DEATHKNIGHT']['UNHOLY'] = DefaultWithClassBarWithPet
 Configuration['DRUID'] = Default
+Configuration['DRUID']['BALANCE'] = DefaultWithClassBar
 Configuration['DRUID']['FERAL'] = DefaultWithClassBar
 Configuration['DRUID']['RESTORATION'] = DefaultHealer
 Configuration['HUNTER'] = DefaultWithPet
