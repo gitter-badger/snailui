@@ -10,8 +10,8 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------ 
 
 Version 0.2.3
+- Themes can now be changed via the in game interface options for SnailUI
 - Transparent background added to the chat frame to make it more visible
-- oUF and oUF_SpellRange are now included with SnailUI
 - A few bugs have been fixed
 
 ------------------------------------------------------------------------------ 

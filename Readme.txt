@@ -36,7 +36,7 @@ You can also stay up to date with the cutting edge versions of SnailUI by visiti
 
 Installation
 
-Read: SnailUI relies on oUF and oUF_SpellRange (both of which are included) so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the oUF, oUF_SpellRange, and SnailUI folders into your World of Warcraft / Interface / Addons folder and you are good to go. If any files already exist, overwrite them or delete them before continuing.
+Read: SnailUI relies on both oUF (the latest version from Haste's GitHub page here: https://github.com/haste/oUF/zipball/master) and oUF_SpellRange so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the SnailUI folder into your World of Warcraft / Interface / Addons folder and you are good to go.
 
 ------------------------------------------------------------------------------ 
 
