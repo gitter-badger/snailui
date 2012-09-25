@@ -21,7 +21,7 @@ function deepcopy(object)
 end
 -- v from http://lua-users.org/wiki/CopyTable
 
-Default = 
+Configuration.Themes.Default = 
 {
     ActionBars =
     {

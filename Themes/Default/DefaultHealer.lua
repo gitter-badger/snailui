@@ -1,7 +1,7 @@
 -- DefaultHealer.lua
 -- Written by Snail
 
-DefaultHealer = deepcopy(Default)
+DefaultHealer = deepcopy(Configuration.Themes.Default)
 DefaultHealer.Raid.anchor = 'BOTTOM'
 DefaultHealer.Raid.columns = 8
 DefaultHealer.Raid.height = 24

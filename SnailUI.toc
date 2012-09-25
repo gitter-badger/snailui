@@ -1,9 +1,10 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
+## SavedVariables: theme
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.2.2
+## Version: 0.2.3
 
 Configuration.lua
 

@@ -4,22 +4,24 @@
 class = select(2, UnitClass('Player'))
 version = '0.2.1'
 
--- Functions
+if not theme then
+    theme = Configuration.theme
+end
 
 function getConfiguration()
-    if Configuration[class] then
+    if Configuration.Themes[theme][class] then
         if spec then
-            if Configuration[class][spec] then
-                return Configuration[class][spec]
+            if Configuration.Themes[theme][class][spec] then
+                return Configuration.Themes[theme][class][spec]
             else
-                return Configuration[class]
+                return Configuration.Themes[theme][class]
             end
         else
-            return Configuration[class]
+            return Configuration.Themes[theme][class]
         end
     end
 
-    return Configuration
+    return Configuration.Themes[theme]
 end
 
 function trim(string1, string2)
@@ -47,8 +49,6 @@ function trim2(string)
 
     return string
 end
-
--- Tags
 
 oUF.Tags.Events['SnailUI:EclipseDirection'] = 'ECLIPSE_DIRECTION_CHANGE'
 oUF.Tags.Events['SnailUI:Health'] = 'UNIT_HEALTH UNIT_HEAL_PREDICTION'
@@ -126,7 +126,553 @@ oUF.Tags.Methods['SnailUI:SmallHealth'] = function(unit)
     return health
 end
 
--- Layout
+oUF:RegisterStyle('SnailUI', 
+    function(self, unit)
+        unit = unit:gsub('(.)', string.upper, 1)
+        
+        if getConfiguration()[unit] then            
+            self.frame = unit
+            self.menu = function(self)
+                if self.unit:match('^party') then
+                    ToggleDropDownMenu(1, nil, _G['PartyMemberFrame' .. self.id .. 'DropDown'], 'cursor', 0, 0)
+                elseif self.unit:match('^raid') then
+                    self.name = self.unit
+                    RaidGroupButton_ShowMenu(self)
+                else
+                    ToggleDropDownMenu(1, nil, _G[self.unit:gsub('(.)', string.upper, 1) .. 'FrameDropDown'], 'cursor', 0, 0)
+                end
+            end
+
+            self.background = self:CreateTexture(nil, 'LOW')
+            self.background:SetPoint('TOPLEFT', 1, -1)
+            self.background:SetSize(getConfiguration()[self.frame].width - 2, getConfiguration()[self.frame].height - 2)
+
+            self.border = self:CreateTexture(nil, 'BACKGROUND')
+            self.border:SetPoint('TOPLEFT')
+            self.border:SetSize(getConfiguration()[self.frame].width, getConfiguration()[self.frame].height)
+            self.border:SetTexture(0, 0, 0)
+
+            self.PostUpdate = function(self)
+                if UnitClass(self.unit) then
+                    self.classColor = RAID_CLASS_COLORS[select(2, UnitClass(self.unit))]
+                else
+                    self.classColor =
+                    {
+                        b = 1,
+                        g = 1,
+                        r = 1
+                    }
+                end
+
+                self.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                if UnitThreatSituation(self.unit) and (self.frame == 'Raid') and getConfiguration()[self.frame].colorByThreatLevel then
+                    if UnitThreatSituation(self.unit) > 0 then
+                        self.threatColor =
+                        {
+                            b = 0,
+                            g = 0,
+                            r = 0
+                        }
+
+                        self.threatColor.r, self.threatColor.g, self.threatColor.b = GetThreatStatusColor(UnitThreatSituation(self.unit))
+                        self.background:SetTexture(self.threatColor.r, self.threatColor.g, self.threatColor.b)
+                    end
+                end
+
+                if self.Castbar then
+                    self.Castbar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    self.Castbar.backgroundBottom:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                    self.Castbar.backgroundLeft:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                    self.Castbar.backgroundRight:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                    self.Castbar.backgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                end
+
+                if self.ClassIcons then
+                    self.ClassIcons.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                    for i = 1, 5 do
+                        self.ClassIcons[i]:SetVertexColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+                end
+
+                if self.CPoints then
+                    self.CPoints.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                    for i = 1, #self.CPoints do
+                        self.CPoints[i]:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+                end
+
+                if self.EclipseBar then
+                    self.EclipseBar.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                end
+
+                if self.Health then
+                    self.Health:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                    if self.HealPrediction.myBar then
+                        self.HealPrediction.myBar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+
+                    if self.HealPrediction.otherBar then
+                        self.HealPrediction.otherBar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+
+                    if self.Health.text then
+                        self.Health.text:SetTextColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+                end
+                
+                if self.Power then
+                    self.Power:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                    if self.Power.backgroundBottom then
+                        self.Power.backgroundBottom:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                        self.Power.backgroundLeft:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                        self.Power.backgroundRight:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                        self.Power.backgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+
+                    if self.Power.text then
+                        self.Power.text:SetColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+                end
+
+                if self.Runes then
+                    self.Runes.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                end
+
+                if self.WarlockSpecBars then
+                    self.warlockSpecBarsBackground:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                    for i = 1, #self.WarlockSpecBars do
+                        self.WarlockSpecBars[i]:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+                end
+            end
+
+            self.SpellRange =
+            {
+                Update = function(self, inRange)
+                    if Configuration.inactiveAlpha then
+                        if UnitIsUnit(self.unit, 'player') then
+                            inRange = true
+                        end
+
+                        if inRange then
+                            self:SetAlpha(1)
+                            self.inRange = inRange
+
+                            if getConfiguration()[self.frame].healthThreshold then
+                                if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) >= getConfiguration()[self.frame].healthThreshold then
+                                    self:SetAlpha(Configuration.inactiveAlpha)
+                                end
+                            end
+                        else
+                            self:SetAlpha(Configuration.inactiveAlpha)
+                            self.inRange = nil
+                        end
+                    end
+                end
+            }
+
+            self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', self.PostUpdate)
+            self:RegisterForClicks('AnyUp')
+            self:SetSize(getConfiguration()[self.frame].width, getConfiguration()[self.frame].height)
+            self:SetScript('OnEnter',
+                function(self)
+                    UnitFrame_UpdateTooltip(self)
+                end
+            )
+
+            if getConfiguration()[self.frame].healthThreshold then
+                self:RegisterEvent('UNIT_HEALTH',
+                    function(self)
+                        self:SetAlpha(Configuration.inactiveAlpha)
+
+                        if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) < getConfiguration()[self.frame].healthThreshold then
+                            if self.inRange then
+                                self:SetAlpha(1)
+                            end
+                        end
+                    end
+                )
+            end
+
+            if getConfiguration()[self.frame].BurningEmbersBar and (unit == 'Player') then
+                if (class == 'WARLOCK') and (spec == 'DESTRUCTION') then
+                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
+                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].BurningEmbersBar.anchor, getConfiguration()[self.frame].BurningEmbersBar.x, getConfiguration()[self.frame].BurningEmbersBar.y)
+                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width - 2, getConfiguration()[self.frame].BurningEmbersBar.height - 2)
+
+                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
+                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width - 2, getConfiguration()[self.frame].BurningEmbersBar.height - 2)
+
+                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
+                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width, getConfiguration()[self.frame].BurningEmbersBar.height)
+                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].BurningEmbersBar do
+                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
+                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].BurningEmbersBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].BurningEmbersBar[i].x, getConfiguration()[self.frame].BurningEmbersBar[i].y)
+                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].BurningEmbersBar[i].width - 2, getConfiguration()[self.frame].BurningEmbersBar[i].height - 2)
+                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
+                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
+                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].BurningEmbersBar[i].width, getConfiguration()[self.frame].BurningEmbersBar[i].height)
+                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].CastingBar then
+                self.Castbar = CreateFrame('StatusBar', nil, self)
+                self.Castbar:SetOrientation(getConfiguration()[self.frame].CastingBar.orientation)
+                self.Castbar:SetPoint(getConfiguration()[self.frame].CastingBar.anchor, getConfiguration()[self.frame].CastingBar.x, getConfiguration()[self.frame].CastingBar.y)
+                self.Castbar:SetSize(getConfiguration()[self.frame].CastingBar.width - 6, getConfiguration()[self.frame].CastingBar.height - 6)
+                self.Castbar:SetStatusBarTexture(Configuration.texture)
+
+                self.Castbar.backgroundBottom = self.Castbar:CreateTexture(nil, 'LOW')
+                self.Castbar.backgroundBottom:SetPoint('BOTTOM', 0, -2)
+                self.Castbar.backgroundBottom:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
+                self.Castbar.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                self.Castbar.backgroundLeft = self.Castbar:CreateTexture(nil, 'LOW')
+                self.Castbar.backgroundLeft:SetPoint('LEFT', -2, 0)
+                self.Castbar.backgroundLeft:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
+                self.Castbar.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                self.Castbar.backgroundRight = self.Castbar:CreateTexture(nil, 'LOW')
+                self.Castbar.backgroundRight:SetPoint('RIGHT', 2, 0)
+                self.Castbar.backgroundRight:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
+                self.Castbar.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                self.Castbar.backgroundTop = self.Castbar:CreateTexture(nil, 'LOW')
+                self.Castbar.backgroundTop:SetPoint('TOP', 0, 2)
+                self.Castbar.backgroundTop:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
+                self.Castbar.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+                                
+                self.Castbar.border = self.Castbar:CreateTexture(nil, 'BACKGROUND')
+                self.Castbar.border:SetPoint('TOPLEFT', -3, 3)
+                self.Castbar.border:SetSize(getConfiguration()[self.frame].CastingBar.width, getConfiguration()[self.frame].CastingBar.height)
+                self.Castbar.border:SetTexture(0, 0, 0)
+            end
+
+            if getConfiguration()[self.frame].ComboPointsBar and (unit == 'Player') then
+                if (class == 'ROGUE') or ((class == 'DRUID') and (spec == 'FERAL')) then
+                    self.CPoints = CreateFrame('Frame', nil, self)
+                    self.CPoints:SetPoint(getConfiguration()[self.frame].ComboPointsBar.anchor, getConfiguration()[self.frame].ComboPointsBar.x, getConfiguration()[self.frame].ComboPointsBar.y)
+                    self.CPoints:SetSize(getConfiguration()[self.frame].ComboPointsBar.width - 2, getConfiguration()[self.frame].ComboPointsBar.height - 2)
+
+                    self.CPoints.background = self.CPoints:CreateTexture(nil, 'BACKGROUND')
+                    self.CPoints.background:SetPoint('TOPLEFT')
+                    self.CPoints.background:SetSize(getConfiguration()[self.frame].ComboPointsBar.width - 2, getConfiguration()[self.frame].ComboPointsBar.height - 2)
+
+                    self.CPoints.border = self.CPoints:CreateTexture(nil, 'BACKGROUND')
+                    self.CPoints.border:SetPoint('TOPLEFT', -1, 1)
+                    self.CPoints.border:SetSize(getConfiguration()[self.frame].ComboPointsBar.width, getConfiguration()[self.frame].ComboPointsBar.height)
+                    self.CPoints.border:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].ComboPointsBar do
+                        self.CPoints[i] = CreateFrame('StatusBar', nil, self)
+                        self.CPoints[i]:SetPoint(getConfiguration()[self.frame].ComboPointsBar[i].anchor, self.CPoints, getConfiguration()[self.frame].ComboPointsBar[i].x, getConfiguration()[self.frame].ComboPointsBar[i].y)
+                        self.CPoints[i]:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width - 2, getConfiguration()[self.frame].ComboPointsBar[i].height - 2)
+                        self.CPoints[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.CPoints[i].border = self.CPoints:CreateTexture(nil, 'LOW')
+                        self.CPoints[i].border:SetPoint('TOPLEFT', self.CPoints[i], -1, 1)
+                        self.CPoints[i].border:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width, getConfiguration()[self.frame].ComboPointsBar[i].height)
+                        self.CPoints[i].border:SetTexture(0, 0, 0)
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].EclipseBar and (unit == 'Player') then
+                if (class == 'DRUID') and (spec == 'BALANCE') then
+                    self.EclipseBar = CreateFrame('Frame', nil, self)
+                    self.EclipseBar:SetPoint(getConfiguration()[self.frame].EclipseBar.anchor, getConfiguration()[self.frame].EclipseBar.x, getConfiguration()[self.frame].EclipseBar.y)
+                    self.EclipseBar:SetSize(getConfiguration()[self.frame].EclipseBar.width - 2, getConfiguration()[self.frame].EclipseBar.height - 2)
+
+                    self.EclipseBar.background = self.EclipseBar:CreateTexture(nil, 'BACKGROUND')
+                    self.EclipseBar.background:SetPoint('TOPLEFT')
+                    self.EclipseBar.background:SetSize(getConfiguration()[self.frame].EclipseBar.width - 2, getConfiguration()[self.frame].EclipseBar.height - 2)
+
+                    self.EclipseBar.border = self.EclipseBar:CreateTexture(nil, 'BACKGROUND')
+                    self.EclipseBar.border:SetPoint('TOPLEFT', -1, 1)
+                    self.EclipseBar.border:SetSize(getConfiguration()[self.frame].EclipseBar.width, getConfiguration()[self.frame].EclipseBar.height)
+                    self.EclipseBar.border:SetTexture(0, 0, 0)
+
+                    self.EclipseBar.innerBorder = self.EclipseBar:CreateTexture(nil, 'LOW')
+                    self.EclipseBar.innerBorder:SetPoint('TOPLEFT', 1, -1)
+                    self.EclipseBar.innerBorder:SetSize(getConfiguration()[self.frame].EclipseBar[1].width, getConfiguration()[self.frame].EclipseBar[1].height)
+                    self.EclipseBar.innerBorder:SetTexture(0, 0, 0)
+
+                    self.EclipseBar.LunarBar = CreateFrame('StatusBar', nil, self)
+                    self.EclipseBar.LunarBar:SetPoint(getConfiguration()[self.frame].EclipseBar[1].anchor, self.EclipseBar, getConfiguration()[self.frame].EclipseBar[1].x, getConfiguration()[self.frame].EclipseBar[1].y)
+                    self.EclipseBar.LunarBar:SetSize(getConfiguration()[self.frame].EclipseBar[1].width - 2, getConfiguration()[self.frame].EclipseBar[1].height - 2)
+                    self.EclipseBar.LunarBar:SetStatusBarTexture(Configuration.texture)
+                    self.EclipseBar.LunarBar:SetStatusBarColor(0.3, 0.52, 0.9)
+
+                    self.EclipseBar.SolarBar = CreateFrame('StatusBar', nil, self)
+                    self.EclipseBar.SolarBar:SetPoint('LEFT', self.EclipseBar.LunarBar:GetStatusBarTexture(), 'RIGHT')
+                    self.EclipseBar.SolarBar:SetSize(getConfiguration()[self.frame].EclipseBar[1].width - 2, getConfiguration()[self.frame].EclipseBar[1].height - 2)
+                    self.EclipseBar.SolarBar:SetStatusBarTexture(Configuration.texture)
+                    self.EclipseBar.SolarBar:SetStatusBarColor(0.8, 0.82, 0.6)
+
+                    self.EclipseBar.text = self.EclipseBar:CreateFontString(nil, 'OVERLAY')
+                    self.EclipseBar.text.frequentUpdates = true
+                    self.EclipseBar.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.EclipseBar.text:SetPoint('CENTER', self.EclipseBar.innerBorder, 1, 0)
+                    self.EclipseBar.text:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                    self:Tag(self.EclipseBar.text, '[SnailUI:EclipseDirection]')
+                end
+            end
+
+            if getConfiguration()[self.frame].DemonicFuryBar and (unit == 'Player') then
+                if (class == 'WARLOCK') and (spec == 'DEMONOLOGY') then
+                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
+                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].DemonicFuryBar.anchor, getConfiguration()[self.frame].DemonicFuryBar.x, getConfiguration()[self.frame].DemonicFuryBar.y)
+                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width - 2, getConfiguration()[self.frame].DemonicFuryBar.height - 2)
+
+                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
+                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width - 2, getConfiguration()[self.frame].DemonicFuryBar.height - 2)
+
+                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
+                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width, getConfiguration()[self.frame].DemonicFuryBar.height)
+                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].DemonicFuryBar do
+                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
+                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].DemonicFuryBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].DemonicFuryBar[i].x, getConfiguration()[self.frame].DemonicFuryBar[i].y)
+                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].DemonicFuryBar[i].width - 2, getConfiguration()[self.frame].DemonicFuryBar[i].height - 2)
+                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
+                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
+                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].DemonicFuryBar[i].width, getConfiguration()[self.frame].DemonicFuryBar[i].height)
+                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].HealthBar then
+                self:RegisterEvent('UNIT_HEAL_PREDICTION',
+                    function(self)
+                        self.HealPrediction.myBar:SetAlpha(self:GetAlpha() / 2)
+                        self.HealPrediction.otherBar:SetAlpha(self:GetAlpha() / 2)
+                    end
+                )
+
+                self.Health = CreateFrame('StatusBar', nil, self)
+                self.Health.frequentUpdates = true
+                self.Health:SetOrientation(getConfiguration()[self.frame].HealthBar.orientation)
+                self.Health:SetPoint(getConfiguration()[self.frame].HealthBar.anchor, getConfiguration()[self.frame].HealthBar.x, getConfiguration()[self.frame].HealthBar.y)
+                self.Health:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
+                self.Health:SetStatusBarTexture(Configuration.texture)
+                
+                self.Health.border = self.Health:CreateTexture(nil, 'LOW')
+                self.Health.border:SetPoint('TOPLEFT', -1, 1)
+                self.Health.border:SetSize(getConfiguration()[self.frame].HealthBar.width, getConfiguration()[self.frame].HealthBar.height)
+                self.Health.border:SetTexture(0, 0, 0)
+
+                self.HealPrediction =
+                {
+                    maxOverflow = 1,
+                    myBar = CreateFrame('StatusBar', nil, self),
+                    otherBar = CreateFrame('StatusBar', nil, self)
+                }
+
+                self.HealPrediction.myBar:SetPoint('TOPLEFT', self.Health:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
+                self.HealPrediction.myBar:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
+                self.HealPrediction.myBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
+                self.HealPrediction.myBar:SetStatusBarTexture(Configuration.texture)
+
+                self.HealPrediction.otherBar:SetPoint('TOPLEFT', self.HealPrediction.myBar:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
+                self.HealPrediction.otherBar:SetPoint('BOTTOMLEFT', self.HealPrediction.myBar:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
+                self.HealPrediction.otherBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
+                self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.texture)
+
+                if getConfiguration()[self.frame].HealthBar.Text then
+                    self.Health.text = self.Health:CreateFontString(nil, 'OVERLAY')
+                    self.Health.text.frequentUpdates = true
+                    self.Health.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.Health.text:SetPoint(getConfiguration()[self.frame].HealthBar.Text.anchor, getConfiguration()[self.frame].HealthBar.Text.x, getConfiguration()[self.frame].HealthBar.Text.y)
+
+                    if getConfiguration()[self.frame].HealthBar.smallText then
+                        self:Tag(self.Health.text, '[SnailUI:SmallHealth]')
+                    else
+                        self:Tag(self.Health.text, '[SnailUI:Health]')
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].HolyPowerBar and (unit == 'Player') then
+                if class == 'PALADIN' then
+                    self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
+                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].HolyPowerBar.anchor, getConfiguration()[self.frame].HolyPowerBar.x, getConfiguration()[self.frame].HolyPowerBar.y)
+                    self.ClassIcons:SetSize(getConfiguration()[self.frame].HolyPowerBar.width, getConfiguration()[self.frame].HolyPowerBar.height)
+                    self.ClassIcons:SetTexture(0, 0, 0)
+
+                    self.ClassIcons.background = self:CreateTexture(nil, 'BACKGROUND')
+                    self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
+                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].HolyPowerBar.width - 2, getConfiguration()[self.frame].HolyPowerBar.height - 2)
+
+                    for i = 1, 5 do
+                        self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
+
+                        if i <= #getConfiguration()[self.frame].HolyPowerBar then
+                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].HolyPowerBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].HolyPowerBar[i].x, getConfiguration()[self.frame].HolyPowerBar[i].y)
+                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].HolyPowerBar[i].width - 2, getConfiguration()[self.frame].HolyPowerBar[i].height - 2)
+                            self.ClassIcons[i]:SetTexture(Configuration.texture)
+
+                            self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
+                            self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
+                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].HolyPowerBar[i].width, getConfiguration()[self.frame].HolyPowerBar[i].height)
+                            self.ClassIcons[i].border:SetTexture(0, 0, 0)
+                        end
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].PowerBar then
+                self.Power = CreateFrame('StatusBar', nil, self)
+                self.Power.frequentUpdates = true
+                self.Power:SetOrientation(getConfiguration()[self.frame].PowerBar.orientation)
+                self.Power:SetPoint(getConfiguration()[self.frame].PowerBar.anchor, getConfiguration()[self.frame].PowerBar.x, getConfiguration()[self.frame].PowerBar.y)
+                self.Power:SetStatusBarTexture(Configuration.texture)
+
+                if getConfiguration()[self.frame].PowerBar.border then
+                    self.Power:SetSize(getConfiguration()[self.frame].PowerBar.width - 6, getConfiguration()[self.frame].PowerBar.height - 6)
+
+                    self.Power.backgroundBottom = self.Power:CreateTexture(nil, 'LOW')
+                    self.Power.backgroundBottom:SetPoint('BOTTOM', 0, -2)
+                    self.Power.backgroundBottom:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, 1)
+                    self.Power.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                    self.Power.backgroundLeft = self.Power:CreateTexture(nil, 'LOW')
+                    self.Power.backgroundLeft:SetPoint('LEFT', -2, 0)
+                    self.Power.backgroundLeft:SetSize(1, getConfiguration()[self.frame].PowerBar.height - 4)
+                    self.Power.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                    self.Power.backgroundRight = self.Power:CreateTexture(nil, 'LOW')
+                    self.Power.backgroundRight:SetPoint('RIGHT', 2, 0)
+                    self.Power.backgroundRight:SetSize(1, getConfiguration()[self.frame].PowerBar.height - 4)
+                    self.Power.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+
+                    self.Power.backgroundTop = self.Power:CreateTexture(nil, 'LOW')
+                    self.Power.backgroundTop:SetPoint('TOP', 0, 2)
+                    self.Power.backgroundTop:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, 1)
+                    self.Power.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+                                    
+                    self.Power.border = self.Power:CreateTexture(nil, 'BACKGROUND')
+                    self.Power.border:SetPoint('TOPLEFT', -3, 3)
+                    self.Power.border:SetSize(getConfiguration()[self.frame].PowerBar.width, getConfiguration()[self.frame].PowerBar.height)
+                    self.Power.border:SetTexture(0, 0, 0)
+                else
+                    self.Power:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, getConfiguration()[self.frame].PowerBar.height - 2)                    
+                
+                    self.Power.innerBorder = self.Power:CreateTexture(nil, 'LOW')
+                    self.Power.innerBorder:SetPoint('TOPLEFT', -1, 1)
+                    self.Power.innerBorder:SetSize(getConfiguration()[self.frame].PowerBar.width, getConfiguration()[self.frame].PowerBar.height)
+                    self.Power.innerBorder:SetTexture(0, 0, 0)
+                end
+            end
+
+            if getConfiguration()[self.frame].RuneBar and (unit == 'Player') then
+                if class == 'DEATHKNIGHT' then
+                    self.Runes = CreateFrame('Frame', nil, self)
+                    self.Runes:SetPoint(getConfiguration()[self.frame].RuneBar.anchor, getConfiguration()[self.frame].RuneBar.x, getConfiguration()[self.frame].RuneBar.y)
+                    self.Runes:SetSize(getConfiguration()[self.frame].RuneBar.width - 2, getConfiguration()[self.frame].RuneBar.height - 2)
+
+                    self.Runes.background = self.Runes:CreateTexture(nil, 'BACKGROUND')
+                    self.Runes.background:SetPoint('TOPLEFT')
+                    self.Runes.background:SetSize(getConfiguration()[self.frame].RuneBar.width - 2, getConfiguration()[self.frame].RuneBar.height - 2)
+
+                    self.Runes.border = self.Runes:CreateTexture(nil, 'BACKGROUND')
+                    self.Runes.border:SetPoint('TOPLEFT', -1, 1)
+                    self.Runes.border:SetSize(getConfiguration()[self.frame].RuneBar.width, getConfiguration()[self.frame].RuneBar.height)
+                    self.Runes.border:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].RuneBar do
+                        self.Runes[i] = CreateFrame('StatusBar', nil, self)
+                        self.Runes[i]:SetPoint(getConfiguration()[self.frame].RuneBar[i].anchor, self.Runes, getConfiguration()[self.frame].RuneBar[i].x, getConfiguration()[self.frame].RuneBar[i].y)
+                        self.Runes[i]:SetSize(getConfiguration()[self.frame].RuneBar[i].width - 2, getConfiguration()[self.frame].RuneBar[i].height - 2)
+                        self.Runes[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.Runes[i].border = self.Runes:CreateTexture(nil, 'LOW')
+                        self.Runes[i].border:SetPoint('TOPLEFT', self.Runes[i], -1, 1)
+                        self.Runes[i].border:SetSize(getConfiguration()[self.frame].RuneBar[i].width, getConfiguration()[self.frame].RuneBar[i].height)
+                        self.Runes[i].border:SetTexture(0, 0, 0)
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].ShadowOrbsBar and (unit == 'Player') then
+                if (class == 'PRIEST') and (spec == 'SHADOW') then
+                    self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
+                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].ShadowOrbsBar.anchor, getConfiguration()[self.frame].ShadowOrbsBar.x, getConfiguration()[self.frame].ShadowOrbsBar.y)
+                    self.ClassIcons:SetSize(getConfiguration()[self.frame].ShadowOrbsBar.width, getConfiguration()[self.frame].ShadowOrbsBar.height)
+                    self.ClassIcons:SetTexture(0, 0, 0)
+
+                    self.ClassIcons.background = self:CreateTexture(nil, 'LOW')
+                    self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
+                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].ShadowOrbsBar.width - 2, getConfiguration()[self.frame].ShadowOrbsBar.height - 2)
+
+                    for i = 1, 5 do
+                        self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
+
+                        if i <= #getConfiguration()[self.frame].ShadowOrbsBar then
+                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].ShadowOrbsBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].ShadowOrbsBar[i].x, getConfiguration()[self.frame].ShadowOrbsBar[i].y)
+                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].ShadowOrbsBar[i].width - 2, getConfiguration()[self.frame].ShadowOrbsBar[i].height - 2)
+                            self.ClassIcons[i]:SetTexture(Configuration.texture)
+
+                            self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
+                            self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
+                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].ShadowOrbsBar[i].width, getConfiguration()[self.frame].ShadowOrbsBar[i].height)
+                            self.ClassIcons[i].border:SetTexture(0, 0, 0)
+                        end
+                    end
+                end
+            end
+
+            if getConfiguration()[self.frame].SoulShardsBar and (unit == 'Player') then
+                if (class == 'WARLOCK') and (spec == 'AFFLICTION') then
+                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
+                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].SoulShardsBar.anchor, getConfiguration()[self.frame].SoulShardsBar.x, getConfiguration()[self.frame].SoulShardsBar.y)
+                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].SoulShardsBar.width - 2, getConfiguration()[self.frame].SoulShardsBar.height - 2)
+
+                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
+                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].SoulShardsBar.width - 2, getConfiguration()[self.frame].SoulShardsBar.height - 2)
+
+                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
+                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
+                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].SoulShardsBar.width, getConfiguration()[self.frame].SoulShardsBar.height)
+                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
+
+                    for i = 1, #getConfiguration()[self.frame].SoulShardsBar do
+                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
+                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].SoulShardsBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].SoulShardsBar[i].x, getConfiguration()[self.frame].SoulShardsBar[i].y)
+                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].SoulShardsBar[i].width - 2, getConfiguration()[self.frame].SoulShardsBar[i].height - 2)
+                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
+
+                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
+                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
+                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].SoulShardsBar[i].width, getConfiguration()[self.frame].SoulShardsBar[i].height)
+                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+                    end
+                end
+            end
+        end
+    end
+)
 
 oUF:Factory(
     function(self)
@@ -144,24 +690,49 @@ oUF:Factory(
         category.name = 'SnailUI'
 
         category.label1 = category:CreateFontString(nil, 'OVERLAY', 'GameFontNormalLarge')
+        category.label1:SetJustifyH('LEFT')
         category.label1:SetPoint('TOPLEFT', 16, -16)
-        category.label1:SetText('SnailUI ' .. version)
+        category.label1:SetText('SnailUI')
 
         category.label2 = category:CreateFontString(nil, 'OVERLAY', 'GameFontHighlight')
+        category.label2:SetJustifyH('LEFT')
         category.label2:SetPoint('TOPLEFT', 16, -36)
-        category.label2:SetText('Snail\'s minimalistic UI.')
+        category.label2:SetText(
+            'Snail\'s minimalistic UI' ..
+            '\n\n' ..
+            'Version ' .. version ..
+            '\n\n' ..
+            'Written by Snail' ..
+            '\n' ..
+            'http://twitter.com/1Snail' ..
+            '\n' ..
+            'http://wowinterface.com/downloads/info20900-SnailUI'
+        )
+
+        category.default = function(self)
+        end
+
+        category.okay = function(self)
+            ReloadUI();
+        end
 
         generalSubcategory = CreateFrame('Frame', nil, category)
         generalSubcategory.name = 'General'
         generalSubcategory.parent = category.name
 
         generalSubcategory.label1 = generalSubcategory:CreateFontString(nil, 'OVERLAY', 'GameFontNormalLarge')
+        generalSubcategory.label1:SetJustifyH('LEFT')
         generalSubcategory.label1:SetPoint('TOPLEFT', 16, -16)
         generalSubcategory.label1:SetText('General')
 
         generalSubcategory.label2 = generalSubcategory:CreateFontString(nil, 'OVERLAY', 'GameFontHighlight')
+        generalSubcategory.label2:SetJustifyH('LEFT')
         generalSubcategory.label2:SetPoint('TOPLEFT', 16, -36)
-        generalSubcategory.label2:SetText('General options for SnailUI.')
+        generalSubcategory.label2:SetText(
+            'General options for SnailUI' ..
+            '\n\n' ..
+            'Theme a'
+        )
 
         InterfaceOptions_AddCategory(category)
         InterfaceOptions_AddCategory(generalSubcategory)
@@ -763,6 +1334,11 @@ oUF:Factory(
             ChatFrame1.borderTop:SetSize(getConfiguration().Chat.width, 3)
             ChatFrame1.borderTop:SetTexture(0, 0, 0)
 
+            ChatFrame1.innerBorder = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
+            ChatFrame1.innerBorder:SetPoint('TOPLEFT', -2, 2)
+            ChatFrame1.innerBorder:SetSize(getConfiguration().Chat.width - 6, getConfiguration().Chat.height - 6)
+            ChatFrame1.innerBorder:SetTexture(0, 0, 0, 0.5)
+
             ChatFrame1EditBox:SetPoint('TOPLEFT', ChatFrame1, 'TOPLEFT', -5, 6)
         end
 
@@ -1008,554 +1584,6 @@ oUF:Factory(
         if getConfiguration().TargetTarget then
             targetTargetFrame = self:Spawn('TargetTarget')
             targetTargetFrame:SetPoint(getConfiguration().TargetTarget.anchor, getConfiguration().TargetTarget.x, getConfiguration().TargetTarget.y)
-        end
-    end
-)
-
-oUF:RegisterStyle('SnailUI', 
-    function(self, unit)
-        unit = unit:gsub('(.)', string.upper, 1)
-        
-        if getConfiguration()[unit] then            
-            self.frame = unit
-            self.menu = function(self)
-                if self.unit:match('^party') then
-                    ToggleDropDownMenu(1, nil, _G['PartyMemberFrame' .. self.id .. 'DropDown'], 'cursor', 0, 0)
-                elseif self.unit:match('^raid') then
-                    self.name = self.unit
-                    RaidGroupButton_ShowMenu(self)
-                else
-                    ToggleDropDownMenu(1, nil, _G[self.unit:gsub('(.)', string.upper, 1) .. 'FrameDropDown'], 'cursor', 0, 0)
-                end
-            end
-
-            self.background = self:CreateTexture(nil, 'LOW')
-            self.background:SetPoint('TOPLEFT', 1, -1)
-            self.background:SetSize(getConfiguration()[self.frame].width - 2, getConfiguration()[self.frame].height - 2)
-
-            self.border = self:CreateTexture(nil, 'BACKGROUND')
-            self.border:SetPoint('TOPLEFT')
-            self.border:SetSize(getConfiguration()[self.frame].width, getConfiguration()[self.frame].height)
-            self.border:SetTexture(0, 0, 0)
-
-            self.PostUpdate = function(self)
-                if UnitClass(self.unit) then
-                    self.classColor = RAID_CLASS_COLORS[select(2, UnitClass(self.unit))]
-                else
-                    self.classColor =
-                    {
-                        b = 1,
-                        g = 1,
-                        r = 1
-                    }
-                end
-
-                self.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-
-                if UnitThreatSituation(self.unit) and (self.frame == 'Raid') and getConfiguration()[self.frame].colorByThreatLevel then
-                    if UnitThreatSituation(self.unit) > 0 then
-                        self.threatColor =
-                        {
-                            b = 0,
-                            g = 0,
-                            r = 0
-                        }
-
-                        self.threatColor.r, self.threatColor.g, self.threatColor.b = GetThreatStatusColor(UnitThreatSituation(self.unit))
-                        self.background:SetTexture(self.threatColor.r, self.threatColor.g, self.threatColor.b)
-                    end
-                end
-
-                if self.Castbar then
-                    self.Castbar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    self.Castbar.backgroundBottom:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                    self.Castbar.backgroundLeft:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                    self.Castbar.backgroundRight:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                    self.Castbar.backgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                end
-
-                if self.ClassIcons then
-                    self.ClassIcons.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-
-                    for i = 1, 5 do
-                        self.ClassIcons[i]:SetVertexColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-                end
-
-                if self.CPoints then
-                    self.CPoints.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-
-                    for i = 1, #self.CPoints do
-                        self.CPoints[i]:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-                end
-
-                if self.EclipseBar then
-                    self.EclipseBar.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                end
-
-                if self.Health then
-                    self.Health:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-
-                    if self.HealPrediction.myBar then
-                        self.HealPrediction.myBar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-
-                    if self.HealPrediction.otherBar then
-                        self.HealPrediction.otherBar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-
-                    if self.Health.text then
-                        self.Health.text:SetTextColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-                end
-                
-                if self.Power then
-                    self.Power:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-
-                    if self.Power.backgroundBottom then
-                        self.Power.backgroundBottom:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                        self.Power.backgroundLeft:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                        self.Power.backgroundRight:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                        self.Power.backgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-
-                    if self.Power.text then
-                        self.Power.text:SetColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-                end
-
-                if self.Runes then
-                    self.Runes.background:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-                end
-
-                if self.WarlockSpecBars then
-                    self.warlockSpecBarsBackground:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
-
-                    for i = 1, #self.WarlockSpecBars do
-                        self.WarlockSpecBars[i]:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
-                    end
-                end
-            end
-
-            self.SpellRange =
-            {
-                Update = function(self, inRange)
-                    if Configuration.inactiveAlpha then
-                        if UnitIsUnit(self.unit, 'player') then
-                            inRange = true
-                        end
-
-                        if inRange then
-                            self:SetAlpha(1)
-                            self.inRange = inRange
-
-                            if getConfiguration()[self.frame].healthThreshold then
-                                if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) >= getConfiguration()[self.frame].healthThreshold then
-                                    self:SetAlpha(Configuration.inactiveAlpha)
-                                end
-                            end
-                        else
-                            self:SetAlpha(Configuration.inactiveAlpha)
-                            self.inRange = nil
-                        end
-                    end
-                end
-            }
-
-            self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', self.PostUpdate)
-            self:RegisterForClicks('AnyUp')
-            self:SetSize(getConfiguration()[self.frame].width, getConfiguration()[self.frame].height)
-            self:SetScript('OnEnter',
-                function(self)
-                    UnitFrame_UpdateTooltip(self)
-                end
-            )
-
-            if getConfiguration()[self.frame].healthThreshold then
-                self:RegisterEvent('UNIT_HEALTH',
-                    function(self)
-                        self:SetAlpha(Configuration.inactiveAlpha)
-
-                        if math.floor(((UnitHealth(self.unit) / UnitHealthMax(self.unit)) * 100) + 0.5) < getConfiguration()[self.frame].healthThreshold then
-                            if self.inRange then
-                                self:SetAlpha(1)
-                            end
-                        end
-                    end
-                )
-            end
-
-            if getConfiguration()[self.frame].BurningEmbersBar and (unit == 'Player') then
-                if (class == 'WARLOCK') and (spec == 'DESTRUCTION') then
-                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
-                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].BurningEmbersBar.anchor, getConfiguration()[self.frame].BurningEmbersBar.x, getConfiguration()[self.frame].BurningEmbersBar.y)
-                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width - 2, getConfiguration()[self.frame].BurningEmbersBar.height - 2)
-
-                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
-                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
-                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width - 2, getConfiguration()[self.frame].BurningEmbersBar.height - 2)
-
-                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
-                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
-                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].BurningEmbersBar.width, getConfiguration()[self.frame].BurningEmbersBar.height)
-                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
-
-                    for i = 1, #getConfiguration()[self.frame].BurningEmbersBar do
-                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
-                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].BurningEmbersBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].BurningEmbersBar[i].x, getConfiguration()[self.frame].BurningEmbersBar[i].y)
-                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].BurningEmbersBar[i].width - 2, getConfiguration()[self.frame].BurningEmbersBar[i].height - 2)
-                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
-
-                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
-                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
-                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].BurningEmbersBar[i].width, getConfiguration()[self.frame].BurningEmbersBar[i].height)
-                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].CastingBar then
-                self.Castbar = CreateFrame('StatusBar', nil, self)
-                self.Castbar:SetOrientation(getConfiguration()[self.frame].CastingBar.orientation)
-                self.Castbar:SetPoint(getConfiguration()[self.frame].CastingBar.anchor, getConfiguration()[self.frame].CastingBar.x, getConfiguration()[self.frame].CastingBar.y)
-                self.Castbar:SetSize(getConfiguration()[self.frame].CastingBar.width - 6, getConfiguration()[self.frame].CastingBar.height - 6)
-                self.Castbar:SetStatusBarTexture(Configuration.texture)
-
-                self.Castbar.backgroundBottom = self.Castbar:CreateTexture(nil, 'LOW')
-                self.Castbar.backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                self.Castbar.backgroundBottom:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
-                self.Castbar.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                self.Castbar.backgroundLeft = self.Castbar:CreateTexture(nil, 'LOW')
-                self.Castbar.backgroundLeft:SetPoint('LEFT', -2, 0)
-                self.Castbar.backgroundLeft:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
-                self.Castbar.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                self.Castbar.backgroundRight = self.Castbar:CreateTexture(nil, 'LOW')
-                self.Castbar.backgroundRight:SetPoint('RIGHT', 2, 0)
-                self.Castbar.backgroundRight:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
-                self.Castbar.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                self.Castbar.backgroundTop = self.Castbar:CreateTexture(nil, 'LOW')
-                self.Castbar.backgroundTop:SetPoint('TOP', 0, 2)
-                self.Castbar.backgroundTop:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
-                self.Castbar.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-                                
-                self.Castbar.border = self.Castbar:CreateTexture(nil, 'BACKGROUND')
-                self.Castbar.border:SetPoint('TOPLEFT', -3, 3)
-                self.Castbar.border:SetSize(getConfiguration()[self.frame].CastingBar.width, getConfiguration()[self.frame].CastingBar.height)
-                self.Castbar.border:SetTexture(0, 0, 0)
-            end
-
-            if getConfiguration()[self.frame].ComboPointsBar and (unit == 'Player') then
-                if (class == 'ROGUE') or ((class == 'DRUID') and (spec == 'FERAL')) then
-                    self.CPoints = CreateFrame('Frame', nil, self)
-                    self.CPoints:SetPoint(getConfiguration()[self.frame].ComboPointsBar.anchor, getConfiguration()[self.frame].ComboPointsBar.x, getConfiguration()[self.frame].ComboPointsBar.y)
-                    self.CPoints:SetSize(getConfiguration()[self.frame].ComboPointsBar.width - 2, getConfiguration()[self.frame].ComboPointsBar.height - 2)
-
-                    self.CPoints.background = self.CPoints:CreateTexture(nil, 'BACKGROUND')
-                    self.CPoints.background:SetPoint('TOPLEFT')
-                    self.CPoints.background:SetSize(getConfiguration()[self.frame].ComboPointsBar.width - 2, getConfiguration()[self.frame].ComboPointsBar.height - 2)
-
-                    self.CPoints.border = self.CPoints:CreateTexture(nil, 'BACKGROUND')
-                    self.CPoints.border:SetPoint('TOPLEFT', -1, 1)
-                    self.CPoints.border:SetSize(getConfiguration()[self.frame].ComboPointsBar.width, getConfiguration()[self.frame].ComboPointsBar.height)
-                    self.CPoints.border:SetTexture(0, 0, 0)
-
-                    for i = 1, #getConfiguration()[self.frame].ComboPointsBar do
-                        self.CPoints[i] = CreateFrame('StatusBar', nil, self)
-                        self.CPoints[i]:SetPoint(getConfiguration()[self.frame].ComboPointsBar[i].anchor, self.CPoints, getConfiguration()[self.frame].ComboPointsBar[i].x, getConfiguration()[self.frame].ComboPointsBar[i].y)
-                        self.CPoints[i]:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width - 2, getConfiguration()[self.frame].ComboPointsBar[i].height - 2)
-                        self.CPoints[i]:SetStatusBarTexture(Configuration.texture)
-
-                        self.CPoints[i].border = self.CPoints:CreateTexture(nil, 'LOW')
-                        self.CPoints[i].border:SetPoint('TOPLEFT', self.CPoints[i], -1, 1)
-                        self.CPoints[i].border:SetSize(getConfiguration()[self.frame].ComboPointsBar[i].width, getConfiguration()[self.frame].ComboPointsBar[i].height)
-                        self.CPoints[i].border:SetTexture(0, 0, 0)
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].EclipseBar and (unit == 'Player') then
-                if (class == 'DRUID') and (spec == 'BALANCE') then
-                    self.EclipseBar = CreateFrame('Frame', nil, self)
-                    self.EclipseBar:SetPoint(getConfiguration()[self.frame].EclipseBar.anchor, getConfiguration()[self.frame].EclipseBar.x, getConfiguration()[self.frame].EclipseBar.y)
-                    self.EclipseBar:SetSize(getConfiguration()[self.frame].EclipseBar.width - 2, getConfiguration()[self.frame].EclipseBar.height - 2)
-
-                    self.EclipseBar.background = self.EclipseBar:CreateTexture(nil, 'BACKGROUND')
-                    self.EclipseBar.background:SetPoint('TOPLEFT')
-                    self.EclipseBar.background:SetSize(getConfiguration()[self.frame].EclipseBar.width - 2, getConfiguration()[self.frame].EclipseBar.height - 2)
-
-                    self.EclipseBar.border = self.EclipseBar:CreateTexture(nil, 'BACKGROUND')
-                    self.EclipseBar.border:SetPoint('TOPLEFT', -1, 1)
-                    self.EclipseBar.border:SetSize(getConfiguration()[self.frame].EclipseBar.width, getConfiguration()[self.frame].EclipseBar.height)
-                    self.EclipseBar.border:SetTexture(0, 0, 0)
-
-                    self.EclipseBar.innerBorder = self.EclipseBar:CreateTexture(nil, 'LOW')
-                    self.EclipseBar.innerBorder:SetPoint('TOPLEFT', 1, -1)
-                    self.EclipseBar.innerBorder:SetSize(getConfiguration()[self.frame].EclipseBar[1].width, getConfiguration()[self.frame].EclipseBar[1].height)
-                    self.EclipseBar.innerBorder:SetTexture(0, 0, 0)
-
-                    self.EclipseBar.LunarBar = CreateFrame('StatusBar', nil, self)
-                    self.EclipseBar.LunarBar:SetPoint(getConfiguration()[self.frame].EclipseBar[1].anchor, self.EclipseBar, getConfiguration()[self.frame].EclipseBar[1].x, getConfiguration()[self.frame].EclipseBar[1].y)
-                    self.EclipseBar.LunarBar:SetSize(getConfiguration()[self.frame].EclipseBar[1].width - 2, getConfiguration()[self.frame].EclipseBar[1].height - 2)
-                    self.EclipseBar.LunarBar:SetStatusBarTexture(Configuration.texture)
-                    self.EclipseBar.LunarBar:SetStatusBarColor(0.3, 0.52, 0.9)
-
-                    self.EclipseBar.SolarBar = CreateFrame('StatusBar', nil, self)
-                    self.EclipseBar.SolarBar:SetPoint('LEFT', self.EclipseBar.LunarBar:GetStatusBarTexture(), 'RIGHT')
-                    self.EclipseBar.SolarBar:SetSize(getConfiguration()[self.frame].EclipseBar[1].width - 2, getConfiguration()[self.frame].EclipseBar[1].height - 2)
-                    self.EclipseBar.SolarBar:SetStatusBarTexture(Configuration.texture)
-                    self.EclipseBar.SolarBar:SetStatusBarColor(0.8, 0.82, 0.6)
-
-                    self.EclipseBar.text = self.EclipseBar:CreateFontString(nil, 'OVERLAY')
-                    self.EclipseBar.text.frequentUpdates = true
-                    self.EclipseBar.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
-                    self.EclipseBar.text:SetPoint('CENTER', self.EclipseBar.innerBorder, 1, 0)
-                    self.EclipseBar.text:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                    self:Tag(self.EclipseBar.text, '[SnailUI:EclipseDirection]')
-                end
-            end
-
-            if getConfiguration()[self.frame].DemonicFuryBar and (unit == 'Player') then
-                if (class == 'WARLOCK') and (spec == 'DEMONOLOGY') then
-                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
-                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].DemonicFuryBar.anchor, getConfiguration()[self.frame].DemonicFuryBar.x, getConfiguration()[self.frame].DemonicFuryBar.y)
-                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width - 2, getConfiguration()[self.frame].DemonicFuryBar.height - 2)
-
-                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
-                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
-                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width - 2, getConfiguration()[self.frame].DemonicFuryBar.height - 2)
-
-                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
-                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
-                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].DemonicFuryBar.width, getConfiguration()[self.frame].DemonicFuryBar.height)
-                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
-
-                    for i = 1, #getConfiguration()[self.frame].DemonicFuryBar do
-                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
-                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].DemonicFuryBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].DemonicFuryBar[i].x, getConfiguration()[self.frame].DemonicFuryBar[i].y)
-                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].DemonicFuryBar[i].width - 2, getConfiguration()[self.frame].DemonicFuryBar[i].height - 2)
-                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
-
-                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
-                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
-                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].DemonicFuryBar[i].width, getConfiguration()[self.frame].DemonicFuryBar[i].height)
-                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].HealthBar then
-                self:RegisterEvent('UNIT_HEAL_PREDICTION',
-                    function(self)
-                        self.HealPrediction.myBar:SetAlpha(self:GetAlpha() / 2)
-                        self.HealPrediction.otherBar:SetAlpha(self:GetAlpha() / 2)
-                    end
-                )
-
-                self.Health = CreateFrame('StatusBar', nil, self)
-                self.Health.frequentUpdates = true
-                self.Health:SetOrientation(getConfiguration()[self.frame].HealthBar.orientation)
-                self.Health:SetPoint(getConfiguration()[self.frame].HealthBar.anchor, getConfiguration()[self.frame].HealthBar.x, getConfiguration()[self.frame].HealthBar.y)
-                self.Health:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
-                self.Health:SetStatusBarTexture(Configuration.texture)
-                
-                self.Health.border = self.Health:CreateTexture(nil, 'LOW')
-                self.Health.border:SetPoint('TOPLEFT', -1, 1)
-                self.Health.border:SetSize(getConfiguration()[self.frame].HealthBar.width, getConfiguration()[self.frame].HealthBar.height)
-                self.Health.border:SetTexture(0, 0, 0)
-
-                self.HealPrediction =
-                {
-                    maxOverflow = 1,
-                    myBar = CreateFrame('StatusBar', nil, self),
-                    otherBar = CreateFrame('StatusBar', nil, self)
-                }
-
-                self.HealPrediction.myBar:SetPoint('TOPLEFT', self.Health:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
-                self.HealPrediction.myBar:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
-                self.HealPrediction.myBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
-                self.HealPrediction.myBar:SetStatusBarTexture(Configuration.texture)
-
-                self.HealPrediction.otherBar:SetPoint('TOPLEFT', self.HealPrediction.myBar:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
-                self.HealPrediction.otherBar:SetPoint('BOTTOMLEFT', self.HealPrediction.myBar:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
-                self.HealPrediction.otherBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
-                self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.texture)
-
-                if getConfiguration()[self.frame].HealthBar.Text then
-                    self.Health.text = self.Health:CreateFontString(nil, 'OVERLAY')
-                    self.Health.text.frequentUpdates = true
-                    self.Health.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
-                    self.Health.text:SetPoint(getConfiguration()[self.frame].HealthBar.Text.anchor, getConfiguration()[self.frame].HealthBar.Text.x, getConfiguration()[self.frame].HealthBar.Text.y)
-
-                    if getConfiguration()[self.frame].HealthBar.smallText then
-                        self:Tag(self.Health.text, '[SnailUI:SmallHealth]')
-                    else
-                        self:Tag(self.Health.text, '[SnailUI:Health]')
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].HolyPowerBar and (unit == 'Player') then
-                if class == 'PALADIN' then
-                    self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
-                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].HolyPowerBar.anchor, getConfiguration()[self.frame].HolyPowerBar.x, getConfiguration()[self.frame].HolyPowerBar.y)
-                    self.ClassIcons:SetSize(getConfiguration()[self.frame].HolyPowerBar.width, getConfiguration()[self.frame].HolyPowerBar.height)
-                    self.ClassIcons:SetTexture(0, 0, 0)
-
-                    self.ClassIcons.background = self:CreateTexture(nil, 'BACKGROUND')
-                    self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
-                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].HolyPowerBar.width - 2, getConfiguration()[self.frame].HolyPowerBar.height - 2)
-
-                    for i = 1, 5 do
-                        self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
-
-                        if i <= #getConfiguration()[self.frame].HolyPowerBar then
-                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].HolyPowerBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].HolyPowerBar[i].x, getConfiguration()[self.frame].HolyPowerBar[i].y)
-                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].HolyPowerBar[i].width - 2, getConfiguration()[self.frame].HolyPowerBar[i].height - 2)
-                            self.ClassIcons[i]:SetTexture(Configuration.texture)
-
-                            self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
-                            self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
-                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].HolyPowerBar[i].width, getConfiguration()[self.frame].HolyPowerBar[i].height)
-                            self.ClassIcons[i].border:SetTexture(0, 0, 0)
-                        end
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].PowerBar then
-                self.Power = CreateFrame('StatusBar', nil, self)
-                self.Power.frequentUpdates = true
-                self.Power:SetOrientation(getConfiguration()[self.frame].PowerBar.orientation)
-                self.Power:SetPoint(getConfiguration()[self.frame].PowerBar.anchor, getConfiguration()[self.frame].PowerBar.x, getConfiguration()[self.frame].PowerBar.y)
-                self.Power:SetStatusBarTexture(Configuration.texture)
-
-                if getConfiguration()[self.frame].PowerBar.border then
-                    self.Power:SetSize(getConfiguration()[self.frame].PowerBar.width - 6, getConfiguration()[self.frame].PowerBar.height - 6)
-
-                    self.Power.backgroundBottom = self.Power:CreateTexture(nil, 'LOW')
-                    self.Power.backgroundBottom:SetPoint('BOTTOM', 0, -2)
-                    self.Power.backgroundBottom:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, 1)
-                    self.Power.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                    self.Power.backgroundLeft = self.Power:CreateTexture(nil, 'LOW')
-                    self.Power.backgroundLeft:SetPoint('LEFT', -2, 0)
-                    self.Power.backgroundLeft:SetSize(1, getConfiguration()[self.frame].PowerBar.height - 4)
-                    self.Power.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                    self.Power.backgroundRight = self.Power:CreateTexture(nil, 'LOW')
-                    self.Power.backgroundRight:SetPoint('RIGHT', 2, 0)
-                    self.Power.backgroundRight:SetSize(1, getConfiguration()[self.frame].PowerBar.height - 4)
-                    self.Power.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-
-                    self.Power.backgroundTop = self.Power:CreateTexture(nil, 'LOW')
-                    self.Power.backgroundTop:SetPoint('TOP', 0, 2)
-                    self.Power.backgroundTop:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, 1)
-                    self.Power.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-                                    
-                    self.Power.border = self.Power:CreateTexture(nil, 'BACKGROUND')
-                    self.Power.border:SetPoint('TOPLEFT', -3, 3)
-                    self.Power.border:SetSize(getConfiguration()[self.frame].PowerBar.width, getConfiguration()[self.frame].PowerBar.height)
-                    self.Power.border:SetTexture(0, 0, 0)
-                else
-                    self.Power:SetSize(getConfiguration()[self.frame].PowerBar.width - 2, getConfiguration()[self.frame].PowerBar.height - 2)                    
-                
-                    self.Power.innerBorder = self.Power:CreateTexture(nil, 'LOW')
-                    self.Power.innerBorder:SetPoint('TOPLEFT', -1, 1)
-                    self.Power.innerBorder:SetSize(getConfiguration()[self.frame].PowerBar.width, getConfiguration()[self.frame].PowerBar.height)
-                    self.Power.innerBorder:SetTexture(0, 0, 0)
-                end
-            end
-
-            if getConfiguration()[self.frame].RuneBar and (unit == 'Player') then
-                if class == 'DEATHKNIGHT' then
-                    self.Runes = CreateFrame('Frame', nil, self)
-                    self.Runes:SetPoint(getConfiguration()[self.frame].RuneBar.anchor, getConfiguration()[self.frame].RuneBar.x, getConfiguration()[self.frame].RuneBar.y)
-                    self.Runes:SetSize(getConfiguration()[self.frame].RuneBar.width - 2, getConfiguration()[self.frame].RuneBar.height - 2)
-
-                    self.Runes.background = self.Runes:CreateTexture(nil, 'BACKGROUND')
-                    self.Runes.background:SetPoint('TOPLEFT')
-                    self.Runes.background:SetSize(getConfiguration()[self.frame].RuneBar.width - 2, getConfiguration()[self.frame].RuneBar.height - 2)
-
-                    self.Runes.border = self.Runes:CreateTexture(nil, 'BACKGROUND')
-                    self.Runes.border:SetPoint('TOPLEFT', -1, 1)
-                    self.Runes.border:SetSize(getConfiguration()[self.frame].RuneBar.width, getConfiguration()[self.frame].RuneBar.height)
-                    self.Runes.border:SetTexture(0, 0, 0)
-
-                    for i = 1, #getConfiguration()[self.frame].RuneBar do
-                        self.Runes[i] = CreateFrame('StatusBar', nil, self)
-                        self.Runes[i]:SetPoint(getConfiguration()[self.frame].RuneBar[i].anchor, self.Runes, getConfiguration()[self.frame].RuneBar[i].x, getConfiguration()[self.frame].RuneBar[i].y)
-                        self.Runes[i]:SetSize(getConfiguration()[self.frame].RuneBar[i].width - 2, getConfiguration()[self.frame].RuneBar[i].height - 2)
-                        self.Runes[i]:SetStatusBarTexture(Configuration.texture)
-
-                        self.Runes[i].border = self.Runes:CreateTexture(nil, 'LOW')
-                        self.Runes[i].border:SetPoint('TOPLEFT', self.Runes[i], -1, 1)
-                        self.Runes[i].border:SetSize(getConfiguration()[self.frame].RuneBar[i].width, getConfiguration()[self.frame].RuneBar[i].height)
-                        self.Runes[i].border:SetTexture(0, 0, 0)
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].ShadowOrbsBar and (unit == 'Player') then
-                if (class == 'PRIEST') and (spec == 'SHADOW') then
-                    self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
-                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].ShadowOrbsBar.anchor, getConfiguration()[self.frame].ShadowOrbsBar.x, getConfiguration()[self.frame].ShadowOrbsBar.y)
-                    self.ClassIcons:SetSize(getConfiguration()[self.frame].ShadowOrbsBar.width, getConfiguration()[self.frame].ShadowOrbsBar.height)
-                    self.ClassIcons:SetTexture(0, 0, 0)
-
-                    self.ClassIcons.background = self:CreateTexture(nil, 'LOW')
-                    self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
-                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].ShadowOrbsBar.width - 2, getConfiguration()[self.frame].ShadowOrbsBar.height - 2)
-
-                    for i = 1, 5 do
-                        self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
-
-                        if i <= #getConfiguration()[self.frame].ShadowOrbsBar then
-                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].ShadowOrbsBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].ShadowOrbsBar[i].x, getConfiguration()[self.frame].ShadowOrbsBar[i].y)
-                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].ShadowOrbsBar[i].width - 2, getConfiguration()[self.frame].ShadowOrbsBar[i].height - 2)
-                            self.ClassIcons[i]:SetTexture(Configuration.texture)
-
-                            self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
-                            self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
-                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].ShadowOrbsBar[i].width, getConfiguration()[self.frame].ShadowOrbsBar[i].height)
-                            self.ClassIcons[i].border:SetTexture(0, 0, 0)
-                        end
-                    end
-                end
-            end
-
-            if getConfiguration()[self.frame].SoulShardsBar and (unit == 'Player') then
-                if (class == 'WARLOCK') and (spec == 'AFFLICTION') then
-                    self.WarlockSpecBars = CreateFrame('Frame', nil, self)
-                    self.WarlockSpecBars:SetPoint(getConfiguration()[self.frame].SoulShardsBar.anchor, getConfiguration()[self.frame].SoulShardsBar.x, getConfiguration()[self.frame].SoulShardsBar.y)
-                    self.WarlockSpecBars:SetSize(getConfiguration()[self.frame].SoulShardsBar.width - 2, getConfiguration()[self.frame].SoulShardsBar.height - 2)
-
-                    self.warlockSpecBarsBackground = self:CreateTexture(nil, 'BACKGROUND')
-                    self.warlockSpecBarsBackground:SetPoint('TOPLEFT', self.WarlockSpecBars)
-                    self.warlockSpecBarsBackground:SetSize(getConfiguration()[self.frame].SoulShardsBar.width - 2, getConfiguration()[self.frame].SoulShardsBar.height - 2)
-
-                    self.warlockSpecBarsBorder = self:CreateTexture(nil, 'BACKGROUND')
-                    self.warlockSpecBarsBorder:SetPoint('TOPLEFT', self.WarlockSpecBars, -1, 1)
-                    self.warlockSpecBarsBorder:SetSize(getConfiguration()[self.frame].SoulShardsBar.width, getConfiguration()[self.frame].SoulShardsBar.height)
-                    self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
-
-                    for i = 1, #getConfiguration()[self.frame].SoulShardsBar do
-                        self.WarlockSpecBars[i] = CreateFrame('StatusBar', nil, self)
-                        self.WarlockSpecBars[i]:SetPoint(getConfiguration()[self.frame].SoulShardsBar[i].anchor, self.WarlockSpecBars, getConfiguration()[self.frame].SoulShardsBar[i].x, getConfiguration()[self.frame].SoulShardsBar[i].y)
-                        self.WarlockSpecBars[i]:SetSize(getConfiguration()[self.frame].SoulShardsBar[i].width - 2, getConfiguration()[self.frame].SoulShardsBar[i].height - 2)
-                        self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.texture)
-
-                        self.warlockSpecBarsBorder[i] = self:CreateTexture(nil, 'LOW')
-                        self.warlockSpecBarsBorder[i]:SetPoint('TOPLEFT', self.WarlockSpecBars[i], -1, 1)
-                        self.warlockSpecBarsBorder[i]:SetSize(getConfiguration()[self.frame].SoulShardsBar[i].width, getConfiguration()[self.frame].SoulShardsBar[i].height)
-                        self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
-                    end
-                end
-            end
         end
     end
 )

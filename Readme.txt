@@ -7,12 +7,13 @@ SnailUI
 
 SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you reported them on the comments page on WoWInterface for this addon or through Twitter. :)
 
-This UI is also using Tuk's warlock bars addon as a temporary fix until oUF is updated. Should you need to contact me, I can be found via Twitter. (@1Snail)
+A lot of aspects of SnailUI can be changed via the in game interface options (or by typing /SUI or /SnailUI) or via the lua files themselves. This UI is also using Tuk's warlock bars addon as a temporary fix until oUF is updated. Should you need to contact me, I can be found via Twitter. (@1Snail)
 
 ------------------------------------------------------------------------------ 
 
 Features
-- Supports all classes and specs, changing based on what your current spec is (Requires a /reload to take effect)
+- Theme based UI that offers tons of customization
+- Supports all classes and specs, changing based on what your current spec is
 - Some specific talents are supported (Such as removing pet bars if you have Grimoire of Sacrifice for Warlocks)
 - A lot of Healbot-esque features are supported such as health prediction
 - Very small and very fast
@@ -20,11 +21,12 @@ Features
 - Widescreen action buttons (First time I have ever seen someone do this)
 - Easy central focused class bars to help you watch your character more easily (Get out of that fire!)
 - Easy to extend or create your own themes
+
 ------------------------------------------------------------------------------ 
 
 Download
 
-You can download this release here: http://www.wowinterface.com/downloads/info20900-SnailUI.html
+You can download this release here: http://wowinterface.com/downloads/info20900-SnailUI
 
 Mirrors of all of the SnailUI releases can be found here: https://github.com/1Snail/SnailUI/downloads
 
@@ -34,7 +36,7 @@ You can also stay up to date with the cutting edge versions of SnailUI by visiti
 
 Installation
 
-Read: SnailUI relies on both oUF (the latest version from Haste's GitHub page here: https://github.com/haste/oUF/zipball/master) and oUF_SpellRange so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the SnailUI folder into your World of Warcraft / Interface / Addons folder and you are good to go.
+Read: SnailUI relies on oUF and oUF_SpellRange (both of which are included) so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the oUF, oUF_SpellRange, and SnailUI folders into your World of Warcraft / Interface / Addons folder and you are good to go. If any files already exist, overwrite them or delete them before continuing.
 
 ------------------------------------------------------------------------------ 
 

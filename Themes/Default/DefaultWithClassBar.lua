@@ -1,7 +1,7 @@
 -- DefaultWithClassBar.lua
 -- Written by Snail
 
-DefaultWithClassBar = deepcopy(Default)
+DefaultWithClassBar = deepcopy(Configuration.Themes.Default)
 DefaultWithClassBar.Player.BurningEmbersBar =
 {
     anchor = 'TOPLEFT',

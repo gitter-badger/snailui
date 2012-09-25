@@ -1,28 +1,28 @@
 -- Classes.lua
 -- Written by Snail
 
-Configuration['DEATHKNIGHT'] = DefaultWithClassBar
-Configuration['DEATHKNIGHT']['UNHOLY'] = DefaultWithClassBarWithPet
-Configuration['DRUID'] = Default
-Configuration['DRUID']['BALANCE'] = DefaultWithClassBar
-Configuration['DRUID']['FERAL'] = DefaultWithClassBar
-Configuration['DRUID']['RESTORATION'] = DefaultHealer
-Configuration['HUNTER'] = DefaultWithPet
-Configuration['MAGE'] = Default
-Configuration['MAGE']['FROST'] = DefaultWithPet
-Configuration['PALADIN'] = DefaultWithClassBar
-Configuration['PALADIN']['HOLY'] = DefaultHealerWithClassBar
-Configuration['PRIEST'] = DefaultHealer
-Configuration['PRIEST']['SHADOW'] = DefaultWithClassBar
-Configuration['ROGUE'] = DefaultWithClassBar
-Configuration['SHAMAN'] = Default
-Configuration['SHAMAN']['RESTORATION'] = DefaultHealer
-Configuration['WARLOCK'] = DefaultWithClassBarWithPet
+Configuration.Themes[Configuration.theme]['DEATHKNIGHT'] = DefaultWithClassBar
+Configuration.Themes[Configuration.theme]['DEATHKNIGHT']['UNHOLY'] = DefaultWithClassBarWithPet
+Configuration.Themes[Configuration.theme]['DRUID'] = Configuration.Themes.Default
+Configuration.Themes[Configuration.theme]['DRUID']['BALANCE'] = DefaultWithClassBar
+Configuration.Themes[Configuration.theme]['DRUID']['FERAL'] = DefaultWithClassBar
+Configuration.Themes[Configuration.theme]['DRUID']['RESTORATION'] = DefaultHealer
+Configuration.Themes[Configuration.theme]['HUNTER'] = DefaultWithPet
+Configuration.Themes[Configuration.theme]['MAGE'] = Configuration.Themes.Default
+Configuration.Themes[Configuration.theme]['MAGE']['FROST'] = DefaultWithPet
+Configuration.Themes[Configuration.theme]['PALADIN'] = DefaultWithClassBar
+Configuration.Themes[Configuration.theme]['PALADIN']['HOLY'] = DefaultHealerWithClassBar
+Configuration.Themes[Configuration.theme]['PRIEST'] = DefaultHealer
+Configuration.Themes[Configuration.theme]['PRIEST']['SHADOW'] = DefaultWithClassBar
+Configuration.Themes[Configuration.theme]['ROGUE'] = DefaultWithClassBar
+Configuration.Themes[Configuration.theme]['SHAMAN'] = Configuration.Themes.Default
+Configuration.Themes[Configuration.theme]['SHAMAN']['RESTORATION'] = DefaultHealer
+Configuration.Themes[Configuration.theme]['WARLOCK'] = DefaultWithClassBarWithPet
 
 function warlockCheckForSacrifice()
     _, _, _, _, selected = GetTalentInfo(15)
 
     if selected == true then
-        Configuration['WARLOCK'] = DefaultWithClassBar
+        Configuration.Themes[Configuration.theme]['WARLOCK'] = DefaultWithClassBar
     end
 end

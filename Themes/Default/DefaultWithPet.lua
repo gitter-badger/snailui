@@ -1,7 +1,7 @@
 -- DefaultWithPet.lua
 -- Written by Snail
 
-DefaultWithPet = deepcopy(Default)
+DefaultWithPet = deepcopy(Configuration.Themes.Default)
 DefaultWithPet.ActionBars.Pet =
 {
     anchor = 'BOTTOM',
