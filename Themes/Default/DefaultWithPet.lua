@@ -37,7 +37,7 @@ DefaultWithPet.Pet =
         x = 0,
         y = -3,
 
-        Text =
+        Health =
         {
             anchor ='CENTER',
             x = 1,

@@ -2,7 +2,7 @@
 -- Written by Snail
 
 class = select(2, UnitClass('Player'))
-version = '0.2.1'
+version = '0.3.1'
 
 if not theme then
     theme = Configuration.theme
@@ -186,6 +186,21 @@ oUF:RegisterStyle('SnailUI',
                     self.Castbar.backgroundLeft:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
                     self.Castbar.backgroundRight:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
                     self.Castbar.backgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+
+                    if self.Castbar.iconBackgroundBottom then
+                        self.Castbar.iconBackgroundBottom:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                        self.Castbar.iconBackgroundLeft:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                        self.Castbar.iconBackgroundRight:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                        self.Castbar.iconBackgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+
+                    if self.Castbar.Text then
+                        self.Castbar.Text:SetTextColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
+
+                    if self.Castbar.Time then
+                        self.Castbar.Time:SetTextColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    end
                 end
 
                 if self.ClassIcons then
@@ -219,8 +234,8 @@ oUF:RegisterStyle('SnailUI',
                         self.HealPrediction.otherBar:SetStatusBarColor(self.classColor.r, self.classColor.g, self.classColor.b)
                     end
 
-                    if self.Health.text then
-                        self.Health.text:SetTextColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    if self.Health.health then
+                        self.Health.health:SetTextColor(self.classColor.r, self.classColor.g, self.classColor.b)
                     end
                 end
                 
@@ -234,8 +249,8 @@ oUF:RegisterStyle('SnailUI',
                         self.Power.backgroundTop:SetTexture(self.classColor.r, self.classColor.g, self.classColor.b)
                     end
 
-                    if self.Power.text then
-                        self.Power.text:SetColor(self.classColor.r, self.classColor.g, self.classColor.b)
+                    if self.Power.power then
+                        self.Power.power:SetColor(self.classColor.r, self.classColor.g, self.classColor.b)
                     end
                 end
 
@@ -283,6 +298,12 @@ oUF:RegisterStyle('SnailUI',
             self:SetScript('OnEnter',
                 function(self)
                     UnitFrame_UpdateTooltip(self)
+                end
+            )
+
+            self:SetScript('OnLeave',
+                function(self)
+                    GameTooltip_Hide()
                 end
             )
 
@@ -339,27 +360,91 @@ oUF:RegisterStyle('SnailUI',
                 self.Castbar.backgroundBottom = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundBottom:SetPoint('BOTTOM', 0, -2)
                 self.Castbar.backgroundBottom:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
-                self.Castbar.backgroundBottom:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 self.Castbar.backgroundLeft = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundLeft:SetPoint('LEFT', -2, 0)
                 self.Castbar.backgroundLeft:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
-                self.Castbar.backgroundLeft:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 self.Castbar.backgroundRight = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundRight:SetPoint('RIGHT', 2, 0)
                 self.Castbar.backgroundRight:SetSize(1, getConfiguration()[self.frame].CastingBar.height - 4)
-                self.Castbar.backgroundRight:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
                 self.Castbar.backgroundTop = self.Castbar:CreateTexture(nil, 'LOW')
                 self.Castbar.backgroundTop:SetPoint('TOP', 0, 2)
                 self.Castbar.backgroundTop:SetSize(getConfiguration()[self.frame].CastingBar.width - 2, 1)
-                self.Castbar.backgroundTop:SetTexture(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-                                
+
                 self.Castbar.border = self.Castbar:CreateTexture(nil, 'BACKGROUND')
                 self.Castbar.border:SetPoint('TOPLEFT', -3, 3)
                 self.Castbar.border:SetSize(getConfiguration()[self.frame].CastingBar.width, getConfiguration()[self.frame].CastingBar.height)
                 self.Castbar.border:SetTexture(0, 0, 0)
+
+                if getConfiguration()[self.frame].CastingBar.SpellDuration then
+                    self.Castbar.Time = self.Castbar:CreateFontString(nil, 'OVERLAY')
+                    self.Castbar.Time:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.Castbar.Time:SetPoint(getConfiguration()[self.frame].CastingBar.SpellDuration.anchor, getConfiguration()[self.frame].CastingBar.SpellDuration.x, getConfiguration()[self.frame].CastingBar.SpellDuration.y)
+                end
+
+                if getConfiguration()[self.frame].CastingBar.SpellName then
+                    self.Castbar.Text = self.Castbar:CreateFontString(nil, 'OVERLAY')
+                    self.Castbar.Text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.Castbar.Text:SetPoint(getConfiguration()[self.frame].CastingBar.SpellName.anchor, getConfiguration()[self.frame].CastingBar.SpellName.x, getConfiguration()[self.frame].CastingBar.SpellName.y)
+                end
+
+                if getConfiguration()[self.frame].CastingBar.SpellTexture then
+                    self.Castbar.Icon = self.Castbar:CreateTexture(nil, 'LOW')
+                    self.Castbar.Icon:SetPoint(getConfiguration()[self.frame].CastingBar.SpellTexture.anchor, getConfiguration()[self.frame].CastingBar.SpellTexture.x, getConfiguration()[self.frame].CastingBar.SpellTexture.y)
+                    self.Castbar.Icon:SetSize(getConfiguration()[self.frame].CastingBar.SpellTexture.width - 6, getConfiguration()[self.frame].CastingBar.SpellTexture.height - 6)
+                    self.Castbar.Icon:SetTexCoord(getConfiguration()[self.frame].CastingBar.SpellTexture.TextureCoordinate.left, getConfiguration()[self.frame].CastingBar.SpellTexture.TextureCoordinate.right, getConfiguration()[self.frame].CastingBar.SpellTexture.TextureCoordinate.top, getConfiguration()[self.frame].CastingBar.SpellTexture.TextureCoordinate.bottom)
+
+                    self.Castbar.iconBackgroundBottom = self.Castbar:CreateTexture(nil, 'LOW')
+                    self.Castbar.iconBackgroundBottom:SetPoint('BOTTOM', self.Castbar.Icon, 0, -2)
+                    self.Castbar.iconBackgroundBottom:SetSize(getConfiguration()[self.frame].CastingBar.SpellTexture.width - 2, 1)
+
+                    self.Castbar.iconBackgroundLeft = self.Castbar:CreateTexture(nil, 'LOW')
+                    self.Castbar.iconBackgroundLeft:SetPoint('LEFT', self.Castbar.Icon, -2, 0)
+                    self.Castbar.iconBackgroundLeft:SetSize(1, getConfiguration()[self.frame].CastingBar.SpellTexture.height - 4)
+
+                    self.Castbar.iconBackgroundRight = self.Castbar:CreateTexture(nil, 'LOW')
+                    self.Castbar.iconBackgroundRight:SetPoint('RIGHT', self.Castbar.Icon, 2, 0)
+                    self.Castbar.iconBackgroundRight:SetSize(1, getConfiguration()[self.frame].CastingBar.SpellTexture.height - 4)
+
+                    self.Castbar.iconBackgroundTop = self.Castbar:CreateTexture(nil, 'LOW')
+                    self.Castbar.iconBackgroundTop:SetPoint('TOP', self.Castbar.Icon, 0, 2)
+                    self.Castbar.iconBackgroundTop:SetSize(getConfiguration()[self.frame].CastingBar.SpellTexture.width - 2, 1)
+
+                    self.Castbar.iconBorder = self.Castbar:CreateTexture(nil, 'BACKGROUND')
+                    self.Castbar.iconBorder:SetPoint('TOPLEFT', self.Castbar.Icon, -3, 3)
+                    self.Castbar.iconBorder:SetSize(getConfiguration()[self.frame].CastingBar.SpellTexture.width, getConfiguration()[self.frame].CastingBar.SpellTexture.height)
+                    self.Castbar.iconBorder:SetTexture(0, 0, 0)
+                end
+            end
+
+            if getConfiguration()[self.frame].ChiBar and (unit == 'Player') then
+                if class == 'MONK' then
+                    self.ClassIcons = self:CreateTexture(self, 'BACKGROUND')
+                    self.ClassIcons:SetPoint(getConfiguration()[self.frame].ChiBar.anchor, getConfiguration()[self.frame].ChiBar.x, getConfiguration()[self.frame].ChiBar.y)
+                    self.ClassIcons:SetSize(getConfiguration()[self.frame].ChiBar.width, getConfiguration()[self.frame].ChiBar.height)
+                    self.ClassIcons:SetTexture(0, 0, 0)
+
+                    self.ClassIcons.background = self:CreateTexture(nil, 'BACKGROUND')
+                    self.ClassIcons.background:SetPoint('TOPLEFT', self.ClassIcons, 1, -1)
+                    self.ClassIcons.background:SetSize(getConfiguration()[self.frame].ChiBar.width - 2, getConfiguration()[self.frame].ChiBar.height - 2)
+
+                    for i = 1, 5 do
+                        self.ClassIcons[i] = self:CreateTexture(self, 'LOW')
+
+                        if i <= #getConfiguration()[self.frame].ChiBar then
+                            self.ClassIcons[i]:SetPoint(getConfiguration()[self.frame].ChiBar[i].anchor, self.ClassIcons, getConfiguration()[self.frame].ChiBar[i].x, getConfiguration()[self.frame].ChiBar[i].y)
+                            self.ClassIcons[i]:SetSize(getConfiguration()[self.frame].ChiBar[i].width - 2, getConfiguration()[self.frame].ChiBar[i].height - 2)
+                            self.ClassIcons[i]:SetTexture(Configuration.texture)
+
+                            self.ClassIcons[i].border = self:CreateTexture(nil, 'LOW')
+                            self.ClassIcons[i].border:SetPoint('TOPLEFT', self.ClassIcons[i], -1, 1)
+                            self.ClassIcons[i].border:SetSize(getConfiguration()[self.frame].ChiBar[i].width, getConfiguration()[self.frame].ChiBar[i].height)
+                            self.ClassIcons[i].border:SetTexture(0, 0, 0)
+                        end
+                    end
+                end
             end
 
             if getConfiguration()[self.frame].ComboPointsBar and (unit == 'Player') then
@@ -423,13 +508,13 @@ oUF:RegisterStyle('SnailUI',
                     self.EclipseBar.SolarBar:SetStatusBarTexture(Configuration.texture)
                     self.EclipseBar.SolarBar:SetStatusBarColor(0.8, 0.82, 0.6)
 
-                    self.EclipseBar.text = self.EclipseBar:CreateFontString(nil, 'OVERLAY')
-                    self.EclipseBar.text.frequentUpdates = true
-                    self.EclipseBar.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
-                    self.EclipseBar.text:SetPoint('CENTER', self.EclipseBar.innerBorder, 1, 0)
-                    self.EclipseBar.text:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
+                    self.EclipseBar.direction = self.EclipseBar:CreateFontString(nil, 'OVERLAY')
+                    self.EclipseBar.direction.frequentUpdates = true
+                    self.EclipseBar.direction:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.EclipseBar.direction:SetPoint('CENTER', self.EclipseBar.innerBorder, 1, 0)
+                    self.EclipseBar.direction:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 
-                    self:Tag(self.EclipseBar.text, '[SnailUI:EclipseDirection]')
+                    self:Tag(self.EclipseBar.direction, '[SnailUI:EclipseDirection]')
                 end
             end
 
@@ -499,16 +584,16 @@ oUF:RegisterStyle('SnailUI',
                 self.HealPrediction.otherBar:SetSize(getConfiguration()[self.frame].HealthBar.width - 2, getConfiguration()[self.frame].HealthBar.height - 2)
                 self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.texture)
 
-                if getConfiguration()[self.frame].HealthBar.Text then
-                    self.Health.text = self.Health:CreateFontString(nil, 'OVERLAY')
-                    self.Health.text.frequentUpdates = true
-                    self.Health.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
-                    self.Health.text:SetPoint(getConfiguration()[self.frame].HealthBar.Text.anchor, getConfiguration()[self.frame].HealthBar.Text.x, getConfiguration()[self.frame].HealthBar.Text.y)
+                if getConfiguration()[self.frame].HealthBar.Health then
+                    self.Health.health = self.Health:CreateFontString(nil, 'OVERLAY')
+                    self.Health.health.frequentUpdates = true
+                    self.Health.health:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
+                    self.Health.health:SetPoint(getConfiguration()[self.frame].HealthBar.Health.anchor, getConfiguration()[self.frame].HealthBar.Health.x, getConfiguration()[self.frame].HealthBar.Health.y)
 
-                    if getConfiguration()[self.frame].HealthBar.smallText then
-                        self:Tag(self.Health.text, '[SnailUI:SmallHealth]')
+                    if getConfiguration()[self.frame].HealthBar.Health.smallText then
+                        self:Tag(self.Health.health, '[SnailUI:SmallHealth]')
                     else
-                        self:Tag(self.Health.text, '[SnailUI:Health]')
+                        self:Tag(self.Health.health, '[SnailUI:Health]')
                     end
                 end
             end
@@ -701,20 +786,13 @@ oUF:Factory(
             'Snail\'s minimalistic UI' ..
             '\n\n' ..
             'Version ' .. version ..
-            '\n\n' ..
-            'Written by Snail' ..
             '\n' ..
+            'Written by Snail' ..
+            '\n\n' ..
             'http://twitter.com/1Snail' ..
             '\n' ..
             'http://wowinterface.com/downloads/info20900-SnailUI'
         )
-
-        category.default = function(self)
-        end
-
-        category.okay = function(self)
-            ReloadUI();
-        end
 
         generalSubcategory = CreateFrame('Frame', nil, category)
         generalSubcategory.name = 'General'
@@ -728,11 +806,49 @@ oUF:Factory(
         generalSubcategory.label2 = generalSubcategory:CreateFontString(nil, 'OVERLAY', 'GameFontHighlight')
         generalSubcategory.label2:SetJustifyH('LEFT')
         generalSubcategory.label2:SetPoint('TOPLEFT', 16, -36)
-        generalSubcategory.label2:SetText(
-            'General options for SnailUI' ..
-            '\n\n' ..
-            'Theme a'
+        generalSubcategory.label2:SetText('General options for SnailUI')
+
+        generalSubcategory.label3 = generalSubcategory:CreateFontString(nil, 'OVERLAY', 'GameFontNormalSmall')
+        generalSubcategory.label3:SetJustifyH('LEFT')
+        generalSubcategory.label3:SetPoint('TOPLEFT', 16, -60)
+        generalSubcategory.label3:SetText('Theme')
+
+        generalSubcategory.themeDropdownMenu = CreateFrame('Frame', 'themeDropdownMenu', generalSubcategory, 'UIDropDownMenuTemplate')
+        generalSubcategory.themeDropdownMenu:SetPoint('TOPLEFT', 0, -73)
+
+        themes = {}
+
+        UIDropDownMenu_Initialize(generalSubcategory.themeDropdownMenu,
+            function(dropdownMenu, level)
+                index = 1
+
+                for key, value in pairs(Configuration.Themes) do
+                    info = UIDropDownMenu_CreateInfo()
+                    info.text = key
+                    info.func = function(self)
+                        UIDropDownMenu_SetSelectedID(dropdownMenu, self:GetID())
+                    end
+
+                    themes[index] = key
+                    themes[key] = index
+                    index = index + 1
+
+                    UIDropDownMenu_AddButton(info, level)
+                end
+            end
         )
+
+        category.okay = function(self)
+            newTheme = themes[UIDropDownMenu_GetSelectedID(generalSubcategory.themeDropdownMenu)]
+
+            if newtheme ~= theme then
+                theme = newTheme
+                ReloadUI();
+            end
+        end
+
+        UIDropDownMenu_JustifyText(generalSubcategory.themeDropdownMenu, 'LEFT')
+        UIDropDownMenu_SetSelectedID(generalSubcategory.themeDropdownMenu, themes[theme])
 
         InterfaceOptions_AddCategory(category)
         InterfaceOptions_AddCategory(generalSubcategory)
@@ -1327,7 +1443,7 @@ oUF:Factory(
             ChatFrame1.borderRight = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
             ChatFrame1.borderRight:SetPoint('RIGHT', 5, 0)
             ChatFrame1.borderRight:SetSize(3, getConfiguration().Chat.height - 2)
-             ChatFrame1.borderRight:SetTexture(0, 0, 0)
+            ChatFrame1.borderRight:SetTexture(0, 0, 0)
 
             ChatFrame1.borderTop = ChatFrame1:CreateTexture(nil, 'BACKGROUND')
             ChatFrame1.borderTop:SetPoint('TOP', 0, 5)
@@ -1410,7 +1526,6 @@ oUF:Factory(
             extraButton.Bar.border:SetTexture(0, 0, 0)
 
             extraButton.Bar.text = extraButton.Bar:CreateFontString(nil, 'OVERLAY')
-            extraButton.Bar.text.frequentUpdates = true
             extraButton.Bar.text:SetFont(Configuration.Font.name, Configuration.Font.size, Configuration.Font.outline)
             extraButton.Bar.text:SetPoint('CENTER', 1, 0)
             extraButton.Bar.text:SetText('Show Misc Frames')
@@ -1491,14 +1606,14 @@ oUF:Factory(
                 GameTimeFrame:SetPoint(getConfiguration().Minimap.Calender.anchor, getConfiguration().Minimap.Calender.x, getConfiguration().Minimap.Calender.y)
                 GameTimeFrame:SetSize(32, 32)
 
-                GameTimeFrame.text = GameTimeFrame:CreateFontString(nil, 'OVERLAY')
-                GameTimeFrame.text:SetFont([[Fonts\FRIZQT__.TTF]], Configuration.Font.size)
-                GameTimeFrame.text:SetPoint('CENTER', 0, -2)
-                GameTimeFrame.text:SetTextColor(0, 0, 0)
+                GameTimeFrame.time = GameTimeFrame:CreateFontString(nil, 'OVERLAY')
+                GameTimeFrame.time:SetFont([[Fonts\FRIZQT__.TTF]], Configuration.Font.size)
+                GameTimeFrame.time:SetPoint('CENTER', 0, -2)
+                GameTimeFrame.time:SetTextColor(0, 0, 0)
 
                 GameTimeFrame_SetDate = function(self)
                     _, _, day = CalendarGetDate()
-                    GameTimeFrame.text:SetText(day)
+                    GameTimeFrame.time:SetText(day)
                 end
 
                 GameTimeFrame:SetText(nil)

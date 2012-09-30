@@ -5,7 +5,7 @@ Written by Snail
 
 SnailUI
 
-SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you reported them on the comments page on WoWInterface for this addon or through Twitter. :)
+SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you report them on the comments page on WoWInterface for this addon or through Twitter. :)
 
 A lot of aspects of SnailUI can be changed via the in game interface options (or by typing /SUI or /SnailUI) or via the lua files themselves. This UI is also using Tuk's warlock bars addon as a temporary fix until oUF is updated. Should you need to contact me, I can be found via Twitter. (@1Snail)
 
@@ -36,13 +36,4 @@ You can also stay up to date with the cutting edge versions of SnailUI by visiti
 
 Installation
 
-Read: SnailUI relies on both oUF (the latest version from Haste's GitHub page here: https://github.com/haste/oUF/zipball/master) and oUF_SpellRange so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the SnailUI folder into your World of Warcraft / Interface / Addons folder and you are good to go.
-
------------------------------------------------------------------------------- 
-
-To do list
-- Skin Recount
-- Skin DBM
-- Skin the bag frame
-- Finish working on the in game interface options for SnailUI to allow easier customization
-- Skin the nameplates
+Read: SnailUI relies on both oUF and oUF_SpellRange, so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the SnailUI folder into your World of Warcraft / Interface / Addons folder and you are good to go. If you get any messages to overwrite files then please do so.

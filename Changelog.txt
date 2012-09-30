@@ -9,10 +9,14 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------ 
 
-Version 0.2.3
+Version 0.3.1
+- Fixed a bug where raid frames were not being colored based on threat levels
+- Fixed a bug where raid frames were shortening character names for healers
+- Casting bar now displays the spell icon, spell name, and spell duration
+- Chi is now supported for monks
 - Themes can now be changed via the in game interface options for SnailUI
 - Transparent background added to the chat frame to make it more visible
-- A few bugs have been fixed
+- A few minor bugs have been fixed
 
 ------------------------------------------------------------------------------ 
 

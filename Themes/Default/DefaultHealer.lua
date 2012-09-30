@@ -10,6 +10,7 @@ DefaultHealer.Raid.shown = true
 DefaultHealer.Raid.width = 100
 DefaultHealer.Raid.x = 0
 DefaultHealer.Raid.y = 192
+DefaultHealer.Raid.HealthBar.Health.smallText = nil
 DefaultHealer.Raid.HealthBar.height = 20
 DefaultHealer.Raid.HealthBar.orientation = 'HORIZONTAL'
 DefaultHealer.Raid.HealthBar.width = 96

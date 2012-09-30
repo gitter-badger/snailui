@@ -129,9 +129,40 @@ Configuration.Themes.Default =
             anchor = 'TOPLEFT',
             height = 24,
             orientation = 'HORIZONTAL',
-            width = 516,
-            x = 3,
-            y = 25
+            width = 464,
+            x = 55,
+            y = 25,
+
+            SpellDuration =
+            {
+                anchor = 'RIGHT',
+                x = -4,
+                y = 0
+            },
+
+            SpellName =
+            {
+                anchor = 'LEFT',
+                x = 6,
+                y = 0
+            },
+
+            SpellTexture =
+            {
+                anchor = 'LEFT',
+                height = 24,
+                width = 48,
+                x = -52,
+                y = 0,
+
+                TextureCoordinate =
+                {
+                    bottom = 0.7,
+                    left = 0.1,
+                    right = 0.9,
+                    top = 0.3
+                }
+            }
         },
 
         HealthBar =
@@ -143,7 +174,7 @@ Configuration.Themes.Default =
             x = 0,
             y = -3,
 
-            Text =
+            Health =
             {
                 anchor ='CENTER',
                 x = 1,
@@ -165,6 +196,7 @@ Configuration.Themes.Default =
     Raid =
     {
         anchor = 'LEFT',
+        colorByThreatLevel = true,
         columnAnchor = 'LEFT',
         columns = 1,
         columnSpacing = 4,
@@ -188,14 +220,14 @@ Configuration.Themes.Default =
             anchor = 'CENTER',
             height = 28,
             orientation = 'VERTICAL',
-            smallText = true,
             width = 28,
             x = 0,
             y = 0,
 
-            Text =
+            Health =
             {
                 anchor ='CENTER',
+                smallText = true,
                 x = 1,
                 y = 0
             }
@@ -229,7 +261,7 @@ Configuration.Themes.Default =
             x = 0,
             y = -3,
 
-            Text =
+            Health =
             {
                 anchor ='CENTER',
                 x = 1,

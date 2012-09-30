@@ -48,6 +48,51 @@ DefaultWithClassBar.Player.BurningEmbersBar =
 }
 
 DefaultWithClassBar.Player.CastingBar.y = 53
+DefaultWithClassBar.Player.ChiBar =
+{
+    anchor = 'TOPLEFT',
+    height = 24,
+    width = 516,
+    x = 0,
+    y = 28,
+
+    [1] =
+    {
+        anchor = 'TOPLEFT',
+        height = 13,
+        width = 127,
+        x = 3,
+        y = -3
+    },
+
+    [2] =
+    {
+        anchor = 'TOP',
+        height = 13,
+        width = 128,
+        x = -64,
+        y = -3
+    },
+
+    [3] =
+    {
+        anchor = 'TOP',
+        height = 13,
+        width = 128,
+        x = 65,
+        y = -3
+    },
+
+    [4] =
+    {
+        anchor = 'TOPRIGHT',
+        height = 13,
+        width = 126,
+        x = -3,
+        y = -3
+    }
+}
+
 DefaultWithClassBar.Player.ComboPointsBar =
 {
     anchor = 'TOPLEFT',
