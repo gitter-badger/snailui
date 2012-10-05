@@ -1,68 +1,68 @@
 -- DefaultWithClassBarWithPet.lua
 -- Written by Snail
 
-DefaultWithClassBarWithPet = deepcopy(DefaultWithClassBar)
+DefaultWithClassBarWithPet = DeepCopy(DefaultWithClassBar)
 DefaultWithClassBarWithPet.ActionBars.Pet =
 {
-    anchor = 'BOTTOM',
-    buttons = 10,
-    height = 24,
-    width = 48,
-    x = 0,
-    y = 28,
+    Anchor = "BOTTOM",
+    Buttons = 10,
+    Height = 24,
+    Width = 48,
+    X = 0,
+    Y = 28,
 
     TextureCoordinate =
     {
-        bottom = 0.7,
-        left = 0.1,
-        right = 0.9,
-        top = 0.3
+        Bottom = 0.7,
+        Left = 0.1,
+        Right = 0.9,
+        Top = 0.3
     }
 }
 
 DefaultWithClassBarWithPet.Pet =
 {
-    anchor = 'BOTTOM',
-    height = 24,
-    width = 100,
-    x = 0,
-    y = 164,
+    Anchor = "BOTTOM",
+    Height = 24,
+    Width = 100,
+    X = 0,
+    Y = 164,
 
     HealthBar =
     {
-        anchor = 'TOP',
-        height = 15,
-        orientation = 'HORIZONTAL',
-        width = 96,
-        x = 0,
-        y = -3,
+        Anchor = "TOP",
+        Height = 15,
+        Orientation = "HORIZONTAL",
+        Width = 96,
+        X = 0,
+        Y = -3,
 
         Health =
         {
-            anchor ='CENTER',
-            x = 1,
-            y = 0
+            Anchor ="CENTER",
+            X = 1,
+            Y = 0
         }
     },
 
     PowerBar =
     {
-        anchor = 'BOTTOM',
-        height = 4,
-        orientation = 'HORIZONTAL',
-        width = 96,
-        x = 0,
-        y = 3
+        Anchor = "BOTTOM",
+        Height = 4,
+        Orientation = "HORIZONTAL",
+        Width = 96,
+        X = 0,
+        Y = 3
     }
 }
     
-DefaultWithClassBarWithPet.Player.HealthBar.width = 200
-DefaultWithClassBarWithPet.Player.width = 204
-DefaultWithClassBarWithPet.Player.x = -156
-DefaultWithClassBarWithPet.Player.y = 164
-DefaultWithClassBarWithPet.Target.HealthBar.width = 200
-DefaultWithClassBarWithPet.Target.PowerBar.width = 200
-DefaultWithClassBarWithPet.Target.width = 204
-DefaultWithClassBarWithPet.Target.x = 156
-DefaultWithClassBarWithPet.Target.y = 164
-DefaultWithClassBarWithPet.Target.CastingBar.height = 212
+DefaultWithClassBarWithPet.Player.HealthBar.Width = 200
+DefaultWithClassBarWithPet.Player.Width = 204
+DefaultWithClassBarWithPet.Player.X = -156
+DefaultWithClassBarWithPet.Player.Y = 164
+DefaultWithClassBarWithPet.Target.HealthBar.Width = 200
+DefaultWithClassBarWithPet.Target.PowerBar.Width = 200
+DefaultWithClassBarWithPet.Target.Width = 204
+DefaultWithClassBarWithPet.Target.X = 156
+DefaultWithClassBarWithPet.Target.Y = 164
+DefaultWithClassBarWithPet.Target.CastingBar.Height = 212

@@ -1,375 +1,375 @@
 -- DefaultWithClassBar.lua
 -- Written by Snail
 
-DefaultWithClassBar = deepcopy(Configuration.Themes.Default)
+DefaultWithClassBar = DeepCopy(Configuration.Themes.Default)
 DefaultWithClassBar.Player.BurningEmbersBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 1,
-    y = 27,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 1,
+    Y = 27,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 127,
-        x = 2,
-        y = -2
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 127,
+        X = 2,
+        Y = -2
     },
 
     [2] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 128,
-        x = -64,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 128,
+        X = -64,
+        Y = -2
     },
 
     [3] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 128,
-        x = 65,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 128,
+        X = 65,
+        Y = -2
     },
 
     [4] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 126,
-        x = -2,
-        y = -2
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 126,
+        X = -2,
+        Y = -2
     }
 }
 
-DefaultWithClassBar.Player.CastingBar.y = 53
+DefaultWithClassBar.Player.CastingBar.Y = 53
 DefaultWithClassBar.Player.ChiBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 0,
-    y = 28,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 0,
+    Y = 28,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 127,
-        x = 3,
-        y = -3
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 127,
+        X = 3,
+        Y = -3
     },
 
     [2] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 128,
-        x = -64,
-        y = -3
+        Anchor = "TOP",
+        Height = 13,
+        Width = 128,
+        X = -64,
+        Y = -3
     },
 
     [3] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 128,
-        x = 65,
-        y = -3
+        Anchor = "TOP",
+        Height = 13,
+        Width = 128,
+        X = 65,
+        Y = -3
     },
 
     [4] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 126,
-        x = -3,
-        y = -3
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 126,
+        X = -3,
+        Y = -3
     }
 }
 
 DefaultWithClassBar.Player.ComboPointsBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 1,
-    y = 27,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 1,
+    Y = 27,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 102,
-        x = 2,
-        y = -2
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 102,
+        X = 2,
+        Y = -2
     },
 
     [2] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 102,
-        x = 105,
-        y = -2
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 102,
+        X = 105,
+        Y = -2
     },
 
     [3] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 100,
-        x = 0,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 100,
+        X = 0,
+        Y = -2
     },
 
     [4] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 102,
-        x = -105,
-        y = -2
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 102,
+        X = -105,
+        Y = -2
     },
 
     [5] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 102,
-        x = -2,
-        y = -2
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 102,
+        X = -2,
+        Y = -2
     }
 }
 
 DefaultWithClassBar.Player.EclipseBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 1,
-    y = 27,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 1,
+    Y = 27,
 
     [1] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 512,
-        x = 0,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 512,
+        X = 0,
+        Y = -2
     }
 }
 
 DefaultWithClassBar.Player.DemonicFuryBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 1,
-    y = 27,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 1,
+    Y = 27,
 
     [1] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 512,
-        x = 0,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 512,
+        X = 0,
+        Y = -2
     }
 }
 
-DefaultWithClassBar.Player.HealthBar.anchor = 'CENTER'
-DefaultWithClassBar.Player.HealthBar.height = 20
-DefaultWithClassBar.Player.HealthBar.y = 0
+DefaultWithClassBar.Player.HealthBar.Anchor = "CENTER"
+DefaultWithClassBar.Player.HealthBar.Height = 20
+DefaultWithClassBar.Player.HealthBar.Y = 0
 DefaultWithClassBar.Player.HolyPowerBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 0,
-    y = 28,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 0,
+    Y = 28,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 170,
-        x = 3,
-        y = -3
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 170,
+        X = 3,
+        Y = -3
     },
 
     [2] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 170,
-        x = 0,
-        y = -3
+        Anchor = "TOP",
+        Height = 13,
+        Width = 170,
+        X = 0,
+        Y = -3
     },
 
     [3] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 170,
-        x = -3,
-        y = -3
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 170,
+        X = -3,
+        Y = -3
     }
 }
 
-DefaultWithClassBar.Player.PowerBar.anchor = 'TOPLEFT'
-DefaultWithClassBar.Player.PowerBar.height = 6
-DefaultWithClassBar.Player.PowerBar.width = 512
-DefaultWithClassBar.Player.PowerBar.x = 3
-DefaultWithClassBar.Player.PowerBar.y = 11
+DefaultWithClassBar.Player.PowerBar.Anchor = "TOPLEFT"
+DefaultWithClassBar.Player.PowerBar.Height = 6
+DefaultWithClassBar.Player.PowerBar.Width = 512
+DefaultWithClassBar.Player.PowerBar.X = 3
+DefaultWithClassBar.Player.PowerBar.Y = 11
 DefaultWithClassBar.Player.RuneBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 1,
-    y = 27,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 1,
+    Y = 27,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 85,
-        x = 2,
-        y = -2
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 85,
+        X = 2,
+        Y = -2
     },
 
     [2] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 84,
-        x = 88,
-        y = -2
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 84,
+        X = 88,
+        Y = -2
     },
 
     [3] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 84,
-        x = -43,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 84,
+        X = -43,
+        Y = -2
     },
 
     [4] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 84,
-        x = 42,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 84,
+        X = 42,
+        Y = -2
     },
 
     [5] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 85,
-        x = -88,
-        y = -2
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 85,
+        X = -88,
+        Y = -2
     },
 
     [6] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 85,
-        x = -2,
-        y = -2
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 85,
+        X = -2,
+        Y = -2
     }
 }
 
 DefaultWithClassBar.Player.ShadowOrbsBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 0,
-    y = 28,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 0,
+    Y = 28,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 170,
-        x = 3,
-        y = -3
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 170,
+        X = 3,
+        Y = -3
     },
 
     [2] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 170,
-        x = 0,
-        y = -3
+        Anchor = "TOP",
+        Height = 13,
+        Width = 170,
+        X = 0,
+        Y = -3
     },
 
     [3] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 170,
-        x = -3,
-        y = -3
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 170,
+        X = -3,
+        Y = -3
     }
 }
 
 DefaultWithClassBar.Player.SoulShardsBar =
 {
-    anchor = 'TOPLEFT',
-    height = 24,
-    width = 516,
-    x = 1,
-    y = 27,
+    Anchor = "TOPLEFT",
+    Height = 24,
+    Width = 516,
+    X = 1,
+    Y = 27,
 
     [1] =
     {
-        anchor = 'TOPLEFT',
-        height = 13,
-        width = 127,
-        x = 2,
-        y = -2
+        Anchor = "TOPLEFT",
+        Height = 13,
+        Width = 127,
+        X = 2,
+        Y = -2
     },
 
     [2] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 128,
-        x = -64,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 128,
+        X = -64,
+        Y = -2
     },
 
     [3] =
     {
-        anchor = 'TOP',
-        height = 13,
-        width = 126,
-        x = 64,
-        y = -2
+        Anchor = "TOP",
+        Height = 13,
+        Width = 126,
+        X = 64,
+        Y = -2
     },
 
     [4] =
     {
-        anchor = 'TOPRIGHT',
-        height = 13,
-        width = 128,
-        x = -2,
-        y = -2
+        Anchor = "TOPRIGHT",
+        Height = 13,
+        Width = 128,
+        X = -2,
+        Y = -2
     }
 }
 
-DefaultWithClassBar.Target.CastingBar.height = 184
-DefaultWithClassBar.Target.CastingBar.y = 25
+DefaultWithClassBar.Target.CastingBar.Height = 184
+DefaultWithClassBar.Target.CastingBar.Y = 25

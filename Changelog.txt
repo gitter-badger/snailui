@@ -1,13 +1,25 @@
 Changelog.txt
 Written by Snail
 
------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------
 
 Change log for SnailUI
 
 This is where I will document the changes made for SnailUI in each release.
 
------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------
+
+Version 0.3.2
+- Fixed a bug where debuffs were misaligned when there were no buffs present
+- Theme fallback measures have been added to prevent errors
+- Several speed improvements have been made
+- Bag frame added
+- Using the interface options panel now requires a /reload to take effect
+- Added a feature where the chat frame is resized if Recount is not installed
+- Fixed a bug where character names were being shortened more than intended
+- You will now automatically release when you die in battlegrounds
+
+------------------------------------------------------------------------------
 
 Version 0.3.1
 - Fixed a bug where raid frames were not being colored based on threat levels
@@ -18,19 +30,19 @@ Version 0.3.1
 - Transparent background added to the chat frame to make it more visible
 - A few minor bugs have been fixed
 
------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------
 
 Version 0.2.2
 - Eclipse bar added for Balance Druids
 - Readme.txt and Changelog.txt added
 
------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------
 
 Version 0.2.1
 - Updated for MoP
 - Too many features to list added
 
------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------
 
 Version 0.1.1
 - Initial release

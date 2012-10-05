@@ -1,12 +1,15 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## SavedVariables: theme
+## SavedVariables: Theme
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.3.1
+## Version: 0.3.2
 
 Configuration.lua
+Functions.lua
+oUF_WarlockSpecBars.lua
+Tags.lua
 
 Themes\Default\Default.lua
 Themes\Default\DefaultHealer.lua
@@ -14,7 +17,5 @@ Themes\Default\DefaultWithPet.lua
 Themes\Default\DefaultWithClassBar.lua
 Themes\Default\DefaultHealerWithClassBar.lua
 Themes\Default\DefaultWithClassBarWithPet.lua
-Themes\Default\Classes.lua
 
-oUF_WarlockSpecBars.lua
 SnailUI.lua

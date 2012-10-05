@@ -1,69 +1,69 @@
 -- DefaultWithPet.lua
 -- Written by Snail
 
-DefaultWithPet = deepcopy(Configuration.Themes.Default)
+DefaultWithPet = DeepCopy(Configuration.Themes.Default)
 DefaultWithPet.ActionBars.Pet =
 {
-    anchor = 'BOTTOM',
-    buttons = 10,
-    height = 24,
-    width = 48,
-    x = 0,
-    y = 28,
+    Anchor = "BOTTOM",
+    Buttons = 10,
+    Height = 24,
+    Width = 48,
+    X = 0,
+    Y = 28,
 
     TextureCoordinate =
     {
-        bottom = 0.7,
-        left = 0.1,
-        right = 0.9,
-        top = 0.3
+        Bottom = 0.7,
+        Left = 0.1,
+        Right = 0.9,
+        Top = 0.3
     }
 }
 
 DefaultWithPet.Pet =
 {
-    anchor = 'BOTTOM',
-    height = 24,
-    width = 100,
-    x = 0,
-    y = 164,
+    Anchor = "BOTTOM",
+    Height = 24,
+    Width = 100,
+    X = 0,
+    Y = 164,
 
     HealthBar =
     {
-        anchor = 'TOP',
-        height = 15,
-        orientation = 'HORIZONTAL',
-        width = 96,
-        x = 0,
-        y = -3,
+        Anchor = "TOP",
+        Height = 15,
+        Orientation = "HORIZONTAL",
+        Width = 96,
+        X = 0,
+        Y = -3,
 
         Health =
         {
-            anchor ='CENTER',
-            x = 1,
-            y = 0
+            Anchor ="CENTER",
+            X = 1,
+            Y = 0
         }
     },
 
     PowerBar =
     {
-        anchor = 'BOTTOM',
-        height = 4,
-        orientation = 'HORIZONTAL',
-        width = 96,
-        x = 0,
-        y = 3
+        Anchor = "BOTTOM",
+        Height = 4,
+        Orientation = "HORIZONTAL",
+        Width = 96,
+        X = 0,
+        Y = 3
     }
 }
     
-DefaultWithPet.Player.HealthBar.width = 200
-DefaultWithPet.Player.PowerBar.width = 200
-DefaultWithPet.Player.width = 204
-DefaultWithPet.Player.x = -156
-DefaultWithPet.Player.y = 164
-DefaultWithPet.Target.HealthBar.width = 200
-DefaultWithPet.Target.PowerBar.width = 200
-DefaultWithPet.Target.width = 204
-DefaultWithPet.Target.x = 156
-DefaultWithPet.Target.y = 164
-DefaultWithPet.Target.CastingBar.height = 184
+DefaultWithPet.Player.HealthBar.Width = 200
+DefaultWithPet.Player.PowerBar.Width = 200
+DefaultWithPet.Player.Width = 204
+DefaultWithPet.Player.X = -156
+DefaultWithPet.Player.Y = 164
+DefaultWithPet.Target.HealthBar.Width = 200
+DefaultWithPet.Target.PowerBar.Width = 200
+DefaultWithPet.Target.Width = 204
+DefaultWithPet.Target.X = 156
+DefaultWithPet.Target.Y = 164
+DefaultWithPet.Target.CastingBar.Height = 184

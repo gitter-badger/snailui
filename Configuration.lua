@@ -3,15 +3,15 @@
 
 Configuration =
 {
-    inactiveAlpha = 0.1,
-    texture = [[Interface\AddOns\SnailUI\SnailUI]],
-    theme = 'Default',
+    InactiveAlpha = 0.1,
+    Texture = "Interface\\AddOns\\SnailUI\\SnailUI.tga",
+    Theme = "Default",
 
     Font =
     {
-        name = [[Interface\AddOns\SnailUI\SnailUI.ttf]],
-        outline = 'MONOCHROME, OUTLINE',
-        size = 8,
+        Name = "Interface\\AddOns\\SnailUI\\SnailUI.ttf",
+        Outline = "MONOCHROME, OUTLINE",
+        Size = 8,
     },
 
     Themes =

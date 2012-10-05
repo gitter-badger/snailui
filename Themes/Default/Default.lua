@@ -1,282 +1,334 @@
 -- Default.lua
 -- Written by Snail
 
--- v from http://lua-users.org/wiki/CopyTable
-function deepcopy(object)
-    local lookup_table = {}
-    local function _copy(object)
-        if type(object) ~= "table" then
-            return object
-        elseif lookup_table[object] then
-            return lookup_table[object]
-        end
-        local new_table = {}
-        lookup_table[object] = new_table
-        for index, value in pairs(object) do
-            new_table[_copy(index)] = _copy(value)
-        end
-        return setmetatable(new_table, getmetatable(object))
-    end
-    return _copy(object)
-end
--- v from http://lua-users.org/wiki/CopyTable
-
 Configuration.Themes.Default = 
 {
     ActionBars =
     {
         Player =
         {
-            anchor = 'BOTTOM',
-            buttons = 10,
-            height = 24,
-            width = 48,
-            x = 0,
-            y = 108,
+            Anchor = "BOTTOM",
+            Buttons = 10,
+            Height = 24,
+            Width = 48,
+            X = 0,
+            Y = 108,
 
             TextureCoordinate =
             {
-                bottom = 0.7,
-                left = 0.1,
-                right = 0.9,
-                top = 0.3
+                Bottom = 0.7,
+                Left = 0.1,
+                Right = 0.9,
+                Top = 0.3
             }
+        }
+    },
+
+    Bag1 =
+    {
+        Anchor = "BOTTOMRIGHT",
+        Columns = 8,
+        Height = 24,
+        Width = 48,
+        X = -5,
+        Y = 5,
+
+        TextureCoordinate =
+        {
+            Bottom = 0.7,
+            Left = 0.1,
+            Right = 0.9,
+            Top = 0.3
         }
     },
 
     Buffs =
     {
-        anchor = 'RIGHT',
-        height = 32,
-        width = 32,
-        x = -4,
-        y = 0
+        Anchor = "RIGHT",
+        Height = 32,
+        Width = 32,
+        X = -4,
+        Y = 0,
+
+        TextureCoordinate =
+        {
+            Bottom = 0.9,
+            Left = 0.1,
+            Right = 0.9,
+            Top = 0.1
+        }
     },
 
     Chat =
     {
-        anchor = 'BOTTOM',
-        height = 100,
-        width = 256,
-        x = -130,
-        y = 9
+        Anchor = "BOTTOM",
+        Height = 100,
+        Width = 256,
+        X = -130,
+        Y = 9
     },
 
     ExtraButton =
     {
-        anchor = 'TOP',
-        height = 24,
-        hoverToShow = true,
-        width = 204,
-        x = 0,
-        y = -6
+        Anchor = "TOP",
+        Height = 24,
+        HoverToShow = true,
+        Width = 204,
+        X = 0,
+        Y = -6
     },
+
+    Initialize = function()
+        Configuration.Themes.Default["DEATHKNIGHT"] = DefaultWithClassBar
+        Configuration.Themes.Default["DEATHKNIGHT"]["UNHOLY"] = DefaultWithClassBarWithPet
+        Configuration.Themes.Default["DRUID"] = Configuration.Themes.Default
+        Configuration.Themes.Default["DRUID"]["BALANCE"] = DefaultWithClassBar
+        Configuration.Themes.Default["DRUID"]["FERAL"] = DefaultWithClassBar
+        Configuration.Themes.Default["DRUID"]["RESTORATION"] = DefaultHealer
+        Configuration.Themes.Default["HUNTER"] = DefaultWithPet
+        Configuration.Themes.Default["MAGE"] = Configuration.Themes.Default
+        Configuration.Themes.Default["MAGE"]["FROST"] = DefaultWithPet
+        Configuration.Themes.Default["MONK"] = DefaultWithClassBar
+        Configuration.Themes.Default["MONK"]["MISTWEAVER"] = DefaultHealerWithClassBar
+        Configuration.Themes.Default["PALADIN"] = DefaultWithClassBar
+        Configuration.Themes.Default["PALADIN"]["HOLY"] = DefaultHealerWithClassBar
+        Configuration.Themes.Default["PRIEST"] = DefaultHealer
+        Configuration.Themes.Default["PRIEST"]["SHADOW"] = DefaultWithClassBar
+        Configuration.Themes.Default["ROGUE"] = DefaultWithClassBar
+        Configuration.Themes.Default["SHAMAN"] = Configuration.Themes.Default
+        Configuration.Themes.Default["SHAMAN"]["RESTORATION"] = DefaultHealer
+        Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBarWithPet
+
+        local Specialization = GetSpecialization()
+
+        if Specialization then
+            Specialization = select(2, GetSpecializationInfo(Specialization))
+            Specialization = Specialization:gsub("(.)", string.upper)
+
+            if Specialization == "WARLOCK" then
+                local _, _, _, _, Selected = GetTalentInfo(15)
+
+                if Selected == true then
+                    Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
+                end
+            end
+        end
+    end,
 
     Minimap =
     {
-        anchor = 'BOTTOM',
-        height = 100,
-        width = 100,
-        x = 208,
-        y = 7,
+        Anchor = "BOTTOM",
+        Height = 100,
+        Width = 100,
+        X = 208,
+        Y = 7,
 
         Calender =
         {
-            anchor ='TOPRIGHT',
-            x = 0,
-            y = 0
+            Anchor ="TOPRIGHT",
+            X = 0,
+            Y = 0
         },
 
         Clock =
         {
-            anchor ='BOTTOM',
-            x = 2,
-            y = 6
+            Anchor ="BOTTOM",
+            X = 2,
+            Y = 6
         },
 
-        MailButton =
+        Mail =
         {
-            anchor ='BOTTOMRIGHT',
-            x = 1,
-            y = -2
+            Anchor ="BOTTOMRIGHT",
+            X = 1,
+            Y = -2
         },
 
-        TrackingButton =
+        Tracking =
         {
-            anchor ='TOPLEFT',
-            x = -1,
-            y = 0
+            Anchor ="TOPLEFT",
+            X = -1,
+            Y = 0
         },
 
-        QueueStatusButton =
+        QueueStatus =
         {
-            anchor ='BOTTOMLEFT',
-            x = 0,
-            y = 0
+            Anchor ="BOTTOMLEFT",
+            X = 0,
+            Y = 0
         },
     },
     
     Player =
     {
-        anchor = 'BOTTOM',
-        height = 24,
-        width = 256,
-        x = -130,
-        y = 136,
+        Anchor = "BOTTOM",
+        Height = 24,
+        Width = 256,
+        X = -130,
+        Y = 136,
 
         CastingBar =
         {
-            anchor = 'TOPLEFT',
-            height = 24,
-            orientation = 'HORIZONTAL',
-            width = 464,
-            x = 55,
-            y = 25,
+            Anchor = "TOPLEFT",
+            Height = 24,
+            Orientation = "HORIZONTAL",
+            Width = 464,
+            X = 55,
+            Y = 25,
 
-            SpellDuration =
+            Spell =
             {
-                anchor = 'RIGHT',
-                x = -4,
-                y = 0
-            },
-
-            SpellName =
-            {
-                anchor = 'LEFT',
-                x = 6,
-                y = 0
-            },
-
-            SpellTexture =
-            {
-                anchor = 'LEFT',
-                height = 24,
-                width = 48,
-                x = -52,
-                y = 0,
-
-                TextureCoordinate =
+                Duration =
                 {
-                    bottom = 0.7,
-                    left = 0.1,
-                    right = 0.9,
-                    top = 0.3
+                    Anchor = "RIGHT",
+                    X = -4,
+                    Y = 0
+                },
+
+                Name =
+                {
+                    Anchor = "LEFT",
+                    X = 6,
+                    Y = 0
+                },
+
+                Texture =
+                {
+                    Anchor = "LEFT",
+                    Height = 24,
+                    Width = 48,
+                    X = -52,
+                    Y = 0,
+
+                    TextureCoordinate =
+                    {
+                        Bottom = 0.7,
+                        Left = 0.1,
+                        Right = 0.9,
+                        Top = 0.3
+                    }
                 }
             }
         },
 
         HealthBar =
         {
-            anchor = 'TOP',
-            height = 15,
-            orientation = 'HORIZONTAL',
-            width = 252,
-            x = 0,
-            y = -3,
+            Anchor = "TOP",
+            Height = 15,
+            Orientation = "HORIZONTAL",
+            Width = 252,
+            X = 0,
+            Y = -3,
 
             Health =
             {
-                anchor ='CENTER',
-                x = 1,
-                y = 0
+                Anchor ="CENTER",
+                X = 1,
+                Y = 0
             }
         },
 
         PowerBar =
         {
-            anchor = 'BOTTOM',
-            height = 4,
-            orientation = 'HORIZONTAL',
-            width = 252,
-            x = 0,
-            y = 3
+            Anchor = "BOTTOM",
+            Height = 4,
+            Orientation = "HORIZONTAL",
+            Width = 252,
+            X = 0,
+            Y = 3
         }
     },
 
     Raid =
     {
-        anchor = 'LEFT',
-        colorByThreatLevel = true,
-        columnAnchor = 'LEFT',
-        columns = 1,
-        columnSpacing = 4,
-        columnX = 4,
-        columnY = -4,
-        groupBy = 'GROUP',
-        groupOrder = '1, 2, 3, 4, 5, 6, 7, 8',
-        healthThreshold = 90,
-        height = 32,
-        rows = 40,
-        showParty = true,
-        showPlayer = true,
-        showRaid = true,
-        showSolo = true,
-        width = 32,
-        x = 4,
-        y = 0,
+        Anchor = "LEFT",
+        ColorByThreatLevel = true,
+        ColumnAnchor = "LEFT",
+        Columns = 1,
+        ColumnSpacing = 4,
+        ColumnX = 4,
+        ColumnY = -4,
+        GroupBY = "GROUP",
+        GroupOrder = "1, 2, 3, 4, 5, 6, 7, 8",
+        HealthThreshold = 90,
+        Height = 32,
+        Rows = 40,
+        ShowParty = true,
+        ShowPlayer = true,
+        ShowRaid = true,
+        ShowSolo = true,
+        Width = 32,
+        X = 4,
+        Y = 0,
 
         HealthBar =
         {
-            anchor = 'CENTER',
-            height = 28,
-            orientation = 'VERTICAL',
-            width = 28,
-            x = 0,
-            y = 0,
+            Anchor = "CENTER",
+            Height = 28,
+            Orientation = "VERTICAL",
+            Width = 28,
+            X = 0,
+            Y = 0,
 
             Health =
             {
-                anchor ='CENTER',
-                smallText = true,
-                x = 1,
-                y = 0
+                Anchor ="CENTER",
+                SmallText = true,
+                X = 1,
+                Y = 0
             }
         }
     },
 
     Target =
     {
-        anchor = 'BOTTOM',
-        height = 24,
-        width = 256,
-        x = 130,
-        y = 136,
+        Anchor = "BOTTOM",
+        Height = 24,
+        Width = 256,
+        X = 130,
+        Y = 136,
 
         CastingBar =
         {
-            anchor = 'TOPRIGHT',
-            height = 156,
-            orientation = 'VERTICAL',
-            width = 8,
-            x = 9,
-            y = -3
+            Anchor = "TOPRIGHT",
+            Height = 156,
+            Orientation = "VERTICAL",
+            Width = 8,
+            X = 9,
+            Y = -3
         },
 
         HealthBar =
         {
-            anchor = 'TOP',
-            height = 15,
-            orientation = 'HORIZONTAL',
-            width = 252,
-            x = 0,
-            y = -3,
+            Anchor = "TOP",
+            Height = 15,
+            Orientation = "HORIZONTAL",
+            Width = 252,
+            X = 0,
+            Y = -3,
 
             Health =
             {
-                anchor ='CENTER',
-                x = 1,
-                y = 0
+                Anchor ="CENTER",
+                X = 1,
+                Y = 0
             }
         },
 
         PowerBar =
         {
-            anchor = 'BOTTOM',
-            height = 4,
-            orientation = 'HORIZONTAL',
-            width = 252,
-            x = 0,
-            y = 3
+            Anchor = "BOTTOM",
+            Height = 4,
+            Orientation = "HORIZONTAL",
+            Width = 252,
+            X = 0,
+            Y = 3
         }
     }
 }
+
+
+if not select(1, IsAddOnLoaded("Recount")) then
+    Configuration.Themes.Default.Chat.Width = 412
+    Configuration.Themes.Default.Chat.X = -52
+end
