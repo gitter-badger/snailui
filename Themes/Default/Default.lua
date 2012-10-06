@@ -24,7 +24,7 @@ Configuration.Themes.Default =
         }
     },
 
-    Bag1 =
+    Bag =
     {
         Anchor = "BOTTOMRIGHT",
         Columns = 8,
@@ -99,18 +99,13 @@ Configuration.Themes.Default =
         Configuration.Themes.Default["SHAMAN"]["RESTORATION"] = DefaultHealer
         Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBarWithPet
 
-        local Specialization = GetSpecialization()
+        local Class = select(2, UnitClass("Player"))
 
-        if Specialization then
-            Specialization = select(2, GetSpecializationInfo(Specialization))
-            Specialization = Specialization:gsub("(.)", string.upper)
+        if Class == "WARLOCK" then
+            local _, _, _, _, Selected = GetTalentInfo(15)
 
-            if Specialization == "WARLOCK" then
-                local _, _, _, _, Selected = GetTalentInfo(15)
-
-                if Selected == true then
-                    Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
-                end
+            if Selected == true then
+                Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
             end
         end
     end,

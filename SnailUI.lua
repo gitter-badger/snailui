@@ -806,6 +806,18 @@ oUF:Factory(
                 "TalentMicroButton"
             }
 
+            ActionButton_UpdateUsable = function(Self)
+                local IsUsable, NotEnoughMana = IsUsableAction(Self.action);
+
+                if IsUsable then
+                    _G[Self:GetName() .. 'Icon']:SetVertexColor(1.0, 1.0, 1.0);
+                elseif NotEnoughMana then
+                    _G[Self:GetName() .. 'Icon']:SetVertexColor(0.5, 0.5, 1.0);
+                else
+                    _G[Self:GetName() .. 'Icon']:SetVertexColor(0.4, 0.4, 0.4);
+                end
+            end
+
             AchievementMicroButton_Update = Blank
             StanceBarFrame:SetPoint("TOPLEFT", UIParent, -500, 500)
 
@@ -998,8 +1010,6 @@ oUF:Factory(
         end
 
         if GetConfiguration().Bag then
-            local CurrentColumn = 1
-            local CurrentRow = 1
             local TotalBagSlots = 0
 
             for i = 0, NUM_BAG_FRAMES do
@@ -1012,72 +1022,13 @@ oUF:Factory(
                 Rows = Rows + 1
             end
 
-            bagFrame:Hide()
-            bagFrame:SetPoint(GetConfiguration().Bag.Anchor, GetConfiguration().Bag.X, GetConfiguration().Bag.Y)
-            bagFrame:SetSize(1 + (GetConfiguration().Bag.Columns * (GetConfiguration().Bag.Width + 1)), 26 + (Rows * (GetConfiguration().Bag.Height + 1)))
+            ContainerFrame1.Bag = CreateFrame('Frame', nil, ContainerFrame1)
+            ContainerFrame1.Bag:SetPoint(GetConfiguration().Bag.Anchor, UIParent, GetConfiguration().Bag.X, GetConfiguration().Bag.Y)
+            ContainerFrame1.Bag:SetSize(1 + (GetConfiguration().Bag.Columns * (GetConfiguration().Bag.Width + 1)), 26 + (Rows * (GetConfiguration().Bag.Height + 1)))
 
-            for i = 1, NUM_BAG_FRAMES + 1 do
-                for j = 1, GetContainerNumSlots(i - 1) do
-                    _G["ContainerFrame" .. i .. "Item" .. j]:SetNormalTexture(nil)
-                    _G["ContainerFrame" .. i .. "Item" .. j]:SetParent(bagFrame)
-                    _G["ContainerFrame" .. i .. "Item" .. j]:SetSize(GetConfiguration().Bag.Width - 2, GetConfiguration().Bag.Height - 2)
-                    _G["ContainerFrame" .. i .. "Item" .. j]:Show()
-
-                    if (i == 1) and (j == 1) then
-                        _G["ContainerFrame" .. i .. "Item" .. j]:SetPoint("BOTTOMLEFT", 2, 27)
-                    else
-                        _G["ContainerFrame" .. i .. "Item" .. j]:SetPoint("BOTTOMLEFT", 2 + ((CurrentColumn - 1) * (GetConfiguration().Bag.Width + 1)), 27 + ((CurrentRow - 1) * (GetConfiguration().Bag.Height + 1)))
-                    end
-
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom:SetSize(GetConfiguration().Bag.Width + 2 , 1)
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-
-                    if (i == 1) and (j == 1) then
-                        _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetPoint("TOPLEFT", -2, 1)
-                        _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetSize(1, 1 + (GetConfiguration().Bag.Height * 2))
-                    else
-                        _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetPoint("LEFT", -2, 0)
-                        _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetSize(1, GetConfiguration().Bag.Height)
-                    end
-
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight:SetPoint("RIGHT", 2, 0)
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight:SetSize(1, GetConfiguration().Bag.Height)
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop:SetPoint("TOP", 0, 2)
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop:SetSize(GetConfiguration().Bag.Width + 2, 1)
-                    _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-
-                    _G["ContainerFrame" .. i .. "Item" .. j].Border = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "BACKGROUND")
-                    _G["ContainerFrame" .. i .. "Item" .. j].Border:SetPoint("TOPLEFT", -3, 3)
-                    _G["ContainerFrame" .. i .. "Item" .. j].Border:SetSize(GetConfiguration().Bag.Width + 4, GetConfiguration().Bag.Height + 4)
-                    _G["ContainerFrame" .. i .. "Item" .. j].Border:SetTexture(0, 0, 0)
-                                    
-                    _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:ClearAllPoints()
-                    _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
-                    _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
-                    _G["ContainerFrame" .. i .. "Item" .. j .. "IconTexture"]:SetTexCoord(GetConfiguration().Bag.TextureCoordinate.Left, GetConfiguration().Bag.TextureCoordinate.Right, GetConfiguration().Bag.TextureCoordinate.Top, GetConfiguration().Bag.TextureCoordinate.Bottom)
-                
-                    if CurrentColumn == GetConfiguration().Bag.Columns then
-                        CurrentColumn = 1
-                        CurrentRow = CurrentRow + 1
-                    else
-                        CurrentColumn = CurrentColumn + 1
-                    end
-                end
-            end 
-
+            ContainerFrame1MoneyFrame:ClearAllPoints()
             ContainerFrame1MoneyFrame:SetHeight(GetConfiguration().Bag.Height)
-            ContainerFrame1MoneyFrame:SetParent(bagFrame)
-            ContainerFrame1MoneyFrame:SetPoint("BOTTOMRIGHT", 0, 1)
-            ContainerFrame1MoneyFrame:Show()
+            ContainerFrame1MoneyFrame:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, 0, 1)
 
             ContainerFrame1MoneyFrame.BackgroundBottom = ContainerFrame1MoneyFrame:CreateTexture(nil, "LOW")
             ContainerFrame1MoneyFrame.BackgroundBottom:SetPoint("BOTTOMRIGHT", 0, -1)
@@ -1102,6 +1053,102 @@ oUF:Factory(
             ContainerFrame1MoneyFrameCopperButtonText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
             ContainerFrame1MoneyFrameGoldButtonText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
             ContainerFrame1MoneyFrameSilverButtonText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+
+            local OriginalToggleAllBags = ToggleAllBags
+
+            ToggleAllBags = function()
+                OriginalToggleAllBags()
+                BagItemSearchBox:Hide()
+
+                ContainerFrame1BackgroundBottom:Hide()
+                ContainerFrame1BackgroundMiddle1:Hide()
+                ContainerFrame1BackgroundMiddle2:Hide()
+                ContainerFrame1BackgroundTop:Hide()
+                ContainerFrame1CloseButton:Hide()
+                ContainerFrame1Name:Hide()
+                ContainerFrame1Portrait:Hide()
+                ContainerFrame1PortraitButton:Hide()
+
+                local CurrentColumn = 1
+                local CurrentRow = 1
+
+                TotalBagSlots = 0
+
+                for i = 0, NUM_BAG_FRAMES do
+                    TotalBagSlots = TotalBagSlots + GetContainerNumSlots(i)
+                end
+
+                Rows = math.floor(TotalBagSlots / GetConfiguration().Bag.Columns)
+
+                if (TotalBagSlots % GetConfiguration().Bag.Columns) ~= 0 then
+                    Rows = Rows + 1
+                end
+
+                for i = NUM_BAG_FRAMES + 1, 1, -1 do
+                    _G["ContainerFrame" .. i]:ClearAllPoints()
+                    _G["ContainerFrame" .. i]:SetPoint("TOPLEFT", UIParent, -500, 500)
+                    
+                    _G["ContainerFrame" .. i].ClearAllPoints = Blank
+                    _G["ContainerFrame" .. i].SetPoint = Blank
+
+                    for j = GetContainerNumSlots(i - 1), 1, -1 do
+                        _G["ContainerFrame" .. i .. "Item" .. j]:ClearAllPoints()
+                        _G["ContainerFrame" .. i .. "Item" .. j]:SetNormalTexture(nil)
+                        _G["ContainerFrame" .. i .. "Item" .. j]:SetSize(GetConfiguration().Bag.Width - 2, GetConfiguration().Bag.Height - 2)
+
+                        if (i == (NUM_BAG_FRAMES + 1)) and (j == (GetContainerNumSlots(i - 1))) then
+                            _G["ContainerFrame" .. i .. "Item" .. j]:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, -2, 27)
+                        else
+                            _G["ContainerFrame" .. i .. "Item" .. j]:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, -(2 + ((CurrentColumn - 1) * (GetConfiguration().Bag.Width + 1))), 27 + ((CurrentRow - 1) * (GetConfiguration().Bag.Height + 1)))
+                        end
+
+                        if not _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom then
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom:SetSize(GetConfiguration().Bag.Width + 2 , 1)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight:SetPoint("RIGHT", 2, 0)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight:SetSize(1, GetConfiguration().Bag.Height)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "LOW")
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop:SetPoint("TOP", 0, 2)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop:SetSize(GetConfiguration().Bag.Width + 2, 1)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
+                            _G["ContainerFrame" .. i .. "Item" .. j].Border = _G["ContainerFrame" .. i .. "Item" .. j]:CreateTexture(nil, "BACKGROUND")
+                            _G["ContainerFrame" .. i .. "Item" .. j].Border:SetPoint("TOPLEFT", -3, 3)
+                            _G["ContainerFrame" .. i .. "Item" .. j].Border:SetSize(GetConfiguration().Bag.Width + 4, GetConfiguration().Bag.Height + 4)
+                            _G["ContainerFrame" .. i .. "Item" .. j].Border:SetTexture(0, 0, 0)
+                        end
+
+                         if (CurrentRow == 1) and (CurrentColumn == GetConfiguration().Bag.Columns) then
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetPoint("TOPLEFT", -2, 1)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetSize(1, 1 + (GetConfiguration().Bag.Height * 2))
+                        else
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetPoint("LEFT", -2, 0)
+                            _G["ContainerFrame" .. i .. "Item" .. j].BackgroundLeft:SetSize(1, GetConfiguration().Bag.Height)
+                        end
+                                        
+                        _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:ClearAllPoints()
+                        _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+                        _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
+                        _G["ContainerFrame" .. i .. "Item" .. j .. "IconTexture"]:SetTexCoord(GetConfiguration().Bag.TextureCoordinate.Left, GetConfiguration().Bag.TextureCoordinate.Right, GetConfiguration().Bag.TextureCoordinate.Top, GetConfiguration().Bag.TextureCoordinate.Bottom)
+                    
+                        if CurrentColumn == GetConfiguration().Bag.Columns then
+                            CurrentColumn = 1
+                            CurrentRow = CurrentRow + 1
+                        else
+                            CurrentColumn = CurrentColumn + 1
+                        end
+                    end
+                end
+            end
         end
 
         if GetConfiguration().Buffs then

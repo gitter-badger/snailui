@@ -10,6 +10,7 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.3.2
+- Fixed a bug where buttons were not lighting up when available to use
 - Fixed a bug where debuffs were misaligned when there were no buffs present
 - Theme fallback measures have been added to prevent errors
 - Several speed improvements have been made
