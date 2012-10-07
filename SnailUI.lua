@@ -3,7 +3,7 @@
 
 local Class = select(2, UnitClass("Player"))
 local Themes = {}
-local Version = "0.3.2"
+local Version = "0.3.3"
 
 if not Theme then
     Theme = Configuration.Theme
@@ -810,11 +810,11 @@ oUF:Factory(
                 local IsUsable, NotEnoughMana = IsUsableAction(Self.action);
 
                 if IsUsable then
-                    _G[Self:GetName() .. 'Icon']:SetVertexColor(1.0, 1.0, 1.0);
+                    _G[Self:GetName() .. "Icon"]:SetVertexColor(1.0, 1.0, 1.0);
                 elseif NotEnoughMana then
-                    _G[Self:GetName() .. 'Icon']:SetVertexColor(0.5, 0.5, 1.0);
+                    _G[Self:GetName() .. "Icon"]:SetVertexColor(0.5, 0.5, 1.0);
                 else
-                    _G[Self:GetName() .. 'Icon']:SetVertexColor(0.4, 0.4, 0.4);
+                    _G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4);
                 end
             end
 
@@ -824,6 +824,15 @@ oUF:Factory(
             if not GetConfiguration().ActionBars.Pet then
                 PetActionBarFrame:Hide()
                 PetActionBarFrame:SetScript("OnShow",
+                    function(Self)
+                        Self:Hide()
+                    end
+                )
+            end
+
+            if not GetConfiguration().ActionBars.Player then
+                MainMenuBar:Hide()
+                MainMenuBar:SetScript("OnShow",
                     function(Self)
                         Self:Hide()
                     end
@@ -947,65 +956,67 @@ oUF:Factory(
                 end
             end
 
-            MainMenuBar:ClearAllPoints()
-            MainMenuBar:SetSize((GetConfiguration().ActionBars.Player.Buttons * GetConfiguration().ActionBars.Player.Width) + ((GetConfiguration().ActionBars.Player.Buttons - 1) * 4), GetConfiguration().ActionBars.Player.Height)
-            MainMenuBar:SetPoint(GetConfiguration().ActionBars.Player.Anchor, GetConfiguration().ActionBars.Player.X, GetConfiguration().ActionBars.Player.Y)
+            if GetConfiguration().ActionBars.Player then
+                MainMenuBar:ClearAllPoints()
+                MainMenuBar:SetSize((GetConfiguration().ActionBars.Player.Buttons * GetConfiguration().ActionBars.Player.Width) + ((GetConfiguration().ActionBars.Player.Buttons - 1) * 4), GetConfiguration().ActionBars.Player.Height)
+                MainMenuBar:SetPoint(GetConfiguration().ActionBars.Player.Anchor, GetConfiguration().ActionBars.Player.X, GetConfiguration().ActionBars.Player.Y)
 
-            for i = 1, GetConfiguration().ActionBars.Player.Buttons do
-                _G["ActionButton" .. i]:ClearAllPoints()
-                _G["ActionButton" .. i]:SetNormalTexture(nil)
-                _G["ActionButton" .. i]:SetPoint("LEFT", ((i - 1) * GetConfiguration().ActionBars.Player.Width) + ((i - 1) * 4) + 3, 0)
-                _G["ActionButton" .. i]:SetSize(GetConfiguration().ActionBars.Player.Width - 6, GetConfiguration().ActionBars.Player.Height - 6)
-                
-                _G["ActionButton" .. i].BackgroundBottom = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
-                _G["ActionButton" .. i].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
-                _G["ActionButton" .. i].BackgroundBottom:SetSize(GetConfiguration().ActionBars.Player.Width - 2, 1)
-                _G["ActionButton" .. i].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+                for i = 1, GetConfiguration().ActionBars.Player.Buttons do
+                    _G["ActionButton" .. i]:ClearAllPoints()
+                    _G["ActionButton" .. i]:SetNormalTexture(nil)
+                    _G["ActionButton" .. i]:SetPoint("LEFT", ((i - 1) * GetConfiguration().ActionBars.Player.Width) + ((i - 1) * 4) + 3, 0)
+                    _G["ActionButton" .. i]:SetSize(GetConfiguration().ActionBars.Player.Width - 6, GetConfiguration().ActionBars.Player.Height - 6)
+                    
+                    _G["ActionButton" .. i].BackgroundBottom = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
+                    _G["ActionButton" .. i].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
+                    _G["ActionButton" .. i].BackgroundBottom:SetSize(GetConfiguration().ActionBars.Player.Width - 2, 1)
+                    _G["ActionButton" .. i].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-                _G["ActionButton" .. i].BackgroundLeft = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
-                _G["ActionButton" .. i].BackgroundLeft:SetPoint("LEFT", -2, 0)
-                _G["ActionButton" .. i].BackgroundLeft:SetSize(1, GetConfiguration().ActionBars.Player.Height - 4)
-                _G["ActionButton" .. i].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+                    _G["ActionButton" .. i].BackgroundLeft = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
+                    _G["ActionButton" .. i].BackgroundLeft:SetPoint("LEFT", -2, 0)
+                    _G["ActionButton" .. i].BackgroundLeft:SetSize(1, GetConfiguration().ActionBars.Player.Height - 4)
+                    _G["ActionButton" .. i].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-                _G["ActionButton" .. i].BackgroundRight = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
-                _G["ActionButton" .. i].BackgroundRight:SetPoint("RIGHT", 2, 0)
-                _G["ActionButton" .. i].BackgroundRight:SetSize(1, GetConfiguration().ActionBars.Player.Height - 4)
-                _G["ActionButton" .. i].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+                    _G["ActionButton" .. i].BackgroundRight = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
+                    _G["ActionButton" .. i].BackgroundRight:SetPoint("RIGHT", 2, 0)
+                    _G["ActionButton" .. i].BackgroundRight:SetSize(1, GetConfiguration().ActionBars.Player.Height - 4)
+                    _G["ActionButton" .. i].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-                _G["ActionButton" .. i].BackgroundTop = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
-                _G["ActionButton" .. i].BackgroundTop:SetPoint("TOP", 0, 2)
-                _G["ActionButton" .. i].BackgroundTop:SetSize(GetConfiguration().ActionBars.Player.Width - 2, 1)
-                _G["ActionButton" .. i].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-                                
-                _G["ActionButton" .. i].BorderBottom = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
-                _G["ActionButton" .. i].BorderBottom:SetPoint("BOTTOM", 0, -3)
-                _G["ActionButton" .. i].BorderBottom:SetSize(GetConfiguration().ActionBars.Player.Width, 3)
-                _G["ActionButton" .. i].BorderBottom:SetTexture(0, 0, 0)
+                    _G["ActionButton" .. i].BackgroundTop = _G["ActionButton" .. i]:CreateTexture(nil, "LOW")
+                    _G["ActionButton" .. i].BackgroundTop:SetPoint("TOP", 0, 2)
+                    _G["ActionButton" .. i].BackgroundTop:SetSize(GetConfiguration().ActionBars.Player.Width - 2, 1)
+                    _G["ActionButton" .. i].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+                                    
+                    _G["ActionButton" .. i].BorderBottom = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
+                    _G["ActionButton" .. i].BorderBottom:SetPoint("BOTTOM", 0, -3)
+                    _G["ActionButton" .. i].BorderBottom:SetSize(GetConfiguration().ActionBars.Player.Width, 3)
+                    _G["ActionButton" .. i].BorderBottom:SetTexture(0, 0, 0)
 
-                _G["ActionButton" .. i].BorderLeft = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
-                _G["ActionButton" .. i].BorderLeft:SetPoint("LEFT", -3, 0)
-                _G["ActionButton" .. i].BorderLeft:SetSize(3, GetConfiguration().ActionBars.Player.Height - 2)
-                _G["ActionButton" .. i].BorderLeft:SetTexture(0, 0, 0)
+                    _G["ActionButton" .. i].BorderLeft = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
+                    _G["ActionButton" .. i].BorderLeft:SetPoint("LEFT", -3, 0)
+                    _G["ActionButton" .. i].BorderLeft:SetSize(3, GetConfiguration().ActionBars.Player.Height - 2)
+                    _G["ActionButton" .. i].BorderLeft:SetTexture(0, 0, 0)
 
-                _G["ActionButton" .. i].BorderRight = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
-                _G["ActionButton" .. i].BorderRight:SetPoint("RIGHT", 3, 0)
-                _G["ActionButton" .. i].BorderRight:SetSize(3, GetConfiguration().ActionBars.Player.Height - 2)
-                _G["ActionButton" .. i].BorderRight:SetTexture(0, 0, 0)
+                    _G["ActionButton" .. i].BorderRight = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
+                    _G["ActionButton" .. i].BorderRight:SetPoint("RIGHT", 3, 0)
+                    _G["ActionButton" .. i].BorderRight:SetSize(3, GetConfiguration().ActionBars.Player.Height - 2)
+                    _G["ActionButton" .. i].BorderRight:SetTexture(0, 0, 0)
 
-                _G["ActionButton" .. i].BorderTop = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
-                _G["ActionButton" .. i].BorderTop:SetPoint("TOP", 0, 3)
-                _G["ActionButton" .. i].BorderTop:SetSize(GetConfiguration().ActionBars.Player.Width, 3)
-                _G["ActionButton" .. i].BorderTop:SetTexture(0, 0, 0)
+                    _G["ActionButton" .. i].BorderTop = _G["ActionButton" .. i]:CreateTexture(nil, "BACKGROUND")
+                    _G["ActionButton" .. i].BorderTop:SetPoint("TOP", 0, 3)
+                    _G["ActionButton" .. i].BorderTop:SetSize(GetConfiguration().ActionBars.Player.Width, 3)
+                    _G["ActionButton" .. i].BorderTop:SetTexture(0, 0, 0)
 
-                _G["ActionButton" .. i .. "Count"]:SetAlpha(0)
-                _G["ActionButton" .. i .. "Border"]:SetAlpha(0)
-                _G["ActionButton" .. i .. "Border"].SetVertexColor = Blank
+                    _G["ActionButton" .. i .. "Count"]:SetAlpha(0)
+                    _G["ActionButton" .. i .. "Border"]:SetAlpha(0)
+                    _G["ActionButton" .. i .. "Border"].SetVertexColor = Blank
 
-                _G["ActionButton" .. i .. "Icon"]:SetTexCoord(GetConfiguration().ActionBars.Player.TextureCoordinate.Left, GetConfiguration().ActionBars.Player.TextureCoordinate.Right, GetConfiguration().ActionBars.Player.TextureCoordinate.Top, GetConfiguration().ActionBars.Player.TextureCoordinate.Bottom)
-                _G["ActionButton" .. i .. "FlyoutBorder"]:SetAlpha(0)
-                _G["ActionButton" .. i .. "FlyoutBorderShadow"]:SetAlpha(0)
-                _G["ActionButton" .. i .. "HotKey"]:SetAlpha(0)
-                _G["ActionButton" .. i .. "Name"]:SetAlpha(0)
+                    _G["ActionButton" .. i .. "Icon"]:SetTexCoord(GetConfiguration().ActionBars.Player.TextureCoordinate.Left, GetConfiguration().ActionBars.Player.TextureCoordinate.Right, GetConfiguration().ActionBars.Player.TextureCoordinate.Top, GetConfiguration().ActionBars.Player.TextureCoordinate.Bottom)
+                    _G["ActionButton" .. i .. "FlyoutBorder"]:SetAlpha(0)
+                    _G["ActionButton" .. i .. "FlyoutBorderShadow"]:SetAlpha(0)
+                    _G["ActionButton" .. i .. "HotKey"]:SetAlpha(0)
+                    _G["ActionButton" .. i .. "Name"]:SetAlpha(0)
+                end
             end
         end
 
@@ -1022,7 +1033,7 @@ oUF:Factory(
                 Rows = Rows + 1
             end
 
-            ContainerFrame1.Bag = CreateFrame('Frame', nil, ContainerFrame1)
+            ContainerFrame1.Bag = CreateFrame("Frame", nil, ContainerFrame1)
             ContainerFrame1.Bag:SetPoint(GetConfiguration().Bag.Anchor, UIParent, GetConfiguration().Bag.X, GetConfiguration().Bag.Y)
             ContainerFrame1.Bag:SetSize(1 + (GetConfiguration().Bag.Columns * (GetConfiguration().Bag.Width + 1)), 26 + (Rows * (GetConfiguration().Bag.Height + 1)))
 
@@ -1054,10 +1065,7 @@ oUF:Factory(
             ContainerFrame1MoneyFrameGoldButtonText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
             ContainerFrame1MoneyFrameSilverButtonText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
 
-            local OriginalToggleAllBags = ToggleAllBags
-
-            ToggleAllBags = function()
-                OriginalToggleAllBags()
+            local OpenBags = function()
                 BagItemSearchBox:Hide()
 
                 ContainerFrame1BackgroundBottom:Hide()
@@ -1087,16 +1095,16 @@ oUF:Factory(
                 for i = NUM_BAG_FRAMES + 1, 1, -1 do
                     _G["ContainerFrame" .. i]:ClearAllPoints()
                     _G["ContainerFrame" .. i]:SetPoint("TOPLEFT", UIParent, -500, 500)
-                    
+
                     _G["ContainerFrame" .. i].ClearAllPoints = Blank
                     _G["ContainerFrame" .. i].SetPoint = Blank
 
-                    for j = GetContainerNumSlots(i - 1), 1, -1 do
+                    for j = 1, GetContainerNumSlots(i - 1) do
                         _G["ContainerFrame" .. i .. "Item" .. j]:ClearAllPoints()
                         _G["ContainerFrame" .. i .. "Item" .. j]:SetNormalTexture(nil)
                         _G["ContainerFrame" .. i .. "Item" .. j]:SetSize(GetConfiguration().Bag.Width - 2, GetConfiguration().Bag.Height - 2)
 
-                        if (i == (NUM_BAG_FRAMES + 1)) and (j == (GetContainerNumSlots(i - 1))) then
+                        if (i == (NUM_BAG_FRAMES + 1)) and (j == 1) then
                             _G["ContainerFrame" .. i .. "Item" .. j]:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, -2, 27)
                         else
                             _G["ContainerFrame" .. i .. "Item" .. j]:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, -(2 + ((CurrentColumn - 1) * (GetConfiguration().Bag.Width + 1))), 27 + ((CurrentRow - 1) * (GetConfiguration().Bag.Height + 1)))
@@ -1139,6 +1147,7 @@ oUF:Factory(
                         _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                         _G["ContainerFrame" .. i .. "Item" .. j .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
                         _G["ContainerFrame" .. i .. "Item" .. j .. "IconTexture"]:SetTexCoord(GetConfiguration().Bag.TextureCoordinate.Left, GetConfiguration().Bag.TextureCoordinate.Right, GetConfiguration().Bag.TextureCoordinate.Top, GetConfiguration().Bag.TextureCoordinate.Bottom)
+                        _G["ContainerFrame" .. i .. "Item" .. j .. "IconQuestTexture"]:SetSize(GetConfiguration().Bag.Width - 2, GetConfiguration().Bag.Height - 2)
                     
                         if CurrentColumn == GetConfiguration().Bag.Columns then
                             CurrentColumn = 1
@@ -1148,6 +1157,20 @@ oUF:Factory(
                         end
                     end
                 end
+            end
+
+            local OriginalOpenAllBags = OpenAllBags
+
+            OpenAllBags = function(Self)
+                OriginalOpenAllBags(Self)
+                OpenBags()
+            end
+
+            local OriginalToggleAllBags = ToggleAllBags
+
+            ToggleAllBags = function(Self)
+                OriginalToggleAllBags(Self)
+                OpenBags()
             end
         end
 
@@ -1496,7 +1519,7 @@ oUF:Factory(
             ExtraButton:SetSize(GetConfiguration().ExtraButton.Width - 4, GetConfiguration().ExtraButton.Height - 4)
             ExtraButton:SetScript("OnClick",
                 function(Self)
-                    if BuffFrame:IsShown() then
+                    if Self.Shown then
                         BuffFrame:Hide()
                         WatchFrame:Hide()
                         WorldStateAlwaysUpFrame:Hide()
@@ -1506,6 +1529,7 @@ oUF:Factory(
                         end
 
                         Self.Bar.Text:SetText("Show Misc Frames")
+                        Self.Shown = nil
                     else
                         BuffFrame:Show()
                         WatchFrame:Show()
@@ -1516,6 +1540,7 @@ oUF:Factory(
                         end
 
                         Self.Bar.Text:SetText("Hide Misc Frames")
+                        Self.Shown = true
                     end
                 end
             )
@@ -1524,13 +1549,17 @@ oUF:Factory(
                 ExtraButton:SetAlpha(0)
                 ExtraButton:SetScript("OnEnter",
                     function(Self)
-                        Self:SetAlpha(1)
+                        if not ExtraButton.Shown then
+                            Self:SetAlpha(1)
+                        end
                     end
                 )
 
                 ExtraButton:SetScript("OnLeave",
                     function(Self)
-                        Self:SetAlpha(0)
+                        if not ExtraButton.Shown then
+                            Self:SetAlpha(0)
+                        end
                     end
                 )
             end

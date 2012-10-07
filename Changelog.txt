@@ -5,7 +5,16 @@ Written by Snail
 
 Change log for SnailUI
 
-This is where I will document the changes made for SnailUI in each release.
+This is where I will document the changes made for SnailUI in each release
+
+------------------------------------------------------------------------------
+
+Version 0.3.3
+- Fixed a bug where the extra button was not staying shown when clicked
+- Fixed a bug where the player action bar was causing errors when disabled
+- Fixed a bug where items were not being added to their correct bag slots
+- Fixed a bug where quest items were not being resized in the bag frame
+- Fixed a bug where the bag frame was not being skinned on certain conditions
 
 ------------------------------------------------------------------------------
 

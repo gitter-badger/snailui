@@ -5,7 +5,7 @@ Written by Snail
 
 SnailUI
 
-SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you report them on the comments page on WoWInterface for this addon or through Twitter. :)
+SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you reported them in the comments or through Twitter. :)
 
 A lot of aspects of SnailUI can be changed via the in game interface options (or by typing /SUI or /SnailUI) or via the lua files themselves. This UI is also using Tuk's warlock bars addon as a temporary fix until oUF is updated. Should you need to contact me, I can be found via Twitter. (@1Snail)
 
@@ -22,12 +22,16 @@ Features
 - Widescreen action buttons (First time I have ever seen someone do this)
 - Easy central focused class bars to help you watch your character more easily (Get out of that fire!)
 - Easy to extend or create your own themes
+- All class bars are supported (Combo point bar, rune bar, etc.)
 
 ------------------------------------------------------------------------------
 
 Download
 
-You can download this release here: http://wowinterface.com/downloads/info20900-SnailUI
+You can download this UI at either of these sites:
+
+WoW Interface: http://wowinterface.com/downloads/info20900-SnailUI
+Curse: http://www.curse.com/addons/wow/snailui
 
 Mirrors of all of the SnailUI releases can be found here: https://github.com/1Snail/SnailUI/downloads
 
