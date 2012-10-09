@@ -68,6 +68,15 @@ Configuration.Themes.Default =
         Y = 9
     },
 
+    ExperienceBar =
+    {
+        Anchor = "TOP",
+        Height = 8,
+        Width = 204,
+        X = 0,
+        Y = -28
+    },
+
     ExtraButton =
     {
         Anchor = "TOP",
@@ -78,7 +87,7 @@ Configuration.Themes.Default =
         Y = -6
     },
 
-    Initialize = function()
+    Initialize = function(Self)
         Configuration.Themes.Default["DEATHKNIGHT"] = DefaultWithClassBar
         Configuration.Themes.Default["DEATHKNIGHT"]["UNHOLY"] = DefaultWithClassBarWithPet
         Configuration.Themes.Default["DRUID"] = Configuration.Themes.Default

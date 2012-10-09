@@ -31,7 +31,7 @@ Download
 You can download this UI at either of these sites:
 
 WoW Interface: http://wowinterface.com/downloads/info20900-SnailUI
-Curse: http://www.curse.com/addons/wow/snailui
+Curse: http://curse.com/addons/wow/snailui
 
 Mirrors of all of the SnailUI releases can be found here: https://github.com/1Snail/SnailUI/downloads
 

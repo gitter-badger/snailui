@@ -227,7 +227,7 @@ DefaultWithClassBar.Player.PowerBar.Height = 6
 DefaultWithClassBar.Player.PowerBar.Width = 512
 DefaultWithClassBar.Player.PowerBar.X = 3
 DefaultWithClassBar.Player.PowerBar.Y = 11
-DefaultWithClassBar.Player.RuneBar =
+DefaultWithClassBar.Player.RunesBar =
 {
     Anchor = "TOPLEFT",
     Height = 24,

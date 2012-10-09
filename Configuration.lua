@@ -18,3 +18,7 @@ Configuration =
     {
     }
 }
+
+if not Theme then
+    Theme = Configuration.Theme
+end

@@ -4,7 +4,7 @@
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.3.3
+## Version: 0.3.4
 
 Configuration.lua
 Functions.lua
@@ -17,5 +17,40 @@ Themes\Default\DefaultWithPet.lua
 Themes\Default\DefaultWithClassBar.lua
 Themes\Default\DefaultHealerWithClassBar.lua
 Themes\Default\DefaultWithClassBarWithPet.lua
+
+Elements\ActionBars.lua
+Elements\BackgroundColors.lua
+Elements\Bag.lua
+Elements\BattlegroundAutoRelease.lua
+Elements\BlizzardFrames.lua
+Elements\Buffs.lua
+Elements\CastingBar.lua
+Elements\Chat.lua
+Elements\ConsoleVariables.lua
+Elements\Experience.lua
+Elements\ExtraButton.lua
+Elements\Focus.lua
+Elements\FocusTarget.lua
+Elements\HealthBar.lua
+Elements\InterfaceOptions.lua
+Elements\Minimap.lua
+Elements\Pet.lua
+Elements\Player.lua
+Elements\PowerBar.lua
+Elements\Raid.lua
+Elements\SpellRange.lua
+Elements\Target.lua
+Elements\TargetTarget.lua
+Elements\Unit.lua
+
+Elements\ClassBars\BurningEmbersBar.lua
+Elements\ClassBars\ChiBar.lua
+Elements\ClassBars\ComboPointsBar.lua
+Elements\ClassBars\DemonicFuryBar.lua
+Elements\ClassBars\EclipseBar.lua
+Elements\ClassBars\HolyPowerBar.lua
+Elements\ClassBars\RunesBar.lua
+Elements\ClassBars\ShadowOrbsBar.lua
+Elements\ClassBars\SoulShardsBar.lua
 
 SnailUI.lua
