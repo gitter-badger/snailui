@@ -3,6 +3,7 @@
 
 function HandleChat()
     if GetConfiguration().Chat then
+        local Class = select(2, UnitClass("Player"))
         local OriginalChatEdit_OnEscapePressed = ChatEdit_OnEscapePressed
 
         ChatEdit_OnEscapePressed = function(Self)
@@ -57,11 +58,23 @@ function HandleChat()
         ChatFrame1.BorderTop:SetSize(GetConfiguration().Chat.Width, 3)
         ChatFrame1.BorderTop:SetTexture(0, 0, 0)
 
+        ChatFrame1.OriginalSetPoint = ChatFrame1.SetPoint
+        ChatFrame1.OriginalSetSize = ChatFrame1.SetSize
+
         ChatFrame1.TransparentBackground = ChatFrame1:CreateTexture(nil, "BACKGROUND")
         ChatFrame1.TransparentBackground:SetPoint("TOPLEFT", -2, 2)
         ChatFrame1.TransparentBackground:SetSize(GetConfiguration().Chat.Width - 6, GetConfiguration().Chat.Height - 6)
         ChatFrame1.TransparentBackground:SetTexture(0, 0, 0, 0.5)
 
+        ChatFrame1.SetPoint = function()
+            ChatFrame1:OriginalSetPoint(GetConfiguration().Chat.Anchor, GetConfiguration().Chat.X, GetConfiguration().Chat.Y)
+        end
+
+        ChatFrame1.SetSize = function()
+            ChatFrame1:OriginalSetSize(GetConfiguration().Chat.Width - 10, GetConfiguration().Chat.Height - 10)
+        end
+
+        ChatFrame1EditBox:Hide()
         ChatFrame1EditBox:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", -5, 6)
     end
 end

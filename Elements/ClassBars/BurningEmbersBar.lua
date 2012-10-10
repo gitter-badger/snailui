@@ -10,7 +10,7 @@ function HandleBurningEmbersBar(Self)
         Specialization = Specialization:gsub("(.)", string.upper)
     end
 
-    if GetConfiguration()[Self.Frame].BurningEmbersBar and (self.Frame == "Player") and (Class == "WARLOCK") and (Specialization == "DESTRUCTION") then
+    if GetConfiguration()[Self.Frame].BurningEmbersBar and (Self.Frame == "Player") and (Class == "WARLOCK") and (Specialization == "DESTRUCTION") then
         Self.WarlockSpecBars = CreateFrame("Frame", nil, Self)
         Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].BurningEmbersBar.Anchor, GetConfiguration()[Self.Frame].BurningEmbersBar.X, GetConfiguration()[Self.Frame].BurningEmbersBar.Y)
         Self.WarlockSpecBars:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar.Width - 2, GetConfiguration()[Self.Frame].BurningEmbersBar.Height - 2)

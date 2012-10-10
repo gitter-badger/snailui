@@ -3,6 +3,7 @@
 
 function HandleBag()
     if GetConfiguration().Bag then
+        local Class = select(2, UnitClass("Player"))
         local TotalBagSlots = 0
 
         for i = 0, NUM_BAG_FRAMES do

@@ -10,7 +10,6 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.3.4
-- The extra button will act as if it was pushed when holding down shift + tab
 - Many code simplifications have been made to improve SnailUI's speed
 - All of the UI elements have been split into their own lua file
 - Experience bar added

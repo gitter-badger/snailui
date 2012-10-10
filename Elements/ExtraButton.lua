@@ -3,13 +3,14 @@
 
 function HandleExtraButton()
     if GetConfiguration().ExtraButton then
-        local ExtraButton = CreateFrame("Button", nil, UIParent)
-
+        local Class = select(2, UnitClass("Player"))
+        
+        ExtraButton = CreateFrame("Button", nil, UIParent)
         ExtraButton:RegisterForClicks("AnyUp")
         ExtraButton:SetPoint(GetConfiguration().ExtraButton.Anchor, GetConfiguration().ExtraButton.X, GetConfiguration().ExtraButton.Y)
         ExtraButton:SetSize(GetConfiguration().ExtraButton.Width - 4, GetConfiguration().ExtraButton.Height - 4)
         ExtraButton:SetScript("OnClick",
-            local function(Self)
+            function(Self)
                 if Self.Shown then
                     BuffFrame:Hide()
                     MainMenuExpBar:Hide()

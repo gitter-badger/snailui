@@ -30,6 +30,7 @@ function HandleBuffs()
             BuffFrame:ClearAllPoints()
             BuffFrame:SetPoint(GetConfiguration().Buffs.Anchor, GetConfiguration().Buffs.X, GetConfiguration().Buffs.Y)
 
+            local Class = select(2, UnitClass("Player"))
             local GreaterBuff = BUFF_ACTUAL_DISPLAY
 
             if DEBUFF_ACTUAL_DISPLAY > GreaterBuff then
@@ -45,8 +46,6 @@ function HandleBuffs()
             else
                 BuffFrame:SetSize(GetConfiguration().Buffs.Width, GreaterBuff * GetConfiguration().Buffs.Height)
             end
-
-            local Class = select(2, UnitClass(Self.Frame))
 
             for i = 1, BUFF_ACTUAL_DISPLAY do
                 _G["BuffButton" .. i]:ClearAllPoints()

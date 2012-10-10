@@ -4,13 +4,12 @@
 local Version = "0.3.4"
 
 oUF:RegisterStyle("SnailUI", 
-    local function(Self, Unit)
+    function(Self, Unit)
         Unit = Unit:gsub("(.)", string.upper, 1)
         
         if GetConfiguration()[Unit] then
             Self.Frame = Unit
-
-            HandleUnit(Self)
+            
             HandleBackgroundColors(Self)
             HandleBattlegroundAutoRelease(Self)
             HandleBurningEmbersBar(Self)
@@ -25,7 +24,8 @@ oUF:RegisterStyle("SnailUI",
             HandleRunesBar(Self)
             HandleShadowOrbsBar(Self)
             HandleSoulShardsBar(Self)
-            HandleSpellRange(Self) 
+            HandleSpellRange(Self)
+            HandleUnit(Self)
         end
     end
 )
@@ -42,17 +42,17 @@ oUF:Factory(
         HandleBuffs()
         HandleChat()
         HandleConsoleVariables()
-        HandleExperience()
+        HandleExperienceBar()
         HandleExtraButton()
-        HandleFocus()
-        HandleFocusTarget()
+        HandleFocus(Self)
+        HandleFocusTarget(Self)
         HandleInterfaceOptions(Version)
         HandleMinimap()
-        HandlePet()
-        HandlePlayer()
-        HandleRaid()
-        HandleTarget()
-        HandleTargetTarget()
+        HandlePet(Self)
+        HandlePlayer(Self)
+        HandleRaid(Self)
+        HandleTarget(Self)
+        HandleTargetTarget(Self)
 
         Self:SetActiveStyle("SnailUI")
     end

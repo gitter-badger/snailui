@@ -3,6 +3,7 @@
 
 function HandleMinimap()
     if GetConfiguration().Minimap then
+        local Class = select(2, UnitClass("Player"))
         local Minimap = CreateFrame("Minimap", nil, UIParent)
 
         Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8X8.tga")

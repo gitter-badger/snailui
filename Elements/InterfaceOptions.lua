@@ -50,7 +50,7 @@ function HandleInterfaceOptions(Version)
     GeneralSubcategory.ThemeDropdownMenu:SetPoint("TOPLEFT", 0, -73)
         
     UIDropDownMenu_Initialize(GeneralSubcategory.ThemeDropdownMenu,
-        local function(ThemeDropdownMenu, Level)
+        function(ThemeDropdownMenu, Level)
             local Index = 1
 
             for Key, Value in pairs(Configuration.Themes) do

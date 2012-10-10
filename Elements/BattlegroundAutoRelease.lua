@@ -2,9 +2,9 @@
 -- Written by Snail
 
 function HandleBattlegroundAutoRelease(Self)
-    if self.Frame == "Player" then
+    if Self.Frame == "Player" then
         Self:RegisterEvent("PLAYER_DEAD",
-            local function()
+            function()
                 local InInstance, InstanceType = IsInInstance()
 
                 if InInstance then

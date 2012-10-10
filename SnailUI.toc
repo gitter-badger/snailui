@@ -27,7 +27,7 @@ Elements\Buffs.lua
 Elements\CastingBar.lua
 Elements\Chat.lua
 Elements\ConsoleVariables.lua
-Elements\Experience.lua
+Elements\ExperienceBar.lua
 Elements\ExtraButton.lua
 Elements\Focus.lua
 Elements\FocusTarget.lua

@@ -85,14 +85,14 @@ function HandleBlizzardFrames()
     if GetConfiguration().Bag then
         Frames[#Frames + 1] = "BagItemSearchBox"
         Frames[#Frames + 1] = "ContainerFrame1CloseButton"
-        Frames[#Frames + 1] = "ContainerFrame1Name"
-        Frames[#Frames + 1] = "ContainerFrame1Portrait"
         Frames[#Frames + 1] = "ContainerFrame1PortraitButton"
 
         Textures[#Textures + 1] = "ContainerFrame1BackgroundBottom"
         Textures[#Textures + 1] = "ContainerFrame1BackgroundMiddle1"
         Textures[#Textures + 1] = "ContainerFrame1BackgroundMiddle2"
         Textures[#Textures + 1] = "ContainerFrame1BackgroundTop"
+        Textures[#Textures + 1] = "ContainerFrame1Name"
+        Textures[#Textures + 1] = "ContainerFrame1Portrait"
     end
 
     if GetConfiguration().Chat then
@@ -102,12 +102,11 @@ function HandleBlizzardFrames()
 
         for i = 1, NUM_CHAT_WINDOWS do
             Frames[#Frames + 1] = "ChatFrame" .. i .. "ButtonFrame"
-            Frames[#Frames + 1] = "ChatFrame" .. i .. "EditBox"
             Frames[#Frames + 1] = "ChatFrame" .. i .. "ResizeButton"
         end
     end
 
-    if GetConfiguration().Experience and (UnitLevel("Player") ~= MAX_PLAYER_LEVEL) then
+    if GetConfiguration().ExperienceBar and (UnitLevel("Player") ~= MAX_PLAYER_LEVEL) then
         Frames[#Frames + 1] = "ExhaustionTick"
         Frames[#Frames + 1] = "MainMenuBarMaxLevelBar"
         Frames[#Frames + 1] = "MainMenuBarOverlayFrame"
@@ -124,10 +123,8 @@ function HandleBlizzardFrames()
         for i = 1, 19 do
             Textures[#Textures + 1] = "MainMenuXPBarDiv" .. i
         end
-    else
-        if not GetConfiguration().ActionBars.Player then
+    elseif GetConfiguration().ActionBars.Player then
             Frames[#Frames + 1] = "MainMenuExpBar"
-        end
     end
 
     for i = 1, #Frames do

@@ -4,7 +4,7 @@
 function HandleSpellRange(Self)
     Self.SpellRange =
     {
-        local function Update(Self, InRange)
+        Update = function(Self, InRange)
             if Configuration.InactiveAlpha then
                 if UnitIsUnit(Self.unit, "Player") then
                     InRange = true

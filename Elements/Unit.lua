@@ -5,13 +5,13 @@ function HandleUnit(Self)
     Self:RegisterForClicks("AnyUp")
     Self:SetSize(GetConfiguration()[Self.Frame].Width, GetConfiguration()[Self.Frame].Height)
     Self:SetScript("OnEnter",
-        local function(Self)
+        function(Self)
             UnitFrame_UpdateTooltip(Self)
         end
     )
 
     Self:SetScript("OnLeave",
-        local function()
+        function()
             GameTooltip_Hide()
         end
     )

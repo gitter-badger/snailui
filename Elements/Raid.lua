@@ -1,7 +1,7 @@
 -- Raid.lua
 -- Written by Snail
 
-function HandleRaid()
+function HandleRaid(Self)
     if GetConfiguration().Raid then
         Raid = Self:SpawnHeader(
             nil, nil, nil,

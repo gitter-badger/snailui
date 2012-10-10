@@ -4,28 +4,11 @@
 function HandleHealthBar(Self)
     if GetConfiguration()[Self.Frame].HealthBar then
         Self:RegisterEvent("UNIT_HEAL_PREDICTION",
-            local function(Self)
+            function(Self)
                 Self.HealPrediction.myBar:SetAlpha(Self:GetAlpha() / 2)
                 Self.HealPrediction.otherBar:SetAlpha(Self:GetAlpha() / 2)
             end
         )
-
-        Self.HealPrediction =
-        {
-            maxOverflow = 1,
-            myBar = CreateFrame("StatusBar", nil, Self),
-            otherBar = CreateFrame("StatusBar", nil, Self)
-        }
-
-        Self.HealPrediction.myBar:SetPoint("TOPLEFT", Self.Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
-        Self.HealPrediction.myBar:SetPoint("BOTTOMLEFT", Self.Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
-        Self.HealPrediction.myBar:SetSize(GetConfiguration()[Self.Frame].HealthBar.Width - 2, GetConfiguration()[Self.Frame].HealthBar.Height - 2)
-        Self.HealPrediction.myBar:SetStatusBarTexture(Configuration.Texture)
-
-        Self.HealPrediction.otherBar:SetPoint("TOPLEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
-        Self.HealPrediction.otherBar:SetPoint("BOTTOMLEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
-        Self.HealPrediction.otherBar:SetSize(GetConfiguration()[Self.Frame].HealthBar.Width - 2, GetConfiguration()[Self.Frame].HealthBar.Height - 2)
-        Self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.Texture)
 
         Self.Health = CreateFrame("StatusBar", nil, Self)
         Self.Health.frequentUpdates = true
@@ -51,5 +34,22 @@ function HandleHealthBar(Self)
                 Self:Tag(Self.Health.Health, "[SnailUI:Health]")
             end
         end
+
+        Self.HealPrediction =
+        {
+            maxOverflow = 1,
+            myBar = CreateFrame("StatusBar", nil, Self),
+            otherBar = CreateFrame("StatusBar", nil, Self)
+        }
+
+        Self.HealPrediction.myBar:SetPoint("TOPLEFT", Self.Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
+        Self.HealPrediction.myBar:SetPoint("BOTTOMLEFT", Self.Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
+        Self.HealPrediction.myBar:SetSize(GetConfiguration()[Self.Frame].HealthBar.Width - 2, GetConfiguration()[Self.Frame].HealthBar.Height - 2)
+        Self.HealPrediction.myBar:SetStatusBarTexture(Configuration.Texture)
+
+        Self.HealPrediction.otherBar:SetPoint("TOPLEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
+        Self.HealPrediction.otherBar:SetPoint("BOTTOMLEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
+        Self.HealPrediction.otherBar:SetSize(GetConfiguration()[Self.Frame].HealthBar.Width - 2, GetConfiguration()[Self.Frame].HealthBar.Height - 2)
+        Self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.Texture)
     end
 end
