@@ -31,7 +31,7 @@ Features
 
 Download
 
-You can download this UI at either of these sites:
+You can download SnailUI at either of these sites:
 
 WoW Interface: http://wowinterface.com/downloads/info20900-SnailUI
 Curse: http://curse.com/addons/wow/snailui
