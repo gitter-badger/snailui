@@ -7,6 +7,14 @@ function HandleBlizzardFrames()
     CompactRaidFrameContainer:UnregisterAllEvents()
     CompactRaidFrameManager:UnregisterAllEvents()
 
+    ExtraActionBarFrame:ClearAllPoints()
+    ExtraActionBarFrame:SetPoint("TOP", 0, -100)
+    ExtraActionBarFrame.OriginalSetPoint = ExtraActionBarFrame.SetPoint
+    ExtraActionBarFrame.SetPoint = function()
+        ExtraActionBarFrame:ClearAllPoints()
+        ExtraActionBarFrame:OriginalSetPoint("TOP", 0, -100)
+    end
+
     WatchFrame:Hide()
     WorldStateAlwaysUpFrame:Hide()
 
@@ -15,6 +23,7 @@ function HandleBlizzardFrames()
         "CompactRaidFrameContainer",
         "CompactRaidFrameManager",
         "MinimapCluster",
+        "PlayerPowerBarAlt",
         "RaidBossEmoteFrame",
         "UIErrorsFrame"
     }
@@ -22,6 +31,27 @@ function HandleBlizzardFrames()
     local Textures = {}
 
     if GetConfiguration().ActionBars then
+        local OriginalInterfaceOptions_UpdateMultiActionBars = InterfaceOptions_UpdateMultiActionBars
+
+        InterfaceOptions_UpdateMultiActionBars = function()
+            SHOW_MULTI_ACTIONBAR_1 = 1
+            SHOW_MULTI_ACTIONBAR_2 = 1
+            SHOW_MULTI_ACTIONBAR_3 = 1
+            SHOW_MULTI_ACTIONBAR_4 = 1
+
+            OriginalInterfaceOptions_UpdateMultiActionBars()
+        end
+
+        if GetConfiguration().ActionBars.Pet then
+            if GetConfiguration().ActionBars.Pet.Buttons < NUM_PET_ACTION_SLOTS then
+                for I = (GetConfiguration().ActionBars.Pet.Buttons + 1), NUM_PET_ACTION_SLOTS do
+                    Frames[#Frames + 1] = "PetActionButton" .. I
+                end
+            end
+        else
+            Frames[#Frames + 1] = "PetActionBarFrame"
+        end
+
         if GetConfiguration().ActionBars.Player then
             AchievementMicroButton_Update = Blank
 
@@ -39,11 +69,7 @@ function HandleBlizzardFrames()
             Frames[#Frames + 1] = "HelpMicroButton"
             Frames[#Frames + 1] = "LFDMicroButton"
             Frames[#Frames + 1] = "MainMenuBarBackpackButton"
-            Frames[#Frames + 1] = "MainMenuMicroButton"
-            Frames[#Frames + 1] = "MultiBarBottomLeft"
-            Frames[#Frames + 1] = "MultiBarBottomRight"
-            Frames[#Frames + 1] = "MultiBarLeft"
-            Frames[#Frames + 1] = "MultiBarRight"        
+            Frames[#Frames + 1] = "MainMenuMicroButton" 
             Frames[#Frames + 1] = "PVPMicroButton"
             Frames[#Frames + 1] = "QuestLogMicroButton"
             Frames[#Frames + 1] = "ReputationWatchBar"
@@ -51,8 +77,8 @@ function HandleBlizzardFrames()
             Frames[#Frames + 1] = "TalentMicroButton"
 
             if GetConfiguration().ActionBars.Player.Buttons < NUM_ACTIONBAR_BUTTONS then
-                for i = (GetConfiguration().ActionBars.Player.Buttons + 1), NUM_ACTIONBAR_BUTTONS do
-                    Frames[#Frames + 1] = "ActionButton" .. i
+                for I = (GetConfiguration().ActionBars.Player.Buttons + 1), NUM_ACTIONBAR_BUTTONS do
+                    Frames[#Frames + 1] = "ActionButton" .. I
                 end
             end
 
@@ -71,14 +97,44 @@ function HandleBlizzardFrames()
             Frames[#Frames + 1] = "MainMenuBar"
         end
 
-        if GetConfiguration().ActionBars.Pet then
-            if GetConfiguration().ActionBars.Pet.Buttons < NUM_PET_ACTION_SLOTS then
-                for i = (GetConfiguration().ActionBars.Pet.Buttons + 1), NUM_PET_ACTION_SLOTS do
-                    Frames[#Frames + 1] = "PetActionButton" .. i
+        if GetConfiguration().ActionBars.Player2 then
+            if GetConfiguration().ActionBars.Player2.Buttons < NUM_MULTIBAR_BUTTONS then
+                for I = (GetConfiguration().ActionBars.Player2.Buttons + 1), NUM_MULTIBAR_BUTTONS do
+                    Frames[#Frames + 1] = "MultiBarRightButton" .. I
                 end
             end
         else
-            Frames[#Frames + 1] = "PetActionBarFrame"
+            Frames[#Frames + 1] = "MultiBarRight"
+        end
+
+        if GetConfiguration().ActionBars.Player3 then
+            if GetConfiguration().ActionBars.Player3.Buttons < NUM_MULTIBAR_BUTTONS then
+                for I = (GetConfiguration().ActionBars.Player3.Buttons + 1), NUM_MULTIBAR_BUTTONS do
+                    Frames[#Frames + 1] = "MultiBarLeftButton" .. I
+                end
+            end
+        else
+            Frames[#Frames + 1] = "MultiBarLeft"
+        end
+
+        if GetConfiguration().ActionBars.Player4 then
+            if GetConfiguration().ActionBars.Player4.Buttons < NUM_MULTIBAR_BUTTONS then
+                for I = (GetConfiguration().ActionBars.Player4.Buttons + 1), NUM_MULTIBAR_BUTTONS do
+                    Frames[#Frames + 1] = "MultiBarBottomRightButton" .. I
+                end
+            end
+        else
+            Frames[#Frames + 1] = "MultiBarBottomRight"
+        end
+
+        if GetConfiguration().ActionBars.Player5 then
+            if GetConfiguration().ActionBars.Player5.Buttons < NUM_MULTIBAR_BUTTONS then
+                for I = (GetConfiguration().ActionBars.Player5.Buttons + 1), NUM_MULTIBAR_BUTTONS do
+                    Frames[#Frames + 1] = "MultiBarBottomLeftButton" .. I
+                end
+            end
+        else
+            Frames[#Frames + 1] = "MultiBarBottomLeft"
         end
     end
 
@@ -100,9 +156,9 @@ function HandleBlizzardFrames()
         Frames[#Frames + 1] = "FriendsMicroButton"
         Frames[#Frames + 1] = "GeneralDockManager"
 
-        for i = 1, NUM_CHAT_WINDOWS do
-            Frames[#Frames + 1] = "ChatFrame" .. i .. "ButtonFrame"
-            Frames[#Frames + 1] = "ChatFrame" .. i .. "ResizeButton"
+        for I = 1, NUM_CHAT_WINDOWS do
+            Frames[#Frames + 1] = "ChatFrame" .. I .. "ButtonFrame"
+            Frames[#Frames + 1] = "ChatFrame" .. I .. "ResizeButton"
         end
     end
 
@@ -120,26 +176,26 @@ function HandleBlizzardFrames()
         Textures[#Textures + 1] = "MainMenuXPBarTextureMid"
         Textures[#Textures + 1] = "MainMenuXPBarTextureRightCap"
 
-        for i = 1, 19 do
-            Textures[#Textures + 1] = "MainMenuXPBarDiv" .. i
+        for I = 1, 19 do
+            Textures[#Textures + 1] = "MainMenuXPBarDiv" .. I
         end
     elseif GetConfiguration().ActionBars.Player then
             Frames[#Frames + 1] = "MainMenuExpBar"
     end
 
-    for i = 1, #Frames do
-        _G[Frames[i]]:Hide()
-        _G[Frames[i]]:SetScript("OnShow",
+    for I = 1, #Frames do
+        _G[Frames[I]]:Hide()
+        _G[Frames[I]]:SetScript("OnShow",
             function(Self)
                 Self:Hide()
             end
         )
 
-        _G[Frames[i]].Show = Blank
+        _G[Frames[I]].Show = Blank
     end
 
-    for i = 1, #Textures do
-        _G[Textures[i]]:Hide()
-        _G[Textures[i]]:SetAlpha(0)
+    for I = 1, #Textures do
+        _G[Textures[I]]:Hide()
+        _G[Textures[I]]:SetAlpha(0)
     end
 end

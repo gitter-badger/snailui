@@ -24,16 +24,16 @@ function HandleSoulShardsBar(Self)
         Self.warlockSpecBarsBorder:SetSize(GetConfiguration()[Self.Frame].SoulShardsBar.Width, GetConfiguration()[Self.Frame].SoulShardsBar.Height)
         Self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
 
-        for i = 1, #GetConfiguration()[Self.Frame].SoulShardsBar do
-            Self.WarlockSpecBars[i] = CreateFrame("StatusBar", nil, Self)
-            Self.WarlockSpecBars[i]:SetPoint(GetConfiguration()[Self.Frame].SoulShardsBar[i].Anchor, Self.WarlockSpecBars, GetConfiguration()[Self.Frame].SoulShardsBar[i].X, GetConfiguration()[Self.Frame].SoulShardsBar[i].Y)
-            Self.WarlockSpecBars[i]:SetSize(GetConfiguration()[Self.Frame].SoulShardsBar[i].Width - 2, GetConfiguration()[Self.Frame].SoulShardsBar[i].Height - 2)
-            Self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.Texture)
+        for I = 1, #GetConfiguration()[Self.Frame].SoulShardsBar do
+            Self.WarlockSpecBars[I] = CreateFrame("StatusBar", nil, Self)
+            Self.WarlockSpecBars[I]:SetPoint(GetConfiguration()[Self.Frame].SoulShardsBar[I].Anchor, Self.WarlockSpecBars, GetConfiguration()[Self.Frame].SoulShardsBar[I].X, GetConfiguration()[Self.Frame].SoulShardsBar[I].Y)
+            Self.WarlockSpecBars[I]:SetSize(GetConfiguration()[Self.Frame].SoulShardsBar[I].Width - 2, GetConfiguration()[Self.Frame].SoulShardsBar[I].Height - 2)
+            Self.WarlockSpecBars[I]:SetStatusBarTexture(Configuration.Texture)
 
-            Self.warlockSpecBarsBorder[i] = Self:CreateTexture(nil, "LOW")
-            Self.warlockSpecBarsBorder[i]:SetPoint("TOPLEFT", Self.WarlockSpecBars[i], -1, 1)
-            Self.warlockSpecBarsBorder[i]:SetSize(GetConfiguration()[Self.Frame].SoulShardsBar[i].Width, GetConfiguration()[Self.Frame].SoulShardsBar[i].Height)
-            Self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+            Self.warlockSpecBarsBorder[I] = Self:CreateTexture(nil, "LOW")
+            Self.warlockSpecBarsBorder[I]:SetPoint("TOPLEFT", Self.WarlockSpecBars[I], -1, 1)
+            Self.warlockSpecBarsBorder[I]:SetSize(GetConfiguration()[Self.Frame].SoulShardsBar[I].Width, GetConfiguration()[Self.Frame].SoulShardsBar[I].Height)
+            Self.warlockSpecBarsBorder[I]:SetTexture(0, 0, 0)
         end
     end
 end

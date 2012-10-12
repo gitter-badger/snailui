@@ -58,16 +58,16 @@ function HandleBackgroundColors(Self)
         if Self.ClassIcons then
             Self.ClassIcons.Background:SetTexture(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
 
-            for i = 1, #Self.ClassIcons do
-                Self.ClassIcons[i]:SetVertexColor(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
+            for I = 1, #Self.ClassIcons do
+                Self.ClassIcons[I]:SetVertexColor(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
             end
         end
 
         if Self.CPoints then
             Self.CPoints.Background:SetTexture(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
 
-            for i = 1, #Self.CPoints do
-                Self.CPoints[i]:SetStatusBarColor(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
+            for I = 1, #Self.CPoints do
+                Self.CPoints[I]:SetStatusBarColor(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
             end
         end
 
@@ -109,8 +109,8 @@ function HandleBackgroundColors(Self)
         if Self.WarlockSpecBars then
             Self.warlockSpecBarsBackground:SetTexture(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
 
-            for i = 1, #Self.WarlockSpecBars do
-                Self.WarlockSpecBars[i]:SetStatusBarColor(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
+            for I = 1, #Self.WarlockSpecBars do
+                Self.WarlockSpecBars[I]:SetStatusBarColor(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
             end
         end
     end

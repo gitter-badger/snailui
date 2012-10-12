@@ -14,18 +14,18 @@ function HandleChiBar(Self)
         Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)
         Self.ClassIcons.Background:SetSize(GetConfiguration()[Self.Frame].ChiBar.Width - 2, GetConfiguration()[Self.Frame].ChiBar.Height - 2)
 
-        for i = 1, 5 do
-            Self.ClassIcons[i] = Self:CreateTexture(Self, "LOW")
+        for I = 1, 5 do
+            Self.ClassIcons[I] = Self:CreateTexture(Self, "LOW")
 
-            if i <= #GetConfiguration()[Self.Frame].ChiBar then
-                Self.ClassIcons[i]:SetPoint(GetConfiguration()[Self.Frame].ChiBar[i].Anchor, Self.ClassIcons, GetConfiguration()[Self.Frame].ChiBar[i].X, GetConfiguration()[Self.Frame].ChiBar[i].Y)
-                Self.ClassIcons[i]:SetSize(GetConfiguration()[Self.Frame].ChiBar[i].Width - 2, GetConfiguration()[Self.Frame].ChiBar[i].Height - 2)
-                Self.ClassIcons[i]:SetTexture(Configuration.Texture)
+            if I <= #GetConfiguration()[Self.Frame].ChiBar then
+                Self.ClassIcons[I]:SetPoint(GetConfiguration()[Self.Frame].ChiBar[I].Anchor, Self.ClassIcons, GetConfiguration()[Self.Frame].ChiBar[I].X, GetConfiguration()[Self.Frame].ChiBar[I].Y)
+                Self.ClassIcons[I]:SetSize(GetConfiguration()[Self.Frame].ChiBar[I].Width - 2, GetConfiguration()[Self.Frame].ChiBar[I].Height - 2)
+                Self.ClassIcons[I]:SetTexture(Configuration.Texture)
 
-                Self.ClassIcons[i].Border = Self:CreateTexture(nil, "LOW")
-                Self.ClassIcons[i].Border:SetPoint("TOPLEFT", Self.ClassIcons[i], -1, 1)
-                Self.ClassIcons[i].Border:SetSize(GetConfiguration()[Self.Frame].ChiBar[i].Width, GetConfiguration()[Self.Frame].ChiBar[i].Height)
-                Self.ClassIcons[i].Border:SetTexture(0, 0, 0)
+                Self.ClassIcons[I].Border = Self:CreateTexture(nil, "LOW")
+                Self.ClassIcons[I].Border:SetPoint("TOPLEFT", Self.ClassIcons[I], -1, 1)
+                Self.ClassIcons[I].Border:SetSize(GetConfiguration()[Self.Frame].ChiBar[I].Width, GetConfiguration()[Self.Frame].ChiBar[I].Height)
+                Self.ClassIcons[I].Border:SetTexture(0, 0, 0)
             end
         end
     end

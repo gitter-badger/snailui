@@ -24,16 +24,16 @@ function HandleBurningEmbersBar(Self)
         Self.warlockSpecBarsBorder:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar.Width, GetConfiguration()[Self.Frame].BurningEmbersBar.Height)
         Self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
 
-        for i = 1, #GetConfiguration()[Self.Frame].BurningEmbersBar do
-            Self.WarlockSpecBars[i] = CreateFrame("StatusBar", nil, Self)
-            Self.WarlockSpecBars[i]:SetPoint(GetConfiguration()[Self.Frame].BurningEmbersBar[i].Anchor, Self.WarlockSpecBars, GetConfiguration()[Self.Frame].BurningEmbersBar[i].X, GetConfiguration()[Self.Frame].BurningEmbersBar[i].Y)
-            Self.WarlockSpecBars[i]:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar[i].Width - 2, GetConfiguration()[Self.Frame].BurningEmbersBar[i].Height - 2)
-            Self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.Texture)
+        for I = 1, #GetConfiguration()[Self.Frame].BurningEmbersBar do
+            Self.WarlockSpecBars[I] = CreateFrame("StatusBar", nil, Self)
+            Self.WarlockSpecBars[I]:SetPoint(GetConfiguration()[Self.Frame].BurningEmbersBar[I].Anchor, Self.WarlockSpecBars, GetConfiguration()[Self.Frame].BurningEmbersBar[I].X, GetConfiguration()[Self.Frame].BurningEmbersBar[I].Y)
+            Self.WarlockSpecBars[I]:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar[I].Width - 2, GetConfiguration()[Self.Frame].BurningEmbersBar[I].Height - 2)
+            Self.WarlockSpecBars[I]:SetStatusBarTexture(Configuration.Texture)
 
-            Self.warlockSpecBarsBorder[i] = Self:CreateTexture(nil, "LOW")
-            Self.warlockSpecBarsBorder[i]:SetPoint("TOPLEFT", Self.WarlockSpecBars[i], -1, 1)
-            Self.warlockSpecBarsBorder[i]:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar[i].Width, GetConfiguration()[Self.Frame].BurningEmbersBar[i].Height)
-            Self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+            Self.warlockSpecBarsBorder[I] = Self:CreateTexture(nil, "LOW")
+            Self.warlockSpecBarsBorder[I]:SetPoint("TOPLEFT", Self.WarlockSpecBars[I], -1, 1)
+            Self.warlockSpecBarsBorder[I]:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar[I].Width, GetConfiguration()[Self.Frame].BurningEmbersBar[I].Height)
+            Self.warlockSpecBarsBorder[I]:SetTexture(0, 0, 0)
         end
     end
 end

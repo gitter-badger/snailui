@@ -24,16 +24,16 @@ function HandleDemonicFuryBar(Self)
         Self.warlockSpecBarsBorder:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar.Width, GetConfiguration()[Self.Frame].DemonicFuryBar.Height)
         Self.warlockSpecBarsBorder:SetTexture(0, 0, 0)
 
-        for i = 1, #GetConfiguration()[Self.Frame].DemonicFuryBar do
-            Self.WarlockSpecBars[i] = CreateFrame("StatusBar", nil, Self)
-            Self.WarlockSpecBars[i]:SetPoint(GetConfiguration()[Self.Frame].DemonicFuryBar[i].Anchor, Self.WarlockSpecBars, GetConfiguration()[Self.Frame].DemonicFuryBar[i].X, GetConfiguration()[Self.Frame].DemonicFuryBar[i].Y)
-            Self.WarlockSpecBars[i]:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar[i].Width - 2, GetConfiguration()[Self.Frame].DemonicFuryBar[i].Height - 2)
-            Self.WarlockSpecBars[i]:SetStatusBarTexture(Configuration.Texture)
+        for I = 1, #GetConfiguration()[Self.Frame].DemonicFuryBar do
+            Self.WarlockSpecBars[I] = CreateFrame("StatusBar", nil, Self)
+            Self.WarlockSpecBars[I]:SetPoint(GetConfiguration()[Self.Frame].DemonicFuryBar[I].Anchor, Self.WarlockSpecBars, GetConfiguration()[Self.Frame].DemonicFuryBar[I].X, GetConfiguration()[Self.Frame].DemonicFuryBar[I].Y)
+            Self.WarlockSpecBars[I]:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar[I].Width - 2, GetConfiguration()[Self.Frame].DemonicFuryBar[I].Height - 2)
+            Self.WarlockSpecBars[I]:SetStatusBarTexture(Configuration.Texture)
 
-            Self.warlockSpecBarsBorder[i] = Self:CreateTexture(nil, "LOW")
-            Self.warlockSpecBarsBorder[i]:SetPoint("TOPLEFT", Self.WarlockSpecBars[i], -1, 1)
-            Self.warlockSpecBarsBorder[i]:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar[i].Width, GetConfiguration()[Self.Frame].DemonicFuryBar[i].Height)
-            Self.warlockSpecBarsBorder[i]:SetTexture(0, 0, 0)
+            Self.warlockSpecBarsBorder[I] = Self:CreateTexture(nil, "LOW")
+            Self.warlockSpecBarsBorder[I]:SetPoint("TOPLEFT", Self.WarlockSpecBars[I], -1, 1)
+            Self.warlockSpecBarsBorder[I]:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar[I].Width, GetConfiguration()[Self.Frame].DemonicFuryBar[I].Height)
+            Self.warlockSpecBarsBorder[I]:SetTexture(0, 0, 0)
         end
     end
 end

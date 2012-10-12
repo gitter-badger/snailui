@@ -9,7 +9,16 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
-Version 0.3.4
+Version 0.4.1
+- Action buttons should now have hover effects when mousing over them
+- Maximum supported raid size reduced to 25 from 40
+- Fixed several minor bugs
+- Fixed a bug where action buttons were being hidden on certain conditions
+- You will now automatically repair your items when visiting a vendor
+- You will now automatically sell all gray trash items when visiting a vendor
+- Target casting bar has been widened
+- A new action bar has been added (3 more are supported, but not enabled)
+- PlayerPowerBarAlt has been hidden
 - Many code simplifications have been made to improve SnailUI's speed
 - All of the UI elements have been split into their own lua file
 - Experience bar added

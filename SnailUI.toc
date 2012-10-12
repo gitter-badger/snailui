@@ -4,7 +4,7 @@
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.3.4
+## Version: 0.4.1
 
 Configuration.lua
 Functions.lua
@@ -42,6 +42,7 @@ Elements\SpellRange.lua
 Elements\Target.lua
 Elements\TargetTarget.lua
 Elements\Unit.lua
+Elements\VendorAutoRepair.lua
 
 Elements\ClassBars\BurningEmbersBar.lua
 Elements\ClassBars\ChiBar.lua

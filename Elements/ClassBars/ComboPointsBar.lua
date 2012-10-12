@@ -24,16 +24,16 @@ function HandleComboPointsBar(Self)
         Self.CPoints.Border:SetSize(GetConfiguration()[Self.Frame].ComboPointsBar.Width, GetConfiguration()[Self.Frame].ComboPointsBar.Height)
         Self.CPoints.Border:SetTexture(0, 0, 0)
 
-        for i = 1, #GetConfiguration()[Self.Frame].ComboPointsBar do
-            Self.CPoints[i] = CreateFrame("StatusBar", nil, Self)
-            Self.CPoints[i]:SetPoint(GetConfiguration()[Self.Frame].ComboPointsBar[i].Anchor, Self.CPoints, GetConfiguration()[Self.Frame].ComboPointsBar[i].X, GetConfiguration()[Self.Frame].ComboPointsBar[i].Y)
-            Self.CPoints[i]:SetSize(GetConfiguration()[Self.Frame].ComboPointsBar[i].Width - 2, GetConfiguration()[Self.Frame].ComboPointsBar[i].Height - 2)
-            Self.CPoints[i]:SetStatusBarTexture(Configuration.Texture)
+        for I = 1, #GetConfiguration()[Self.Frame].ComboPointsBar do
+            Self.CPoints[I] = CreateFrame("StatusBar", nil, Self)
+            Self.CPoints[I]:SetPoint(GetConfiguration()[Self.Frame].ComboPointsBar[I].Anchor, Self.CPoints, GetConfiguration()[Self.Frame].ComboPointsBar[I].X, GetConfiguration()[Self.Frame].ComboPointsBar[I].Y)
+            Self.CPoints[I]:SetSize(GetConfiguration()[Self.Frame].ComboPointsBar[I].Width - 2, GetConfiguration()[Self.Frame].ComboPointsBar[I].Height - 2)
+            Self.CPoints[I]:SetStatusBarTexture(Configuration.Texture)
 
-            Self.CPoints[i].Border = Self.CPoints:CreateTexture(nil, "LOW")
-            Self.CPoints[i].Border:SetPoint("TOPLEFT", Self.CPoints[i], -1, 1)
-            Self.CPoints[i].Border:SetSize(GetConfiguration()[Self.Frame].ComboPointsBar[i].Width, GetConfiguration()[Self.Frame].ComboPointsBar[i].Height)
-            Self.CPoints[i].Border:SetTexture(0, 0, 0)
+            Self.CPoints[I].Border = Self.CPoints:CreateTexture(nil, "LOW")
+            Self.CPoints[I].Border:SetPoint("TOPLEFT", Self.CPoints[I], -1, 1)
+            Self.CPoints[I].Border:SetSize(GetConfiguration()[Self.Frame].ComboPointsBar[I].Width, GetConfiguration()[Self.Frame].ComboPointsBar[I].Height)
+            Self.CPoints[I].Border:SetTexture(0, 0, 0)
         end
     end
 end

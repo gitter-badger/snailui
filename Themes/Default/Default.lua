@@ -21,6 +21,24 @@ Configuration.Themes.Default =
                 Right = 0.9,
                 Top = 0.3
             }
+        },
+
+        Player2 =
+        {
+            Anchor = "BOTTOM",
+            Buttons = 10,
+            Height = 24,
+            Width = 48,
+            X = 0,
+            Y = 136,
+
+            TextureCoordinate =
+            {
+                Bottom = 0.7,
+                Left = 0.1,
+                Right = 0.9,
+                Top = 0.3
+            }
         }
     },
 
@@ -169,7 +187,7 @@ Configuration.Themes.Default =
         Height = 24,
         Width = 256,
         X = -130,
-        Y = 136,
+        Y = 164,
 
         CastingBar =
         {
@@ -290,15 +308,15 @@ Configuration.Themes.Default =
         Height = 24,
         Width = 256,
         X = 130,
-        Y = 136,
+        Y = 164,
 
         CastingBar =
         {
             Anchor = "TOPRIGHT",
-            Height = 156,
+            Height = 184,
             Orientation = "VERTICAL",
-            Width = 8,
-            X = 9,
+            Width = 10,
+            X = 11,
             Y = -3
         },
 
