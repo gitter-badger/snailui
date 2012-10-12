@@ -11,7 +11,6 @@ This is where I will document the changes made for SnailUI in each release.
 
 Version 0.4.1
 - Action buttons should now have hover effects when mousing over them
-- Maximum supported raid size reduced to 25 from 40
 - Fixed several minor bugs
 - Fixed a bug where action buttons were being hidden on certain conditions
 - You will now automatically repair your items when visiting a vendor
