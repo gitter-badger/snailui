@@ -23,6 +23,9 @@ Features
 - Easy central focused class bars to help you watch your character more easily (Get out of that fire!)
 - Easy to extend or create your own themes
 - All class bars are supported (Combo point bar, rune bar, etc.)
+- Automatically repairs your items when visiting a vendor
+- Automatically sells all gray items when visiting a vendor
+- Automatically releases when you die in a battleground
 
 ------------------------------------------------------------------------------
 
