@@ -8,7 +8,7 @@ function HandleBattlegroundAutoRelease(Self)
                 local InInstance, InstanceType = IsInInstance()
 
                 if InInstance then
-                    if InstanceType == "PVP" then
+                    if InstanceType == "pvp" then
                         RepopMe()
                     end
                 end

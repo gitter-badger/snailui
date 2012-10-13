@@ -1,15 +1,13 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## SavedVariables: Theme
+## SavedVariables: EnableThreatColorsOnAllFrames, Theme
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.4.1
+## Version: 0.4.2
 
 Configuration.lua
 Functions.lua
-oUF_WarlockSpecBars.lua
-Tags.lua
 
 Themes\Default\Default.lua
 Themes\Default\DefaultHealer.lua
@@ -33,12 +31,14 @@ Elements\Focus.lua
 Elements\FocusTarget.lua
 Elements\HealthBar.lua
 Elements\InterfaceOptions.lua
+Elements\Meter.lua
 Elements\Minimap.lua
 Elements\Pet.lua
 Elements\Player.lua
 Elements\PowerBar.lua
 Elements\Raid.lua
 Elements\SpellRange.lua
+Elements\Tags.lua
 Elements\Target.lua
 Elements\TargetTarget.lua
 Elements\Unit.lua
@@ -50,6 +50,7 @@ Elements\ClassBars\ComboPointsBar.lua
 Elements\ClassBars\DemonicFuryBar.lua
 Elements\ClassBars\EclipseBar.lua
 Elements\ClassBars\HolyPowerBar.lua
+Elements\ClassBars\oUF_WarlockSpecBars.lua
 Elements\ClassBars\RunesBar.lua
 Elements\ClassBars\ShadowOrbsBar.lua
 Elements\ClassBars\SoulShardsBar.lua

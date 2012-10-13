@@ -15,6 +15,14 @@ function HandleBlizzardFrames()
         ExtraActionBarFrame:OriginalSetPoint("TOP", 0, -100)
     end
 
+    GhostFrame:ClearAllPoints()
+    GhostFrame:SetPoint("TOP", 0, -100)
+    GhostFrame.OriginalSetPoint = ExtraActionBarFrame.SetPoint
+    GhostFrame.SetPoint = function()
+        GhostFrame:ClearAllPoints()
+        GhostFrame:OriginalSetPoint("TOP", 0, -100)
+    end
+
     WatchFrame:Hide()
     WorldStateAlwaysUpFrame:Hide()
 

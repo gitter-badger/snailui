@@ -26,6 +26,7 @@ Features
 - Automatically repairs your items when visiting a vendor
 - Automatically sells all gray items when visiting a vendor
 - Automatically releases when you die in a battleground
+- Action button cooldown timers that are similar to OmniCC
 
 ------------------------------------------------------------------------------
 

@@ -2,48 +2,7 @@
 -- Written by Snail
 
 function HandleActionBars()
-    if GetConfiguration().ActionBars then
-        local OriginalActionButton_Update = ActionButton_Update
-
-        ActionButton_Update = function(Self)
-            OriginalActionButton_Update(Self)
-
-            if Self.BackgroundBottom and not Self.Hovering then
-                if _G[Self:GetName() .. "Icon"]:GetTexture() then
-                    Self.BackgroundBottom:Show()
-                    Self.BackgroundLeft:Show()
-                    Self.BackgroundRight:Show()
-                    Self.BackgroundTop:Show()
-
-                    Self.BorderBottom:Show()
-                    Self.BorderLeft:Show()
-                    Self.BorderRight:Show()
-                    Self.BorderTop:Show()
-                else
-                    Self.BackgroundBottom:Hide()
-                    Self.BackgroundLeft:Hide()
-                    Self.BackgroundRight:Hide()
-                    Self.BackgroundTop:Hide()
-
-                    Self.BorderBottom:Hide()
-                    Self.BorderLeft:Hide()
-                    Self.BorderRight:Hide()
-                    Self.BorderTop:Hide()
-                end
-            end
-        end
-
-        ActionButton_UpdateUsable = function(Self)
-            local IsUsable, NotEnoughMana = IsUsableAction(Self.action);
-
-            if IsUsable then
-                _G[Self:GetName() .. "Icon"]:SetVertexColor(1.0, 1.0, 1.0);
-            elseif NotEnoughMana then
-                _G[Self:GetName() .. "Icon"]:SetVertexColor(0.5, 0.5, 1.0);
-            else
-                _G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4);
-            end
-        end
+    if GetConfiguration().ActionBars then       
 
         local Bars = {}
         local Buttons = {}
@@ -104,6 +63,84 @@ function HandleActionBars()
 
         if #Bars > 0 then
             local Class = select(2, UnitClass("Player"))
+            local OriginalActionButton_Update = ActionButton_Update
+
+            ActionButton_Update = function(Self)
+                OriginalActionButton_Update(Self)
+
+                if Self.BackgroundBottom and not Self.Hovering then
+                    if _G[Self:GetName() .. "Icon"]:GetTexture() then
+                        Self.BackgroundBottom:Show()
+                        Self.BackgroundLeft:Show()
+                        Self.BackgroundRight:Show()
+                        Self.BackgroundTop:Show()
+
+                        Self.BorderBottom:Show()
+                        Self.BorderLeft:Show()
+                        Self.BorderRight:Show()
+                        Self.BorderTop:Show()
+                    else
+                        Self.BackgroundBottom:Hide()
+                        Self.BackgroundLeft:Hide()
+                        Self.BackgroundRight:Hide()
+                        Self.BackgroundTop:Hide()
+
+                        Self.BorderBottom:Hide()
+                        Self.BorderLeft:Hide()
+                        Self.BorderRight:Hide()
+                        Self.BorderTop:Hide()
+                    end
+                end
+            end
+
+            ActionButton_UpdateUsable = function(Self)
+                local IsUsable, NotEnoughMana = IsUsableAction(Self.action)
+
+                if IsUsable then
+                    _G[Self:GetName() .. "Icon"]:SetVertexColor(1, 1, 1)
+                elseif NotEnoughMana then
+                    _G[Self:GetName() .. "Icon"]:SetVertexColor(0.5, 0.5, 0.5)
+                else
+                    _G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+                end
+
+                if ActionHasRange(Self.action) then
+                    local Type, SpellID = GetActionInfo(Self.action)
+
+                    if Type == "macro" then
+                         _, _, SpellID = GetMacroSpell(SpellID)
+                    end
+
+                    if UnitIsConnected("Target") then
+                        if IsActionInRange(Self.action) == 0 then
+                            _G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
+                        elseif not UnitCanAttack("Player", "Target") and IsHarmfulSpell(GetSpellInfo(SpellID)) then
+                            _G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
+                        end
+                    else
+                        if IsHarmfulSpell(GetSpellInfo(SpellID)) then
+                            _G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+                        end
+                    end
+                end
+            end
+
+            local OriginalActionButton_OnUpdate = ActionButton_OnUpdate
+
+            ActionButton_OnUpdate = function(Self, ElapsedTime)
+                OriginalActionButton_OnUpdate(Self, ElapsedTime)
+
+                if not Self.Time then
+                    Self.Time = 0
+                end
+
+                if (Self.Time + ElapsedTime) >= 0.1 then
+                    ActionButton_UpdateUsable(Self)                
+                    Self.Time = 0
+                else
+                    Self.Time = Self.Time + ElapsedTime
+                end
+            end
 
             for I = 1, #Bars do
                 _G[Bars[I].ActionBar]:ClearAllPoints()

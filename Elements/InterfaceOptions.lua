@@ -46,8 +46,40 @@ function HandleInterfaceOptions(Version)
     GeneralSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
     GeneralSubcategory.Label3:SetText("Theme")
 
+    GeneralSubcategory.Label4 = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    GeneralSubcategory.Label4:SetJustifyH("LEFT")
+    GeneralSubcategory.Label4:SetPoint("TOPLEFT", 16, -115)
+    GeneralSubcategory.Label4:SetText("Miscellaneous")
+
     GeneralSubcategory.ThemeDropdownMenu = CreateFrame("Frame", "ThemeDropdownMenu", GeneralSubcategory, "UIDropDownMenuTemplate")
     GeneralSubcategory.ThemeDropdownMenu:SetPoint("TOPLEFT", 0, -73)
+
+    GeneralSubcategory.ThreatColorsCheckBox = CreateFrame("CheckButton", nil, GeneralSubcategory, "InterfaceOptionsCheckButtonTemplate")
+    GeneralSubcategory.ThreatColorsCheckBox:SetPoint("TOPLEFT", 16, -128)
+    GeneralSubcategory.ThreatColorsCheckBox:SetScript("OnClick",
+        function(Self)
+            if EnableThreatColorsOnAllFrames then
+                EnableThreatColorsOnAllFrames = nil
+                Self:SetChecked(false)
+            else
+                EnableThreatColorsOnAllFrames = true
+                Self:SetChecked(true)
+            end
+        end
+    )
+
+    if EnableThreatColorsOnAllFrames then
+        GeneralSubcategory.ThreatColorsCheckBox:SetChecked(true)
+    end
+
+    GeneralSubcategory.ThreatColorsText = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    GeneralSubcategory.ThreatColorsText:SetJustifyH("LEFT")
+    GeneralSubcategory.ThreatColorsText:SetPoint("RIGHT", GeneralSubcategory.ThreatColorsCheckBox, 290, 0)
+    GeneralSubcategory.ThreatColorsText:SetText(
+        "Color all frame borders based on the unit's threat level" ..
+        "\n" ..
+        "Default: Only color the raid frames' borders"
+    )
         
     UIDropDownMenu_Initialize(GeneralSubcategory.ThemeDropdownMenu,
         function(ThemeDropdownMenu, Level)

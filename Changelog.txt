@@ -9,6 +9,19 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.4.2
+- Code has been compressed a bit to save space and increase speed
+- Extremely lightweight dps/healing meter added
+- Cooldown text has been added to all action buttons (Similar to OmniCC)
+- An option to color all frames based on threat level instead of just the raid
+  frames has been added under the interface options
+- Action buttons will now change based on if the unit is in range of the spell
+- Action buttons will now change based on if the spell can be cast on the unit
+- Fixed a bug where unicode names were not being displayed correctly
+- Several blizzard buttons have been moved to the top of the screen
+
+------------------------------------------------------------------------------
+
 Version 0.4.1
 - Action buttons should now have hover effects when mousing over them
 - Fixed several minor bugs

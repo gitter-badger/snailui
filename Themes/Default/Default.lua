@@ -137,6 +137,22 @@ Configuration.Themes.Default =
         end
     end,
 
+    Meter =
+    {
+        Anchor = "BOTTOM",
+        Height = 100,
+        Width = 152,
+        X = 78,
+        Y = 7,
+
+        Bars =
+        {
+            Bars = 5,
+            Height = 24,
+            Width = 100
+        }
+    },
+
     Minimap =
     {
         Anchor = "BOTTOM",
@@ -264,7 +280,6 @@ Configuration.Themes.Default =
     Raid =
     {
         Anchor = "LEFT",
-        ColorByThreatLevel = true,
         ColumnAnchor = "LEFT",
         Columns = 1,
         ColumnSpacing = 4,
@@ -348,9 +363,3 @@ Configuration.Themes.Default =
         }
     }
 }
-
-
-if not select(1, IsAddOnLoaded("Recount")) then
-    Configuration.Themes.Default.Chat.Width = 412
-    Configuration.Themes.Default.Chat.X = -52
-end
