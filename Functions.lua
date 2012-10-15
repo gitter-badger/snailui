@@ -55,6 +55,26 @@ function GetConfiguration()
     return Configuration.Themes[Configuration.Theme]
 end
 
+function GetData(Data, Name, Realm)
+    for _, Player in ipairs(Data) do
+        if (Player.Name == Name) and (Player.Realm == Realm) then
+            return Player
+        end
+    end
+
+    return nil
+end
+
+function ShortNumber(Number)
+    if Number > 999999 then
+        return string.format("%.1fM", Number / 1000000)
+    elseif Number > 9999 then
+        return string.format("%.1fK", Number / 1000)
+    end
+
+    return Number
+end
+
 function Trim(String1, String2)
     if String2 then
         if (String1:len() + String2:len()) > 12 then
@@ -77,4 +97,12 @@ function Trim2(String)
     end
 
     return String
+end
+
+function Trim3(String1)
+    if String1:len() > 9 then
+        return String1:sub(1, 7) .. "..."
+    end
+
+    return String1
 end

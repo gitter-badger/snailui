@@ -145,11 +145,58 @@ Configuration.Themes.Default =
         X = 78,
         Y = 7,
 
-        Bars =
+        [0] =
         {
-            Bars = 5,
-            Height = 24,
-            Width = 100
+            Anchor = "TOP",
+            Height = 20,
+            Width = 152,
+            X = 0,
+            Y = 0
+        },
+
+        [1] =
+        {
+            Anchor = "TOP",
+            Height = 19,
+            Width = 152,
+            X = 0,
+            Y = -17
+        },
+
+        [2] =
+        {
+            Anchor = "CENTER",
+            Height = 19,
+            Width = 152,
+            X = 0,
+            Y = 7
+        },
+
+        [3] =
+        {
+            Anchor = "CENTER",
+            Height = 19,
+            Width = 152,
+            X = 0,
+            Y = -9
+        },
+
+        [4] =
+        {
+            Anchor = "BOTTOM",
+            Height = 19,
+            Width = 152,
+            X = 0,
+            Y = 16
+        },
+
+        [5] =
+        {
+            Anchor = "BOTTOM",
+            Height = 19,
+            Width = 152,
+            X = 0,
+            Y = 0
         }
     },
 

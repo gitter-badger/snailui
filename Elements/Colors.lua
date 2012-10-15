@@ -1,7 +1,7 @@
--- BackgroundColors.lua
+-- Colors.lua
 -- Written by Snail
 
-function HandleBackgroundColors(Self)
+function HandleColors(Self)
     Self.PostUpdate = function(Self)
         local Class = select(2, UnitClass(Self.unit))
         
@@ -20,15 +20,15 @@ function HandleBackgroundColors(Self)
 
         if UnitThreatSituation(Self.unit) and ((Self.Frame == "Raid") or EnableThreatColorsOnAllFrames) then
             if UnitThreatSituation(Self.unit) > 0 then
-                Self.threatColor =
+                Self.ThreatColor =
                 {
                     b = 0,
                     g = 0,
                     r = 0
                 }
 
-                Self.threatColor.r, Self.threatColor.g, Self.threatColor.b = GetThreatStatusColor(UnitThreatSituation(Self.unit))
-                Self.Background:SetTexture(Self.threatColor.r, Self.threatColor.g, Self.threatColor.b)
+                Self.ThreatColor.r, Self.ThreatColor.g, Self.ThreatColor.b = GetThreatStatusColor(UnitThreatSituation(Self.unit))
+                Self.Background:SetTexture(Self.ThreatColor.r, Self.ThreatColor.g, Self.ThreatColor.b)
             end
         end
 
@@ -114,6 +114,4 @@ function HandleBackgroundColors(Self)
             end
         end
     end
-
-    Self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", Self.PostUpdate)
 end

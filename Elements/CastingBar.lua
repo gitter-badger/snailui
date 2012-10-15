@@ -33,12 +33,14 @@ function HandleCastingBar(Self)
         if GetConfiguration()[Self.Frame].CastingBar.Spell then
             if GetConfiguration()[Self.Frame].CastingBar.Spell.Duration then
                 Self.Castbar.Time = Self.Castbar:CreateFontString(nil, "OVERLAY")
+                Self.Castbar.Time:SetJustifyH("RIGHT")
                 Self.Castbar.Time:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 Self.Castbar.Time:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.Anchor, GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.X, GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.Y)
             end
 
             if GetConfiguration()[Self.Frame].CastingBar.Spell.Name then
                 Self.Castbar.Text = Self.Castbar:CreateFontString(nil, "OVERLAY")
+                Self.Castbar.Text:SetJustifyH("LEFT")
                 Self.Castbar.Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 Self.Castbar.Text:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Spell.Name.Anchor, GetConfiguration()[Self.Frame].CastingBar.Spell.Name.X, GetConfiguration()[Self.Frame].CastingBar.Spell.Name.Y)
             end

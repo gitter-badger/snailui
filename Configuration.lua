@@ -14,9 +14,7 @@ Configuration =
         Size = 8,
     },
 
-    Themes =
-    {
-    }
+    Themes = {}
 }
 
 if Configuration.EnableThreatColorsOnAllFrames then

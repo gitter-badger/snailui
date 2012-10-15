@@ -5,20 +5,17 @@ function HandleBuffs()
     if GetConfiguration().Buffs then
         AuraButton_UpdateDuration = function(Self, TimeLeft)         
             if (SHOW_BUFF_DURATIONS == "1") and TimeLeft then
-                Self.duration:SetFormattedText(SecondsToTimeAbbrev(TimeLeft));
-
-                if TimeLeft < BUFF_DURATION_WARNING_TIME then
-                    Self.duration:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-                else
-                    Self.duration:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
-                end
+                local Class = select(2, UnitClass("Player"))
+                
+                Self.duration:SetFormattedText(SecondsToTimeAbbrev(TimeLeft))
+                Self.duration:SetVertexColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
                 local Text = Self.duration:GetText()
 
                 Self.duration:SetText(Text:gsub(" ", ""))
-                Self.duration:Show();
+                Self.duration:Show()
             else
-                Self.duration:Hide();
+                Self.duration:Hide()
             end
         end
       

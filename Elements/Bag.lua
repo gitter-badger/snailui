@@ -82,6 +82,43 @@ function HandleBag()
                         _G["ContainerFrame" .. I .. "Item" .. J]:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, -(2 + ((CurrentColumn - 1) * (GetConfiguration().Bag.Width + 1))), 27 + ((CurrentRow - 1) * (GetConfiguration().Bag.Height + 1)))
                     end
 
+                    _G["ContainerFrame" .. I .. "Item" .. J]:SetScript("OnUpdate",
+                        function(Self, ElapsedTime)
+                            if not Self.Time then
+                                Self.Time = 0
+                            end
+
+                            if not Self.CooldownTime then
+                                Self.CooldownTime = 0
+                            end
+
+                            if (Self.Time + ElapsedTime) >= 0.1 then
+                                local Start, Duration, Enable, Charges, MaxCharges = GetContainerItemCooldown(Self:GetParent():GetID(), Self:GetID())
+
+                                if Duration > 0 then
+                                    if Self.CooldownTime < Duration then
+                                        Self.CooldownTime = Self.CooldownTime + (Self.Time + ElapsedTime)
+                                        Self.Text:SetFormattedText(SecondsToTimeAbbrev(Duration - Self.CooldownTime))
+
+                                        local Text = Self.Text:GetText()
+
+                                        Self.Text:SetText(Text:gsub(" ", ""))
+                                        Self.Text:Show()
+                                    else
+                                        Self.CooldownTime = 0
+                                    end
+                                else
+                                    Self.CooldownTime = 0
+                                    Self.Text:Hide()
+                                end
+
+                                Self.Time = 0
+                            else
+                                Self.Time = Self.Time + ElapsedTime
+                            end
+                        end
+                    )
+
                     if not _G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom then
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom = _G["ContainerFrame" .. I .. "Item" .. J]:CreateTexture(nil, "LOW")
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
@@ -114,6 +151,12 @@ function HandleBag()
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetPoint("LEFT", -2, 0)
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetSize(1, GetConfiguration().Bag.Height)
                     end
+
+                    _G["ContainerFrame" .. I .. "Item" .. J].Text = _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:CreateFontString(nil, "OVERLAY")
+                    _G["ContainerFrame" .. I .. "Item" .. J].Text:Hide()
+                    _G["ContainerFrame" .. I .. "Item" .. J].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+                    _G["ContainerFrame" .. I .. "Item" .. J].Text:SetPoint("CENTER", 1, 0)
+                    _G["ContainerFrame" .. I .. "Item" .. J].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
                     _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:ClearAllPoints()
                     _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)

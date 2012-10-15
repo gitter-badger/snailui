@@ -85,7 +85,7 @@ function HandleInterfaceOptions(Version)
         function(ThemeDropdownMenu, Level)
             local Index = 1
 
-            for Key, Value in pairs(Configuration.Themes) do
+            for Key, _ in pairs(Configuration.Themes) do
                 local Info = UIDropDownMenu_CreateInfo()
 
                 Info.text = Key

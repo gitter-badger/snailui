@@ -63,6 +63,46 @@ function HandleActionBars()
 
         if #Bars > 0 then
             local Class = select(2, UnitClass("Player"))
+            local OriginalActionButton_OnUpdate = ActionButton_OnUpdate
+
+            ActionButton_OnUpdate = function(Self, ElapsedTime)
+                OriginalActionButton_OnUpdate(Self, ElapsedTime)
+
+                if not Self.Time then
+                    Self.Time = 0
+                end
+
+                if not Self.CooldownTime then
+                    Self.CooldownTime = 0
+                end
+
+                if (Self.Time + ElapsedTime) >= 0.1 then
+                    local Start, Duration, Enable, Charges, MaxCharges = GetActionCooldown(Self.action)
+
+                    if Duration > 0 then
+                        if Self.CooldownTime < Duration then
+                            Self.CooldownTime = Self.CooldownTime + (Self.Time + ElapsedTime)
+                            Self.Text:SetFormattedText(SecondsToTimeAbbrev(Duration - Self.CooldownTime))
+
+                            local Text = Self.Text:GetText()
+
+                            Self.Text:SetText(Text:gsub(" ", ""))
+                            Self.Text:Show()
+                        else
+                            Self.CooldownTime = 0
+                        end
+                    else
+                        Self.CooldownTime = 0
+                        Self.Text:Hide()
+                    end
+
+                    ActionButton_UpdateUsable(Self)
+                    Self.Time = 0
+                else
+                    Self.Time = Self.Time + ElapsedTime
+                end
+            end
+
             local OriginalActionButton_Update = ActionButton_Update
 
             ActionButton_Update = function(Self)
@@ -122,23 +162,6 @@ function HandleActionBars()
                             _G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
                         end
                     end
-                end
-            end
-
-            local OriginalActionButton_OnUpdate = ActionButton_OnUpdate
-
-            ActionButton_OnUpdate = function(Self, ElapsedTime)
-                OriginalActionButton_OnUpdate(Self, ElapsedTime)
-
-                if not Self.Time then
-                    Self.Time = 0
-                end
-
-                if (Self.Time + ElapsedTime) >= 0.1 then
-                    ActionButton_UpdateUsable(Self)                
-                    Self.Time = 0
-                else
-                    Self.Time = Self.Time + ElapsedTime
                 end
             end
 
@@ -251,10 +274,18 @@ function HandleActionBars()
                     _G[Buttons[I] .. J].Hide = Blank
                     _G[Buttons[I] .. J].SetNormalTexture = Blank
 
+                    _G[Buttons[I] .. J].Text = _G[Buttons[I] .. J .. "Cooldown"]:CreateFontString(nil, "OVERLAY")
+                    _G[Buttons[I] .. J].Text:Hide()
+                    _G[Buttons[I] .. J].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+                    _G[Buttons[I] .. J].Text:SetPoint("CENTER", 1, 0)
+                    _G[Buttons[I] .. J].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
                     _G[Buttons[I] .. J .. "Border"]:SetAlpha(0)
                     _G[Buttons[I] .. J .. "Border"].SetVertexColor = Blank
+
                     _G[Buttons[I] .. J .. "Cooldown"]:SetSize(Bars[I].Width - 6, Bars[I].Height - 6)
                     _G[Buttons[I] .. J .. "Cooldown"]:SetPoint("CENTER")
+                    
                     _G[Buttons[I] .. J .. "Count"]:SetAlpha(0)
                     _G[Buttons[I] .. J .. "FlyoutBorder"]:SetAlpha(0)
                     _G[Buttons[I] .. J .. "FlyoutBorderShadow"]:SetAlpha(0)                    

@@ -10,11 +10,11 @@ oUF:RegisterStyle("SnailUI",
         if GetConfiguration()[Unit] then
             Self.Frame = Unit
             
-            HandleBackgroundColors(Self)
             HandleBattlegroundAutoRelease(Self)
             HandleBurningEmbersBar(Self)
             HandleCastingBar(Self)
             HandleChiBar(Self)
+            HandleColors(Self)
             HandleComboPointsBar(Self)
             HandleEclipseBar(Self)
             HandleDemonicFuryBar(Self)

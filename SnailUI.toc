@@ -17,13 +17,13 @@ Themes\Default\DefaultHealerWithClassBar.lua
 Themes\Default\DefaultWithClassBarWithPet.lua
 
 Elements\ActionBars.lua
-Elements\BackgroundColors.lua
 Elements\Bag.lua
 Elements\BattlegroundAutoRelease.lua
 Elements\BlizzardFrames.lua
 Elements\Buffs.lua
 Elements\CastingBar.lua
 Elements\Chat.lua
+Elements\Colors.lua
 Elements\ConsoleVariables.lua
 Elements\ExperienceBar.lua
 Elements\ExtraButton.lua

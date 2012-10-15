@@ -88,6 +88,7 @@ function HandleMinimap()
             TimeManagerClockTicker:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
             TimeManagerClockTicker:SetPoint("CENTER", TimeManagerClockButton)
             TimeManagerClockTicker:SetShadowOffset(0, 0)
+            TimeManagerClockTicker:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
         end
 
         if GetConfiguration().Minimap.Mail then

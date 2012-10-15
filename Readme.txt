@@ -27,6 +27,7 @@ Features
 - Automatically sells all gray items when visiting a vendor
 - Automatically releases when you die in a battleground
 - Action button cooldown timers that are similar to OmniCC
+- Extremely lightweight dps/healing meter that also shows the opposite faction
 
 ------------------------------------------------------------------------------
 

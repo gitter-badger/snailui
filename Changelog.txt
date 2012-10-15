@@ -10,9 +10,12 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.4.2
-- Code has been compressed a bit to save space and increase speed
+- Bag slots added to the bag frame
+- Fixed a bug where debuffs weren't being colored according to your class
+- Fixed a bug where buffs weren't being colored according to your class
+- Fixed a bug where the clock wasn't being colored according to your class
 - Extremely lightweight dps/healing meter added
-- Cooldown text has been added to all action buttons (Similar to OmniCC)
+- Cooldown text has been added to all action/item buttons (Similar to OmniCC)
 - An option to color all frames based on threat level instead of just the raid
   frames has been added under the interface options
 - Action buttons will now change based on if the unit is in range of the spell
