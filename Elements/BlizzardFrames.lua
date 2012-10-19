@@ -9,11 +9,9 @@ function HandleBlizzardFrames()
 
     ExtraActionBarFrame:ClearAllPoints()
     ExtraActionBarFrame:SetPoint("TOP", 0, -100)
-    ExtraActionBarFrame.OriginalSetPoint = ExtraActionBarFrame.SetPoint
-    ExtraActionBarFrame.SetPoint = function()
-        ExtraActionBarFrame:ClearAllPoints()
-        ExtraActionBarFrame:OriginalSetPoint("TOP", 0, -100)
-    end
+
+    ExtraActionBarFrame.ClearAllPoints = Blank
+    ExtraActionBarFrame.SetPoint = Blank
 
     GhostFrame:ClearAllPoints()
     GhostFrame:SetPoint("TOP", 0, -100)
@@ -66,10 +64,6 @@ function HandleBlizzardFrames()
             Frames[#Frames + 1] = "AchievementMicroButton"
             Frames[#Frames + 1] = "ActionBarDownButton"
             Frames[#Frames + 1] = "ActionBarUpButton"
-            Frames[#Frames + 1] = "CharacterBag0Slot"
-            Frames[#Frames + 1] = "CharacterBag1Slot"
-            Frames[#Frames + 1] = "CharacterBag2Slot"
-            Frames[#Frames + 1] = "CharacterBag3Slot"
             Frames[#Frames + 1] = "CharacterMicroButton"
             Frames[#Frames + 1] = "CompanionsMicroButton"
             Frames[#Frames + 1] = "EJMicroButton"
@@ -157,6 +151,11 @@ function HandleBlizzardFrames()
         Textures[#Textures + 1] = "ContainerFrame1BackgroundTop"
         Textures[#Textures + 1] = "ContainerFrame1Name"
         Textures[#Textures + 1] = "ContainerFrame1Portrait"
+    else
+        Frames[#Frames + 1] = "CharacterBag0Slot"
+        Frames[#Frames + 1] = "CharacterBag1Slot"
+        Frames[#Frames + 1] = "CharacterBag2Slot"
+        Frames[#Frames + 1] = "CharacterBag3Slot"
     end
 
     if GetConfiguration().Chat then

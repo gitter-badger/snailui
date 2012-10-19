@@ -5,6 +5,13 @@ local Version = "0.4.2"
 
 oUF:RegisterStyle("SnailUI", 
     function(Self, Unit)
+        RAID_CLASS_COLORS["UNKNOWN"] =
+        {
+            b = 0.75,
+            g = 0.75,
+            r = 0.75
+        }
+
         Unit = Unit:gsub("(.)", string.upper, 1)
         
         if GetConfiguration()[Unit] then

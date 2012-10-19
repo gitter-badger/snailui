@@ -1,6 +1,16 @@
 -- Functions.lua
 -- Written by Snail
 
+function AddPet(Pets, PlayerGUID, PetGUID)
+    if PlayerGUID and PetGUID then
+        if not Pets[PlayerGUID] then
+            Pets[PlayerGUID] = {}
+        end
+
+        Pets[PlayerGUID][#Pets[PlayerGUID] + 1] = PetGUID
+    end
+end
+
 function Blank()
 end
 
@@ -55,10 +65,36 @@ function GetConfiguration()
     return Configuration.Themes[Configuration.Theme]
 end
 
-function GetData(Data, Name, Realm)
-    for _, Player in ipairs(Data) do
-        if (Player.Name == Name) and (Player.Realm == Realm) then
-            return Player
+function GetData(Data, GUID)
+    if Data and GUID then
+        for _, Unit in ipairs(Data) do
+            if Unit.GUID == GUID then
+                return Unit
+            end
+        end
+    end
+
+    return nil
+end
+
+function GetDuration(Time)
+    if Time >= 3600 then
+        return math.ceil((Time / 60) / 60) .. "H"
+    elseif Time >= 60 then
+        return math.ceil(Time / 60) .. "M"
+    end
+
+    return math.ceil(Time)
+end
+
+function GetPetOwner(Pets, GUID)
+    if Pets and GUID then
+        for PlayerGUID, Player in pairs(Pets) do
+            for _, PetGUID in ipairs(Player) do
+                if PetGUID == GUID then
+                    return PlayerGUID
+                end
+            end
         end
     end
 

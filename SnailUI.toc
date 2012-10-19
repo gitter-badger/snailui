@@ -1,6 +1,6 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## SavedVariables: EnableThreatColorsOnAllFrames, Theme
+## SavedVariables: EnableThreatColorsOnAllFrames, LogoutTime, MeterData, Theme
 ## Interface: 50001
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI

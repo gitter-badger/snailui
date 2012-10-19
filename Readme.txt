@@ -26,8 +26,8 @@ Features
 - Automatically repairs your items when visiting a vendor
 - Automatically sells all gray items when visiting a vendor
 - Automatically releases when you die in a battleground
-- Action button cooldown timers that are similar to OmniCC
-- Extremely lightweight dps/healing meter that also shows the opposite faction
+- Action/item button cooldown text that is similar to OmniCC
+- Extremely lightweight dps/healing meter that also shows players of the the opposite faction and players outside of your group (Most pets can't be merged if the players are not in your group)
 
 ------------------------------------------------------------------------------
 

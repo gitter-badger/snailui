@@ -148,7 +148,7 @@ Configuration.Themes.Default =
         [0] =
         {
             Anchor = "TOP",
-            Height = 20,
+            Height = 24,
             Width = 152,
             X = 0,
             Y = 0
@@ -157,43 +157,34 @@ Configuration.Themes.Default =
         [1] =
         {
             Anchor = "TOP",
-            Height = 19,
+            Height = 22,
             Width = 152,
             X = 0,
-            Y = -17
+            Y = -21
         },
 
         [2] =
         {
             Anchor = "CENTER",
-            Height = 19,
+            Height = 22,
             Width = 152,
             X = 0,
-            Y = 7
+            Y = -1
         },
 
         [3] =
         {
-            Anchor = "CENTER",
-            Height = 19,
+            Anchor = "BOTTOM",
+            Height = 22,
             Width = 152,
             X = 0,
-            Y = -9
+            Y = 19
         },
 
         [4] =
         {
             Anchor = "BOTTOM",
-            Height = 19,
-            Width = 152,
-            X = 0,
-            Y = 16
-        },
-
-        [5] =
-        {
-            Anchor = "BOTTOM",
-            Height = 19,
+            Height = 22,
             Width = 152,
             X = 0,
             Y = 0
@@ -219,7 +210,7 @@ Configuration.Themes.Default =
         {
             Anchor ="BOTTOM",
             X = 2,
-            Y = 6
+            Y = 5
         },
 
         Mail =

@@ -1,12 +1,34 @@
 -- Meter.lua
 -- Written by Snail
 
+if not MeterData then
+    MeterData =
+    {
+        Data = {},
+        InCombat = nil,
+        Pets = {},
+        TotalDamage = 0,
+        TotalHealing = 0
+    }
+end
+
 function HandleMeter()
     if GetConfiguration().Meter then
+        local LoginTime = time()
+
+        if not LogoutTime then
+            LogoutTime = 0
+        end
+
+        if (LoginTime - LogoutTime) >= 180 then
+            MeterData.Pets = {}
+        end
+
         local Class = select(2, UnitClass("Player"))
         local Meter = CreateFrame("Frame", nil, UIParent)
 
         Meter:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+        Meter:RegisterEvent("PLAYER_LOGOUT")
         Meter:RegisterEvent("PLAYER_REGEN_DISABLED")
         Meter:RegisterEvent("PLAYER_REGEN_ENABLED")
         Meter:SetPoint(GetConfiguration().Meter.Anchor, GetConfiguration().Meter.X, GetConfiguration().Meter.Y)
@@ -14,54 +36,99 @@ function HandleMeter()
         Meter:SetScript("OnEvent",
             function(Self, Event, ...)
                 if Event == "PLAYER_REGEN_DISABLED" then
-                    Self.Data =
-                    {
-                        InCombat = true,
-                        TotalDamage = 0,
-                        TotalHealing = 0
-                    }
-                elseif Event == "PLAYER_REGEN_ENABLED" then
-                    Self.Data.InCombat = nil
-                elseif Event == "COMBAT_LOG_EVENT_UNFILTERED" then
-                    if Self.Data.InCombat then
-                        local CombatEvent = select(2, ...)
+                    MeterData.Data = {}
+                    MeterData.InCombat = true
+                    MeterData.TotalDamage = 0
+                    MeterData.TotalHealing = 0
 
-                        if string.find(CombatEvent, "_DAMAGE") or string.find(CombatEvent, "_EXTRA_ATTACKS") then
+                    AddPet(MeterData.Pets, UnitGUID("Player"), UnitGUID("Pet"))
+
+                    if GetNumGroupMembers() > 0 then
+                        local InRaid = IsInRaid()
+                        local Frame
+
+                        if InRaid then
+                            Frame = "Raid"
+                        else
+                            Frame = "Party"
+                        end
+
+                        for I = 1, GetNumGroupMembers() do
+                            AddPet(MeterData.Pets, UnitGUID(Frame .. I), UnitGUID(Frame .. I .. "Pet"))
+                        end
+                    end
+                elseif Event == "PLAYER_REGEN_ENABLED" then
+                    MeterData.InCombat = nil
+                elseif Event == "PLAYER_LOGOUT" then
+                    LogoutTime = time()
+                elseif Event == "COMBAT_LOG_EVENT_UNFILTERED" then
+                    local CombatEvent = select(2, ...)
+
+                    if (select(3, ...) == false) then
+                        if MeterData.InCombat and (string.find(CombatEvent, "_DAMAGE") or string.find(CombatEvent, "_EXTRA_ATTACKS") or string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH")) then
                             local UnitFlags = select(6, ...)
 
                             if (bit.band(UnitFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(UnitFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(UnitFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0) then
-                                local _, PlayerClass, _, _, _, PlayerName, PlayerRealm = GetPlayerInfoByGUID(select(4, ...))
                                 local Damage
 
                                 if string.find(CombatEvent, "SWING") then
                                     Damage = select(12, ...)
                                 else
                                     Damage = select(15, ...)
+
+                                    if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
+                                        if select(16, ...) ~= -2 then
+                                            Damage = 0
+                                        end
+                                    end
                                 end
 
-                                local PlayerData = GetData(Self.Data, PlayerName, PlayerRealm)
+                                local Class
+                                local Data
+                                local GUID = select(4, ...)
+                                local Name
+                                local Realm
 
-                                if not PlayerData then
-                                    Self.Data[#Self.Data + 1] =
+                                if (bit.band(UnitFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(UnitFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
+                                    GUID = GetPetOwner(MeterData.Pets, GUID)
+                                end
+
+                                if GUID then
+                                    _, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
+                                else
+                                    Class = "UNKNOWN"
+                                    GUID = select(4, ...)
+                                    Name = select(5, ...)
+                                end
+
+                                Data = GetData(MeterData.Data, GUID)
+
+                                if not Data then
+                                    MeterData.Data[#MeterData.Data + 1] =
                                     {
-                                        Class = PlayerClass,
+                                        Class = Class,
                                         Damage = 0,
                                         EndTime = 0,
-                                        Name = PlayerName,
-                                        Realm = PlayerRealm,
+                                        GUID = GUID,
+                                        Name = Name,
+                                        Realm = Realm,
                                         StartTime = GetTime()
                                     }
 
-                                    PlayerData = Self.Data[#Self.Data]
+                                    Data = MeterData.Data[#MeterData.Data]
                                 end
 
-                                PlayerData.Damage = PlayerData.Damage + Damage
-                                PlayerData.EndTime = GetTime()
+                                Data.Damage = Data.Damage + Damage
+                                Data.EndTime = GetTime()
 
-                                Self.Data.TotalDamage = Self.Data.TotalDamage + Damage
+                                if bit.band(UnitFlags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
+                                    Data.Hostile = true
+                                end
+
+                                MeterData.TotalDamage = MeterData.TotalDamage + Damage
                             end
-                        elseif CombatEvent == "SPELL_SUMMON" then
-                            print("a")
+                        elseif string.find(CombatEvent, "_SUMMON") then
+                            AddPet(MeterData.Pets, select(4, ...), select(8, ...))
                         end
                     end
                 end
@@ -75,27 +142,42 @@ function HandleMeter()
                 end
 
                 if (Self.Time + ElapsedTime) >= 1 then
-                    table.sort(Self.Data,
+                    table.sort(MeterData.Data,
                         function(A, B)
                             return A.Damage > B.Damage
                         end
                     )
 
+                    local MaxDamage = 0
+
+                    for I = 1, #MeterData.Data do
+                        if MeterData.Data[I].Damage > MaxDamage then
+                            MaxDamage = MeterData.Data[I].Damage
+                        end
+                    end
+
                     for I = 1, #Self.Bars do
-                        if Self.Data[I] then
-                            Self.Bars[I]:SetMinMaxValues(0, Self.Data.TotalDamage)
-                            Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[Self.Data[I].Class].r, RAID_CLASS_COLORS[Self.Data[I].Class].g, RAID_CLASS_COLORS[Self.Data[I].Class].b)
-                            Self.Bars[I]:SetValue(Self.Data[I].Damage)
+                        if MeterData.Data[I] then
+                            Self.Bars[I]:SetMinMaxValues(0, MaxDamage)
+                            Self.Bars[I]:SetValue(MeterData.Data[I].Damage)
                             Self.Bars[I]:Show()
 
-                            Self.Bars[I].LeftText:SetText(Trim3(I .. ". " .. Self.Data[I].Name))
-                            Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[Self.Data[I].Class].r, RAID_CLASS_COLORS[Self.Data[I].Class].g, RAID_CLASS_COLORS[Self.Data[I].Class].b)
-                            Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[Self.Data[I].Class].r, RAID_CLASS_COLORS[Self.Data[I].Class].g, RAID_CLASS_COLORS[Self.Data[I].Class].b)
-
-                            if (Self.Data[I].EndTime - Self.Data[I].StartTime) > 0 then
-                                Self.Bars[I].RightText:SetText(ShortNumber(Self.Data[I].Damage) .. " (" .. ShortNumber(math.floor((Self.Data[I].Damage / (Self.Data[I].EndTime - Self.Data[I].StartTime)) + 0.05)) .. ")")
+                            if MeterData.Data[I].Hostile then
+                                Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].b / 2)
+                                Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].b / 2)
+                                Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].b / 2)
                             else
-                                Self.Bars[I].RightText:SetText(ShortNumber(Self.Data[I].Damage) .. " (" .. ShortNumber(math.floor(Self.Data[I].Damage + 0.05)) .. ")")
+                                Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].b)
+                                Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].b)
+                                Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[MeterData.Data[I].Class or "UNKNOWN"].b)
+                            end
+
+                            Self.Bars[I].LeftText:SetText(Trim3(I .. ". " .. MeterData.Data[I].Name))
+
+                            if (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime) > 0 then
+                                Self.Bars[I].RightText:SetText(ShortNumber(MeterData.Data[I].Damage) .. " (" .. ShortNumber(math.floor((MeterData.Data[I].Damage / (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime)) + 0.05)) .. ")")
+                            else
+                                Self.Bars[I].RightText:SetText(ShortNumber(MeterData.Data[I].Damage) .. " (" .. ShortNumber(math.floor(MeterData.Data[I].Damage + 0.05)) .. ")")
                             end
                         else
                             Self.Bars[I]:Hide()
@@ -134,13 +216,6 @@ function HandleMeter()
         Meter.Border:SetSize(GetConfiguration().Meter.Width, GetConfiguration().Meter.Height)
         Meter.Border:SetTexture(0, 0, 0)
 
-        Meter.Data =
-        {
-            InCombat = nil,
-            TotalDamage = 0,
-            TotalHealing = 0
-        }
-
         local Bars = CreateFrame("Frame", nil, Meter)
         Meter.Bars = Bars
 
@@ -161,12 +236,12 @@ function HandleMeter()
                 Bars[I].LeftText = Bars[I]:CreateFontString(nil, "OVERLAY")
                 Bars[I].LeftText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 Bars[I].LeftText:SetJustifyH("LEFT")
-                Bars[I].LeftText:SetPoint("LEFT", 4, 0)
+                Bars[I].LeftText:SetPoint("LEFT", 5, 0)
 
                 Bars[I].RightText = Bars[I]:CreateFontString(nil, "OVERLAY")
                 Bars[I].RightText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 Bars[I].RightText:SetJustifyH("RIGHT")
-                Bars[I].RightText:SetPoint("RIGHT", -1, 0)
+                Bars[I].RightText:SetPoint("RIGHT", -2, 0)
             end
 
             Bars[I]:SetPoint(GetConfiguration().Meter[I].Anchor, GetConfiguration().Meter[I].X, GetConfiguration().Meter[I].Y)

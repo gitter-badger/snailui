@@ -72,28 +72,18 @@ function HandleActionBars()
                     Self.Time = 0
                 end
 
-                if not Self.CooldownTime then
-                    Self.CooldownTime = 0
-                end
-
                 if (Self.Time + ElapsedTime) >= 0.1 then
-                    local Start, Duration, Enable, Charges, MaxCharges = GetActionCooldown(Self.action)
+                    if Self.Text then
+                        local Start, Duration, Enable, Charges, MaxCharges = GetActionCooldown(Self.action)
 
-                    if Duration > 0 then
-                        if Self.CooldownTime < Duration then
-                            Self.CooldownTime = Self.CooldownTime + (Self.Time + ElapsedTime)
-                            Self.Text:SetFormattedText(SecondsToTimeAbbrev(Duration - Self.CooldownTime))
-
-                            local Text = Self.Text:GetText()
-
-                            Self.Text:SetText(Text:gsub(" ", ""))
-                            Self.Text:Show()
+                        if Duration > 0 then
+                            if (GetTime() - Start) < Duration then
+                                Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
+                                Self.Text:Show()
+                            end
                         else
-                            Self.CooldownTime = 0
+                            Self.Text:Hide()
                         end
-                    else
-                        Self.CooldownTime = 0
-                        Self.Text:Hide()
                     end
 
                     ActionButton_UpdateUsable(Self)
@@ -148,17 +138,25 @@ function HandleActionBars()
                     local Type, SpellID = GetActionInfo(Self.action)
 
                     if Type == "macro" then
-                         _, _, SpellID = GetMacroSpell(SpellID)
+                        _, _, SpellID = GetMacroSpell(SpellID)
+                    end
+
+                    local IsHarmful
+
+                    if Type == "item" then
+                        IsHarmful = IsHarmfulItem
+                    else
+                        IsHarmful = IsHarmfulSpell
                     end
 
                     if UnitIsConnected("Target") then
                         if IsActionInRange(Self.action) == 0 then
                             _G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
-                        elseif not UnitCanAttack("Player", "Target") and IsHarmfulSpell(GetSpellInfo(SpellID)) then
+                        elseif (UnitIsDeadOrGhost("Target") or not UnitCanAttack("Player", "Target")) and IsHarmful(GetSpellInfo(SpellID)) then
                             _G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
                         end
                     else
-                        if IsHarmfulSpell(GetSpellInfo(SpellID)) then
+                        if IsHarmful(GetSpellInfo(SpellID)) then
                             _G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
                         end
                     end
@@ -179,6 +177,8 @@ function HandleActionBars()
 
                 for J = 1, Bars[I].Buttons do
                     _G[Buttons[I] .. J]:ClearAllPoints()
+                    _G[Buttons[I] .. J]:GetCheckedTexture():SetAlpha(0)
+                    _G[Buttons[I] .. J]:GetCheckedTexture().SetAlpha = Blank
                     _G[Buttons[I] .. J]:SetNormalTexture(nil)
                     _G[Buttons[I] .. J]:SetPoint("LEFT", ((J - 1) * Bars[I].Width) + ((J - 1) * 4) + 3, 0)
                     _G[Buttons[I] .. J]:SetSize(Bars[I].Width - 6, Bars[I].Height - 6)
@@ -298,7 +298,6 @@ function HandleActionBars()
                     end
 
                     if _G[Buttons[I] .. J .. "FloatingBG"] then
-                        _G[Buttons[I] .. J]:SetCheckedTexture(nil)
                         _G[Buttons[I] .. J .. "FloatingBG"]:SetAlpha(0)
                     end
 

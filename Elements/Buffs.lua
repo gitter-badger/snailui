@@ -5,14 +5,7 @@ function HandleBuffs()
     if GetConfiguration().Buffs then
         AuraButton_UpdateDuration = function(Self, TimeLeft)         
             if (SHOW_BUFF_DURATIONS == "1") and TimeLeft then
-                local Class = select(2, UnitClass("Player"))
-                
-                Self.duration:SetFormattedText(SecondsToTimeAbbrev(TimeLeft))
-                Self.duration:SetVertexColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-
-                local Text = Self.duration:GetText()
-
-                Self.duration:SetText(Text:gsub(" ", ""))
+                Self.duration:SetText(GetDuration(TimeLeft))
                 Self.duration:Show()
             else
                 Self.duration:Hide()
@@ -91,9 +84,12 @@ function HandleBuffs()
                     _G["BuffButton" .. I].BorderTop:SetTexture(0, 0, 0)
                 end
 
+                _G["BuffButton" .. I].duration:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
                 _G["BuffButton" .. I .. "Count"]:ClearAllPoints()
                 _G["BuffButton" .. I .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 _G["BuffButton" .. I .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
+                _G["BuffButton" .. I .. "Count"]:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
                 _G["BuffButton" .. I .. "Duration"]:ClearAllPoints()
                 _G["BuffButton" .. I .. "Duration"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
@@ -150,11 +146,13 @@ function HandleBuffs()
                     _G["DebuffButton" .. I].BorderTop:SetTexture(0, 0, 0)
                 end
 
+                _G["DebuffButton" .. I].duration:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
                 _G["DebuffButton" .. I .. "Border"]:Hide()
 
                 _G["DebuffButton" .. I .. "Count"]:ClearAllPoints()
                 _G["DebuffButton" .. I .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 _G["DebuffButton" .. I .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
+                _G["DebuffButton" .. I .. "Count"]:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
                 _G["DebuffButton" .. I .. "Duration"]:ClearAllPoints()
                 _G["DebuffButton" .. I .. "Duration"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
@@ -212,11 +210,13 @@ function HandleBuffs()
                     _G["TempEnchant" .. I].BorderTop:SetTexture(0, 0, 0)
                 end
 
+                _G["TempEnchant" .. I].duration:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
                 _G["TempEnchant" .. I .. "Border"]:Hide()
 
                 _G["TempEnchant" .. I .. "Count"]:ClearAllPoints()
                 _G["TempEnchant" .. I .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 _G["TempEnchant" .. I .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
+                _G["TempEnchant" .. I .. "Count"]:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
                 _G["TempEnchant" .. I .. "Duration"]:ClearAllPoints()
                 _G["TempEnchant" .. I .. "Duration"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
