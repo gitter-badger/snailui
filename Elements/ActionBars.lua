@@ -63,36 +63,6 @@ function HandleActionBars()
 
         if #Bars > 0 then
             local Class = select(2, UnitClass("Player"))
-            local OriginalActionButton_OnUpdate = ActionButton_OnUpdate
-
-            ActionButton_OnUpdate = function(Self, ElapsedTime)
-                OriginalActionButton_OnUpdate(Self, ElapsedTime)
-
-                if not Self.Time then
-                    Self.Time = 0
-                end
-
-                if (Self.Time + ElapsedTime) >= 0.1 then
-                    if Self.Text then
-                        local Start, Duration, Enable, Charges, MaxCharges = GetActionCooldown(Self.action)
-
-                        if Duration > 0 then
-                            if (GetTime() - Start) < Duration then
-                                Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
-                                Self.Text:Show()
-                            end
-                        else
-                            Self.Text:Hide()
-                        end
-                    end
-
-                    ActionButton_UpdateUsable(Self)
-                    Self.Time = 0
-                else
-                    Self.Time = Self.Time + ElapsedTime
-                end
-            end
-
             local OriginalActionButton_Update = ActionButton_Update
 
             ActionButton_Update = function(Self)
@@ -285,6 +255,45 @@ function HandleActionBars()
 
                     _G[Buttons[I] .. J .. "Cooldown"]:SetSize(Bars[I].Width - 6, Bars[I].Height - 6)
                     _G[Buttons[I] .. J .. "Cooldown"]:SetPoint("CENTER")
+                    _G[Buttons[I] .. J .. "Cooldown"]:HookScript("OnHide",
+                        function(Self)
+                            Self:SetScript("OnUpdate", nil)
+                        end
+                    )
+
+                    _G[Buttons[I] .. J .. "Cooldown"]:HookScript("OnShow",
+                        function(Self)
+                            Self:SetScript("OnUpdate",
+                                function(Self, ElapsedTime)
+                                    Self = Self:GetParent()
+
+                                    if not Self.Time then
+                                        Self.Time = 0
+                                    end
+
+                                    if (Self.Time + ElapsedTime) >= 0.1 then
+                                        if Self.Text then
+                                            local Start, Duration, Enable, Charges, MaxCharges = GetActionCooldown(Self.action)
+
+                                            if Duration > 0 then
+                                                if (GetTime() - Start) < Duration then
+                                                    Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
+                                                    Self.Text:Show()
+                                                end
+                                            else
+                                                Self.Text:Hide()
+                                            end
+                                        end
+
+                                        ActionButton_UpdateUsable(Self)
+                                        Self.Time = 0
+                                    else
+                                        Self.Time = Self.Time + ElapsedTime
+                                    end
+                                end
+                            )
+                        end
+                    )
                     
                     _G[Buttons[I] .. J .. "Count"]:SetAlpha(0)
                     _G[Buttons[I] .. J .. "FlyoutBorder"]:SetAlpha(0)

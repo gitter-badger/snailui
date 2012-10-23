@@ -9,6 +9,23 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.4.3
+- CPU usage for the meter has been optimized
+- CPU usage for action buttons and bag slots have been optimized
+- Fixed a bug where the extra action button wasn't being positioned correctly
+- The dps/healing meter now supports reporting to raid/battleground/party/say depending on your group type
+- The dps/healing meter will now display short numbers for anything above 1k (Down from 10k)
+- Item/action buttons now support cooldowns longer than a day
+- Fixed a bug where the dps/healing meter would sometimes show data from random fights instead of the current one
+- Unknown class color changed to magenta
+- Fixed a bug where some unicode characters were not being displayed correctly in players' names
+- The dps/healing meter now tracks healing/hps done
+- The dps/healing meter can now be scrolled through
+- Buff/debuff/cooldown timers for each class/spec added
+- Bank frame added
+
+------------------------------------------------------------------------------
+
 Version 0.4.2
 - Fixed a bug where warlock bars would sometimes error when switching specs
 - Fixed a bug where being in a vehicle was severely messing up the action bars

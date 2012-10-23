@@ -65,6 +65,18 @@ function GetConfiguration()
     return Configuration.Themes[Configuration.Theme]
 end
 
+function GetCount(Data, Mode)
+    local Count = 0
+
+    for I = 1, #Data do
+        if Data[I][Mode] > 0 then
+            Count = Count + 1
+        end
+    end
+
+    return Count
+end
+
 function GetData(Data, GUID)
     if Data and GUID then
         for _, Unit in ipairs(Data) do
@@ -78,9 +90,11 @@ function GetData(Data, GUID)
 end
 
 function GetDuration(Time)
-    if Time >= 3600 then
+    if (((Time / 60) / 60) / 24) >= 1 then
+        return math.ceil(((Time / 60) / 60) / 24) .. "D"
+    elseif ((Time / 60) / 60) >= 1 then
         return math.ceil((Time / 60) / 60) .. "H"
-    elseif Time >= 60 then
+    elseif (Time / 60) >= 1 then
         return math.ceil(Time / 60) .. "M"
     end
 
@@ -104,7 +118,7 @@ end
 function ShortNumber(Number)
     if Number > 999999 then
         return string.format("%.1fM", Number / 1000000)
-    elseif Number > 9999 then
+    elseif Number > 999 then
         return string.format("%.1fK", Number / 1000)
     end
 

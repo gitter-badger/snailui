@@ -223,33 +223,6 @@ function HandleBag()
                         _G["ContainerFrame" .. I .. "Item" .. J]:SetPoint("BOTTOMRIGHT", ContainerFrame1.Bag, -(2 + ((CurrentColumn - 1) * (GetConfiguration().Bag.Width + 1))), 27 + ((CurrentRow - 1) * (GetConfiguration().Bag.Height + 1)))
                     end
 
-                    _G["ContainerFrame" .. I .. "Item" .. J]:SetScript("OnUpdate",
-                        function(Self, ElapsedTime)
-                            if not Self.Time then
-                                Self.Time = 0
-                            end
-
-                            if (Self.Time + ElapsedTime) >= 0.1 then
-                                if Self.Text then
-                                    local Start, Duration, Enable, Charges, MaxCharges = GetContainerItemCooldown(Self:GetParent():GetID(), Self:GetID())
-
-                                    if Duration > 0 then
-                                        if (GetTime() - Start) < Duration then
-                                            Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
-                                            Self.Text:Show()
-                                        end
-                                    else
-                                        Self.Text:Hide()
-                                    end
-                                end
-
-                                Self.Time = 0
-                            else
-                                Self.Time = Self.Time + ElapsedTime
-                            end
-                        end
-                    )
-
                     if (CurrentRow == 1) and (CurrentColumn == GetConfiguration().Bag.Columns) then
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetPoint("TOPLEFT", _G["ContainerFrame" .. I .. "Item" .. J], -2, 1)
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetSize(1, 1 + (GetConfiguration().Bag.Height * 2))
@@ -265,6 +238,45 @@ function HandleBag()
                         _G["ContainerFrame" .. I .. "Item" .. J].Text:SetPoint("CENTER", 1, 0)
                         _G["ContainerFrame" .. I .. "Item" .. J].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
                     end
+
+                    _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:SetScript("OnHide",
+                        function(Self)
+                            Self:SetScript("OnUpdate", nil)
+                        end
+                    )
+
+                    _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:SetScript("OnShow",
+                        function(Self)
+                            Self:SetScript("OnUpdate",
+                                function(Self, ElapsedTime)
+                                    Self = Self:GetParent()
+
+                                    if not Self.Time then
+                                        Self.Time = 0
+                                    end
+
+                                    if (Self.Time + ElapsedTime) >= 0.1 then
+                                        if Self.Text then
+                                            local Start, Duration, Enable, Charges, MaxCharges = GetContainerItemCooldown(Self:GetParent():GetID(), Self:GetID())
+
+                                            if Duration > 0 then
+                                                if (GetTime() - Start) < Duration then
+                                                    Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
+                                                    Self.Text:Show()
+                                                end
+                                            else
+                                                Self.Text:Hide()
+                                            end
+                                        end
+
+                                        Self.Time = 0
+                                    else
+                                        Self.Time = Self.Time + ElapsedTime
+                                    end
+                                end
+                            )
+                        end
+                    )
 
                     _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:ClearAllPoints()
                     _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)

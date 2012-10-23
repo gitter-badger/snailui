@@ -8,7 +8,7 @@ function HandleBlizzardFrames()
     CompactRaidFrameManager:UnregisterAllEvents()
 
     ExtraActionBarFrame:ClearAllPoints()
-    ExtraActionBarFrame:SetPoint("TOP", 0, -100)
+    ExtraActionBarFrame:SetPoint("TOP", UIParent, 0, -100)
 
     ExtraActionBarFrame.ClearAllPoints = Blank
     ExtraActionBarFrame.SetPoint = Blank

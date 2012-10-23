@@ -10,8 +10,8 @@ function HandleMinimap()
         Minimap:SetPoint(GetConfiguration().Minimap.Anchor, GetConfiguration().Minimap.X, GetConfiguration().Minimap.Y)
         Minimap:SetSize(GetConfiguration().Minimap.Width - 6, GetConfiguration().Minimap.Height - 6)
         Minimap:SetScript("OnMouseWheel",
-            function(Self, Zoom)
-                if Zoom > 0 then
+            function(Self, Direction)
+                if Direction > 0 then
                     Minimap_ZoomIn()
                 else
                     Minimap_ZoomOut()

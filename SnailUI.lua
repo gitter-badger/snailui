@@ -1,15 +1,15 @@
 -- Snail.lua
 -- Written by Snail
 
-local Version = "0.4.2"
+local Version = "0.4.3"
 
 oUF:RegisterStyle("SnailUI", 
     function(Self, Unit)
         RAID_CLASS_COLORS["UNKNOWN"] =
         {
-            b = 0.75,
-            g = 0.75,
-            r = 0.75
+            b = 1,
+            g = 0,
+            r = 1
         }
 
         Unit = Unit:gsub("(.)", string.upper, 1)
