@@ -18,11 +18,8 @@ Version 0.4.3
 - Item/action buttons now support cooldowns longer than a day
 - Fixed a bug where the dps/healing meter would sometimes show data from random fights instead of the current one
 - Unknown class color changed to magenta
-- Fixed a bug where some unicode characters were not being displayed correctly in players' names
 - The dps/healing meter now tracks healing/hps done
 - The dps/healing meter can now be scrolled through
-- Buff/debuff/cooldown timers for each class/spec added
-- Bank frame added
 
 ------------------------------------------------------------------------------
 

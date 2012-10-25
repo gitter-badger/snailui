@@ -155,36 +155,40 @@ function HandleMeter()
                             local Flags = select(6, ...)
 
                             if (bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0) then
+                                local Class
+                                local Data
                                 local GUID = select(4, ...)
+                                local IsPet
+                                local Name
+                                local Realm
 
                                 if (bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
                                     GUID = GetPetOwner(MeterData.Pets, GUID)
+
+                                    if not GUID then
+                                        GUID = select(4, ...)
+                                        IsPet = true
+                                    end
                                 end
 
-                                local Data = GetData(MeterData.Data, GUID)
+                                Data = GetData(MeterData.Data, GUID)
 
                                 if not Data then
-                                    local Class
-                                    local Name
-                                    local Realm
-
-                                    if GUID then
+                                    if not IsPet then
                                         _, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
                                     else
-                                        Class = "UNKNOWN"
-                                        GUID = select(4, ...)
                                         Name = select(5, ...)
                                     end
 
                                     MeterData.Data[#MeterData.Data + 1] =
                                     {
-                                        Class = Class,
+                                        Class = Class or "UNKNOWN",
                                         Damage = 0,
                                         EndTime = 0,
                                         GUID = GUID,
                                         Healing = 0,
-                                        Name = Name,
-                                        Realm = Realm,
+                                        Name = Name or "UNKNOWN",
+                                        Realm = Realm or "",
                                         StartTime = GetTime()
                                     }
 
@@ -381,9 +385,9 @@ function HandleMeter()
                                 end
 
                                 if MeterData.Data[I].Realm:len() > 0 then
-                                    SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. "-" .. MeterData.Data[I].Realm .. " " .. MeterData.Data[I][MeterData.Mode] .. " (" .. Percent .. ")", Type)
+                                    SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. "-" .. MeterData.Data[I].Realm .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. Percent .. ")", Type)
                                 else
-                                    SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. " " .. MeterData.Data[I][MeterData.Mode] .. " (" .. Percent .. ")", Type)
+                                    SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. Percent .. ")", Type)
                                 end
                             end
                         end

@@ -28,8 +28,6 @@ Features
 - Automatically releases when you die in a battleground
 - Action/item button cooldown text that is similar to OmniCC
 - Extremely lightweight dps/healing meter that also shows players of the the opposite faction and players outside of your group (Most pets can't be merged if the players are not in your group)
-- Buff/debuff/cooldown timers for each class/spec
-- Automatically sorts the items in your bags for you
 - A lot of Blizzard frames are skinned (Bag, action bars, minimap, etc.)
 
 ------------------------------------------------------------------------------
