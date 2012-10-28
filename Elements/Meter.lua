@@ -1,6 +1,13 @@
 -- Meter.lua
 -- Written by Snail
 
+RAID_CLASS_COLORS["UNKNOWN"] =
+{
+    b = 1,
+    g = 0,
+    r = 1
+}
+
 if not MeterData then
     MeterData =
     {
@@ -199,6 +206,8 @@ function HandleMeter()
 
                                 if bit.band(Flags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
                                     Data.Hostile = true
+                                else
+                                    Data.Hostile = nil
                                 end
 
                                 local Amount

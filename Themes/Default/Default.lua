@@ -399,5 +399,51 @@ Configuration.Themes.Default =
             X = 0,
             Y = 3
         }
+    },
+
+    Timers =
+    {
+        ["WARLOCK"] =
+        {
+            ["DESTRUCTION"] =
+            {
+                [1] =
+                {
+                    Anchor = "BOTTOM",
+                    Height = 24,
+                    Spell = "Conflagrate",
+                    Type = "Cooldown",
+                    Width = 464,
+                    X = 26,
+                    Y = 251,
+
+                    Color =
+                    {
+                        B = 0,
+                        G = 85 / 255,
+                        R = 204 / 255
+                    }
+                },
+
+                [2] =
+                {
+                    Anchor = "BOTTOM",
+                    Height = 24,
+                    Spell = "Immolate",
+                    Type = "Debuff",
+                    Unit = "Target",
+                    Width = 464,
+                    X = 26,
+                    Y = 279,
+
+                    Color =
+                    {
+                        B = 0,
+                        G = 0,
+                        R = 139 / 255
+                    }
+                }
+            }
+        }
     }
 }

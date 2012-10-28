@@ -36,6 +36,13 @@ function HandleCastingBar(Self)
                 Self.Castbar.Time:SetJustifyH("RIGHT")
                 Self.Castbar.Time:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 Self.Castbar.Time:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.Anchor, GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.X, GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.Y)
+            
+                local function HandleText(Self, Text)
+                    Self.Time:SetFormattedText("%.1f", Text)
+                end
+
+                Self.Castbar.CustomDelayText = HandleText
+                Self.Castbar.CustomTimeText = HandleText
             end
 
             if GetConfiguration()[Self.Frame].CastingBar.Spell.Name then

@@ -1,17 +1,10 @@
 -- Snail.lua
 -- Written by Snail
 
-local Version = "0.4.3"
+local Version = "0.4.4"
 
 oUF:RegisterStyle("SnailUI", 
     function(Self, Unit)
-        RAID_CLASS_COLORS["UNKNOWN"] =
-        {
-            b = 1,
-            g = 0,
-            r = 1
-        }
-
         Unit = Unit:gsub("(.)", string.upper, 1)
         
         if GetConfiguration()[Unit] then
@@ -62,6 +55,7 @@ oUF:Factory(
         HandleRaid(Self)
         HandleTarget(Self)
         HandleTargetTarget(Self)
+        HandleTimers()
 
         Self:SetActiveStyle("SnailUI")
     end

@@ -177,6 +177,61 @@ function HandleBag()
                 _G["ContainerFrame" .. I .. "Item" .. J].Border:SetPoint("TOPLEFT", _G["ContainerFrame" .. I .. "Item" .. J], -3, 3)
                 _G["ContainerFrame" .. I .. "Item" .. J].Border:SetSize(GetConfiguration().Bag.Width + 4, GetConfiguration().Bag.Height + 4)
                 _G["ContainerFrame" .. I .. "Item" .. J].Border:SetTexture(0, 0, 0)
+
+                _G["ContainerFrame" .. I .. "Item" .. J].Text = _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:CreateFontString(nil, "OVERLAY")
+                _G["ContainerFrame" .. I .. "Item" .. J].Text:Hide()
+                _G["ContainerFrame" .. I .. "Item" .. J].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+                _G["ContainerFrame" .. I .. "Item" .. J].Text:SetPoint("CENTER", 1, 0)
+                _G["ContainerFrame" .. I .. "Item" .. J].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
+                _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:SetScript("OnHide",
+                    function(Self)
+                        Self:SetScript("OnUpdate", nil)
+                    end
+                )
+
+                _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:SetScript("OnShow",
+                    function(Self)
+                        Self:SetScript("OnUpdate",
+                            function(Self, ElapsedTime)
+                                Self = Self:GetParent()
+
+                                if not Self.Time then
+                                    Self.Time = 0
+                                end
+
+                                if (Self.Time + ElapsedTime) >= 0.1 then
+                                    if Self.Text then
+                                        local Start, Duration = GetContainerItemCooldown(Self:GetParent():GetID(), Self:GetID())
+
+                                        if Duration > 2 then
+                                            if (GetTime() - Start) < Duration then
+                                                Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
+                                                Self.Text:Show()
+                                            end
+                                        else
+                                            Self.Text:Hide()
+                                            Self:SetScript("OnUpdate", nil)
+                                        end
+                                    else
+                                        Self:SetScript("OnUpdate", nil)
+                                    end
+
+                                    Self.Time = 0
+                                else
+                                    Self.Time = Self.Time + ElapsedTime
+                                end
+                            end
+                        )
+                    end
+                )
+
+                _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:ClearAllPoints()
+                _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+                _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
+
+                _G["ContainerFrame" .. I .. "Item" .. J .. "IconTexture"]:SetTexCoord(GetConfiguration().Bag.TextureCoordinate.Left, GetConfiguration().Bag.TextureCoordinate.Right, GetConfiguration().Bag.TextureCoordinate.Top, GetConfiguration().Bag.TextureCoordinate.Bottom)
+                _G["ContainerFrame" .. I .. "Item" .. J .. "IconQuestTexture"]:SetAlpha(0)
             end
         end
 
@@ -230,60 +285,6 @@ function HandleBag()
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetPoint("LEFT", _G["ContainerFrame" .. I .. "Item" .. J], -2, 0)
                         _G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetSize(1, GetConfiguration().Bag.Height)
                     end
-
-                    if not _G["ContainerFrame" .. I .. "Item" .. J].Text then
-                        _G["ContainerFrame" .. I .. "Item" .. J].Text = _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:CreateFontString(nil, "OVERLAY")
-                        _G["ContainerFrame" .. I .. "Item" .. J].Text:Hide()
-                        _G["ContainerFrame" .. I .. "Item" .. J].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
-                        _G["ContainerFrame" .. I .. "Item" .. J].Text:SetPoint("CENTER", 1, 0)
-                        _G["ContainerFrame" .. I .. "Item" .. J].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-                    end
-
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:SetScript("OnHide",
-                        function(Self)
-                            Self:SetScript("OnUpdate", nil)
-                        end
-                    )
-
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:SetScript("OnShow",
-                        function(Self)
-                            Self:SetScript("OnUpdate",
-                                function(Self, ElapsedTime)
-                                    Self = Self:GetParent()
-
-                                    if not Self.Time then
-                                        Self.Time = 0
-                                    end
-
-                                    if (Self.Time + ElapsedTime) >= 0.1 then
-                                        if Self.Text then
-                                            local Start, Duration, Enable, Charges, MaxCharges = GetContainerItemCooldown(Self:GetParent():GetID(), Self:GetID())
-
-                                            if Duration > 0 then
-                                                if (GetTime() - Start) < Duration then
-                                                    Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
-                                                    Self.Text:Show()
-                                                end
-                                            else
-                                                Self.Text:Hide()
-                                            end
-                                        end
-
-                                        Self.Time = 0
-                                    else
-                                        Self.Time = Self.Time + ElapsedTime
-                                    end
-                                end
-                            )
-                        end
-                    )
-
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:ClearAllPoints()
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetPoint("BOTTOMRIGHT", 1, 0)
-
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "IconTexture"]:SetTexCoord(GetConfiguration().Bag.TextureCoordinate.Left, GetConfiguration().Bag.TextureCoordinate.Right, GetConfiguration().Bag.TextureCoordinate.Top, GetConfiguration().Bag.TextureCoordinate.Bottom)
-                    _G["ContainerFrame" .. I .. "Item" .. J .. "IconQuestTexture"]:SetAlpha(0)
                     
                     if CurrentColumn == GetConfiguration().Bag.Columns then
                         CurrentColumn = 1

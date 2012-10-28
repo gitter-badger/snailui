@@ -29,6 +29,7 @@ Features
 - Action/item button cooldown text that is similar to OmniCC
 - Extremely lightweight dps/healing meter that also shows players of the the opposite faction and players outside of your group (Most pets can't be merged if the players are not in your group)
 - A lot of Blizzard frames are skinned (Bag, action bars, minimap, etc.)
+- Buff/debuff/cooldown timers for each class/spec
 
 ------------------------------------------------------------------------------
 

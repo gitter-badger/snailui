@@ -133,6 +133,36 @@ function HandleActionBars()
                 end
             end
 
+            local function UpdateCooldownText(Self, ElapsedTime)
+                Self = Self:GetParent()
+
+                if not Self.Time then
+                    Self.Time = 0
+                end
+
+                if (Self.Time + ElapsedTime) >= 0.1 then
+                    if Self.Text then
+                        local Start, Duration = GetActionCooldown(Self.action)
+
+                        if Duration > 2 then
+                            if (GetTime() - Start) < Duration then
+                                Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
+                                Self.Text:Show()
+                            end
+                        else
+                            Self.Text:Hide()
+                            Self:SetScript("OnUpdate", nil)
+                        end
+                    else
+                        Self:SetScript("OnUpdate", nil)
+                    end
+
+                    Self.Time = 0
+                else
+                    Self.Time = Self.Time + ElapsedTime
+                end
+            end
+
             for I = 1, #Bars do
                 _G[Bars[I].ActionBar]:ClearAllPoints()
                 _G[Bars[I].ActionBar]:SetSize((Bars[I].Buttons * Bars[I].Width) + ((Bars[I].Buttons - 1) * 4), Bars[I].Height)
@@ -142,6 +172,25 @@ function HandleActionBars()
                 else
                     _G[Bars[I].ActionBar]:SetPoint(Bars[I].Anchor, Bars[I].X, Bars[I].Y)
                 end
+
+                _G[Bars[I].ActionBar].Index = I
+                _G[Bars[I].ActionBar]:SetScript("OnUpdate",
+                    function(Self, ElapsedTime)
+                        if not Self.Time then
+                            Self.Time = 0
+                        end
+
+                        if (Self.Time + ElapsedTime) >= 0.1 then
+                            for I = 1, Bars[Self.Index].Buttons do
+                                ActionButton_UpdateUsable(_G[Buttons[Self.Index] .. I])
+                            end
+
+                            Self.Time = 0
+                        else
+                            Self.Time = Self.Time + ElapsedTime
+                        end
+                    end
+                )
 
                 _G[Bars[I].ActionBar].SetPoint = Blank
 
@@ -263,37 +312,13 @@ function HandleActionBars()
 
                     _G[Buttons[I] .. J .. "Cooldown"]:HookScript("OnShow",
                         function(Self)
-                            Self:SetScript("OnUpdate",
-                                function(Self, ElapsedTime)
-                                    Self = Self:GetParent()
-
-                                    if not Self.Time then
-                                        Self.Time = 0
-                                    end
-
-                                    if (Self.Time + ElapsedTime) >= 0.1 then
-                                        if Self.Text then
-                                            local Start, Duration, Enable, Charges, MaxCharges = GetActionCooldown(Self.action)
-
-                                            if Duration > 0 then
-                                                if (GetTime() - Start) < Duration then
-                                                    Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
-                                                    Self.Text:Show()
-                                                end
-                                            else
-                                                Self.Text:Hide()
-                                            end
-                                        end
-
-                                        ActionButton_UpdateUsable(Self)
-                                        Self.Time = 0
-                                    else
-                                        Self.Time = Self.Time + ElapsedTime
-                                    end
-                                end
-                            )
+                            Self:SetScript("OnUpdate", UpdateCooldownText)
                         end
                     )
+
+                    if _G[Buttons[I] .. J .. "Cooldown"]:IsShown() then
+                        _G[Buttons[I] .. J .. "Cooldown"]:SetScript("OnUpdate", UpdateCooldownText)
+                    end
                     
                     _G[Buttons[I] .. J .. "Count"]:SetAlpha(0)
                     _G[Buttons[I] .. J .. "FlyoutBorder"]:SetAlpha(0)
