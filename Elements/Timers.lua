@@ -61,9 +61,9 @@ function HandleTimers()
                                     Self:Show()
                                 end
                             elseif Self.Timer.Type == "Cooldown" then
-                                local Start, Duration, Enabled = GetSpellCooldown(Self.Timer.Spell)
+                                local Start, Duration = GetSpellCooldown(Self.Timer.Spell)
 
-                                if Duration > 0 then
+                                if Duration and (Duration > 2) then
                                     Self:Show()
                                 end
                             elseif Self.Timer.Type == "Debuff" then
@@ -118,7 +118,12 @@ function HandleTimers()
                                     end
 
                                     Self.Icon:SetTexture(SpellIcon)
-                                    Self.Text:SetText(SpellName)
+
+                                    if SpellCount and (SpellCount > 1) then
+                                        Self.Text:SetText(SpellName .. ": " .. SpellCount)
+                                    else
+                                        Self.Text:SetText(SpellName)
+                                    end
                                 else
                                     Self:Hide()
                                 end
@@ -186,13 +191,13 @@ function HandleTimers()
                 TimerBars[I].Text:SetJustifyH("LEFT")
                 TimerBars[I].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 TimerBars[I].Text:SetPoint("LEFT", 6, 0)
-                TimerBars[I].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+                TimerBars[I].Text:SetTextColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
 
                 TimerBars[I].Time = TimerBars[I]:CreateFontString(nil, "OVERLAY")
                 TimerBars[I].Time:SetJustifyH("RIGHT")
                 TimerBars[I].Time:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
                 TimerBars[I].Time:SetPoint("RIGHT", -4, 0)
-                TimerBars[I].Time:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+                TimerBars[I].Time:SetTextColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
 
                 TimerBars[I].Timer = Timers[I]
             end

@@ -10,6 +10,9 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.4.4
+- Fixed a bug where borders around pet action buttons weren't being displayed correctly
+- Fixed a bug where weapon enchant buffs weren't being aligned correctly
+- Fixed a bug where the soul shard bar wasn't working for warlocks
 - Fixed a bug where the action buttons sometimes wouldn't update correctly
 - Fixed a bug where item cooldown text wasn't appearing sometimes
 - Cooldown text will no longer show for the GCD to reduce CPU usage

@@ -204,7 +204,7 @@ function HandleBag()
                                     if Self.Text then
                                         local Start, Duration = GetContainerItemCooldown(Self:GetParent():GetID(), Self:GetID())
 
-                                        if Duration > 2 then
+                                        if Duration and (Duration > 2) then
                                             if (GetTime() - Start) < Duration then
                                                 Self.Text:SetText(GetDuration(Duration - (GetTime() - Start)))
                                                 Self.Text:Show()

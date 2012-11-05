@@ -31,7 +31,7 @@ function HandleBuffs()
                 GreaterBuff = BuffFrame.numEnchants
             end
 
-            if (DEBUFF_ACTUAL_DISPLAY > 0) and (BUFF_ACTUAL_DISPLAY > 0) then
+            if ((DEBUFF_ACTUAL_DISPLAY > 0) or (BuffFrame.numEnchants > 0)) and (BUFF_ACTUAL_DISPLAY > 0) then
                 BuffFrame:SetSize((GetConfiguration().Buffs.Width * 2) + 4, GreaterBuff * GetConfiguration().Buffs.Height)
             else
                 BuffFrame:SetSize(GetConfiguration().Buffs.Width, GreaterBuff * GetConfiguration().Buffs.Height)
@@ -165,8 +165,13 @@ function HandleBuffs()
             for I = 1, BuffFrame.numEnchants do
                 _G["TempEnchant" .. I]:ClearAllPoints()
                 _G["TempEnchant" .. I]:SetParent(BuffFrame)
-                _G["TempEnchant" .. I]:SetPoint("TOPLEFT", -33, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
                 _G["TempEnchant" .. I]:SetSize(GetConfiguration().Buffs.Width - 6, GetConfiguration().Buffs.Height - 6)
+
+                if DEBUFF_ACTUAL_DISPLAY > 0 then
+                    _G["TempEnchant" .. I]:SetPoint("TOPLEFT", -33, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+                else
+                    _G["TempEnchant" .. I]:SetPoint("TOPLEFT", 3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+                end
 
                 if not  _G["TempEnchant" .. I].BackgroundBottom then
                     _G["TempEnchant" .. I].BackgroundBottom = _G["TempEnchant" .. I]:CreateTexture(nil, "LOW")

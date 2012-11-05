@@ -10,6 +10,7 @@ Configuration.lua
 Functions.lua
 
 Themes\Default\Default.lua
+Themes\Default\DefaultTimers.lua
 Themes\Default\DefaultHealer.lua
 Themes\Default\DefaultWithPet.lua
 Themes\Default\DefaultWithClassBar.lua

@@ -127,12 +127,44 @@ Configuration.Themes.Default =
         Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBarWithPet
 
         local Class = select(2, UnitClass("Player"))
+        local Specialization = GetSpecialization()
 
-        if Class == "WARLOCK" then
+        if Specialization then
+            Specialization = select(2, GetSpecializationInfo(Specialization))
+            Specialization = Specialization:gsub("(.)", string.upper)
+        end
+
+        local Timers = {}
+
+        if GetConfiguration().Timers[Class] then
+            if GetConfiguration().Timers[Class][Specialization] then
+                for I = 1, #GetConfiguration().Timers[Class][Specialization] do
+                    Timers[#Timers + 1] = GetConfiguration().Timers[Class][Specialization][I]
+                end
+            end
+
+            for I = 1, #GetConfiguration().Timers[Class] do
+                Timers[#Timers + 1] = GetConfiguration().Timers[Class][I]
+            end
+        end
+
+        local Go
+
+        if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
+            Go = true
+        elseif Class == "WARLOCK" then
             local _, _, _, _, Selected = GetTalentInfo(15)
 
             if Selected == true then
                 Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
+            else
+                Go = true
+            end
+        end
+
+        if Go and (#Timers > 0) then
+            for I = 1, #Timers do
+                Timers[I].Y = Timers[I].Y + 28
             end
         end
     end,
@@ -398,52 +430,6 @@ Configuration.Themes.Default =
             Width = 252,
             X = 0,
             Y = 3
-        }
-    },
-
-    Timers =
-    {
-        ["WARLOCK"] =
-        {
-            ["DESTRUCTION"] =
-            {
-                [1] =
-                {
-                    Anchor = "BOTTOM",
-                    Height = 24,
-                    Spell = "Conflagrate",
-                    Type = "Cooldown",
-                    Width = 464,
-                    X = 26,
-                    Y = 251,
-
-                    Color =
-                    {
-                        B = 0,
-                        G = 85 / 255,
-                        R = 204 / 255
-                    }
-                },
-
-                [2] =
-                {
-                    Anchor = "BOTTOM",
-                    Height = 24,
-                    Spell = "Immolate",
-                    Type = "Debuff",
-                    Unit = "Target",
-                    Width = 464,
-                    X = 26,
-                    Y = 279,
-
-                    Color =
-                    {
-                        B = 0,
-                        G = 0,
-                        R = 139 / 255
-                    }
-                }
-            }
         }
     }
 }

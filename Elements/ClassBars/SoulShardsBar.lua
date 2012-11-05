@@ -10,7 +10,7 @@ function HandleSoulShardsBar(Self)
         Specialization = Specialization:gsub("(.)", string.upper)
     end
 
-    if GetConfiguration()[Self.Frame].SoulShardsBar and (Unit == "Player") and (Self.Frame == "WARLOCK") and (Specialization == "AFFLICTION") then
+    if GetConfiguration()[Self.Frame].SoulShardsBar and (Self.Frame == "Player") and (Class == "WARLOCK") and (Specialization == "AFFLICTION") then
         Self.WarlockSpecBars = CreateFrame("Frame", nil, Self)
         Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].SoulShardsBar.Anchor, GetConfiguration()[Self.Frame].SoulShardsBar.X, GetConfiguration()[Self.Frame].SoulShardsBar.Y)
         Self.WarlockSpecBars:SetSize(GetConfiguration()[Self.Frame].SoulShardsBar.Width - 2, GetConfiguration()[Self.Frame].SoulShardsBar.Height - 2)
