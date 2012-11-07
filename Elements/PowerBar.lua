@@ -9,6 +9,8 @@ function HandlePowerBar(Self)
         Self.Power:SetPoint(GetConfiguration()[Self.Frame].PowerBar.Anchor, GetConfiguration()[Self.Frame].PowerBar.X, GetConfiguration()[Self.Frame].PowerBar.Y)
         Self.Power:SetStatusBarTexture(Configuration.Texture)
 
+        local Class = select(2, UnitClass(Self.unit))
+
         if GetConfiguration()[Self.Frame].PowerBar.Border then
             Self.Power:SetSize(GetConfiguration()[Self.Frame].PowerBar.Width - 6, GetConfiguration()[Self.Frame].PowerBar.Height - 6)
 

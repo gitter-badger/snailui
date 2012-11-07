@@ -169,7 +169,7 @@ function HandleBlizzardFrames()
         end
     end
 
-    if GetConfiguration().ExperienceBar and (UnitLevel("Player") ~= MAX_PLAYER_LEVEL) then
+    if GetConfiguration().ExperienceBar then
         Frames[#Frames + 1] = "ExhaustionTick"
         Frames[#Frames + 1] = "MainMenuBarMaxLevelBar"
         Frames[#Frames + 1] = "MainMenuBarOverlayFrame"
@@ -179,6 +179,10 @@ function HandleBlizzardFrames()
         end
 
         Textures[#Textures + 1] = "ExhaustionLevelFillBar"
+        Textures[#Textures + 1] = "MainMenuMaxLevelBar0"
+        Textures[#Textures + 1] = "MainMenuMaxLevelBar1"
+        Textures[#Textures + 1] = "MainMenuMaxLevelBar2"
+        Textures[#Textures + 1] = "MainMenuMaxLevelBar3"
         Textures[#Textures + 1] = "MainMenuXPBarTextureLeftCap"
         Textures[#Textures + 1] = "MainMenuXPBarTextureMid"
         Textures[#Textures + 1] = "MainMenuXPBarTextureRightCap"
@@ -186,8 +190,10 @@ function HandleBlizzardFrames()
         for I = 1, 19 do
             Textures[#Textures + 1] = "MainMenuXPBarDiv" .. I
         end
-    elseif GetConfiguration().ActionBars.Player then
+
+        if UnitLevel("Player") == MAX_PLAYER_LEVEL then
             Frames[#Frames + 1] = "MainMenuExpBar"
+        end
     end
 
     for I = 1, #Frames do

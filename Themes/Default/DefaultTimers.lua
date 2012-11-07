@@ -44,6 +44,86 @@ Configuration.Themes.Default.Timers =
         }
     },
 
+    ["PRIEST"] =
+    {
+        ["SHADOW"] =
+        {
+            [1] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Mind Blast",
+                Type = "Cooldown",
+                Width = 464,
+                X = 26,
+                Y = 251,
+
+                Color =
+                {
+                    B = 171 / 255,
+                    G = 0,
+                    R = 115 / 255
+                }
+            },
+
+            [2] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Vampiric Touch",
+                Type = "Debuff",
+                Unit = "Target",
+                Width = 464,
+                X = 26,
+                Y = 279,
+
+                Color =
+                {
+                    B = 189 / 255,
+                    G = 96 / 255,
+                    R = 21 / 255
+                }
+            },
+
+            [3] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shadow Word: Pain",
+                Type = "Debuff",
+                Unit = "Target",
+                Width = 464,
+                X = 26,
+                Y = 307,
+
+                Color =
+                {
+                    B = 0,
+                    G = 0,
+                    R = 139 / 255
+                }
+            },
+
+            [4] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shadow Word: Death",
+                Type = "Cooldown",
+                Width = 464,
+                X = 26,
+                Y = 335,
+
+                Color =
+                {
+                    B = 192 / 255,
+                    G = 192 / 255,
+                    R = 192 / 255
+                }
+            }
+        }
+    },
+
     ["WARLOCK"] =
     {
         ["AFFLICTION"] =

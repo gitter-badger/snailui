@@ -125,6 +125,7 @@ Configuration.Themes.Default =
         Configuration.Themes.Default["SHAMAN"] = Configuration.Themes.Default
         Configuration.Themes.Default["SHAMAN"]["RESTORATION"] = DefaultHealer
         Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBarWithPet
+        Configuration.Themes.Default["WARRIOR"] = DefaultWithClassBar
 
         local Class = select(2, UnitClass("Player"))
         local Specialization = GetSpecialization()
@@ -160,6 +161,11 @@ Configuration.Themes.Default =
             else
                 Go = true
             end
+        elseif (Class == "WARRIOR") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) then
+            DefaultWithClassBar.Player.PowerBar.Border = true
+            DefaultWithClassBar.Player.PowerBar.Height = 24
+            DefaultWithClassBar.Player.PowerBar.Width = 516
+            DefaultWithClassBar.Player.PowerBar.Y = 25
         end
 
         if Go and (#Timers > 0) then

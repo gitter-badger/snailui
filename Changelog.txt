@@ -10,6 +10,9 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.4.4
+- Fixed a bug where parts of the blizzard experience bar would sometimes show
+- Fixed a bug where the power bar's border was producing an error
+- A warrior and guardian druid's rage bar is now considered a class bar and will be displayed as such
 - Fixed a bug where borders around pet action buttons weren't being displayed correctly
 - Fixed a bug where weapon enchant buffs weren't being aligned correctly
 - Fixed a bug where the soul shard bar wasn't working for warlocks
@@ -17,7 +20,7 @@ Version 0.4.4
 - Fixed a bug where item cooldown text wasn't appearing sometimes
 - Cooldown text will no longer show for the GCD to reduce CPU usage
 - Fixed a bug where the meter would sometimes produce an error when there was a unit who's class was unknown
-- Buff/debuff/cooldown timers added for each class/spec
+- Buff/debuff/cooldown timers added
 - Fixed an issue with players being counted as hostile in certain situations
 
 ------------------------------------------------------------------------------
