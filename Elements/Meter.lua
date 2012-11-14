@@ -11,6 +11,8 @@ RAID_CLASS_COLORS["UNKNOWN"] =
 if not MeterData then
     MeterData =
     {
+        Absorbs = {},
+        CombatTime = 0,
         Data = {},
         InCombat = nil,
         Pets = {},
@@ -86,6 +88,7 @@ function HandleMeter()
         end
 
         if (LoginTime - LogoutTime) >= 180 then
+            MeterData.Absorbs = {}
             MeterData.Pets = {}
         end
 
@@ -109,6 +112,7 @@ function HandleMeter()
         Meter:SetScript("OnEvent",
             function(Self, Event, ...)
                 if Event == "PLAYER_REGEN_DISABLED" then
+                    MeterData.CombatTime = 0
                     MeterData.Data = {}
                     MeterData.InCombat = true
                     MeterData.Position = 1
@@ -148,6 +152,7 @@ function HandleMeter()
                         end
                     )
                 elseif Event == "PLAYER_REGEN_ENABLED" then
+                    MeterData.CombatTime = GetTime()
                     MeterData.InCombat = nil
                     Meter:SetScript("OnUpdate", nil)
 
@@ -158,13 +163,23 @@ function HandleMeter()
                     local CombatEvent = select(2, ...)
 
                     if (select(3, ...) == false) then
-                        if MeterData.InCombat and (string.find(CombatEvent, "_DAMAGE") or string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_EXTRA_ATTACKS") or string.find(CombatEvent, "_HEAL") or string.find(CombatEvent, "_LEECH")) then
-                            local Flags = select(6, ...)
+                        if string.find(CombatEvent, "_MISSED") then
+                            local Amount
+                            local Flags = select(10, ...)
+                            local Type
 
-                            if (bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0) then
+                            if string.find(CombatEvent, "SWING") then
+                                Amount = select(14, ...)
+                                Type = select(12, ...)
+                            else
+                                Amount = select(17, ...)
+                                Type = select(15, ...)
+                            end
+
+                            if Amount and (Amount > 0) and MeterData.InCombat and (Type == "ABSORB") and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
                                 local Class
                                 local Data
-                                local GUID = select(4, ...)
+                                local GUID = select(8, ...)
                                 local IsPet
                                 local Name
                                 local Realm
@@ -173,7 +188,122 @@ function HandleMeter()
                                     GUID = GetPetOwner(MeterData.Pets, GUID)
 
                                     if not GUID then
-                                        GUID = select(4, ...)
+                                        GUID = select(8, ...)
+                                        IsPet = true
+                                    end
+                                end
+
+                                Data = GetData(MeterData.Data, GUID)
+
+                                if not IsPet then
+                                    _, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
+                                end
+
+                                if not Name then
+                                    Name = select(9, ...)
+                                end
+
+                                if not Data then
+                                    MeterData.Data[#MeterData.Data + 1] =
+                                    {
+                                        Class = Class or "UNKNOWN",
+                                        Damage = 0,
+                                        EndTime = 0,
+                                        GUID = GUID,
+                                        Healing = 0,
+                                        Name = Name or "UNKNOWN",
+                                        Realm = Realm or "",
+                                        StartTime = GetTime()
+                                    }
+
+                                    Data = MeterData.Data[#MeterData.Data]
+                                end
+
+                                if not MeterData.Absorbs then
+                                    MeterData.Absorbs = {}
+                                end
+
+                                if MeterData.Absorbs[GUID] then
+                                    for _, Info in pairs(MeterData.Absorbs[GUID]) do
+                                        local SpellName = select(1, GetSpellInfo(Info.Spell))
+
+                                        for I = 1, 40 do
+                                            local BuffName, _, _, _, _, _, _, BuffCasterUnit, _, _, _, _, _, BuffAmount = UnitBuff(Name, I)
+
+                                            if BuffName then
+                                                local BuffCasterGUID = UnitGUID(BuffCasterUnit)
+
+                                                if BuffAmount and BuffCasterGUID and (BuffCasterGUID == Info.SourceGUID) and (BuffName == SpellName) and (Info.Amount ~= BuffAmount) then
+                                                    local SourceData = GetData(MeterData.Data, Info.SourceGUID)
+
+                                                    if not SourceData then
+                                                        local _, SourceClass, _, _, _, SourceName, SourceRealm = GetPlayerInfoByGUID(Info.SourceGUID)
+
+                                                        MeterData.Data[#MeterData.Data + 1] =
+                                                        {
+                                                            Class = SourceClass or "UNKNOWN",
+                                                            Damage = 0,
+                                                            EndTime = 0,
+                                                            GUID = Info.SourceGUID,
+                                                            Healing = 0,
+                                                            Name = SourceName or "UNKNOWN",
+                                                            Realm = SourceRealm or "",
+                                                            StartTime = GetTime()
+                                                        }
+
+                                                        SourceData = MeterData.Data[#MeterData.Data]
+                                                    end
+
+                                                    SourceData.Healing = SourceData.Healing + math.floor(Info.Amount - BuffAmount)
+                                                    MeterData.TotalHealing = MeterData.TotalHealing + math.floor(Info.Amount - BuffAmount)
+                                                    Info.Amount = BuffAmount
+
+                                                    if MeterData.InCombat then
+                                                        SourceData.EndTime = GetTime()
+                                                    else
+                                                        if SourceData.EndTime == 0 then
+                                                            SourceData.EndTime = MeterData.CombatTime
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        elseif (CombatEvent == "DAMAGE_SHIELD") or (CombatEvent == "DAMAGE_SPLIT") or string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") or string.find(CombatEvent, "_DAMAGE") or string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_EXTRA_ATTACKS") or string.find(CombatEvent, "_HEAL") or string.find(CombatEvent, "_LEECH") then
+                            local Data
+                            local Flags
+
+                            if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
+                                Flags = select(10, ...)
+                            else
+                                Flags = select(6, ...)
+                            end
+
+                            if (MeterData.InCombat or ((string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED")))) and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
+                                local Class
+                                local GUID
+                                local IsPet
+                                local Name
+                                local Realm
+
+                                if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
+                                    GUID = select(8, ...)
+                                else
+                                    GUID = select(4, ...)
+                                end
+
+                                if (bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
+                                    GUID = GetPetOwner(MeterData.Pets, GUID)
+
+                                    if not GUID then
+                                        if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
+                                            GUID = select(8, ...)
+                                        else
+                                            GUID = select(4, ...)
+                                        end
+
                                         IsPet = true
                                     end
                                 end
@@ -183,8 +313,14 @@ function HandleMeter()
                                 if not Data then
                                     if not IsPet then
                                         _, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
-                                    else
-                                        Name = select(5, ...)
+                                    end
+
+                                    if not Name then
+                                        if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
+                                            Name = select(9, ...)
+                                        else
+                                            Name = select(5, ...)
+                                        end
                                     end
 
                                     MeterData.Data[#MeterData.Data + 1] =
@@ -202,35 +338,132 @@ function HandleMeter()
                                     Data = MeterData.Data[#MeterData.Data]
                                 end
 
-                                Data.EndTime = GetTime()
-
-                                if bit.band(Flags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
-                                    Data.Hostile = true
-                                else
-                                    Data.Hostile = nil
-                                end
-
                                 local Amount
 
-                                if string.find(CombatEvent, "_HEAL") then
-                                    Amount = ((select(15, ...) or 0) + (select(17, ...) or 0)) - (select(16, ...) or 0)
-                                    Data.Healing = Data.Healing + Amount
-                                    MeterData.TotalHealing = MeterData.TotalHealing + Amount
-                                else
-                                    if string.find(CombatEvent, "SWING") then
-                                        Amount = (select(12, ...) or 0)
-                                    else
-                                        Amount = (select(15, ...) or 0)
+                                if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
+                                    Amount = select(16, ...)
 
-                                        if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
-                                            if select(16, ...) ~= -2 then
-                                                Amount = 0
+                                    if Amount and (select(15, ...) == "BUFF") then
+                                        if not MeterData.Absorbs then
+                                            MeterData.Absorbs = {}
+                                        end
+
+                                        local Spell = select(12, ...)
+
+                                        if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") then
+                                            local SourceGUID = select(4, ...)
+                                            local Absorb = GetAbsorb(MeterData.Absorbs, GUID, Spell, SourceGUID)
+
+                                            if Absorb then
+                                                Absorb.Amount = Amount
+                                            else
+                                                MeterData.Absorbs[GUID][#MeterData.Absorbs[GUID] + 1] =
+                                                {
+                                                    Amount = Amount,
+                                                    SourceGUID = SourceGUID,
+                                                    Spell = Spell
+                                                }
+                                            end
+                                        elseif string.find(CombatEvent, "_AURA_REMOVED") then
+                                            local SourceGUID = select(4, ...)
+                                            local Absorb, AbsorbIndex = GetAbsorb(MeterData.Absorbs, GUID, Spell, SourceGUID)
+
+                                            if Absorb then
+                                                if Absorb.Amount > Amount then
+                                                    local SourceClass
+                                                    local SourceGUID
+                                                    local SourceIsPet
+                                                    local SourceName
+                                                    local SourceRealm
+
+                                                    if (bit.band(select(6, ...), COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(select(6, ...), COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
+                                                        SourceGUID = GetPetOwner(MeterData.Pets, Absorb.SourceGUID)
+
+                                                        if not SourceGUID then
+                                                            SourceGUID = select(4, ...)
+                                                            SourceIsPet = true
+                                                        end
+                                                    end
+
+                                                    local SourceData = GetData(MeterData.Data, Absorb.SourceGUID)
+
+                                                    if not SourceData then
+                                                        if not SourceIsPet then
+                                                            _, SourceClass, _, _, _, SourceName, SourceRealm = GetPlayerInfoByGUID(SourceGUID)
+                                                        end
+
+                                                        if not SourceName then
+                                                            SourceName = select(5, ...)
+                                                        end
+
+                                                        MeterData.Data[#MeterData.Data + 1] =
+                                                        {
+                                                            Class = SourceClass or "UNKNOWN",
+                                                            Damage = 0,
+                                                            EndTime = 0,
+                                                            GUID = SourceGUID,
+                                                            Healing = 0,
+                                                            Name = SourceName or "UNKNOWN",
+                                                            Realm = SourceRealm or "",
+                                                            StartTime = GetTime()
+                                                        }
+
+                                                        SourceData = MeterData.Data[#MeterData.Data]
+                                                    end
+
+                                                    if MeterData.InCombat then
+                                                        Data.EndTime = GetTime()
+                                                    else
+                                                        if Data.EndTime == 0 then
+                                                            Data.EndTime = MeterData.CombatTime
+                                                        end
+                                                    end
+
+                                                    Data.Healing = Data.Healing + math.floor(Absorb.Amount - Amount)
+                                                    MeterData.TotalHealing = MeterData.TotalHealing + math.floor(Absorb.Amount - Amount)
+
+                                                    if not MeterData.InCombat then
+                                                        RefreshMeter(Meter)
+                                                    end
+                                                end
+
+                                                MeterData.Absorbs[GUID][AbsorbIndex] = nil
+
+                                                if #MeterData.Absorbs[GUID] == 0 then
+                                                    MeterData.Absorbs[GUID] = nil
+                                                end
                                             end
                                         end
                                     end
+                                elseif MeterData.InCombat then
+                                    Data.EndTime = GetTime()
 
-                                    Data.Damage = Data.Damage + Amount
-                                    MeterData.TotalDamage = MeterData.TotalDamage + Amount
+                                    if bit.band(Flags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
+                                        Data.Hostile = true
+                                    else
+                                        Data.Hostile = nil
+                                    end
+
+                                    if string.find(CombatEvent, "_HEAL") then
+                                        Amount = ((select(15, ...) or 0) + (select(17, ...) or 0)) - (select(16, ...) or 0)
+                                        Data.Healing = Data.Healing + Amount
+                                        MeterData.TotalHealing = MeterData.TotalHealing + Amount
+                                    else
+                                        if string.find(CombatEvent, "SWING") then
+                                            Amount = (select(12, ...) or 0)
+                                        else
+                                            Amount = (select(15, ...) or 0)
+
+                                            if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
+                                                if select(16, ...) ~= -2 then
+                                                    Amount = 0
+                                                end
+                                            end
+                                        end                                        
+
+                                        Data.Damage = Data.Damage + Amount
+                                        MeterData.TotalDamage = MeterData.TotalDamage + Amount
+                                    end
                                 end
                             end
                         elseif string.find(CombatEvent, "_SUMMON") then

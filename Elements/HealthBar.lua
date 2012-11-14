@@ -42,14 +42,21 @@ function HandleHealthBar(Self)
             otherBar = CreateFrame("StatusBar", nil, Self)
         }
 
-        Self.HealPrediction.myBar:SetPoint("TOPLEFT", Self.Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
-        Self.HealPrediction.myBar:SetPoint("BOTTOMLEFT", Self.Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
         Self.HealPrediction.myBar:SetSize(GetConfiguration()[Self.Frame].HealthBar.Width - 2, GetConfiguration()[Self.Frame].HealthBar.Height - 2)
         Self.HealPrediction.myBar:SetStatusBarTexture(Configuration.Texture)
 
-        Self.HealPrediction.otherBar:SetPoint("TOPLEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
-        Self.HealPrediction.otherBar:SetPoint("BOTTOMLEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
         Self.HealPrediction.otherBar:SetSize(GetConfiguration()[Self.Frame].HealthBar.Width - 2, GetConfiguration()[Self.Frame].HealthBar.Height - 2)
         Self.HealPrediction.otherBar:SetStatusBarTexture(Configuration.Texture)
+
+        if GetConfiguration()[Self.Frame].HealthBar.Orientation and (GetConfiguration()[Self.Frame].HealthBar.Orientation == "VERTICAL") then
+            Self.HealPrediction.myBar:SetOrientation(GetConfiguration()[Self.Frame].HealthBar.Orientation)
+            Self.HealPrediction.myBar:SetPoint("BOTTOM", Self.Health:GetStatusBarTexture(), "TOP", 0, 0)
+
+            Self.HealPrediction.myBar:SetOrientation(GetConfiguration()[Self.Frame].HealthBar.Orientation)
+            Self.HealPrediction.otherBar:SetPoint("BOTTOM", Self.HealPrediction.myBar:GetStatusBarTexture(), "TOP", 0, 0)
+        else
+            Self.HealPrediction.myBar:SetPoint("LEFT", Self.Health:GetStatusBarTexture(), "RIGHT", 0, 0)
+            Self.HealPrediction.otherBar:SetPoint("LEFT", Self.HealPrediction.myBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+        end
     end
 end

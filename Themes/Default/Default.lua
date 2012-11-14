@@ -153,6 +153,8 @@ Configuration.Themes.Default =
 
         if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
             Go = true
+        elseif Class == "PRIEST" and (Specialization == "DISCIPLINE") then
+            Configuration.Themes.Default[Class].Raid.Y = Configuration.Themes.Default[Class].Raid.Y + ((Configuration.Themes.Default.Timers[Class][Specialization][1].Height * #Configuration.Themes.Default.Timers[Class][Specialization]) + (4 * #Configuration.Themes.Default.Timers[Class][Specialization]))
         elseif Class == "WARLOCK" then
             local _, _, _, _, Selected = GetTalentInfo(15)
 

@@ -46,6 +46,27 @@ Configuration.Themes.Default.Timers =
 
     ["PRIEST"] =
     {
+        ["DISCIPLINE"] =
+        {
+            [1] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Penance",
+                Type = "Cooldown",
+                Width = 464,
+                X = 26,
+                Y = 223,
+
+                Color =
+                {
+                    B = 131 / 255,
+                    G = 1,
+                    R = 1
+                }
+            }
+        },
+
         ["SHADOW"] =
         {
             [1] =
@@ -119,6 +140,87 @@ Configuration.Themes.Default.Timers =
                     B = 192 / 255,
                     G = 192 / 255,
                     R = 192 / 255
+                }
+            }
+        }
+    },
+
+    ["ROGUE"] =
+    {
+        [1] =
+        {
+            Anchor = "BOTTOM",
+            Height = 24,
+            Spell = "Rupture",
+            Type = "Debuff",
+            Unit = "Target",
+            Width = 464,
+            X = 26,
+            Y = 223,
+
+            Color =
+            {
+                B = 41 / 255,
+                G = 32 / 255,
+                R = 206 / 255
+            }
+        },
+
+        [2] =
+        {
+            Anchor = "BOTTOM",
+            Height = 24,
+            Spell = "Slice and Dice",
+            Type = "Buff",
+            Width = 464,
+            X = 26,
+            Y = 251,
+
+            Color =
+            {
+                B = 0,
+                G = 85 / 255,
+                R = 204 / 255
+            }
+        },
+
+        ["SUBTLETY"] =
+        {
+            [1] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Hemorrhage",
+                Type = "Debuff",
+                Unit = "Target",
+                Width = 464,
+                X = 26,
+                Y = 279,
+
+                Color =
+                {
+                    B = 0,
+                    G = 0,
+                    R = 139 / 255
+                }
+            },
+
+            [2] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Find Weakness",
+                Type = "Debuff",
+                Unit = "Target",
+                Width = 464,
+                X = 26,
+                Y = 307,
+
+                Color =
+                {
+                    B = 107 / 255,
+                    G = 168 / 255,
+                    R = 0
                 }
             }
         }

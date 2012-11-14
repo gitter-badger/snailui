@@ -48,7 +48,7 @@ local Update = function(self, event, unit, powerType)
 				if i <= numShards then
 					wsb[i]:SetAlpha(1)
 				else
-					wsb[i]:SetAlpha(.2)
+					wsb[i]:SetAlpha(0)
 				end
 			end
 		elseif spec == SPEC_WARLOCK_DEMONOLOGY then

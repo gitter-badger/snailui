@@ -3,6 +3,7 @@
 
 DefaultHealerWithClassBar = DeepCopy(DefaultWithClassBar)
 DefaultHealerWithClassBar.Raid.Anchor = "BOTTOM"
+DefaultHealerWithClassBar.Raid.BuffIcons = true
 DefaultHealerWithClassBar.Raid.Columns = 8
 DefaultHealerWithClassBar.Raid.Height = 24
 DefaultHealerWithClassBar.Raid.Rows = 5

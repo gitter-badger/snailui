@@ -114,4 +114,6 @@ function HandleColors(Self)
             end
         end
     end
+
+    Self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', Self.PostUpdate)
 end

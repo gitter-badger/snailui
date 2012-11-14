@@ -3,6 +3,7 @@
 
 DefaultHealer = DeepCopy(Configuration.Themes.Default)
 DefaultHealer.Raid.Anchor = "BOTTOM"
+DefaultHealer.Raid.BuffIcons = true
 DefaultHealer.Raid.Columns = 8
 DefaultHealer.Raid.Height = 24
 DefaultHealer.Raid.Rows = 5

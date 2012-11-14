@@ -9,6 +9,19 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.4.5
+- Fixed a bug where SnailUI wasn't behaving correctly with ncHoverBind
+- The meter will now count absorbs as healing done
+- The meter now supports reflected and split damage
+- Fixed a bug where threat colors were sometimes not being updated
+- Subtlety rogue timers are now fully completed
+- General rogue timers added
+- Fixed a bug where the shadow orbs bar was sometimes not showing up
+- Fixed a bug where health prediction wasn't working correctly on raid frames for dps/tank specs
+- Fixed a bug where the soul shard bar slots weren't completely black when missing a shard
+
+------------------------------------------------------------------------------
+
 Version 0.4.4
 - Fixed a bug where parts of the blizzard experience bar would sometimes show
 - Fixed a bug where the power bar's border was producing an error

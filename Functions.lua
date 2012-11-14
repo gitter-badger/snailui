@@ -2,7 +2,7 @@
 -- Written by Snail
 
 function AddPet(Pets, PlayerGUID, PetGUID)
-    if PlayerGUID and PetGUID then
+    if Pets and PlayerGUID and PetGUID then
         if not Pets[PlayerGUID] then
             Pets[PlayerGUID] = {}
         end
@@ -35,6 +35,26 @@ function DeepCopy(Object)
     end
 
     return Copy(Object)
+end
+
+function GetAbsorb(Absorbs, GUID, Spell, SourceGUID)
+    if Absorbs[GUID] then
+        for Index, Absorb in ipairs(Absorbs[GUID]) do
+            if Absorb.Spell == Spell then
+                if SourceGUID then
+                    if Absorb.SourceGUID == SourceGUID then
+                        return Absorb, Index
+                    end
+                else
+                    return Absorb, Index
+                end
+            end
+        end
+    else
+        Absorbs[GUID] = {}
+    end
+
+    return nil, nil
 end
 
 function GetConfiguration()

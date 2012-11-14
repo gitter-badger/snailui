@@ -16,7 +16,7 @@ function HandleShadowOrbsBar(Self)
         Self.ClassIcons:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar.Width, GetConfiguration()[Self.Frame].ShadowOrbsBar.Height)
         Self.ClassIcons:SetTexture(0, 0, 0)
 
-        Self.ClassIcons.Background = Self:CreateTexture(nil, "LOW")
+        Self.ClassIcons.Background = Self:CreateTexture(nil, "BACKGROUND")
         Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)
         Self.ClassIcons.Background:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar.Width - 2, GetConfiguration()[Self.Frame].ShadowOrbsBar.Height - 2)
 
