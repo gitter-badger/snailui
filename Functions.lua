@@ -39,7 +39,7 @@ end
 
 function GetAbsorb(Absorbs, GUID, Spell, SourceGUID)
     if Absorbs[GUID] then
-        for Index, Absorb in ipairs(Absorbs[GUID]) do
+        for Index, Absorb in pairs(Absorbs[GUID]) do
             if Absorb.Spell == Spell then
                 if SourceGUID then
                     if Absorb.SourceGUID == SourceGUID then

@@ -28,7 +28,7 @@ local function RefreshMeter(Self)
                 return A[MeterData.Mode] > B[MeterData.Mode]
             end
 
-            return A
+            return nil
         end
     )
 
@@ -230,21 +230,43 @@ function HandleMeter()
                                         for I = 1, 40 do
                                             local BuffName, _, _, _, _, _, _, BuffCasterUnit, _, _, _, _, _, BuffAmount = UnitBuff(Name, I)
 
-                                            if BuffName then
+                                            if BuffName and BuffCasterUnit then
                                                 local BuffCasterGUID = UnitGUID(BuffCasterUnit)
+                                                local SourceGUID = Info.SourceGUID
 
-                                                if BuffAmount and BuffCasterGUID and (BuffCasterGUID == Info.SourceGUID) and (BuffName == SpellName) and (Info.Amount ~= BuffAmount) then
-                                                    local SourceData = GetData(MeterData.Data, Info.SourceGUID)
+                                                if BuffAmount and BuffCasterGUID and (BuffCasterGUID == SourceGUID) and (BuffName == SpellName) and (Info.Amount ~= BuffAmount) then
+                                                    local IsPet
+                                                    
+                                                    if (bit.band(Info.SourceFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Info.SourceFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
+                                                        SourceGUID = GetPetOwner(MeterData.Pets, SourceGUID)
+
+                                                        if not GUID then
+                                                            SourceGUID = Info.SourceGUID
+                                                            IsPet = true
+                                                        end
+                                                    end
+
+                                                    local SourceData = GetData(MeterData.Data, SourceGUID)
 
                                                     if not SourceData then
-                                                        local _, SourceClass, _, _, _, SourceName, SourceRealm = GetPlayerInfoByGUID(Info.SourceGUID)
+                                                        local SourceClass
+                                                        local SourceName
+                                                        local SourceRealm
+
+                                                        if not IsPet then
+                                                            _, SourceClass, _, _, _, SourceName, SourceRealm = GetPlayerInfoByGUID(SourceGUID)
+                                                        end
+
+                                                        if not SourceName then
+                                                            SourceName = Info.SourceName
+                                                        end
 
                                                         MeterData.Data[#MeterData.Data + 1] =
                                                         {
                                                             Class = SourceClass or "UNKNOWN",
                                                             Damage = 0,
                                                             EndTime = 0,
-                                                            GUID = Info.SourceGUID,
+                                                            GUID = SourceGUID,
                                                             Healing = 0,
                                                             Name = SourceName or "UNKNOWN",
                                                             Realm = SourceRealm or "",
@@ -348,36 +370,39 @@ function HandleMeter()
                                             MeterData.Absorbs = {}
                                         end
 
+                                        local SourceFlags = select(6, ...)
+                                        local SourceGUID = select(4, ...)
+                                        local SourceName = select(5, ...)
                                         local Spell = select(12, ...)
 
                                         if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") then
-                                            local SourceGUID = select(4, ...)
                                             local Absorb = GetAbsorb(MeterData.Absorbs, GUID, Spell, SourceGUID)
 
                                             if Absorb then
                                                 Absorb.Amount = Amount
+                                                Absorb.SourceFlags = SourceFlags
+                                                Absorb.SourceName = SourceName
                                             else
                                                 MeterData.Absorbs[GUID][#MeterData.Absorbs[GUID] + 1] =
                                                 {
                                                     Amount = Amount,
+                                                    SourceFlags = SourceFlags,
                                                     SourceGUID = SourceGUID,
+                                                    SourceName = SourceName,
                                                     Spell = Spell
                                                 }
                                             end
                                         elseif string.find(CombatEvent, "_AURA_REMOVED") then
-                                            local SourceGUID = select(4, ...)
                                             local Absorb, AbsorbIndex = GetAbsorb(MeterData.Absorbs, GUID, Spell, SourceGUID)
 
                                             if Absorb then
                                                 if Absorb.Amount > Amount then
                                                     local SourceClass
-                                                    local SourceGUID
                                                     local SourceIsPet
-                                                    local SourceName
                                                     local SourceRealm
 
-                                                    if (bit.band(select(6, ...), COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(select(6, ...), COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
-                                                        SourceGUID = GetPetOwner(MeterData.Pets, Absorb.SourceGUID)
+                                                    if (bit.band(SourceFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(SourceFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
+                                                        SourceGUID = GetPetOwner(MeterData.Pets, SourceGUID)
 
                                                         if not SourceGUID then
                                                             SourceGUID = select(4, ...)
@@ -385,7 +410,7 @@ function HandleMeter()
                                                         end
                                                     end
 
-                                                    local SourceData = GetData(MeterData.Data, Absorb.SourceGUID)
+                                                    local SourceData = GetData(MeterData.Data, SourceGUID)
 
                                                     if not SourceData then
                                                         if not SourceIsPet then
@@ -428,6 +453,16 @@ function HandleMeter()
                                                 end
 
                                                 MeterData.Absorbs[GUID][AbsorbIndex] = nil
+
+                                                table.sort(MeterData.Absorbs[GUID],
+                                                    function(A, B)
+                                                        if A and B then
+                                                            return A.Amount > B.Amount
+                                                        end
+
+                                                        return nil
+                                                    end
+                                                )
 
                                                 if #MeterData.Absorbs[GUID] == 0 then
                                                     MeterData.Absorbs[GUID] = nil
