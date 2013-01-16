@@ -228,7 +228,7 @@ function HandleMeter()
                                         local SpellName = select(1, GetSpellInfo(Info.Spell))
 
                                         for I = 1, 40 do
-                                            local BuffName, _, _, _, _, _, _, BuffCasterUnit, _, _, _, _, _, BuffAmount = UnitBuff(Name, I)
+                                            local BuffName, _, _, _, _, _, _, BuffCasterUnit, _, _, _, _, _, _, BuffAmount = UnitBuff(Name, I)
 
                                             if BuffName and BuffCasterUnit then
                                                 local BuffCasterGUID = UnitGUID(BuffCasterUnit)

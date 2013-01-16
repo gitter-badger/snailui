@@ -10,6 +10,8 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.4.5
+- Updated for 5.1
+- Fixed a bug where action button hotkey text was being randomly displayed
 - Fixed a bug where SnailUI wasn't behaving correctly with ncHoverBind
 - The meter will now count absorbs as healing done
 - The meter now supports reflected and split damage
