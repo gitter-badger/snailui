@@ -10,6 +10,8 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.4.6
+- Warlock timers are now fully complete
+- Rogue timers are now fully complete
 - Meter reporting now works for the new instance chat
 - A bug where health prediction for non-healer raid frames has been fixed
 - The default frames for a warlock without a spec has been fixed

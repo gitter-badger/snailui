@@ -184,6 +184,175 @@ Configuration.Themes.Default.Timers =
             }
         },
 
+        ["ASSASSINATION"] =
+        {
+            [1] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Envenom",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 279,
+
+                Color =
+                {
+                    B = 0,
+                    G = 153 / 255,
+                    R = 0
+                }
+            },
+
+            [2] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Vendetta",
+                Type = "Debuff",
+                Unit = "Target",
+                Width = 464,
+                X = 26,
+                Y = 307,
+
+                Color =
+                {
+                    B = 0,
+                    G = 0,
+                    R = 139 / 255
+                }
+            },
+
+            [3] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shadow Blades",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 335,
+
+                Color =
+                {
+                    B = 1,
+                    G = 0,
+                    R = 143 / 255
+                }
+            }
+        },
+
+        ["COMBAT"] =
+        {
+            [1] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shallow Insight",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 279,
+
+                Color =
+                {
+                    B = 0,
+                    G = 153 / 255,
+                    R = 0
+                }
+            },
+
+            [2] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Moderate Insight",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 279,
+
+                Color =
+                {
+                    B = 93 / 255,
+                    G = 236 / 255,
+                    R = 251 / 255
+                }
+            },
+
+            [3] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Deep Insight",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 279,
+
+                Color =
+                {
+                    B = 0,
+                    G = 0,
+                    R = 139 / 255
+                }
+            },
+
+            [4] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Adrenaline Rush",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 307,
+
+                Color =
+                {
+                    B = 130 / 255,
+                    G = 220 / 255,
+                    R = 240 / 255
+                }
+            },
+
+            [5] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Blade Flurry",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 335,
+
+                Color =
+                {
+                    B = 34 / 255,
+                    G = 88 / 255,
+                    R = 226 / 255
+                }
+            },
+
+            [6] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shadow Blades",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 363,
+
+                Color =
+                {
+                    B = 1,
+                    G = 0,
+                    R = 143 / 255
+                }
+            }
+        },
+
         ["SUBTLETY"] =
         {
             [1] =
@@ -221,6 +390,42 @@ Configuration.Themes.Default.Timers =
                     B = 107 / 255,
                     G = 168 / 255,
                     R = 0
+                }
+            },
+
+            [3] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shadow Dance",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 335,
+
+                Color =
+                {
+                    B = 52 / 255,
+                    G = 52 / 255,
+                    R = 52 / 255
+                }
+            },
+
+            [4] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Shadow Blades",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 363,
+
+                Color =
+                {
+                    B = 1,
+                    G = 0,
+                    R = 143 / 255
                 }
             }
         }
@@ -304,6 +509,24 @@ Configuration.Themes.Default.Timers =
                     G = 186 / 255,
                     R = 169 / 255
                 }
+            },
+
+            [5] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Dark Soul: Misery",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 363,
+
+                Color =
+                {
+                    B = 1,
+                    G = 0,
+                    R = 143 / 255
+                }
             }
         },
 
@@ -363,6 +586,24 @@ Configuration.Themes.Default.Timers =
                     G = 192 / 255,
                     R = 192 / 255
                 }
+            },
+
+            [4] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Dark Soul: Knowledge",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 335,
+
+                Color =
+                {
+                    B = 1,
+                    G = 0,
+                    R = 143 / 255
+                }
             }
         },
 
@@ -402,6 +643,24 @@ Configuration.Themes.Default.Timers =
                     B = 0,
                     G = 0,
                     R = 139 / 255
+                }
+            },
+
+            [3] =
+            {
+                Anchor = "BOTTOM",
+                Height = 24,
+                Spell = "Dark Soul: Instability",
+                Type = "Buff",
+                Width = 464,
+                X = 26,
+                Y = 307,
+
+                Color =
+                {
+                    B = 27 / 255,
+                    G = 111 / 255,
+                    R = 244 / 255
                 }
             }
         }
