@@ -124,7 +124,10 @@ Configuration.Themes.Default =
         Configuration.Themes.Default["ROGUE"] = DefaultWithClassBar
         Configuration.Themes.Default["SHAMAN"] = Configuration.Themes.Default
         Configuration.Themes.Default["SHAMAN"]["RESTORATION"] = DefaultHealer
-        Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBarWithPet
+        Configuration.Themes.Default["WARLOCK"] = DefaultWithPet
+        Configuration.Themes.Default["WARLOCK"]["AFFLICTION"] = DefaultWithClassBarWithPet
+        Configuration.Themes.Default["WARLOCK"]["DEMONOLOGY"] = DefaultWithClassBarWithPet
+        Configuration.Themes.Default["WARLOCK"]["DESTRUCTION"] = DefaultWithClassBarWithPet
         Configuration.Themes.Default["WARRIOR"] = DefaultWithClassBar
 
         local Class = select(2, UnitClass("Player"))

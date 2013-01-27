@@ -634,7 +634,9 @@ function HandleMeter()
                             local Type
 
                             if GetNumGroupMembers() > 0 then
-                                if IsInRaid() then
+                                if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+                                    Type = "INSTANCE_CHAT"
+                                elseif IsInRaid() then
                                     if UnitInBattleground("Player") then
                                         Type = "BATTLEGROUND"
                                     else
