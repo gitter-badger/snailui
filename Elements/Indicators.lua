@@ -1,9 +1,9 @@
--- Timers.lua
+-- Indicators.lua
 -- Written by Snail
 
-function HandleTimers()
-	if GetConfiguration().Timers then
-		local Class = select(2, UnitClass("Player"))
+function HandleIndicators(Self)
+	if (Self.Frame == "Raid") and GetConfiguration().Indicators then
+		local Class = select(2, UnitClass(Self.unit))
 		local Specialization = GetSpecialization()
 
 		if Specialization then
