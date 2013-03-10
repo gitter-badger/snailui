@@ -10,17 +10,10 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.5.1
-- Fixed a bug where the bag frame wasn't updating correctly when adding/removing bags
 - Bank frame added
 - A bug has been fixed where action button borders were not behaving correctly
-- Destruction Warlock timers' colors are now greenish when you have completed the Codex of Xerrath quest chain
-- Few colors changed for Priest timers
-- Few colors changed for Rogue timers
-- Few new timers added for Rogues
-- Fixed a bug where health prediction wasn't working correctly on raid frames for dps/tank specs
 - People with aggro will now be shown at full opacity, regardless of health thresholds for raid frames
 - Dispellable debuff indicators added for raid frames
-- Healing indicators added for each healing spec for raid frames
 - Havoc timer added for Destruction Warlocks
 - Updated for 5.2
 

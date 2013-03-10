@@ -27,12 +27,13 @@ Elements\CastingBar.lua
 Elements\Chat.lua
 Elements\Colors.lua
 Elements\ConsoleVariables.lua
+Elements\DebuffIndicators.lua
 Elements\ExperienceBar.lua
 Elements\ExtraButton.lua
 Elements\Focus.lua
 Elements\FocusTarget.lua
+Elements\HealingIndicators.lua
 Elements\HealthBar.lua
-Elements\Indicators.lua
 Elements\InterfaceOptions.lua
 Elements\Meter.lua
 Elements\Minimap.lua

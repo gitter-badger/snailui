@@ -62,6 +62,7 @@ function HandleActionBars()
 
 		if #Bars > 0 then
 			local Class = select(2, UnitClass("Player"))
+			local Texture
 
 			ActionButton_UpdateUsable = function(Self)
 				if Self.action then
@@ -111,7 +112,13 @@ function HandleActionBars()
 				end
 
 				if Self.BackgroundBottom and not Self.Hovering then
-					if (_G[Self:GetName() .. "Icon"]:GetAlpha() > 0) and _G[Self:GetName() .. "Icon"]:GetTexture() then
+					if Self.action then
+						Texture = GetActionTexture(Self.action)
+					else
+						Texture = select(3, GetPetActionInfo(Self:GetID()))
+					end
+
+					if Texture then
 						Self.BackgroundBottom:Show()
 						Self.BackgroundLeft:Show()
 						Self.BackgroundRight:Show()

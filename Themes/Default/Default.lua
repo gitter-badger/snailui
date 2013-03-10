@@ -104,6 +104,17 @@ Configuration.Themes.Default =
 		Y = 9
 	},
 
+	DebuffIndicators =
+	{
+		TextureCoordinate =
+		{
+			Bottom = 0.9,
+			Left = 0.1,
+			Right = 0.9,
+			Top = 0.1
+		}
+	},
+
 	ExperienceBar =
 	{
 		Anchor = "TOP",

@@ -109,6 +109,16 @@ function GetData(Data, GUID)
 	return nil
 end
 
+function GetDispel(Dispels, Type)
+	for _, Dispel in ipairs(Dispels) do
+		if Dispel == Type then
+			return Dispel
+		end
+	end
+
+	return nil
+end
+
 function GetDuration(Time)
 	if (((Time / 60) / 60) / 24) >= 1 then
 		return math.ceil(((Time / 60) / 60) / 24) .. "D"

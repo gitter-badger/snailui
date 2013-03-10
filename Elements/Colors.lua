@@ -18,8 +18,10 @@ function HandleColors(Self)
 
 		Self.Background:SetTexture(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
 
-		if UnitThreatSituation(Self.unit) and ((Self.Frame == "Raid") or EnableThreatColorsOnAllFrames) then
-			if UnitThreatSituation(Self.unit) > 0 then
+		if (Self.Frame == "Raid") or EnableThreatColorsOnAllFrames then
+			Self.ThreatLevel = UnitThreatSituation(Self.unit)
+
+			if Self.ThreatLevel and (Self.ThreatLevel > 0) then
 				Self.ThreatColor =
 				{
 					b = 0,
@@ -34,18 +36,7 @@ function HandleColors(Self)
 				Self.ShowFull = nil
 			end
 
-			local DebuffType
-
-			for I = 0, 40 do
-				DebuffType = select(5, UnitDebuff(Self.unit, I, true))
-
-				if DebuffType then
-					I = 40
-
-					Self.Background:SetTexture(DebuffTypeColor[DebuffType].r, DebuffTypeColor[DebuffType].g, DebuffTypeColor[DebuffType].b)
-					Self.ShowFull = true
-				end
-			end
+			Self.SpellRange.Update(Self, Self.InRange)
 		end
 
 		if Self.Castbar then
@@ -131,7 +122,9 @@ function HandleColors(Self)
 		end
 	end
 
+	Self:RegisterEvent('PLAYER_ENTER_COMBAT', Self.PostUpdate)
 	Self:RegisterEvent('PLAYER_ENTERING_WORLD', Self.PostUpdate)
+	Self:RegisterEvent('PLAYER_LEAVE_COMBAT', Self.PostUpdate)
 	Self:RegisterEvent('UNIT_AURA', Self.PostUpdate)
 	Self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', Self.PostUpdate)
 end

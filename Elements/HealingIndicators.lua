@@ -1,8 +1,8 @@
--- Indicators.lua
+-- HealingIndicators.lua
 -- Written by Snail
 
-function HandleIndicators(Self)
-	if (Self.Frame == "Raid") and GetConfiguration().Indicators then
+function HandleHealingIndicators(Self)
+	if (Self.Frame == "Raid") and GetConfiguration().HealingIndicators then
 		local Class = select(2, UnitClass(Self.unit))
 		local Specialization = GetSpecialization()
 

@@ -15,7 +15,7 @@ function HandleSpellRange(Self)
 					Self.InRange = InRange
 
 					if GetConfiguration()[Self.Frame].HealthThreshold then
-						if (not Self.ShowFull) and (math.floor(((UnitHealth(Self.unit) / UnitHealthMax(Self.unit)) * 100) + 0.5) >= GetConfiguration()[Self.Frame].HealthThreshold) then
+						if (not Self.ShowFull) and (not Self.ShowingDebuffIndicators) and (math.floor(((UnitHealth(Self.unit) / UnitHealthMax(Self.unit)) * 100) + 0.5) >= GetConfiguration()[Self.Frame].HealthThreshold) then
 							Self:SetAlpha(Configuration.InactiveAlpha)
 						end
 					end
@@ -32,7 +32,7 @@ function HandleSpellRange(Self)
 			function(Self)
 				Self:SetAlpha(Configuration.InactiveAlpha)
 
-				if Self.ShowFull or (math.floor(((UnitHealth(Self.unit) / UnitHealthMax(Self.unit)) * 100) + 0.5) < GetConfiguration()[Self.Frame].HealthThreshold) then
+				if Self.ShowFull or Self.ShowingDebuffIndicators or (math.floor(((UnitHealth(Self.unit) / UnitHealthMax(Self.unit)) * 100) + 0.5) < GetConfiguration()[Self.Frame].HealthThreshold) then
 					if Self.InRange then
 						Self:SetAlpha(1)
 					end

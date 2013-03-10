@@ -5,72 +5,6 @@ function HandleBank()
 	if GetConfiguration().Bank then
 		local Class = select(2, UnitClass("Player"))
 
-		BankFrame:HookScript("OnHide",
-			function(Self)
-				for I = 1, NUM_BANKBAGSLOTS do
-					_G["BankFrameBag" .. I].BackgroundBottom:Hide()
-					_G["BankFrameBag" .. I].BackgroundLeft:Hide()
-					_G["BankFrameBag" .. I].BackgroundRight:Hide()
-					_G["BankFrameBag" .. I].BackgroundTop:Hide()
-					_G["BankFrameBag" .. I].Border:Hide()
-				end
-
-				for I = NUM_BANKGENERIC_SLOTS, 1, -1 do
-					_G["BankFrameItem" .. I].BackgroundBottom:Hide()
-					_G["BankFrameItem" .. I].BackgroundLeft:Hide()
-					_G["BankFrameItem" .. I].BackgroundRight:Hide()
-					_G["BankFrameItem" .. I].BackgroundTop:Hide()
-					_G["BankFrameItem" .. I].Border:Hide()
-				end
-			end
-		)
-
-		BankFrame:HookScript("OnShow",
-			function(Self)
-				for I = 1, NUM_BANKBAGSLOTS do
-					_G["BankFrameBag" .. I].BackgroundBottom:Show()
-					_G["BankFrameBag" .. I].BackgroundLeft:Show()
-					_G["BankFrameBag" .. I].BackgroundRight:Show()
-					_G["BankFrameBag" .. I].BackgroundTop:Show()
-					_G["BankFrameBag" .. I].Border:Show()
-				end
-
-				for I = NUM_BANKGENERIC_SLOTS, 1, -1 do
-					_G["BankFrameItem" .. I].BackgroundBottom:Show()
-					_G["BankFrameItem" .. I].BackgroundLeft:Show()
-					_G["BankFrameItem" .. I].BackgroundRight:Show()
-					_G["BankFrameItem" .. I].BackgroundTop:Show()
-					_G["BankFrameItem" .. I].Border:Show()
-				end
-			end
-		)
-
-		for I = (NUM_BAG_SLOTS + NUM_BANKBAGSLOTS) + 1, NUM_BAG_SLOTS + 2, -1 do
-			_G["ContainerFrame" .. I]:HookScript("OnShow",
-				function(Self)
-					for J = 1, MAX_CONTAINER_ITEMS do
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:Show()
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:Show()
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight:Show()
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop:Show()
-						_G["ContainerFrame" .. I .. "Item" .. J].Border:Show()
-					end
-				end
-			)
-
-			_G["ContainerFrame" .. I]:HookScript("OnHide",
-				function(Self)
-					for J = 1, MAX_CONTAINER_ITEMS do
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:Hide()
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:Hide()
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight:Hide()
-						_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop:Hide()
-						_G["ContainerFrame" .. I .. "Item" .. J].Border:Hide()
-					end
-				end
-			)
-		end
-
 		BankFrame.Bag = CreateFrame("Frame", nil, BankFrame)
 		BankFrame.Bag:SetPoint(GetConfiguration().Bank.Anchor, UIParent, GetConfiguration().Bank.X, GetConfiguration().Bank.Y)
 
@@ -86,68 +20,56 @@ function HandleBank()
 				_G["BankFrameBag" .. I]:SetPoint("BOTTOMLEFT", 2 + ((I - 1) * (GetConfiguration().Bank.Width + 1)), 2)
 			end
 
-			if not _G["BankFrameBag" .. I].BackgroundBottom then
-				_G["BankFrameBag" .. I].BackgroundBottom = UIParent:CreateTexture(nil, "LOW")
-				_G["BankFrameBag" .. I].BackgroundBottom:Hide()
-				_G["BankFrameBag" .. I].BackgroundBottom:SetPoint("BOTTOM", _G["BankFrameBag" .. I], 0, -2)
-				_G["BankFrameBag" .. I].BackgroundBottom:SetSize(GetConfiguration().Bank.Width + 2 , 1)
-				_G["BankFrameBag" .. I].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+			_G["BankFrameBag" .. I].BackgroundBottom = _G["BankFrameBag" .. I]:CreateTexture(nil, "LOW")
+			_G["BankFrameBag" .. I].BackgroundBottom:SetPoint("BOTTOM", _G["BankFrameBag" .. I], 0, -2)
+			_G["BankFrameBag" .. I].BackgroundBottom:SetSize(GetConfiguration().Bank.Width + 2 , 1)
+			_G["BankFrameBag" .. I].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["BankFrameBag" .. I].BackgroundLeft = UIParent:CreateTexture(nil, "LOW")
-				_G["BankFrameBag" .. I].BackgroundLeft:Hide()
-				_G["BankFrameBag" .. I].BackgroundLeft:SetPoint("LEFT", _G["BankFrameBag" .. I], -2, 0)
-				_G["BankFrameBag" .. I].BackgroundLeft:SetSize(1, GetConfiguration().Bank.Height)
-				_G["BankFrameBag" .. I].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+			_G["BankFrameBag" .. I].BackgroundLeft = _G["BankFrameBag" .. I]:CreateTexture(nil, "LOW")
+			_G["BankFrameBag" .. I].BackgroundLeft:SetPoint("LEFT", _G["BankFrameBag" .. I], -2, 0)
+			_G["BankFrameBag" .. I].BackgroundLeft:SetSize(1, GetConfiguration().Bank.Height)
+			_G["BankFrameBag" .. I].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["BankFrameBag" .. I].BackgroundRight = UIParent:CreateTexture(nil, "LOW")
-				_G["BankFrameBag" .. I].BackgroundRight:Hide()
-				_G["BankFrameBag" .. I].BackgroundRight:SetPoint("RIGHT", _G["BankFrameBag" .. I], 2, 0)
-				_G["BankFrameBag" .. I].BackgroundRight:SetSize(1, GetConfiguration().Bank.Height)
-				_G["BankFrameBag" .. I].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+			_G["BankFrameBag" .. I].BackgroundRight = _G["BankFrameBag" .. I]:CreateTexture(nil, "LOW")
+			_G["BankFrameBag" .. I].BackgroundRight:SetPoint("RIGHT", _G["BankFrameBag" .. I], 2, 0)
+			_G["BankFrameBag" .. I].BackgroundRight:SetSize(1, GetConfiguration().Bank.Height)
+			_G["BankFrameBag" .. I].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["BankFrameBag" .. I].BackgroundTop = UIParent:CreateTexture(nil, "LOW")
-				_G["BankFrameBag" .. I].BackgroundTop:Hide()
-				_G["BankFrameBag" .. I].BackgroundTop:SetPoint("TOP", _G["BankFrameBag" .. I], 0, 2)
-				_G["BankFrameBag" .. I].BackgroundTop:SetSize(GetConfiguration().Bank.Width + 2, 1)
-				_G["BankFrameBag" .. I].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+			_G["BankFrameBag" .. I].BackgroundTop = _G["BankFrameBag" .. I]:CreateTexture(nil, "LOW")
+			_G["BankFrameBag" .. I].BackgroundTop:SetPoint("TOP", _G["BankFrameBag" .. I], 0, 2)
+			_G["BankFrameBag" .. I].BackgroundTop:SetSize(GetConfiguration().Bank.Width + 2, 1)
+			_G["BankFrameBag" .. I].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["BankFrameBag" .. I].Border = UIParent:CreateTexture(nil, "BACKGROUND")
-				_G["BankFrameBag" .. I].Border:Hide()
-				_G["BankFrameBag" .. I].Border:SetPoint("TOPLEFT", _G["BankFrameBag" .. I], -3, 3)
-				_G["BankFrameBag" .. I].Border:SetSize(GetConfiguration().Bank.Width + 4, GetConfiguration().Bank.Height + 4)
-				_G["BankFrameBag" .. I].Border:SetTexture(0, 0, 0)
-			end
+			_G["BankFrameBag" .. I].Border = _G["BankFrameBag" .. I]:CreateTexture(nil, "BACKGROUND")
+			_G["BankFrameBag" .. I].Border:SetPoint("TOPLEFT", _G["BankFrameBag" .. I], -3, 3)
+			_G["BankFrameBag" .. I].Border:SetSize(GetConfiguration().Bank.Width + 4, GetConfiguration().Bank.Height + 4)
+			_G["BankFrameBag" .. I].Border:SetTexture(0, 0, 0)
 
 			_G["BankFrameBag" .. I .. "IconTexture"]:SetTexCoord(GetConfiguration().Bank.TextureCoordinate.Left, GetConfiguration().Bank.TextureCoordinate.Right, GetConfiguration().Bank.TextureCoordinate.Top, GetConfiguration().Bank.TextureCoordinate.Bottom)
 		end
 
 		for I = NUM_BANKGENERIC_SLOTS, 1, -1 do
-			_G["BankFrameItem" .. I].BackgroundBottom = UIParent:CreateTexture(nil, "LOW")
-			_G["BankFrameItem" .. I].BackgroundBottom:Hide()
+			_G["BankFrameItem" .. I].BackgroundBottom = _G["BankFrameItem" .. I]:CreateTexture(nil, "LOW")
 			_G["BankFrameItem" .. I].BackgroundBottom:SetPoint("BOTTOM", _G["BankFrameItem" .. I], 0, -2)
 			_G["BankFrameItem" .. I].BackgroundBottom:SetSize(GetConfiguration().Bank.Width + 2 , 1)
 			_G["BankFrameItem" .. I].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-			_G["BankFrameItem" .. I].BackgroundLeft = UIParent:CreateTexture(nil, "LOW")
-			_G["BankFrameItem" .. I].BackgroundLeft:Hide()
+			_G["BankFrameItem" .. I].BackgroundLeft = _G["BankFrameItem" .. I]:CreateTexture(nil, "LOW")
 			_G["BankFrameItem" .. I].BackgroundLeft:SetPoint("LEFT", _G["BankFrameItem" .. I], -2, 0)
 			_G["BankFrameItem" .. I].BackgroundLeft:SetSize(1, GetConfiguration().Bank.Height)
 			_G["BankFrameItem" .. I].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-			_G["BankFrameItem" .. I].BackgroundRight = UIParent:CreateTexture(nil, "LOW")
-			_G["BankFrameItem" .. I].BackgroundRight:Hide()
+			_G["BankFrameItem" .. I].BackgroundRight = _G["BankFrameItem" .. I]:CreateTexture(nil, "LOW")
 			_G["BankFrameItem" .. I].BackgroundRight:SetPoint("RIGHT", _G["BankFrameItem" .. I], 2, 0)
 			_G["BankFrameItem" .. I].BackgroundRight:SetSize(1, GetConfiguration().Bank.Height)
 			_G["BankFrameItem" .. I].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-			_G["BankFrameItem" .. I].BackgroundTop = UIParent:CreateTexture(nil, "LOW")
-			_G["BankFrameItem" .. I].BackgroundTop:Hide()
+			_G["BankFrameItem" .. I].BackgroundTop = _G["BankFrameItem" .. I]:CreateTexture(nil, "LOW")
 			_G["BankFrameItem" .. I].BackgroundTop:SetPoint("TOP", _G["BankFrameItem" .. I], 0, 2)
 			_G["BankFrameItem" .. I].BackgroundTop:SetSize(GetConfiguration().Bank.Width + 2, 1)
 			_G["BankFrameItem" .. I].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-			_G["BankFrameItem" .. I].Border = UIParent:CreateTexture(nil, "BACKGROUND")
-			_G["BankFrameItem" .. I].Border:Hide()
+			_G["BankFrameItem" .. I].Border = _G["BankFrameItem" .. I]:CreateTexture(nil, "BACKGROUND")
 			_G["BankFrameItem" .. I].Border:SetPoint("TOPLEFT", _G["BankFrameItem" .. I], -3, 3)
 			_G["BankFrameItem" .. I].Border:SetSize(GetConfiguration().Bank.Width + 4, GetConfiguration().Bank.Height + 4)
 			_G["BankFrameItem" .. I].Border:SetTexture(0, 0, 0)
@@ -210,32 +132,27 @@ function HandleBank()
 
 		for I = (NUM_BAG_SLOTS + NUM_BANKBAGSLOTS) + 1, NUM_BAG_SLOTS + 2, -1 do
 			for J = 1, MAX_CONTAINER_ITEMS do
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom = UIParent:CreateTexture(nil, "LOW")
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:Hide()
+				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom = _G["ContainerFrame" .. I .. "Item" .. J]:CreateTexture(nil, "LOW")
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:SetPoint("BOTTOM", _G["ContainerFrame" .. I .. "Item" .. J], 0, -2)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:SetSize(GetConfiguration().Bank.Width + 2 , 1)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft = UIParent:CreateTexture(nil, "LOW")
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:Hide()
+				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft = _G["ContainerFrame" .. I .. "Item" .. J]:CreateTexture(nil, "LOW")
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetPoint("LEFT", _G["ContainerFrame" .. I .. "Item" .. J], -2, 0)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetSize(1, GetConfiguration().Bank.Height)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight = UIParent:CreateTexture(nil, "LOW")
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight:Hide()
+				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight = _G["ContainerFrame" .. I .. "Item" .. J]:CreateTexture(nil, "LOW")
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight:SetPoint("RIGHT", _G["ContainerFrame" .. I .. "Item" .. J], 2, 0)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight:SetSize(1, GetConfiguration().Bank.Height)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop = UIParent:CreateTexture(nil, "LOW")
-				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop:Hide()
+				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop = _G["ContainerFrame" .. I .. "Item" .. J]:CreateTexture(nil, "LOW")
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop:SetPoint("TOP", _G["ContainerFrame" .. I .. "Item" .. J], 0, 2)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop:SetSize(GetConfiguration().Bank.Width + 2, 1)
 				_G["ContainerFrame" .. I .. "Item" .. J].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-				_G["ContainerFrame" .. I .. "Item" .. J].Border = UIParent:CreateTexture(nil, "BACKGROUND")
-				_G["ContainerFrame" .. I .. "Item" .. J].Border:Hide()
+				_G["ContainerFrame" .. I .. "Item" .. J].Border = _G["ContainerFrame" .. I .. "Item" .. J]:CreateTexture(nil, "BACKGROUND")
 				_G["ContainerFrame" .. I .. "Item" .. J].Border:SetPoint("TOPLEFT", _G["ContainerFrame" .. I .. "Item" .. J], -3, 3)
 				_G["ContainerFrame" .. I .. "Item" .. J].Border:SetSize(GetConfiguration().Bank.Width + 4, GetConfiguration().Bank.Height + 4)
 				_G["ContainerFrame" .. I .. "Item" .. J].Border:SetTexture(0, 0, 0)
@@ -336,21 +253,21 @@ function HandleBank()
 
 			BankFrame.Bag:SetSize(1 + (GetConfiguration().Bank.Columns * (GetConfiguration().Bank.Width + 1)), 26 + (Rows * (GetConfiguration().Bank.Height + 1)))
 
-			local Bags = NUM_BAG_SLOTS + 1
+			local Bags = (NUM_BAG_SLOTS + NUM_BANKBAGSLOTS) + 1
 
 			for I = (NUM_BAG_SLOTS + NUM_BANKBAGSLOTS) + 1, NUM_BAG_SLOTS + 2, -1 do
-				if GetContainerNumSlots(I - 1) > 0 then
-					Bags = Bags + 1
+				if GetContainerNumSlots(I - 1) == 0 then
+					Bags = Bags - 1
 				end
 			end
 
 			for I = Bags, NUM_BAG_SLOTS + 2, -1 do
-				for J = 1, GetContainerNumSlots(I - 1) do
+				for J = 1, GetContainerNumSlots(_G["ContainerFrame" .. I]:GetID()) do
 					_G["ContainerFrame" .. I .. "Item" .. J]:ClearAllPoints()
 					_G["ContainerFrame" .. I .. "Item" .. J]:SetNormalTexture(nil)
 					_G["ContainerFrame" .. I .. "Item" .. J]:SetSize(GetConfiguration().Bank.Width - 2, GetConfiguration().Bank.Height - 2)
 
-					if (I == (NUM_BAG_SLOTS + NUM_BANKBAGSLOTS) + 1) and (J == 1) then
+					if (I == Bags) and (J == 1) then
 						_G["ContainerFrame" .. I .. "Item" .. J]:SetPoint("BOTTOMRIGHT", BankFrame.Bag, -2, 27)
 					else
 						_G["ContainerFrame" .. I .. "Item" .. J]:SetPoint("BOTTOMRIGHT", BankFrame.Bag, -(2 + ((CurrentColumn - 1) * (GetConfiguration().Bank.Width + 1))), 27 + ((CurrentRow - 1) * (GetConfiguration().Bank.Height + 1)))
@@ -394,7 +311,12 @@ function HandleBank()
 		end
 
 		BankFrameItemButtonBag_OnClick = function(Self, Button)
-			PutItemInBag(Self:GetInventorySlot())
+			if not PutItemInBag(Self:GetInventorySlot()) then
+				if Button and (not select(2, GetNumBankSlots())) then
+					PlaySound("igMainMenuOption")
+					StaticPopup_Show("CONFIRM_BUY_BANK_SLOT")
+				end
+			end
 		end
 
 		local OriginalBankFrameItemButtonBag_Pickup = BankFrameItemButtonBag_Pickup
@@ -424,18 +346,6 @@ function HandleBank()
 
 			if BankFrame:IsShown() then
 				HideUIPanel(BankFrame)
-			end
-		end
-
-		local OriginalBankFrameItemButton_Update = BankFrameItemButton_Update
-
-		BankFrameItemButton_Update = function(Self)
-			OriginalBankFrameItemButton_Update(Self)
-
-			if string.match(Self:GetName(), "BankFrameBag") then
-				OpenBank()
-				OpenBag(Self:GetID())
-				print(Self:GetID())
 			end
 		end
 	end
