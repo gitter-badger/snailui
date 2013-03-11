@@ -146,7 +146,7 @@ function HandleActionBars()
 				Self = Self:GetParent()
 
 				if not Self.Time then
-					Self.Time = 0
+					Self.Time = 0.1
 				end
 
 				if (Self.Time + ElapsedTime) >= 0.1 then
@@ -328,11 +328,13 @@ function HandleActionBars()
 
 					_G[Buttons[I] .. J .. "Cooldown"]:HookScript("OnShow",
 						function(Self)
+							Self.Time = 0.1
 							Self:SetScript("OnUpdate", UpdateCooldownText)
 						end
 					)
 
 					if _G[Buttons[I] .. J .. "Cooldown"]:IsShown() then
+						_G[Buttons[I] .. J .. "Cooldown"].Time = 0.1
 						_G[Buttons[I] .. J .. "Cooldown"]:SetScript("OnUpdate", UpdateCooldownText)
 					end
 					

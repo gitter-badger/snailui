@@ -1,6 +1,8 @@
 -- Meter.lua
 -- Written by Snail
 
+local Meter
+
 RAID_CLASS_COLORS["UNKNOWN"] =
 {
 	b = 1,
@@ -21,6 +23,32 @@ if not MeterData then
 	}
 end
 
+local function RefreshTooltip(Self)
+	local APS
+	local Data = MeterData.Data[(Self.I - 1) + MeterData.Position]
+
+	if (Data.EndTime - Data.StartTime) > 0 then
+		APS = ShortNumber(math.floor((Data[MeterData.Mode] / (Data.EndTime - Data.StartTime)) + 0.05))
+	else
+		APS = ShortNumber(math.floor(Data[MeterData.Mode] + 0.05))
+	end
+
+	GameTooltip_SetDefaultAnchor(GameTooltip, Self)
+	GameTooltip:AddDoubleLine(Data.Name, ShortNumber(Data[MeterData.Mode]) .. " (" .. APS .. ")")
+
+	for Index, Spell in ipairs(Data[MeterData.Mode .. "Spells"]) do
+		if (Data.EndTime - Data.StartTime) > 0 then
+			APS = ShortNumber(math.floor((Spell.Amount / (Data.EndTime - Data.StartTime)) + 0.05))
+		else
+			APS = ShortNumber(math.floor(Spell.Amount + 0.05))
+		end
+
+		GameTooltip:AddDoubleLine(Index .. ". " .. Spell.SpellName, ShortNumber(Spell.Amount) .. " (" .. APS .. ", " .. string.format("%.1f", (Spell.Amount / Data[MeterData.Mode]) * 100) .. "%)", 1, 1, 1, 1, 1, 1)
+	end
+
+	GameTooltip:Show()
+end
+
 local function RefreshMeter(Self)
 	table.sort(MeterData.Data,
 		function(A, B)
@@ -31,6 +59,22 @@ local function RefreshMeter(Self)
 			return nil
 		end
 	)
+
+	for _, Data in ipairs(MeterData.Data) do
+		table.sort(Data.DamageSpells,
+			function(A, B)
+				return A.Amount > B.Amount
+			end
+		)
+	end
+
+	for _, Data in ipairs(MeterData.Data) do
+		table.sort(Data.HealingSpells,
+			function(A, B)
+				return A.Amount > B.Amount
+			end
+		)
+	end
 
 	local MaxAmount = 0
 
@@ -77,6 +121,12 @@ local function RefreshMeter(Self)
 			Self.Bars[I]:Hide()
 		end
 	end
+
+	for I = 1, #GetConfiguration().Meter do
+		if Meter.Bars[I].Hovering then
+			RefreshTooltip(Meter.Bars[I])
+		end
+	end
 end
 
 function HandleMeter()
@@ -101,8 +151,8 @@ function HandleMeter()
 		end
 
 		local Class = select(2, UnitClass("Player"))
-		local Meter = CreateFrame("Frame", nil, UIParent)
 
+		Meter = CreateFrame("Frame", nil, UIParent)
 		Meter:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		Meter:RegisterEvent("PLAYER_LOGOUT")
 		Meter:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -208,9 +258,11 @@ function HandleMeter()
 									{
 										Class = Class or "UNKNOWN",
 										Damage = 0,
+										DamageSpells = {},
 										EndTime = 0,
 										GUID = GUID,
 										Healing = 0,
+										HealingSpells = {},
 										Name = Name or "UNKNOWN",
 										Realm = Realm or "",
 										StartTime = GetTime()
@@ -265,15 +317,29 @@ function HandleMeter()
 														{
 															Class = SourceClass or "UNKNOWN",
 															Damage = 0,
+															DamageSpells = {},
 															EndTime = 0,
 															GUID = SourceGUID,
 															Healing = 0,
+															HealingSpells = {},
 															Name = SourceName or "UNKNOWN",
 															Realm = SourceRealm or "",
 															StartTime = GetTime()
 														}
 
 														SourceData = MeterData.Data[#MeterData.Data]
+													end
+
+													local Spell = GetSpell(SourceData.HealingSpells, SpellName)
+
+													if Spell then
+														Spell.Amount = Spell.Amount + (Info.Amount - BuffAmount)
+													else
+														SourceData.HealingSpells[#SourceData.HealingSpells + 1] =
+														{
+															Amount = Info.Amount - BuffAmount,
+															SpellName = SpellName
+														}
 													end
 
 													SourceData.Healing = SourceData.Healing + math.floor(Info.Amount - BuffAmount)
@@ -349,9 +415,11 @@ function HandleMeter()
 									{
 										Class = Class or "UNKNOWN",
 										Damage = 0,
+										DamageSpells = {},
 										EndTime = 0,
 										GUID = GUID,
 										Healing = 0,
+										HealingSpells = {},
 										Name = Name or "UNKNOWN",
 										Realm = Realm or "",
 										StartTime = GetTime()
@@ -361,6 +429,8 @@ function HandleMeter()
 								end
 
 								local Amount
+								local Spell
+								local SpellName
 
 								if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
 									Amount = select(16, ...)
@@ -370,13 +440,13 @@ function HandleMeter()
 											MeterData.Absorbs = {}
 										end
 
+										local SpellID = select(12, ...)
 										local SourceFlags = select(6, ...)
 										local SourceGUID = select(4, ...)
 										local SourceName = select(5, ...)
-										local Spell = select(12, ...)
 
 										if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") then
-											local Absorb = GetAbsorb(MeterData.Absorbs, GUID, Spell, SourceGUID)
+											local Absorb = GetAbsorb(MeterData.Absorbs, GUID, SpellID, SourceGUID)
 
 											if Absorb then
 												Absorb.Amount = Amount
@@ -389,11 +459,11 @@ function HandleMeter()
 													SourceFlags = SourceFlags,
 													SourceGUID = SourceGUID,
 													SourceName = SourceName,
-													Spell = Spell
+													Spell = SpellID
 												}
 											end
 										elseif string.find(CombatEvent, "_AURA_REMOVED") then
-											local Absorb, AbsorbIndex = GetAbsorb(MeterData.Absorbs, GUID, Spell, SourceGUID)
+											local Absorb, AbsorbIndex = GetAbsorb(MeterData.Absorbs, GUID, SpellID, SourceGUID)
 
 											if Absorb then
 												if Absorb.Amount > Amount then
@@ -425,9 +495,11 @@ function HandleMeter()
 														{
 															Class = SourceClass or "UNKNOWN",
 															Damage = 0,
+															DamageSpells = {},
 															EndTime = 0,
 															GUID = SourceGUID,
 															Healing = 0,
+															HealingSpells = {},
 															Name = SourceName or "UNKNOWN",
 															Realm = SourceRealm or "",
 															StartTime = GetTime()
@@ -437,14 +509,27 @@ function HandleMeter()
 													end
 
 													if MeterData.InCombat then
-														Data.EndTime = GetTime()
+														SourceData.EndTime = GetTime()
 													else
-														if Data.EndTime == 0 then
-															Data.EndTime = MeterData.CombatTime
+														if SourceData.EndTime == 0 then
+															SourceData.EndTime = MeterData.CombatTime
 														end
 													end
 
-													Data.Healing = Data.Healing + math.floor(Absorb.Amount - Amount)
+													SpellName = select(13, ...)
+													Spell = GetSpell(SourceData.HealingSpells, SpellName)
+
+													if Spell then
+														Spell.Amount = Spell.Amount + (Absorb.Amount - Amount)
+													else
+														SourceData.HealingSpells[#SourceData.HealingSpells + 1] =
+														{
+															Amount = Absorb.Amount - Amount,
+															SpellName = SpellName
+														}
+													end
+
+													SourceData.Healing = SourceData.Healing + math.floor(Absorb.Amount - Amount)
 													MeterData.TotalHealing = MeterData.TotalHealing + math.floor(Absorb.Amount - Amount)
 
 													if not MeterData.InCombat then
@@ -481,20 +566,51 @@ function HandleMeter()
 
 									if string.find(CombatEvent, "_HEAL") then
 										Amount = ((select(15, ...) or 0) + (select(17, ...) or 0)) - (select(16, ...) or 0)
+										SpellName = (select(13, ...) or "Unknown")
+										Spell = GetSpell(Data.HealingSpells, SpellName)
+
+										if Spell then
+											Spell.Amount = Spell.Amount + Amount
+										else
+											Data.HealingSpells[#Data.HealingSpells + 1] =
+											{
+												Amount = Amount,
+												SpellName = SpellName
+											}
+										end
+
 										Data.Healing = Data.Healing + Amount
 										MeterData.TotalHealing = MeterData.TotalHealing + Amount
 									else
 										if string.find(CombatEvent, "SWING") then
 											Amount = (select(12, ...) or 0)
+											SpellName = "Melee"
 										else
 											Amount = (select(15, ...) or 0)
+											SpellName = (select(13, ...) or "Unknown")
+
+											if string.find(SpellName, " Off%-Hand") then
+												SpellName = string.sub(SpellName, 1, string.find(SpellName, " Off%-Hand") - 1)
+											end
 
 											if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
 												if select(16, ...) ~= -2 then
 													Amount = 0
 												end
 											end
-										end										
+										end
+
+										Spell = GetSpell(Data.DamageSpells, SpellName)
+
+										if Spell then
+											Spell.Amount = Spell.Amount + Amount
+										else
+											Data.DamageSpells[#Data.DamageSpells + 1] =
+											{
+												Amount = Amount,
+												SpellName = SpellName
+											}
+										end
 
 										Data.Damage = Data.Damage + Amount
 										MeterData.TotalDamage = MeterData.TotalDamage + Amount
@@ -655,18 +771,18 @@ function HandleMeter()
 							end
 
 							for I = 1, Count do
-								local Percent
+								local APS
 
 								if (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime) > 0 then
-									Percent = ShortNumber(math.floor((MeterData.Data[I][MeterData.Mode] / (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime)) + 0.05))
+									APS = ShortNumber(math.floor((MeterData.Data[I][MeterData.Mode] / (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime)) + 0.05))
 								else
-									Percent = ShortNumber(math.floor(MeterData.Data[I][MeterData.Mode] + 0.05))
+									APS = ShortNumber(math.floor(MeterData.Data[I][MeterData.Mode] + 0.05))
 								end
 
 								if MeterData.Data[I].Realm:len() > 0 then
-									SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. "-" .. MeterData.Data[I].Realm .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. Percent .. ")", Type)
+									SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. "-" .. MeterData.Data[I].Realm .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. APS .. ")", Type)
 								else
-									SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. Percent .. ")", Type)
+									SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. APS .. ")", Type)
 								end
 							end
 						end
@@ -682,6 +798,21 @@ function HandleMeter()
 				Bars[I] = CreateFrame("StatusBar", nil, Meter)
 				Bars[I]:Hide()
 				Bars[I]:SetStatusBarTexture(Configuration.Texture)
+				Bars[I]:SetScript("OnEnter",
+					function(Self)
+						Self.Hovering = true
+						RefreshTooltip(Self)
+					end
+				)
+
+				Bars[I]:SetScript("OnLeave",
+					function(Self)
+						Self.Hovering = nil
+						GameTooltip:Hide(Self)
+					end
+				)
+
+				Bars[I].I = I
 
 				Bars[I].LeftText = Bars[I]:CreateFontString(nil, "OVERLAY")
 				Bars[I].LeftText:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)

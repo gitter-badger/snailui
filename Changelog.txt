@@ -9,6 +9,12 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.5.2
+- The tooltip frame has been skinned
+- Hovering over a unit on the meter will now show give a detailed breakdown of damage/healing spells used
+
+------------------------------------------------------------------------------
+
 Version 0.5.1
 - Bank frame added
 - A bug has been fixed where action button borders were not behaving correctly

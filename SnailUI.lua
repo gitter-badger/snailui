@@ -1,7 +1,7 @@
 -- Snail.lua
 -- Written by Snail
 
-local Version = "0.5.1"
+local Version = "0.5.2"
 
 oUF:RegisterStyle("SnailUI", 
 	function(Self, Unit)
@@ -59,6 +59,7 @@ oUF:Factory(
 		HandleTarget(Self)
 		HandleTargetTarget(Self)
 		HandleTimers()
+		HandleTooltip()
 
 		Self:SetActiveStyle("SnailUI")
 	end

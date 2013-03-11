@@ -4,7 +4,7 @@
 ## Interface: 50200
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.5.1
+## Version: 0.5.2
 
 Configuration.lua
 Functions.lua
@@ -46,6 +46,7 @@ Elements\Tags.lua
 Elements\Target.lua
 Elements\TargetTarget.lua
 Elements\Timers.lua
+Elements\Tooltip.lua
 Elements\Unit.lua
 Elements\VendorAutoRepair.lua
 

@@ -145,6 +145,16 @@ function GetPetOwner(Pets, GUID)
 	return nil
 end
 
+function GetSpell(Spells, SpellName)
+	for _, Spell in ipairs(Spells) do
+		if Spell.SpellName == SpellName then
+			return Spell
+		end
+	end
+
+	return nil
+end
+
 function ShortNumber(Number)
 	if Number > 999999 then
 		return string.format("%.1fM", Number / 1000000)
@@ -152,7 +162,7 @@ function ShortNumber(Number)
 		return string.format("%.1fK", Number / 1000)
 	end
 
-	return Number
+	return math.floor(Number)
 end
 
 function Trim(String1, String2)
