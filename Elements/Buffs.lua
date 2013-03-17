@@ -32,15 +32,28 @@ function HandleBuffs()
 			end
 
 			if ((DEBUFF_ACTUAL_DISPLAY > 0) or (BuffFrame.numEnchants > 0)) and (BUFF_ACTUAL_DISPLAY > 0) then
-				BuffFrame:SetSize((GetConfiguration().Buffs.Width * 2) + 4, GreaterBuff * GetConfiguration().Buffs.Height)
+				if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
+					BuffFrame:SetSize((GetConfiguration().Buffs.Width * 2) + 4, GreaterBuff * GetConfiguration().Buffs.Height)
+				else
+					BuffFrame:SetSize(GreaterBuff * GetConfiguration().Buffs.Width, (GetConfiguration().Buffs.Height * 2) + 4)
+				end
 			else
-				BuffFrame:SetSize(GetConfiguration().Buffs.Width, GreaterBuff * GetConfiguration().Buffs.Height)
+				if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
+					BuffFrame:SetSize(GetConfiguration().Buffs.Width, GreaterBuff * GetConfiguration().Buffs.Height)
+				else
+					BuffFrame:SetSize(GreaterBuff * GetConfiguration().Buffs.Width, GetConfiguration().Buffs.Height)
+				end
 			end
 
 			for I = 1, BUFF_ACTUAL_DISPLAY do
 				_G["BuffButton" .. I]:ClearAllPoints()
-				_G["BuffButton" .. I]:SetPoint("TOPRIGHT", -3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
 				_G["BuffButton" .. I]:SetSize(GetConfiguration().Buffs.Width - 6, GetConfiguration().Buffs.Height - 6)
+
+				if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
+					_G["BuffButton" .. I]:SetPoint("TOPRIGHT", -3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+				else
+					_G["BuffButton" .. I]:SetPoint("TOPRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), -3)
+				end
 
 				if not  _G["BuffButton" .. I].BackgroundBottom then
 					_G["BuffButton" .. I].BackgroundBottom = _G["BuffButton" .. I]:CreateTexture(nil, "LOW")
@@ -101,8 +114,13 @@ function HandleBuffs()
 
 			for I = 1, DEBUFF_ACTUAL_DISPLAY do
 				_G["DebuffButton" .. I]:ClearAllPoints()
-				_G["DebuffButton" .. I]:SetPoint("TOPLEFT", 3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
 				_G["DebuffButton" .. I]:SetSize(GetConfiguration().Buffs.Width - 6, GetConfiguration().Buffs.Height - 6)
+
+				if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
+					_G["DebuffButton" .. I]:SetPoint("TOPLEFT", 3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+				else
+					_G["DebuffButton" .. I]:SetPoint("BOTTOMRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), 3)
+				end
 
 				if not  _G["DebuffButton" .. I].BackgroundBottom then
 					_G["DebuffButton" .. I].BackgroundBottom = _G["DebuffButton" .. I]:CreateTexture(nil, "LOW")
@@ -168,9 +186,17 @@ function HandleBuffs()
 				_G["TempEnchant" .. I]:SetSize(GetConfiguration().Buffs.Width - 6, GetConfiguration().Buffs.Height - 6)
 
 				if DEBUFF_ACTUAL_DISPLAY > 0 then
-					_G["TempEnchant" .. I]:SetPoint("TOPLEFT", -33, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+					if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
+						_G["TempEnchant" .. I]:SetPoint("TOPLEFT", -33, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+					else
+						_G["TempEnchant" .. I]:SetPoint("BOTTOMRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), -33)
+					end
 				else
-					_G["TempEnchant" .. I]:SetPoint("TOPLEFT", 3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+					if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
+						_G["TempEnchant" .. I]:SetPoint("TOPLEFT", 3, -(((I - 1) * GetConfiguration().Buffs.Height) + ((I - 1) * 4) + 3))
+					else
+						_G["TempEnchant" .. I]:SetPoint("BOTTOMRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), 3)
+					end
 				end
 
 				if not  _G["TempEnchant" .. I].BackgroundBottom then

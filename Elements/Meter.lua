@@ -34,7 +34,12 @@ local function RefreshTooltip(Self)
 	end
 
 	GameTooltip_SetDefaultAnchor(GameTooltip, Self)
-	GameTooltip:AddDoubleLine(Data.Name, ShortNumber(Data[MeterData.Mode]) .. " (" .. APS .. ")")
+
+	if Data.Realm:len() > 0 then
+		GameTooltip:AddDoubleLine(Data.Name .. "-" .. Data.Realm, ShortNumber(Data[MeterData.Mode]) .. " (" .. APS .. ")")
+	else
+		GameTooltip:AddDoubleLine(Data.Name, ShortNumber(Data[MeterData.Mode]) .. " (" .. APS .. ")")
+	end
 
 	for Index, Spell in ipairs(Data[MeterData.Mode .. "Spells"]) do
 		if (Data.EndTime - Data.StartTime) > 0 then
@@ -661,10 +666,30 @@ function HandleMeter()
 		Meter.BackgroundTop:SetSize(GetConfiguration().Meter.Width - 2, 1)
 		Meter.BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
-		Meter.Border = Meter:CreateTexture(nil, "BACKGROUND")
-		Meter.Border:SetPoint("TOPLEFT", -3, 3)
-		Meter.Border:SetSize(GetConfiguration().Meter.Width, GetConfiguration().Meter.Height)
-		Meter.Border:SetTexture(0, 0, 0)
+		Meter.BorderBottom = Meter:CreateTexture(nil, "BACKGROUND")
+		Meter.BorderBottom:SetPoint("BOTTOM", 0, -3)
+		Meter.BorderBottom:SetSize(GetConfiguration().Meter.Width, 3)
+		Meter.BorderBottom:SetTexture(0, 0, 0)
+
+		Meter.BorderLeft = Meter:CreateTexture(nil, "BACKGROUND")
+		Meter.BorderLeft:SetPoint("LEFT", -3, 0)
+		Meter.BorderLeft:SetSize(3, GetConfiguration().Meter.Height - 2)
+		Meter.BorderLeft:SetTexture(0, 0, 0)
+
+		Meter.BorderRight = Meter:CreateTexture(nil, "BACKGROUND")
+		Meter.BorderRight:SetPoint("RIGHT", 3, 0)
+		Meter.BorderRight:SetSize(3, GetConfiguration().Meter.Height - 2)
+		Meter.BorderRight:SetTexture(0, 0, 0)
+
+		Meter.BorderTop = Meter:CreateTexture(nil, "BACKGROUND")
+		Meter.BorderTop:SetPoint("TOP", 0, 3)
+		Meter.BorderTop:SetSize(GetConfiguration().Meter.Width, 3)
+		Meter.BorderTop:SetTexture(0, 0, 0)
+
+		Meter.TransparentBackground = Meter:CreateTexture(nil, "BACKGROUND")
+		Meter.TransparentBackground:SetPoint("CENTER")
+		Meter.TransparentBackground:SetSize(GetConfiguration().Meter.Width - 6, GetConfiguration().Meter.Height - 6)
+		Meter.TransparentBackground:SetTexture(0, 0, 0, 0.5)
 
 		local Bars = CreateFrame("Frame", nil, Meter)
 		Meter.Bars = Bars
@@ -825,6 +850,7 @@ function HandleMeter()
 				Bars[I].RightText:SetPoint("RIGHT", -2, 0)
 			end
 
+			Bars[I]:SetFrameLevel(Meter:GetFrameLevel())
 			Bars[I]:SetPoint(GetConfiguration().Meter[I].Anchor, GetConfiguration().Meter[I].X, GetConfiguration().Meter[I].Y)
 			Bars[I]:SetSize(GetConfiguration().Meter[I].Width - 6, GetConfiguration().Meter[I].Height - 6)
 
@@ -852,6 +878,11 @@ function HandleMeter()
 			Bars[I].BorderBottom:SetPoint("BOTTOM", 0, -1)
 			Bars[I].BorderBottom:SetSize(GetConfiguration().Meter[I].Width, 1)
 			Bars[I].BorderBottom:SetTexture(0, 0, 0)
+
+			Bars[I].BorderBottom2 = Bars[I]:CreateTexture(nil, "BACKGROUND")
+			Bars[I].BorderBottom2:SetPoint("BOTTOM", 0, -3)
+			Bars[I].BorderBottom2:SetSize(GetConfiguration().Meter[I].Width, 1)
+			Bars[I].BorderBottom2:SetTexture(0, 0, 0)
 
 			Bars[I].BorderLeft = Bars[I]:CreateTexture(nil, "BACKGROUND")
 			Bars[I].BorderLeft:SetPoint("LEFT", -1, 0)

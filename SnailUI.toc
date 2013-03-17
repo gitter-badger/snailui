@@ -1,10 +1,10 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## SavedVariables: EnableThreatColorsOnAllFrames, LogoutTime, MeterData, Theme
+## SavedVariables: EnableRaidFrames, EnableThreatColorsOnAllFrames, LogoutTime, MeterData, Theme
 ## Interface: 50200
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.5.2
+## Version: 0.6.1
 
 Configuration.lua
 Functions.lua
@@ -16,6 +16,8 @@ Themes\Default\DefaultWithPet.lua
 Themes\Default\DefaultWithClassBar.lua
 Themes\Default\DefaultHealerWithClassBar.lua
 Themes\Default\DefaultWithClassBarWithPet.lua
+
+Themes\Vanilla\Vanilla.lua
 
 Elements\ActionBars.lua
 Elements\Bag.lua
@@ -39,6 +41,7 @@ Elements\Meter.lua
 Elements\Minimap.lua
 Elements\Pet.lua
 Elements\Player.lua
+Elements\Portrait.lua
 Elements\PowerBar.lua
 Elements\Raid.lua
 Elements\SpellRange.lua

@@ -181,7 +181,12 @@ function HandleActionBars()
 
 			for I = 1, #Bars do
 				_G[Bars[I].ActionBar]:ClearAllPoints()
-				_G[Bars[I].ActionBar]:SetSize((Bars[I].Buttons * Bars[I].Width) + ((Bars[I].Buttons - 1) * 4), Bars[I].Height)
+
+				if Bars[I].Orientation and (Bars[I].Orientation == "VERTICAL") then
+					_G[Bars[I].ActionBar]:SetSize(Bars[I].Width, (Bars[I].Buttons * Bars[I].Height) + ((Bars[I].Buttons - 1) * 4))
+				else
+					_G[Bars[I].ActionBar]:SetSize((Bars[I].Buttons * Bars[I].Width) + ((Bars[I].Buttons - 1) * 4), Bars[I].Height)
+				end
 
 				if Bars[I].UIParent then
 					_G[Bars[I].ActionBar]:SetPoint(Bars[I].Anchor, UIParent, Bars[I].X, Bars[I].Y)
@@ -215,7 +220,6 @@ function HandleActionBars()
 					_G[Buttons[I] .. J]:GetCheckedTexture():SetAlpha(0)
 					_G[Buttons[I] .. J]:GetCheckedTexture().SetAlpha = Blank
 					_G[Buttons[I] .. J]:SetNormalTexture(nil)
-					_G[Buttons[I] .. J]:SetPoint("LEFT", ((J - 1) * Bars[I].Width) + ((J - 1) * 4) + 3, 0)
 					_G[Buttons[I] .. J]:SetSize(Bars[I].Width - 6, Bars[I].Height - 6)
 					_G[Buttons[I] .. J]:Show()
 					_G[Buttons[I] .. J]:HookScript("OnEnter",
@@ -265,6 +269,12 @@ function HandleActionBars()
 							Self.Hovering = nil
 						end
 					)
+
+					if Bars[I].Orientation and (Bars[I].Orientation == "VERTICAL") then
+						_G[Buttons[I] .. J]:SetPoint("TOP", 0, -(((J - 1) * Bars[I].Height) + ((J - 1) * 4) + 3))
+					else
+						_G[Buttons[I] .. J]:SetPoint("LEFT", ((J - 1) * Bars[I].Width) + ((J - 1) * 4) + 3, 0)
+					end
 
 					_G[Buttons[I] .. J].BackgroundBottom = _G[Buttons[I] .. J]:CreateTexture(nil, "LOW")
 					_G[Buttons[I] .. J].BackgroundBottom:SetPoint("BOTTOM", 0, -2)

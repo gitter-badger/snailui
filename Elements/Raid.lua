@@ -2,7 +2,7 @@
 -- Written by Snail
 
 function HandleRaid(Self)
-	if GetConfiguration().Raid then
+	if GetConfiguration().Raid and (not EnableRaidFrames) then
 		Raid = Self:SpawnHeader(
 			nil, nil, nil,
 			"columnAnchorPoint", GetConfiguration().Raid.ColumnAnchor,

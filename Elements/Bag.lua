@@ -196,9 +196,16 @@ function HandleBag()
 				end
 			end
 
+			ContainerFrame1MoneyFrame:SetFrameLevel(ContainerFrame1:GetFrameLevel())
+
+			for I = 1, NUM_BAG_FRAMES do
+				_G["CharacterBag" .. (I - 1) .. "Slot"]:SetFrameLevel(ContainerFrame1:GetFrameLevel())
+			end
+
 			for I = Bags, 1, -1 do
 				for J = 1, GetContainerNumSlots(_G["ContainerFrame" .. I]:GetID()) do
 					_G["ContainerFrame" .. I .. "Item" .. J]:ClearAllPoints()
+					_G["ContainerFrame" .. I .. "Item" .. J]:SetFrameLevel(ContainerFrame1:GetFrameLevel())
 					_G["ContainerFrame" .. I .. "Item" .. J]:SetNormalTexture(nil)
 					_G["ContainerFrame" .. I .. "Item" .. J]:SetSize(GetConfiguration().Bag.Width - 2, GetConfiguration().Bag.Height - 2)
 

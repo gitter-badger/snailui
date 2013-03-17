@@ -82,6 +82,7 @@ Configuration.Themes.Default =
 	{
 		Anchor = "RIGHT",
 		Height = 32,
+		Orientation = "VERTICAL",
 		Width = 32,
 		X = -4,
 		Y = 0,
@@ -185,6 +186,18 @@ Configuration.Themes.Default =
 
 		if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
 			Go = true
+		elseif Class == "MONK" then
+			local _, _, _, _, Selected = GetTalentInfo(8)
+
+			if Selected == true then
+				GetConfiguration().Player.ChiBar = GetConfiguration().Player.ChiBar2
+			end
+		elseif Class == "PALADIN" then
+			local Level = UnitLevel("Player")
+
+			if Level and (Level >= 85) then
+				GetConfiguration().Player.HolyPowerBar = GetConfiguration().Player.HolyPowerBar2
+			end
 		elseif Class == "WARLOCK" then
 			local _, _, _, _, Selected = GetTalentInfo(15)
 

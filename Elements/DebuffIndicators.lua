@@ -25,6 +25,11 @@ function HandleDebuffIndicators(Self)
 				}
 			},
 
+			["MAGE"] =
+			{
+				"Curse"
+			},
+
 			["MONK"] =
 			{
 				"Disease",

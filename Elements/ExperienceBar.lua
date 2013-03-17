@@ -13,6 +13,7 @@ function HandleExperienceBar()
 			MainMenuExpBar:SetStatusBarColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 		end
 
+		MainMenuExpBar:ClearAllPoints()
 		MainMenuExpBar:SetParent(UIParent)
 		MainMenuExpBar:SetPoint(GetConfiguration().ExperienceBar.Anchor, GetConfiguration().ExperienceBar.X, GetConfiguration().ExperienceBar.Y)
 		MainMenuExpBar:SetSize(GetConfiguration().ExperienceBar.Width - 6, GetConfiguration().ExperienceBar.Height - 6)

@@ -1,7 +1,7 @@
 -- Snail.lua
 -- Written by Snail
 
-local Version = "0.5.2"
+local Version = "0.6.1"
 
 oUF:RegisterStyle("SnailUI", 
 	function(Self, Unit)
@@ -22,6 +22,7 @@ oUF:RegisterStyle("SnailUI",
 			HandleHealingIndicators(Self)
 			HandleHealthBar(Self)
 			HandleHolyPowerBar(Self)
+			HandlePortrait(Self)
 			HandlePowerBar(Self)
 			HandleRunesBar(Self)
 			HandleShadowOrbsBar(Self)

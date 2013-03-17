@@ -93,6 +93,60 @@ DefaultWithClassBar.Player.ChiBar =
 	}
 }
 
+DefaultWithClassBar.Player.ChiBar2 =
+{
+	Anchor = "TOPLEFT",
+	Height = 24,
+	Width = 516,
+	X = 0,
+	Y = 28,
+
+	[1] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 102,
+		X = 3,
+		Y = -3
+	},
+
+	[2] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 102,
+		X = 106,
+		Y = -3
+	},
+
+	[3] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 100,
+		X = 0,
+		Y = -3
+	},
+
+	[4] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 102,
+		X = -106,
+		Y = -3
+	},
+
+	[5] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 102,
+		X = -3,
+		Y = -3
+	}
+}
+
 DefaultWithClassBar.Player.ComboPointsBar =
 {
 	Anchor = "TOPLEFT",
@@ -217,6 +271,60 @@ DefaultWithClassBar.Player.HolyPowerBar =
 		Anchor = "TOPRIGHT",
 		Height = 13,
 		Width = 170,
+		X = -3,
+		Y = -3
+	}
+}
+
+DefaultWithClassBar.Player.HolyPowerBar2 =
+{
+	Anchor = "TOPLEFT",
+	Height = 24,
+	Width = 516,
+	X = 0,
+	Y = 28,
+
+	[1] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 102,
+		X = 3,
+		Y = -3
+	},
+
+	[2] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 102,
+		X = 106,
+		Y = -3
+	},
+
+	[3] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 100,
+		X = 0,
+		Y = -3
+	},
+
+	[4] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 102,
+		X = -106,
+		Y = -3
+	},
+
+	[5] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 102,
 		X = -3,
 		Y = -3
 	}

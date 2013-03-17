@@ -2,8 +2,6 @@
 -- Written by Snail
 
 function HandleBlizzardFrames()
-	BuffFrame:Hide()
-
 	CompactRaidFrameContainer:UnregisterAllEvents()
 	CompactRaidFrameManager:UnregisterAllEvents()
 
@@ -21,14 +19,10 @@ function HandleBlizzardFrames()
 		GhostFrame:OriginalSetPoint("TOP", 0, -100)
 	end
 
-	WatchFrame:Hide()
-	WorldStateAlwaysUpFrame:Hide()
-
 	local Frames =
 	{
 		"CompactRaidFrameContainer",
 		"CompactRaidFrameManager",
-		"MinimapCluster",
 		"PlayerPowerBarAlt",
 		"RaidBossEmoteFrame",
 		"UIErrorsFrame"
@@ -161,6 +155,8 @@ function HandleBlizzardFrames()
 		for I = 1, NUM_CHAT_WINDOWS do
 			Frames[#Frames + 1] = "ChatFrame" .. I .. "ButtonFrame"
 			Frames[#Frames + 1] = "ChatFrame" .. I .. "ResizeButton"
+
+			Textures[#Textures + 1] = "ChatFrame" .. I .. "Background"
 		end
 	end
 
@@ -189,6 +185,18 @@ function HandleBlizzardFrames()
 		if UnitLevel("Player") == MAX_PLAYER_LEVEL then
 			Frames[#Frames + 1] = "MainMenuExpBar"
 		end
+	end
+
+	if GetConfiguration().ExtraButton then
+		BuffFrame:Hide()
+		WatchFrame:Hide()
+		WorldStateAlwaysUpFrame:Hide()
+	end
+
+	if GetConfiguration().Minimap then
+		Frames[#Frames + 1] = "MinimapBackdrop"
+		Frames[#Frames + 1] = "MinimapCluster"
+		Frames[#Frames + 1] = "MinimapZoneTextButton"
 	end
 
 	for I = 1, #Frames do

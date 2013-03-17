@@ -27,6 +27,76 @@ function HandleInterfaceOptions(Version)
 		"http://wowinterface.com/downloads/info20900-SnailUI"
 	)
 
+	FramesSubcategory = CreateFrame("Frame", nil, Category)
+	FramesSubcategory.name = "Frames"
+	FramesSubcategory.parent = Category.name
+
+	FramesSubcategory.RaidEnabledCheckbox = CreateFrame("CheckButton", nil, FramesSubcategory, "InterfaceOptionsCheckButtonTemplate")
+	FramesSubcategory.RaidEnabledCheckbox:SetPoint("TOPLEFT", 16, -73)
+	FramesSubcategory.RaidEnabledCheckbox:SetScript("OnClick",
+		function(Self)
+			if not EnableRaidFrames then
+				EnableRaidFrames = true
+				Self:SetChecked(false)
+			else
+				EnableRaidFrames = nil
+				Self:SetChecked(true)
+			end
+		end
+	)
+
+	if not EnableRaidFrames then
+		FramesSubcategory.RaidEnabledCheckbox:SetChecked(true)
+	end
+
+	FramesSubcategory.ThreatColorsCheckBox = CreateFrame("CheckButton", nil, FramesSubcategory, "InterfaceOptionsCheckButtonTemplate")
+	FramesSubcategory.ThreatColorsCheckBox:SetPoint("TOPLEFT", 16, -119)
+	FramesSubcategory.ThreatColorsCheckBox:SetScript("OnClick",
+		function(Self)
+			if EnableThreatColorsOnAllFrames then
+				EnableThreatColorsOnAllFrames = nil
+				Self:SetChecked(false)
+			else
+				EnableThreatColorsOnAllFrames = true
+				Self:SetChecked(true)
+			end
+		end
+	)
+
+	if EnableThreatColorsOnAllFrames then
+		FramesSubcategory.ThreatColorsCheckBox:SetChecked(true)
+	end
+
+	FramesSubcategory.Label1 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+	FramesSubcategory.Label1:SetJustifyH("LEFT")
+	FramesSubcategory.Label1:SetPoint("TOPLEFT", 16, -16)
+	FramesSubcategory.Label1:SetText("Frames")
+
+	FramesSubcategory.Label2 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+	FramesSubcategory.Label2:SetJustifyH("LEFT")
+	FramesSubcategory.Label2:SetPoint("TOPLEFT", 16, -36)
+	FramesSubcategory.Label2:SetText("Frame options for SnailUI")
+
+	FramesSubcategory.Label3 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	FramesSubcategory.Label3:SetJustifyH("LEFT")
+	FramesSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
+	FramesSubcategory.Label3:SetText("Raid")
+
+	FramesSubcategory.Label4 = FramesSubcategory.RaidEnabledCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	FramesSubcategory.Label4:SetJustifyH("LEFT")
+	FramesSubcategory.Label4:SetPoint("RIGHT", 45, 0)
+	FramesSubcategory.Label4:SetText("Enabled")
+
+	FramesSubcategory.Label5 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	FramesSubcategory.Label5:SetJustifyH("LEFT")
+	FramesSubcategory.Label5:SetPoint("TOPLEFT", 16, -108)
+	FramesSubcategory.Label5:SetText("Other")
+
+	FramesSubcategory.Label6 = FramesSubcategory.ThreatColorsCheckBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	FramesSubcategory.Label6:SetJustifyH("LEFT")
+	FramesSubcategory.Label6:SetPoint("RIGHT", 423, 0)
+	FramesSubcategory.Label6:SetText("Color all frame borders based on the unit's threat level (Default: Raid frames only)")
+
 	GeneralSubcategory = CreateFrame("Frame", nil, Category)
 	GeneralSubcategory.name = "General"
 	GeneralSubcategory.parent = Category.name
@@ -46,40 +116,8 @@ function HandleInterfaceOptions(Version)
 	GeneralSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
 	GeneralSubcategory.Label3:SetText("Theme")
 
-	GeneralSubcategory.Label4 = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	GeneralSubcategory.Label4:SetJustifyH("LEFT")
-	GeneralSubcategory.Label4:SetPoint("TOPLEFT", 16, -115)
-	GeneralSubcategory.Label4:SetText("Miscellaneous")
-
 	GeneralSubcategory.ThemeDropdownMenu = CreateFrame("Frame", "ThemeDropdownMenu", GeneralSubcategory, "UIDropDownMenuTemplate")
 	GeneralSubcategory.ThemeDropdownMenu:SetPoint("TOPLEFT", 0, -73)
-
-	GeneralSubcategory.ThreatColorsCheckBox = CreateFrame("CheckButton", nil, GeneralSubcategory, "InterfaceOptionsCheckButtonTemplate")
-	GeneralSubcategory.ThreatColorsCheckBox:SetPoint("TOPLEFT", 16, -128)
-	GeneralSubcategory.ThreatColorsCheckBox:SetScript("OnClick",
-		function(Self)
-			if EnableThreatColorsOnAllFrames then
-				EnableThreatColorsOnAllFrames = nil
-				Self:SetChecked(false)
-			else
-				EnableThreatColorsOnAllFrames = true
-				Self:SetChecked(true)
-			end
-		end
-	)
-
-	if EnableThreatColorsOnAllFrames then
-		GeneralSubcategory.ThreatColorsCheckBox:SetChecked(true)
-	end
-
-	GeneralSubcategory.ThreatColorsText = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-	GeneralSubcategory.ThreatColorsText:SetJustifyH("LEFT")
-	GeneralSubcategory.ThreatColorsText:SetPoint("RIGHT", GeneralSubcategory.ThreatColorsCheckBox, 290, 0)
-	GeneralSubcategory.ThreatColorsText:SetText(
-		"Color all frame borders based on the unit's threat level" ..
-		"\n" ..
-		"Default: Only color the raid frames' borders"
-	)
 		
 	UIDropDownMenu_Initialize(GeneralSubcategory.ThemeDropdownMenu,
 		function(ThemeDropdownMenu, Level)
@@ -108,6 +146,7 @@ function HandleInterfaceOptions(Version)
 
 	InterfaceOptions_AddCategory(Category)
 	InterfaceOptions_AddCategory(GeneralSubcategory)
+	InterfaceOptions_AddCategory(FramesSubcategory)
 
 	SlashCmdList["SnailUI"] = function()
 		InterfaceOptionsFrame_OpenToCategory(Category)

@@ -426,9 +426,9 @@ Configuration.Themes.Default.Timers =
 
 				Color =
 				{
-					B = 52 / 255,
-					G = 52 / 255,
-					R = 52 / 255
+					B = 1,
+					G = 0,
+					R = 10 / 255
 				}
 			},
 
@@ -671,11 +671,29 @@ Configuration.Themes.Default.Timers =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
+				Spell = "Rain of Fire",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 307,
+
+				Color =
+				{
+					B = 10 / 255,
+					G = 83 / 255,
+					R = 198 / 255
+				}
+			},
+
+			[4] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
 				Spell = "Havoc",
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 363,
 
 				Color =
 				{
@@ -685,7 +703,25 @@ Configuration.Themes.Default.Timers =
 				}
 			},
 
-			[4] =
+			[5] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,				
+				Spell = "Backdraft",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 335,
+
+				Color =
+				{
+					B = 6 / 255,
+					G = 128 / 255,
+					R = 1
+				}
+			},
+
+			[6] =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
@@ -693,7 +729,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 391,
 
 				Color =
 				{

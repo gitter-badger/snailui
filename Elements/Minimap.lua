@@ -4,9 +4,10 @@
 function HandleMinimap()
 	if GetConfiguration().Minimap then
 		local Class = select(2, UnitClass("Player"))
-		local Minimap = CreateFrame("Minimap", nil, UIParent)
 
+		Minimap:ClearAllPoints()
 		Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8X8.tga")
+		Minimap:SetParent(UIParent)
 		Minimap:SetPoint(GetConfiguration().Minimap.Anchor, GetConfiguration().Minimap.X, GetConfiguration().Minimap.Y)
 		Minimap:SetSize(GetConfiguration().Minimap.Width - 6, GetConfiguration().Minimap.Height - 6)
 		Minimap:SetScript("OnMouseWheel",
@@ -72,6 +73,7 @@ function HandleMinimap()
 
 			GameTimeFrame_SetDate = function()
 				local _, _, Day = CalendarGetDate()
+				
 				GameTimeFrame.Time:SetText(Day)
 			end
 

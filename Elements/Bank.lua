@@ -261,9 +261,14 @@ function HandleBank()
 				end
 			end
 
+			for I = 1, NUM_BANKBAGSLOTS do
+				_G["BankFrameBag" .. I]:SetFrameLevel(BankFrame:GetFrameLevel())
+			end
+
 			for I = Bags, NUM_BAG_SLOTS + 2, -1 do
 				for J = 1, GetContainerNumSlots(_G["ContainerFrame" .. I]:GetID()) do
 					_G["ContainerFrame" .. I .. "Item" .. J]:ClearAllPoints()
+					_G["ContainerFrame" .. I .. "Item" .. J]:SetFrameLevel(BankFrame:GetFrameLevel())
 					_G["ContainerFrame" .. I .. "Item" .. J]:SetNormalTexture(nil)
 					_G["ContainerFrame" .. I .. "Item" .. J]:SetSize(GetConfiguration().Bank.Width - 2, GetConfiguration().Bank.Height - 2)
 
@@ -284,6 +289,7 @@ function HandleBank()
 
 			for I = NUM_BANKGENERIC_SLOTS, 1, -1 do
 				_G["BankFrameItem" .. I]:ClearAllPoints()
+				_G["BankFrameItem" .. I]:SetFrameLevel(BankFrame:GetFrameLevel())
 				_G["BankFrameItem" .. I]:SetNormalTexture(nil)
 				_G["BankFrameItem" .. I]:SetSize(GetConfiguration().Bank.Width - 2, GetConfiguration().Bank.Height - 2)
 

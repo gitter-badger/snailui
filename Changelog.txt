@@ -9,6 +9,26 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.6.1
+- Fixed a bug where the chat frame was darker than intended
+- 5 Holy Power is now supported for Paladins
+- A Backdraft timer has been added for Destruction Warlocks
+- A Rain of Fire timer has been added for Destruction Warlocks
+- Debuff indicators will now show up on raid frames for mages as well
+- An option has been added to disable the raid frames
+- Meter tooltips now show the person's realm as well as their name
+- Shadow Dance timer has been its color changed
+- Fixed a bug where arena frames were showing up in battlegrounds
+- Fixed a few minor bugs that were occurring if the extra button was disabled
+- Fixed a minor bug with the experience bar
+- The minimap now supports icons created by other addons
+- Fixed a bug where the bag/bank frame's button borders were not being shown correctly
+- The monk talent Ascension is now supported
+- Meter background has been made more transparent
+- A "vanilla" theme has been added which will looks similar to the default UI
+
+------------------------------------------------------------------------------
+
 Version 0.5.2
 - The tooltip frame has been skinned
 - Hovering over a unit on the meter will now show a detailed breakdown of damage/healing spells used
