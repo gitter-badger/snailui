@@ -221,54 +221,45 @@ Configuration.Themes.Vanilla =
 	Meter =
 	{
 		Anchor = "TOPRIGHT",
-		Height = 100,
+		Height = 119,
 		Width = 160,
 		X = -7,
-		Y = -171,
+		Y = -190,
 
 		[0] =
 		{
-			Anchor = "TOP",
 			Height = 24,
-			Width = 160,
-			X = 0,
-			Y = 0
+			Width = 160
 		},
 
 		[1] =
 		{
-			Anchor = "TOP",
 			Height = 22,
-			Width = 160,
-			X = 0,
-			Y = -21
+			Width = 160
 		},
 
 		[2] =
 		{
-			Anchor = "CENTER",
 			Height = 22,
-			Width = 160,
-			X = 0,
-			Y = -1
+			Width = 160
 		},
 
 		[3] =
 		{
-			Anchor = "BOTTOM",
 			Height = 22,
-			Width = 160,
-			X = 0,
-			Y = 19
+			Width = 160
 		},
 
 		[4] =
 		{
-			Anchor = "BOTTOM",
 			Height = 22,
-			Width = 160,
-			X = 0,
-			Y = 0
+			Width = 160
+		},
+
+		[5] =
+		{
+			Height = 22,
+			Width = 160
 		}
 	},
 
@@ -292,6 +283,29 @@ Configuration.Themes.Vanilla =
 			Anchor ="BOTTOM",
 			X = 2,
 			Y = 5
+		},
+
+		Info =
+		{
+			Anchor = "BOTTOM",
+			Height = 22,
+			Width = 160,
+			X = 0,
+			Y = -19,
+
+			FPS =
+			{
+				Anchor = "LEFT",
+				X = 5,
+				Y = 0
+			},
+
+			Latency =
+			{
+				Anchor = "RIGHT",
+				X = -2,
+				Y = 0
+			}
 		},
 
 		Mail =

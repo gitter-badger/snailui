@@ -26,7 +26,7 @@ DefaultWithClassBarWithPet.Pet =
 	Height = 24,
 	Width = 100,
 	X = 0,
-	Y = 192,
+	Y = 211,
 
 	HealthBar =
 	{
@@ -59,10 +59,10 @@ DefaultWithClassBarWithPet.Pet =
 DefaultWithClassBarWithPet.Player.HealthBar.Width = 200
 DefaultWithClassBarWithPet.Player.Width = 204
 DefaultWithClassBarWithPet.Player.X = -156
-DefaultWithClassBarWithPet.Player.Y = 192
+DefaultWithClassBarWithPet.Player.Y = 211
 DefaultWithClassBarWithPet.Target.HealthBar.Width = 200
 DefaultWithClassBarWithPet.Target.PowerBar.Width = 200
 DefaultWithClassBarWithPet.Target.Width = 204
 DefaultWithClassBarWithPet.Target.X = 156
-DefaultWithClassBarWithPet.Target.Y = 192
-DefaultWithClassBarWithPet.Target.CastingBar.Height = 240
+DefaultWithClassBarWithPet.Target.Y = 211
+DefaultWithClassBarWithPet.Target.CastingBar.Height = 259

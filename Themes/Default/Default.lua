@@ -12,7 +12,7 @@ Configuration.Themes.Default =
 			Height = 24,
 			Width = 48,
 			X = 0,
-			Y = 108,
+			Y = 127,
 
 			TextureCoordinate =
 			{
@@ -30,7 +30,7 @@ Configuration.Themes.Default =
 			Height = 24,
 			Width = 48,
 			X = 0,
-			Y = 136,
+			Y = 155,
 
 			TextureCoordinate =
 			{
@@ -99,7 +99,7 @@ Configuration.Themes.Default =
 	Chat =
 	{
 		Anchor = "BOTTOM",
-		Height = 100,
+		Height = 119,
 		Width = 256,
 		X = -130,
 		Y = 9
@@ -206,6 +206,40 @@ Configuration.Themes.Default =
 			else
 				Go = true
 			end
+
+			if (#Timers > 0) and IsSpellKnown(101508) then
+				for I = 1, #Timers do
+					if Timers[I].Spell == "Backdraft" then
+						Timers[I].Color =
+						{
+							B = 57 / 255,
+							G = 241 / 255,
+							R = 127 / 255
+						}
+					elseif Timers[I].Spell == "Conflagrate" then
+						Timers[I].Color =
+						{
+							B = 10 / 255,
+							G = 221 / 255,
+							R = 153 / 255
+						}
+					elseif Timers[I].Spell == "Immolate" then
+						Timers[I].Color =
+						{
+							B = 63 / 255,
+							G = 1,
+							R = 204 / 255
+						}
+					elseif Timers[I].Spell == "Rain of Fire" then
+						Timers[I].Color =
+						{
+							B = 13 / 255,
+							G = 182 / 255,
+							R = 141 / 255
+						}
+					end
+				end
+			end
 		elseif (Class == "WARRIOR") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) then
 			DefaultWithClassBar.Player.PowerBar.Border = true
 			DefaultWithClassBar.Player.PowerBar.Height = 24
@@ -223,54 +257,45 @@ Configuration.Themes.Default =
 	Meter =
 	{
 		Anchor = "BOTTOM",
-		Height = 100,
+		Height = 119,
 		Width = 152,
 		X = 78,
 		Y = 7,
 
 		[0] =
 		{
-			Anchor = "TOP",
 			Height = 24,
-			Width = 152,
-			X = 0,
-			Y = 0
+			Width = 152
 		},
 
 		[1] =
 		{
-			Anchor = "TOP",
 			Height = 22,
-			Width = 152,
-			X = 0,
-			Y = -21
+			Width = 152
 		},
 
 		[2] =
 		{
-			Anchor = "CENTER",
 			Height = 22,
-			Width = 152,
-			X = 0,
-			Y = -1
+			Width = 152
 		},
 
 		[3] =
 		{
-			Anchor = "BOTTOM",
 			Height = 22,
-			Width = 152,
-			X = 0,
-			Y = 19
+			Width = 152
 		},
 
 		[4] =
 		{
-			Anchor = "BOTTOM",
 			Height = 22,
-			Width = 152,
-			X = 0,
-			Y = 0
+			Width = 152
+		},
+
+		[5] =
+		{
+			Height = 22,
+			Width = 152
 		}
 	},
 
@@ -280,7 +305,7 @@ Configuration.Themes.Default =
 		Height = 100,
 		Width = 100,
 		X = 208,
-		Y = 7,
+		Y = 26,
 
 		Calender =
 		{
@@ -294,6 +319,29 @@ Configuration.Themes.Default =
 			Anchor ="BOTTOM",
 			X = 2,
 			Y = 5
+		},
+
+		Info =
+		{
+			Anchor = "BOTTOM",
+			Height = 22,
+			Width = 100,
+			X = 0,
+			Y = -19,
+
+			FPS =
+			{
+				Anchor = "LEFT",
+				X = 5,
+				Y = 0
+			},
+
+			Latency =
+			{
+				Anchor = "RIGHT",
+				X = -2,
+				Y = 0
+			}
 		},
 
 		Mail =
@@ -324,7 +372,7 @@ Configuration.Themes.Default =
 		Height = 24,
 		Width = 256,
 		X = -130,
-		Y = 164,
+		Y = 183,
 
 		CastingBar =
 		{
@@ -444,12 +492,12 @@ Configuration.Themes.Default =
 		Height = 24,
 		Width = 256,
 		X = 130,
-		Y = 164,
+		Y = 183,
 
 		CastingBar =
 		{
 			Anchor = "TOPRIGHT",
-			Height = 184,
+			Height = 203,
 			Orientation = "VERTICAL",
 			Width = 10,
 			X = 11,

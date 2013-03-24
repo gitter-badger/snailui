@@ -851,8 +851,11 @@ function HandleMeter()
 			end
 
 			Bars[I]:SetFrameLevel(Meter:GetFrameLevel())
-			Bars[I]:SetPoint(GetConfiguration().Meter[I].Anchor, GetConfiguration().Meter[I].X, GetConfiguration().Meter[I].Y)
 			Bars[I]:SetSize(GetConfiguration().Meter[I].Width - 6, GetConfiguration().Meter[I].Height - 6)
+
+			if I == 0 then
+				Bars[I]:SetPoint("TOP")
+			end
 
 			Bars[I].BackgroundBottom = Bars[I]:CreateTexture(nil, "LOW")
 			Bars[I].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
@@ -898,6 +901,10 @@ function HandleMeter()
 			Bars[I].BorderTop:SetPoint("TOP", 0, 1)
 			Bars[I].BorderTop:SetSize(GetConfiguration().Meter[I].Width, 1)
 			Bars[I].BorderTop:SetTexture(0, 0, 0)
+		end
+
+		for I = #GetConfiguration().Meter, 1, -1 do
+			Bars[I]:SetPoint("BOTTOM", 0, ((#GetConfiguration().Meter - I) * GetConfiguration().Meter[I].Height) - ((#GetConfiguration().Meter - I) * 3))
 		end
 
 		RefreshMeter(Meter)

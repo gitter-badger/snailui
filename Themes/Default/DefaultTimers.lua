@@ -14,7 +14,7 @@ Configuration.Themes.Default.Timers =
 			Unit = "Target",
 			Width = 464,
 			X = 26,
-			Y = 223,
+			Y = 242,
 
 			Color =
 			{
@@ -33,7 +33,7 @@ Configuration.Themes.Default.Timers =
 			Unit = "Target",
 			Width = 464,
 			X = 26,
-			Y = 251,
+			Y = 270,
 
 			Color =
 			{
@@ -53,7 +53,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -77,7 +77,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 223,
+				Y = 242,
 
 				Color =
 				{
@@ -98,7 +98,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 251,
+				Y = 270,
 
 				Color =
 				{
@@ -117,7 +117,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -136,7 +136,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -154,7 +154,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
@@ -177,7 +177,7 @@ Configuration.Themes.Default.Timers =
 			Unit = "Target",
 			Width = 464,
 			X = 26,
-			Y = 223,
+			Y = 242,
 
 			Color =
 			{
@@ -195,7 +195,7 @@ Configuration.Themes.Default.Timers =
 			Type = "Buff",
 			Width = 464,
 			X = 26,
-			Y = 251,
+			Y = 270,
 
 			Color =
 			{
@@ -215,7 +215,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -234,7 +234,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -252,7 +252,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
@@ -273,7 +273,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -291,7 +291,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -309,7 +309,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -327,7 +327,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -345,7 +345,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
@@ -363,7 +363,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 363,
+				Y = 382,
 
 				Color =
 				{
@@ -385,7 +385,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -404,7 +404,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -422,7 +422,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
@@ -440,7 +440,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 363,
+				Y = 382,
 
 				Color =
 				{
@@ -465,7 +465,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 251,
+				Y = 270,
 
 				Color =
 				{
@@ -484,7 +484,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -503,7 +503,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -522,7 +522,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
@@ -540,7 +540,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 363,
+				Y = 382,
 
 				Color =
 				{
@@ -561,7 +561,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 251,
+				Y = 270,
 
 				Color =
 				{
@@ -580,7 +580,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -599,7 +599,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -617,7 +617,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
@@ -638,7 +638,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 251,
+				Y = 270,
 
 				Color =
 				{
@@ -657,7 +657,7 @@ Configuration.Themes.Default.Timers =
 				Unit = "Target",
 				Width = 464,
 				X = 26,
-				Y = 279,
+				Y = 298,
 
 				Color =
 				{
@@ -675,7 +675,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 307,
+				Y = 326,
 
 				Color =
 				{
@@ -688,36 +688,36 @@ Configuration.Themes.Default.Timers =
 			[4] =
 			{
 				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Havoc",
-				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 363,
-
-				Color =
-				{
-					B = 41 / 255,
-					G = 32 / 255,
-					R = 206 / 255
-				}
-			},
-
-			[5] =
-			{
-				Anchor = "BOTTOM",
 				Height = 24,				
 				Spell = "Backdraft",
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 335,
+				Y = 354,
 
 				Color =
 				{
 					B = 6 / 255,
 					G = 128 / 255,
 					R = 1
+				}
+			},
+
+			[5] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Havoc",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 41 / 255,
+					G = 32 / 255,
+					R = 206 / 255
 				}
 			},
 
@@ -729,7 +729,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 391,
+				Y = 410,
 
 				Color =
 				{

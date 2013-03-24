@@ -479,5 +479,5 @@ DefaultWithClassBar.Player.SoulShardsBar =
 	}
 }
 
-DefaultWithClassBar.Target.CastingBar.Height = 212
+DefaultWithClassBar.Target.CastingBar.Height = 231
 DefaultWithClassBar.Target.CastingBar.Y = 25
