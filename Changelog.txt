@@ -11,7 +11,6 @@ This is where I will document the changes made for SnailUI in each release.
 
 Version 0.6.2
 - FPS and latency will now be shown underneath the minimap
-- The meter will now record the last 5 fights
 - Destruction Warlock timers now appear fel green when you have completed the Codex of Xerrath quest line
 - The meter will now show 5 bars instead of 4
 
