@@ -99,7 +99,7 @@ Configuration.Themes.Default =
 	Chat =
 	{
 		Anchor = "BOTTOM",
-		Height = 119,
+		Height = 98,
 		Width = 256,
 		X = -130,
 		Y = 9

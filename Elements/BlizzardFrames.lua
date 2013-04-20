@@ -150,7 +150,6 @@ function HandleBlizzardFrames()
 	if GetConfiguration().Chat then
 		Frames[#Frames + 1] = "ChatFrameMenuButton"
 		Frames[#Frames + 1] = "FriendsMicroButton"
-		Frames[#Frames + 1] = "GeneralDockManager"
 
 		for I = 1, NUM_CHAT_WINDOWS do
 			Frames[#Frames + 1] = "ChatFrame" .. I .. "ButtonFrame"

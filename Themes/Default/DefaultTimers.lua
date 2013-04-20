@@ -65,6 +65,48 @@ Configuration.Themes.Default.Timers =
 		}
 	},
 
+	["MAGE"] =
+	{
+		["FROST"] =
+		{
+			[1] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Frost Bomb",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 270,
+
+				Color =
+				{
+					B = 239 / 255,
+					G = 237 / 255,
+					R = 90 / 255
+				}
+			},
+
+			[2] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Frozen Orb",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 298,
+
+				Color =
+				{
+					B = 1,
+					G = 184 / 255,
+					R = 38 / 255
+				}
+			}
+		}
+	},
+
 	["PRIEST"] =
 	{
 		["DISCIPLINE"] =

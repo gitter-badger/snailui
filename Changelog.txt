@@ -9,6 +9,23 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.7.1
+- Level 90 talent timers added for Mages
+- Level 90 talent timers added for Priests
+- Holy Priest timers added
+- Discipline Priest timers added
+- Some spell timer colors were changed for Shadow Priests
+- Imp Swarm timer added for Demonology Warlocks
+- Revealing Strike timer added for Combat Rogues
+- Arcane Mage timers have been added
+- Fire Mage timers have been added
+- Healing indicators have been added to raid frames for healers
+- Soul Link will no longer count as healing/damage done on the meter
+- Chat tabs w/ the options have been implemented
+- Timers added for Frost Mages
+
+------------------------------------------------------------------------------
+
 Version 0.6.2
 - FPS and latency will now be shown underneath the minimap
 - Destruction Warlock timers now appear fel green when you have completed the Codex of Xerrath quest line
