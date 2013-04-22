@@ -14,5 +14,13 @@ function HandleBattlegroundAutoRelease(Self)
 				end
 			end
 		)
+
+		Self:RegisterEvent("PLAYER_ENTERING_WORLD",
+			function()
+				if StaticPopup1:IsShown() and ((not UnitIsDead("Player")) or (UnitIsDead("Player") and UnitIsGhost("Player"))) then
+					StaticPopup_OnClick(StaticPopup1, StaticPopup1Button1:GetID())
+				end
+			end
+		)
 	end
 end

@@ -96,7 +96,7 @@ function HandleTimers()
 								elseif Self.Timer.Type == "Cooldown" then
 									SpellExpires, SpellDuration, Enabled = GetSpellCooldown(Self.Timer.Spell)
 
-									if SpellDuration > 2 then
+									if SpellDuration and (SpellDuration > 2) then
 										SpellName, _, SpellIcon = GetSpellInfo(Self.Timer.Spell)
 										SpellExpires = SpellExpires + SpellDuration
 									end

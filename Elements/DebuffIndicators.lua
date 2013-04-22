@@ -2,7 +2,7 @@
 -- Written by Snail
 
 function HandleDebuffIndicators(Self)
-	if (Self.Frame == "Raid") and GetConfiguration()[Self.Frame] then
+	if (Self.Frame == "Raid") and GetConfiguration().DebuffIndicators then
 		local Class = select(2, UnitClass("Player"))
 		local Specialization = GetSpecialization()
 

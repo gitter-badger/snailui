@@ -569,56 +569,59 @@ function HandleMeter()
 										Data.Hostile = nil
 									end
 
-									if string.find(CombatEvent, "_HEAL") then
-										Amount = ((select(15, ...) or 0) + (select(17, ...) or 0)) - (select(16, ...) or 0)
-										SpellName = (select(13, ...) or "Unknown")
-										Spell = GetSpell(Data.HealingSpells, SpellName)
+									SpellName = (select(13, ...) or "Unknown")
 
-										if Spell then
-											Spell.Amount = Spell.Amount + Amount
-										else
-											Data.HealingSpells[#Data.HealingSpells + 1] =
-											{
-												Amount = Amount,
-												SpellName = SpellName
-											}
-										end
+									if SpellName ~= "Soul Link" then
+										if string.find(CombatEvent, "_HEAL") then
+											Amount = ((select(15, ...) or 0) + (select(17, ...) or 0)) - (select(16, ...) or 0)
+											Spell = GetSpell(Data.HealingSpells, SpellName)
 
-										Data.Healing = Data.Healing + Amount
-										MeterData.TotalHealing = MeterData.TotalHealing + Amount
-									else
-										if string.find(CombatEvent, "SWING") then
-											Amount = (select(12, ...) or 0)
-											SpellName = "Melee"
-										else
-											Amount = (select(15, ...) or 0)
-											SpellName = (select(13, ...) or "Unknown")
-
-											if string.find(SpellName, " Off%-Hand") then
-												SpellName = string.sub(SpellName, 1, string.find(SpellName, " Off%-Hand") - 1)
+											if Spell then
+												Spell.Amount = Spell.Amount + Amount
+											else
+												Data.HealingSpells[#Data.HealingSpells + 1] =
+												{
+													Amount = Amount,
+													SpellName = SpellName
+												}
 											end
 
-											if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
-												if select(16, ...) ~= -2 then
-													Amount = 0
+											Data.Healing = Data.Healing + Amount
+											MeterData.TotalHealing = MeterData.TotalHealing + Amount
+										else
+											if string.find(CombatEvent, "SWING") then
+												Amount = (select(12, ...) or 0)
+												SpellName = "Melee"
+											else
+												Amount = (select(15, ...) or 0)
+												SpellName = (select(13, ...) or "Unknown")
+
+												if string.find(SpellName, " Off%-Hand") then
+													SpellName = string.sub(SpellName, 1, string.find(SpellName, " Off%-Hand") - 1)
+												end
+
+												if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
+													if select(16, ...) ~= -2 then
+														Amount = 0
+													end
 												end
 											end
+
+											Spell = GetSpell(Data.DamageSpells, SpellName)
+
+											if Spell then
+												Spell.Amount = Spell.Amount + Amount
+											else
+												Data.DamageSpells[#Data.DamageSpells + 1] =
+												{
+													Amount = Amount,
+													SpellName = SpellName
+												}
+											end
+
+											Data.Damage = Data.Damage + Amount
+											MeterData.TotalDamage = MeterData.TotalDamage + Amount
 										end
-
-										Spell = GetSpell(Data.DamageSpells, SpellName)
-
-										if Spell then
-											Spell.Amount = Spell.Amount + Amount
-										else
-											Data.DamageSpells[#Data.DamageSpells + 1] =
-											{
-												Amount = Amount,
-												SpellName = SpellName
-											}
-										end
-
-										Data.Damage = Data.Damage + Amount
-										MeterData.TotalDamage = MeterData.TotalDamage + Amount
 									end
 								end
 							end
