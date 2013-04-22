@@ -31,6 +31,7 @@ Features
 - A lot of Blizzard frames are skinned (Bag, action bars, minimap, etc.)
 - Buff/debuff/cooldown timers for each class/spec
 - Dispellable debuff indicators for raid frames
+- Healing indicators for raid frames
 
 ------------------------------------------------------------------------------
 
