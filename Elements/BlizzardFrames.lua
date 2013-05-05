@@ -19,6 +19,31 @@ function HandleBlizzardFrames()
 		GhostFrame:OriginalSetPoint("TOP", 0, -100)
 	end
 
+	VehicleSeatIndicator:ClearAllPoints()
+	VehicleSeatIndicator:SetPoint("BOTTOMRIGHT", WatchFrame, "BOTTOMLEFT", -4, 4)
+	VehicleSeatIndicator.OriginalSetPoint = VehicleSeatIndicator.SetPoint
+	VehicleSeatIndicator.SetPoint = function()
+		VehicleSeatIndicator:ClearAllPoints()
+		VehicleSeatIndicator:OriginalSetPoint("BOTTOMRIGHT", WatchFrame, "BOTTOMLEFT", -4, 4)
+	end
+
+	WatchFrame:ClearAllPoints()
+	WatchFrame:SetPoint("BOTTOMRIGHT", -4, 4)
+	WatchFrame.OriginalSetPoint = WatchFrame.SetPoint
+	WatchFrame.SetPoint = function()
+		WatchFrame:ClearAllPoints()
+		WatchFrame:OriginalSetPoint("BOTTOMRIGHT", -4, 4)
+	end
+
+	local OriginalPetBattleFrame_Display = PetBattleFrame_Display
+
+	PetBattleFrame_Display = function(Self)
+		OriginalPetBattleFrame_Display(Self)
+
+		Self:SetFrameLevel(10)
+		Self:SetFrameStrata("HIGH")
+	end
+
 	local Frames =
 	{
 		"CompactRaidFrameContainer",
@@ -189,6 +214,17 @@ function HandleBlizzardFrames()
 
 	if GetConfiguration().ExtraButton then
 		BuffFrame:Hide()
+
+		MultiBarBottomRight:Hide()
+		MultiBarLeft:Hide()
+
+		MultiBarBottomRight.OriginalShow = MultiBarBottomRight.Show
+		MultiBarBottomRight.Show = Blank
+
+		MultiBarLeft.OriginalShow = MultiBarLeft.Show
+		MultiBarLeft.Show = Blank
+
+		VehicleSeatIndicator:Hide()
 		WatchFrame:Hide()
 		WorldStateAlwaysUpFrame:Hide()
 	end

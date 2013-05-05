@@ -63,19 +63,19 @@ Configuration.Themes.Vanilla =
 		{
 			Anchor = "RIGHT",
 			Buttons = 12,
-			Height = 24,
+			Height = 32,
 			Orientation = "VERTICAL",
 			UIParent = true,
-			Width = 48,
+			Width = 32,
 			X = -4,
 			Y = 0,
 
 			TextureCoordinate =
 			{
-				Bottom = 0.7,
+				Bottom = 0.9,
 				Left = 0.1,
 				Right = 0.9,
-				Top = 0.3
+				Top = 0.1
 			}
 		},
 
@@ -83,19 +83,19 @@ Configuration.Themes.Vanilla =
 		{
 			Anchor = "RIGHT",
 			Buttons = 12,
-			Height = 24,
+			Height = 32,
 			Orientation = "VERTICAL",
 			UIParent = true,
-			Width = 48,
-			X = -56,
+			Width = 32,
+			X = -40,
 			Y = 0,
 
 			TextureCoordinate =
 			{
-				Bottom = 0.7,
+				Bottom = 0.9,
 				Left = 0.1,
 				Right = 0.9,
-				Top = 0.3
+				Top = 0.1
 			}
 		}
 	},

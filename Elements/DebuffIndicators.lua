@@ -139,13 +139,17 @@ function HandleDebuffIndicators(Self)
 
 					Self:SetScript("OnUpdate",
 						function(Self, ElapsedTime)
-							local DebuffExpires = select(7, UnitDebuff(Self.Parent.unit, Self.DebuffName))
+							local DebuffName, _, _, _, _, _, DebuffExpires = UnitDebuff(Self.Parent.unit, Self.DebuffName)
 
-							if DebuffExpires and (DebuffExpires > GetTime()) then
-								Self.Text:SetText(math.ceil(DebuffExpires - GetTime()))
+							if DebuffName then
+								if DebuffExpires and (DebuffExpires > GetTime()) then
+									Self.Text:SetText(math.ceil(DebuffExpires - GetTime()))
 
-								if DebuffCount and (DebuffCount > 1) then
-									--
+									if DebuffCount and (DebuffCount > 1) then
+										--
+									end
+								else
+									Self.Text:SetText("")
 								end
 							else
 								Self.DebuffName = nil

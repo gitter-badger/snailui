@@ -39,6 +39,46 @@ Configuration.Themes.Default =
 				Right = 0.9,
 				Top = 0.3
 			}
+		},
+
+		Player3 =
+		{
+			Anchor = "RIGHT",
+			Buttons = 12,
+			Height = 32,
+			Orientation = "VERTICAL",
+			UIParent = true,
+			Width = 32,
+			X = -4,
+			Y = 0,
+
+			TextureCoordinate =
+			{
+				Bottom = 0.9,
+				Left = 0.1,
+				Right = 0.9,
+				Top = 0.1
+			}
+		},
+
+		Player4 =
+		{
+			Anchor = "RIGHT",
+			Buttons = 12,
+			Height = 32,
+			Orientation = "VERTICAL",
+			UIParent = true,
+			Width = 32,
+			X = -40,
+			Y = 0,
+
+			TextureCoordinate =
+			{
+				Bottom = 0.9,
+				Left = 0.1,
+				Right = 0.9,
+				Top = 0.1
+			}
 		}
 	},
 
@@ -84,7 +124,7 @@ Configuration.Themes.Default =
 		Height = 32,
 		Orientation = "VERTICAL",
 		Width = 32,
-		X = -4,
+		X = -76,
 		Y = 0,
 
 		TextureCoordinate =
@@ -133,97 +173,7 @@ Configuration.Themes.Default =
 		Width = 204,
 		X = 0,
 		Y = -6
-	},
-
-	HealingIndicators =
-	{
-		TextureCoordinate =
-		{
-			Bottom = 0.9,
-			Left = 0.1,
-			Right = 0.9,
-			Top = 0.1
-		},
-
-		["DRUID"] =
-		{
-			["RESTORATION"] =
-			{
-				"Lifebloom",
-				"Rejuvenation",
-				"Regrowth",
-				"Living Seed",
-				"Wild Growth",
-				"Cenarion Ward",
-				"Tranquility",
-				"Ironbark",
-				"Innervate"
-			}
-		},
-
-		["MONK"] =
-		{
-			["MISTWEAVER"] =
-			{
-				"Renewing Mist",
-				"Zen Sphere",
-				"Enveloping Mist",
-				"Soothing Mist"
-			}
-		},
-
-		["PALADIN"] =
-		{
-			["HOLY"] =
-			{
-				"Beacon of Light",
-				"Sacred Shield",
-				"Eternal Flame",
-				"Execution Sentence",
-				"Holy Prisim",
-				"Divine Plea",
-				"Illuminated Healing",
-				"Devotion Aura"
-			}
-		},
-
-		["PRIEST"] =
-		{
-			["DISCIPLINE"] =
-			{
-				"Renew",
-				"Prayer of Mending",
-				"Power Word: Shield",
-				"Weakened Soul",
-				"Divine Aegis",
-				"Grace",
-				"Power Word: Barrier",
-				"Angelic Bulwark"
-			},
-
-			["HOLY"] =
-			{
-				"Renew",
-				"Prayer of Mending",
-				"Power Word: Shield",
-				"Weakened Soul",
-				"Divine Hymn",
-				"Echo of Light",
-				"Angelic Bulwark"
-			}
-		},
-
-		["SHAMAN"] =
-		{
-			["RESTORATION"] =
-			{
-				"Earth Shield",
-				"Riptide",
-				"Earthliving Weapon",
-				"Spirit Link Totem"
-			}
-		}
-	},
+	},	
 
 	Initialize = function(Self)
 		Configuration.Themes.Default["DEATHKNIGHT"] = DefaultWithClassBar
@@ -335,6 +285,14 @@ Configuration.Themes.Default =
 			DefaultWithClassBar.Player.PowerBar.Height = 24
 			DefaultWithClassBar.Player.PowerBar.Width = 516
 			DefaultWithClassBar.Player.PowerBar.Y = 25
+		end
+
+		if #Timers > 0 then
+			for I = 1, #Timers do
+				if ((Class == "PALADIN") and (Specialization == "HOLY")) or ((Class == "PRIEST") and (Specialization == "HOLY")) then
+					GetConfiguration().Raid.Y = GetConfiguration().Raid.Y + 28
+				end
+			end
 		end
 
 		if Go and (#Timers > 0) then

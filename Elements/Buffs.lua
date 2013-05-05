@@ -33,15 +33,15 @@ function HandleBuffs()
 
 			if ((DEBUFF_ACTUAL_DISPLAY > 0) or (BuffFrame.numEnchants > 0)) and (BUFF_ACTUAL_DISPLAY > 0) then
 				if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
-					BuffFrame:SetSize((GetConfiguration().Buffs.Width * 2) + 4, GreaterBuff * GetConfiguration().Buffs.Height)
+					BuffFrame:SetSize((GetConfiguration().Buffs.Width * 2) + 4, (GreaterBuff * GetConfiguration().Buffs.Height) + ((GreaterBuff - 1) * 4))
 				else
-					BuffFrame:SetSize(GreaterBuff * GetConfiguration().Buffs.Width, (GetConfiguration().Buffs.Height * 2) + 4)
+					BuffFrame:SetSize((GreaterBuff * GetConfiguration().Buffs.Width) + ((GreaterBuff - 1) * 4), (GetConfiguration().Buffs.Height * 2) + 4)
 				end
 			else
 				if GetConfiguration().Buffs.Orientation and (GetConfiguration().Buffs.Orientation == "VERTICAL") then
-					BuffFrame:SetSize(GetConfiguration().Buffs.Width, GreaterBuff * GetConfiguration().Buffs.Height)
+					BuffFrame:SetSize(GetConfiguration().Buffs.Width, (GreaterBuff * GetConfiguration().Buffs.Height) + ((GreaterBuff - 1) * 4))
 				else
-					BuffFrame:SetSize(GreaterBuff * GetConfiguration().Buffs.Width, GetConfiguration().Buffs.Height)
+					BuffFrame:SetSize((GreaterBuff * GetConfiguration().Buffs.Width) + ((GreaterBuff - 1) * 4), GetConfiguration().Buffs.Height)
 				end
 			end
 

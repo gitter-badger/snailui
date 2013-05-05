@@ -14,6 +14,9 @@ function HandleExtraButton()
 				if Self.Shown then
 					BuffFrame:Hide()
 					MainMenuExpBar:Hide()
+					MultiBarBottomRight:Hide()
+					MultiBarLeft:Hide()
+					VehicleSeatIndicator:Hide()
 					WatchFrame:Hide()
 					WorldStateAlwaysUpFrame:Hide()
 
@@ -26,6 +29,9 @@ function HandleExtraButton()
 				else
 					BuffFrame:Show()
 					MainMenuExpBar:Show()
+					MultiBarBottomRight:OriginalShow()
+					MultiBarLeft:OriginalShow()
+					VehicleSeatIndicator:Show()
 					WatchFrame:Show()
 					WorldStateAlwaysUpFrame:Show()
 

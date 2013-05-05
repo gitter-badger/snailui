@@ -97,6 +97,24 @@ Configuration.Themes.Default.Timers =
 					G = 0,
 					R = 143 / 255
 				}
+			},
+
+			[4] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Subterfuge",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 132 / 255,
+					G = 103 / 255,
+					R = 79 / 255
+				}
 			}
 		},
 
@@ -227,6 +245,24 @@ Configuration.Themes.Default.Timers =
 					G = 0,
 					R = 143 / 255
 				}
+			},
+
+			[8] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Subterfuge",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 132 / 255,
+					G = 103 / 255,
+					R = 79 / 255
+				}
 			}
 		},
 
@@ -303,6 +339,24 @@ Configuration.Themes.Default.Timers =
 					B = 1,
 					G = 0,
 					R = 143 / 255
+				}
+			},
+
+			[5] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Subterfuge",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 132 / 255,
+					G = 103 / 255,
+					R = 79 / 255
 				}
 			}
 		}

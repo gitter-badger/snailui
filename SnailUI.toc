@@ -4,12 +4,13 @@
 ## Interface: 50200
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.7.1
+## Version: 0.7.2
 
 Configuration.lua
 Functions.lua
 
 Themes\Default\Default.lua
+Themes\Default\DefaultHealingIndicators.lua
 Themes\Default\DefaultTimers.lua
 Themes\Default\DefaultHealer.lua
 Themes\Default\DefaultWithPet.lua

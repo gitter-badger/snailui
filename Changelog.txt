@@ -9,6 +9,17 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.7.2
+- Fixed a bug where the buff frame wasn't being centered correctly
+- 3rd and 4th action buttons resized for the Vanilla theme
+- A few blizzard frames were moved around
+- 2 more action bars added to the Default theme, they appear on the ride side of the screen when you click the "Show Misc Frames" button
+- Subterfuge timer added for rogues
+- Fixed a bug where unlimited duration debuff/buff indicators were not showing up
+- Fixed a bug where the pet battle frame was not being displayed correctly
+
+------------------------------------------------------------------------------
+
 Version 0.7.1
 - Fixed a bug where the "You have died." popup was being shown if you were still alive
 - All timers except Rogue and Warlock timers have been temporarily removed

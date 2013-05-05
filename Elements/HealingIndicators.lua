@@ -109,18 +109,23 @@ function HandleHealingIndicators(Self)
 						Self:SetScript("OnUpdate",
 							function(Self, ElapsedTime)
 								local BuffExpires
+								local BuffName
 
 								if Self.Debuff then
-									BuffExpires = select(7, UnitDebuff(Self.Parent.unit, Self.BuffName))
+									BuffName, _, _, _, _, _, BuffExpires = UnitDebuff(Self.Parent.unit, Self.BuffName)
 								else
-									BuffExpires = select(7, UnitBuff(Self.Parent.unit, Self.BuffName))
+									BuffName, _, _, _, _, _, BuffExpires  = UnitBuff(Self.Parent.unit, Self.BuffName)
 								end
 
-								if BuffExpires and (BuffExpires > GetTime()) then
-									Self.Text:SetText(math.ceil(BuffExpires - GetTime()))
+								if BuffName then
+									if BuffExpires and (BuffExpires > GetTime()) then
+										Self.Text:SetText(math.ceil(BuffExpires - GetTime()))
 
-									if BuffCount and (BuffCount > 1) then
-										--
+										if BuffCount and (BuffCount > 1) then
+											--
+										end
+									else
+										Self.Text:SetText("")
 									end
 								else
 									Self.BuffName = nil
