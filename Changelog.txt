@@ -19,7 +19,6 @@ Version 0.7.3
 - Cheap Shot timer added for Rogues
 - Garrote timer added for Rogues
 - Interface option added that lets you disable the 3rd & 4th action bars
-- Fixed a bug where in certain situations you were not able to change talents/glyphs without disabling SnailUI
 - Fixed a bug where buff text wasn't centered correctly
 - Fixed a bug where certain dual-wield spells were not being merged in the meter
 
