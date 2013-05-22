@@ -216,6 +216,11 @@ Configuration.Themes.Vanilla =
 			Configuration.Themes.Vanilla.Pet.Y = Configuration.Themes.Vanilla.Pet.Y - (Configuration.Themes.Vanilla.Player.RunesBar.Height + 4)
 			Configuration.Themes.Vanilla.Player.CastingBar.Y = Configuration.Themes.Vanilla.Player.CastingBar.Y - (Configuration.Themes.Vanilla.Player.RunesBar.Height + 4)
 		end
+
+		if not EnableSideBars then
+			GetConfiguration().ActionBars.Player3 = nil
+			GetConfiguration().ActionBars.Player4 = nil
+		end
 	end,
 
 	Meter =

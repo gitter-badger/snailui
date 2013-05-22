@@ -1,10 +1,10 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## SavedVariables: EnableRaidFrames, EnableThreatColorsOnAllFrames, LogoutTime, MeterData, Theme
-## Interface: 50200
+## SavedVariables: EnableRaidFrames, EnableSideBars, EnableThreatColorsOnAllFrames, LogoutTime, MeterData, Theme
+## Interface: 50300
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.7.2
+## Version: 0.7.3
 
 Configuration.lua
 Functions.lua

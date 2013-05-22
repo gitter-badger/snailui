@@ -14,14 +14,14 @@ function HandleTimers()
 		local Timers = {}
 
 		if GetConfiguration().Timers[Class] then
+			for I = 1, #GetConfiguration().Timers[Class] do
+				Timers[#Timers + 1] = GetConfiguration().Timers[Class][I]
+			end
+
 			if GetConfiguration().Timers[Class][Specialization] then
 				for I = 1, #GetConfiguration().Timers[Class][Specialization] do
 					Timers[#Timers + 1] = GetConfiguration().Timers[Class][Specialization][I]
 				end
-			end
-
-			for I = 1, #GetConfiguration().Timers[Class] do
-				Timers[#Timers + 1] = GetConfiguration().Timers[Class][I]
 			end
 		end
 
@@ -110,6 +110,26 @@ function HandleTimers()
 										Self:SetValue(SpellExpires - GetTime())
 
 										Self.Time:SetText(math.ceil(SpellExpires - GetTime()))
+
+										if #Self.Timers > 1 then
+											table.sort(Self.Timers,
+												function(A, B)
+													if Self.Parent[A] and Self.Parent[B] then
+														return Self.Parent[A]:GetValue() > Self.Parent[B]:GetValue()
+													end
+
+													return nil
+												end
+											)
+
+											for I = 1, #Self.Timers do
+												if I == 1 then
+													Self.Parent[Self.Timers[I]]:SetFrameLevel(2)
+												else
+													Self.Parent[Self.Timers[I]]:SetFrameLevel(1)
+												end
+											end
+										end
 									else
 										Self:SetMinMaxValues(0, 1)
 										Self:SetValue(1)
@@ -187,6 +207,8 @@ function HandleTimers()
 				TimerBars[I].IconBorder:SetSize(Timers[I].Height * 2, Timers[I].Height)
 				TimerBars[I].IconBorder:SetTexture(0, 0, 0)
 
+				TimerBars[I].Parent = TimerBars
+
 				TimerBars[I].Text = TimerBars[I]:CreateFontString(nil, "OVERLAY")
 				TimerBars[I].Text:SetJustifyH("LEFT")
 				TimerBars[I].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
@@ -198,6 +220,14 @@ function HandleTimers()
 				TimerBars[I].Time:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
 				TimerBars[I].Time:SetPoint("RIGHT", -4, 0)
 				TimerBars[I].Time:SetTextColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
+
+				TimerBars[I].Timers = {}
+
+				for J = 1, #Timers do
+					if Timers[I].Y == Timers[J].Y then
+						TimerBars[I].Timers[#TimerBars[I].Timers + 1] = J
+					end
+				end
 
 				TimerBars[I].Timer = Timers[I]
 			end

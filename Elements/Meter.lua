@@ -600,6 +600,10 @@ function HandleMeter()
 													SpellName = string.sub(SpellName, 1, string.find(SpellName, " Off%-Hand") - 1)
 												end
 
+												if string.find(SpellName, " Off%-hand") then
+													SpellName = string.sub(SpellName, 1, string.find(SpellName, " Off%-hand") - 1)
+												end
+
 												if string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_LEECH") then
 													if select(16, ...) ~= -2 then
 														Amount = 0

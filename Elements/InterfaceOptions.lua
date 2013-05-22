@@ -32,7 +32,7 @@ function HandleInterfaceOptions(Version)
 	FramesSubcategory.parent = Category.name
 
 	FramesSubcategory.RaidEnabledCheckbox = CreateFrame("CheckButton", nil, FramesSubcategory, "InterfaceOptionsCheckButtonTemplate")
-	FramesSubcategory.RaidEnabledCheckbox:SetPoint("TOPLEFT", 16, -73)
+	FramesSubcategory.RaidEnabledCheckbox:SetPoint("TOPLEFT", 16, -119)
 	FramesSubcategory.RaidEnabledCheckbox:SetScript("OnClick",
 		function(Self)
 			if not EnableRaidFrames then
@@ -49,8 +49,26 @@ function HandleInterfaceOptions(Version)
 		FramesSubcategory.RaidEnabledCheckbox:SetChecked(true)
 	end
 
+	FramesSubcategory.SideBarsEnabledCheckbox = CreateFrame("CheckButton", nil, FramesSubcategory, "InterfaceOptionsCheckButtonTemplate")
+	FramesSubcategory.SideBarsEnabledCheckbox:SetPoint("TOPLEFT", 16, -73)
+	FramesSubcategory.SideBarsEnabledCheckbox:SetScript("OnClick",
+		function(Self)
+			if EnableSideBars then
+				EnableSideBars = nil
+				Self:SetChecked(false)
+			else
+				EnableSideBars = true
+				Self:SetChecked(true)
+			end
+		end
+	)
+
+	if EnableSideBars then
+		FramesSubcategory.SideBarsEnabledCheckbox:SetChecked(true)
+	end
+
 	FramesSubcategory.ThreatColorsCheckBox = CreateFrame("CheckButton", nil, FramesSubcategory, "InterfaceOptionsCheckButtonTemplate")
-	FramesSubcategory.ThreatColorsCheckBox:SetPoint("TOPLEFT", 16, -119)
+	FramesSubcategory.ThreatColorsCheckBox:SetPoint("TOPLEFT", 16, -165)
 	FramesSubcategory.ThreatColorsCheckBox:SetScript("OnClick",
 		function(Self)
 			if EnableThreatColorsOnAllFrames then
@@ -80,22 +98,32 @@ function HandleInterfaceOptions(Version)
 	FramesSubcategory.Label3 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	FramesSubcategory.Label3:SetJustifyH("LEFT")
 	FramesSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
-	FramesSubcategory.Label3:SetText("Raid")
+	FramesSubcategory.Label3:SetText("Action Bars")
 
-	FramesSubcategory.Label4 = FramesSubcategory.RaidEnabledCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	FramesSubcategory.Label4 = FramesSubcategory.SideBarsEnabledCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	FramesSubcategory.Label4:SetJustifyH("LEFT")
-	FramesSubcategory.Label4:SetPoint("RIGHT", 45, 0)
-	FramesSubcategory.Label4:SetText("Enabled")
+	FramesSubcategory.Label4:SetPoint("RIGHT", 200, 0)
+	FramesSubcategory.Label4:SetText("Enable the third and fourth action bars")
 
 	FramesSubcategory.Label5 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	FramesSubcategory.Label5:SetJustifyH("LEFT")
 	FramesSubcategory.Label5:SetPoint("TOPLEFT", 16, -108)
-	FramesSubcategory.Label5:SetText("Other")
+	FramesSubcategory.Label5:SetText("Raid")
 
-	FramesSubcategory.Label6 = FramesSubcategory.ThreatColorsCheckBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	FramesSubcategory.Label6 = FramesSubcategory.RaidEnabledCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	FramesSubcategory.Label6:SetJustifyH("LEFT")
-	FramesSubcategory.Label6:SetPoint("RIGHT", 423, 0)
-	FramesSubcategory.Label6:SetText("Color all frame borders based on the unit's threat level (Default: Raid frames only)")
+	FramesSubcategory.Label6:SetPoint("RIGHT", 44, 0)
+	FramesSubcategory.Label6:SetText("Enabled")
+
+	FramesSubcategory.Label7 = FramesSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	FramesSubcategory.Label7:SetJustifyH("LEFT")
+	FramesSubcategory.Label7:SetPoint("TOPLEFT", 16, -156)
+	FramesSubcategory.Label7:SetText("Other")
+
+	FramesSubcategory.Label8 = FramesSubcategory.ThreatColorsCheckBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	FramesSubcategory.Label8:SetJustifyH("LEFT")
+	FramesSubcategory.Label8:SetPoint("RIGHT", 423, 0)
+	FramesSubcategory.Label8:SetText("Color all frame borders based on the unit's threat level (Default: Raid frames only)")
 
 	GeneralSubcategory = CreateFrame("Frame", nil, Category)
 	GeneralSubcategory.name = "General"

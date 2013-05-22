@@ -9,6 +9,22 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.7.3
+- Sap timer added for Rogues
+- Updated for 5.3
+- Fixed a bug where timers would sometimes not overlap correctly
+- Gouge timer added for Rogues
+- Blind timer added for Rogues
+- Kidney Shot timer added for Rogues
+- Cheap Shot timer added for Rogues
+- Garrote timer added for Rogues
+- Interface option added that lets you disable the 3rd & 4th action bars
+- Fixed a bug where in certain situations you were not able to change talents/glyphs without disabling SnailUI
+- Fixed a bug where buff text wasn't centered correctly
+- Fixed a bug where certain dual-wield spells were not being merged in the meter
+
+------------------------------------------------------------------------------
+
 Version 0.7.2
 - Fixed a bug where the buff frame wasn't being centered correctly
 - 3rd and 4th action buttons resized for the Vanilla theme

@@ -1,7 +1,7 @@
 -- Snail.lua
 -- Written by Snail
 
-local Version = "0.7.2"
+local Version = "0.7.3"
 
 oUF:RegisterStyle("SnailUI", 
 	function(Self, Unit)

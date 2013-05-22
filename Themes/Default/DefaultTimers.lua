@@ -28,6 +28,25 @@ Configuration.Themes.Default.Timers =
 		{
 			Anchor = "BOTTOM",
 			Height = 24,
+			Spell = "Garrote",
+			Type = "Debuff",
+			Unit = "Target",
+			Width = 464,
+			X = 26,
+			Y = 242,
+
+			Color =
+			{
+				B = 0,
+				G = 13 / 255,
+				R = 87 / 255
+			}
+		},
+
+		[4] =
+		{
+			Anchor = "BOTTOM",
+			Height = 24,
 			Spell = "Slice and Dice",
 			Type = "Buff",
 			Width = 464,
@@ -103,11 +122,125 @@ Configuration.Themes.Default.Timers =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
+				Spell = "Cheap Shot",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 147 / 255,
+					G = 168 / 255,
+					R = 193 / 255
+				}
+			},
+
+			[5] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Garrote - Silence",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 0,
+					G = 13 / 255,
+					R = 87 / 255
+				}
+			},
+
+			[6] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Kidney Shot",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 144 / 255,
+					G = 197 / 255,
+					R = 1
+				}
+			},
+
+			[7] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Blind",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 173 / 255,
+					G = 211 / 255,
+					R = 247 / 255
+				}
+			},
+
+			[8] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Gouge",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 215 / 255,
+					G = 212 / 255,
+					R = 213 / 255
+				}
+			},
+
+			[9] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Sap",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 167 / 255,
+					G = 168 / 255,
+					R = 167 / 255
+				}
+			},				
+
+			[10] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
 				Spell = "Subterfuge",
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 382,
+				Y = 410,
 
 				Color =
 				{
@@ -251,11 +384,125 @@ Configuration.Themes.Default.Timers =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
+				Spell = "Cheap Shot",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 147 / 255,
+					G = 168 / 255,
+					R = 193 / 255
+				}
+			},
+
+			[9] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Garrote - Silence",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 0,
+					G = 13 / 255,
+					R = 87 / 255
+				}
+			},
+
+			[10] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Kidney Shot",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 144 / 255,
+					G = 197 / 255,
+					R = 1
+				}
+			},
+
+			[11] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Blind",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 173 / 255,
+					G = 211 / 255,
+					R = 247 / 255
+				}
+			},
+
+			[12] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Gouge",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 215 / 255,
+					G = 212 / 255,
+					R = 213 / 255
+				}
+			},
+
+			[13] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Sap",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 167 / 255,
+					G = 168 / 255,
+					R = 167 / 255
+				}
+			},				
+
+			[14] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
 				Spell = "Subterfuge",
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 438,
+				Y = 466,
 
 				Color =
 				{
@@ -346,11 +593,125 @@ Configuration.Themes.Default.Timers =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
+				Spell = "Cheap Shot",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 147 / 255,
+					G = 168 / 255,
+					R = 193 / 255
+				}
+			},
+
+			[6] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Garrote - Silence",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 0,
+					G = 13 / 255,
+					R = 87 / 255
+				}
+			},
+
+			[7] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Kidney Shot",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 144 / 255,
+					G = 197 / 255,
+					R = 1
+				}
+			},
+
+			[8] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Blind",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 173 / 255,
+					G = 211 / 255,
+					R = 247 / 255
+				}
+			},
+
+			[9] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Gouge",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 215 / 255,
+					G = 212 / 255,
+					R = 213 / 255
+				}
+			},
+
+			[10] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Sap",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 167 / 255,
+					G = 168 / 255,
+					R = 167 / 255
+				}
+			},
+
+			[11] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
 				Spell = "Subterfuge",
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 410,
+				Y = 438,
 
 				Color =
 				{

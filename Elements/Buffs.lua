@@ -106,7 +106,7 @@ function HandleBuffs()
 
 				_G["BuffButton" .. I .. "Duration"]:ClearAllPoints()
 				_G["BuffButton" .. I .. "Duration"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
-				_G["BuffButton" .. I .. "Duration"]:SetPoint("CENTER", 1, 0)
+				_G["BuffButton" .. I .. "Duration"]:SetPoint("CENTER", 2, 0)
 				_G["BuffButton" .. I .. "Duration"]:SetShadowOffset(0, 0)
 
 				_G["BuffButton" .. I .. "Icon"]:SetTexCoord(GetConfiguration().Buffs.TextureCoordinate.Left, GetConfiguration().Buffs.TextureCoordinate.Right, GetConfiguration().Buffs.TextureCoordinate.Top, GetConfiguration().Buffs.TextureCoordinate.Bottom)
@@ -174,7 +174,7 @@ function HandleBuffs()
 
 				_G["DebuffButton" .. I .. "Duration"]:ClearAllPoints()
 				_G["DebuffButton" .. I .. "Duration"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
-				_G["DebuffButton" .. I .. "Duration"]:SetPoint("CENTER", 1, 0)
+				_G["DebuffButton" .. I .. "Duration"]:SetPoint("CENTER", 2, 0)
 				_G["DebuffButton" .. I .. "Duration"]:SetShadowOffset(0, 0)
 
 				_G["DebuffButton" .. I .. "Icon"]:SetTexCoord(GetConfiguration().Buffs.TextureCoordinate.Left, GetConfiguration().Buffs.TextureCoordinate.Right, GetConfiguration().Buffs.TextureCoordinate.Top, GetConfiguration().Buffs.TextureCoordinate.Bottom)
@@ -251,7 +251,7 @@ function HandleBuffs()
 
 				_G["TempEnchant" .. I .. "Duration"]:ClearAllPoints()
 				_G["TempEnchant" .. I .. "Duration"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
-				_G["TempEnchant" .. I .. "Duration"]:SetPoint("CENTER", 1, 0)
+				_G["TempEnchant" .. I .. "Duration"]:SetPoint("CENTER", 2, 0)
 				_G["TempEnchant" .. I .. "Duration"]:SetShadowOffset(0, 0)
 
 				_G["TempEnchant" .. I .. "Icon"]:SetTexCoord(GetConfiguration().Buffs.TextureCoordinate.Left, GetConfiguration().Buffs.TextureCoordinate.Right, GetConfiguration().Buffs.TextureCoordinate.Top, GetConfiguration().Buffs.TextureCoordinate.Bottom)

@@ -300,6 +300,12 @@ Configuration.Themes.Default =
 				Timers[I].Y = Timers[I].Y + 28
 			end
 		end
+
+		if not EnableSideBars then
+			GetConfiguration().ActionBars.Player3 = nil
+			GetConfiguration().ActionBars.Player4 = nil
+			GetConfiguration().Buffs.X = GetConfiguration().Buffs.X + 72
+		end
 	end,
 
 	Meter =
