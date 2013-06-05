@@ -11,14 +11,17 @@ function HandleBuffs()
 				Self.duration:Hide()
 			end
 		end
+
+		BuffFrame:ClearAllPoints()
+		BuffFrame:SetPoint(GetConfiguration().Buffs.Anchor, GetConfiguration().Buffs.X, GetConfiguration().Buffs.Y)
+
+		BuffFrame.ClearAllPoints = Blank
+		BuffFrame.SetPoint = Blank
 	  
 		local OriginalBuffFrame_Update = BuffFrame_Update	
 
 		BuffFrame_Update = function()
 			OriginalBuffFrame_Update()
-
-			BuffFrame:ClearAllPoints()
-			BuffFrame:SetPoint(GetConfiguration().Buffs.Anchor, GetConfiguration().Buffs.X, GetConfiguration().Buffs.Y)
 
 			local Class = select(2, UnitClass("Player"))
 			local GreaterBuff = BUFF_ACTUAL_DISPLAY
@@ -54,6 +57,9 @@ function HandleBuffs()
 				else
 					_G["BuffButton" .. I]:SetPoint("TOPRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), -3)
 				end
+
+				_G["BuffButton" .. I].ClearAllPoints = Blank
+				_G["BuffButton" .. I].SetPoint = Blank
 
 				if not  _G["BuffButton" .. I].BackgroundBottom then
 					_G["BuffButton" .. I].BackgroundBottom = _G["BuffButton" .. I]:CreateTexture(nil, "LOW")
@@ -121,6 +127,9 @@ function HandleBuffs()
 				else
 					_G["DebuffButton" .. I]:SetPoint("BOTTOMRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), 3)
 				end
+
+				_G["DebuffButton" .. I].ClearAllPoints = Blank
+				_G["DebuffButton" .. I].SetPoint = Blank
 
 				if not  _G["DebuffButton" .. I].BackgroundBottom then
 					_G["DebuffButton" .. I].BackgroundBottom = _G["DebuffButton" .. I]:CreateTexture(nil, "LOW")
@@ -198,6 +207,9 @@ function HandleBuffs()
 						_G["TempEnchant" .. I]:SetPoint("BOTTOMRIGHT", -(((I - 1) * GetConfiguration().Buffs.Width) + ((I - 1) * 4) + 3), 3)
 					end
 				end
+
+				_G["TempEnchant" .. I].ClearAllPoints = Blank
+				_G["TempEnchant" .. I].SetPoint = Blank
 
 				if not  _G["TempEnchant" .. I].BackgroundBottom then
 					_G["TempEnchant" .. I].BackgroundBottom = _G["TempEnchant" .. I]:CreateTexture(nil, "LOW")

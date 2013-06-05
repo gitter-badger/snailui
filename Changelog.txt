@@ -9,6 +9,18 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.7.4
+- Timers will now appear above the raid frames instead of below them for healers
+- Inactive opacity for frames changed from 10% to 25%
+- Life Cocoon healing indicator added
+- Mistweaver Monk timers added
+- Loot frame moved to the top of the screen
+- Fixed a bug where the buff frame was being moved under certain conditions
+- Fixed a bug where the new transmogrification frame was not displaying correctly
+- Fixed a bug where you were not able to change talents without disabling the UI
+
+------------------------------------------------------------------------------
+
 Version 0.7.3
 - Sap timer added for Rogues
 - Updated for 5.3

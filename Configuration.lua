@@ -3,7 +3,7 @@
 
 Configuration =
 {
-	InactiveAlpha = 0.1,
+	InactiveAlpha = 0.25,
 	Texture = "Interface\\AddOns\\SnailUI\\Media\\SnailUI.tga",
 	Theme = "Default",
 

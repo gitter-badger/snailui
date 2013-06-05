@@ -34,6 +34,7 @@ Configuration.Themes.Default.HealingIndicators =
 			"Renewing Mist",
 			"Zen Sphere",
 			"Enveloping Mist",
+			"Life Cocoon",
 			"Soothing Mist"
 		}
 	},

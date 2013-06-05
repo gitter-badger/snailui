@@ -289,7 +289,7 @@ Configuration.Themes.Default =
 
 		if #Timers > 0 then
 			for I = 1, #Timers do
-				if ((Class == "PALADIN") and (Specialization == "HOLY")) or ((Class == "PRIEST") and (Specialization == "HOLY")) then
+				if ((Class == "MONK") and (Specialization == "MISTWEAVER")) or ((Class == "PALADIN") and (Specialization == "HOLY")) or ((Class == "PRIEST") and (Specialization == "HOLY")) then
 					GetConfiguration().Raid.Y = GetConfiguration().Raid.Y + 28
 				end
 			end

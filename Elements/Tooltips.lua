@@ -1,7 +1,7 @@
--- Tooltip.lua
+-- Tooltips.lua
 -- Written by Snail
 
-function HandleTooltip()
+function HandleTooltips()
 	local Class = select(2, UnitClass("Player"))
 
 	GameTooltip:SetBackdrop(nil)

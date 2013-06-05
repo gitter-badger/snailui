@@ -3,6 +3,84 @@
 
 Configuration.Themes.Default.Timers =
 {
+	["MONK"] =
+	{
+		["MISTWEAVER"] =
+		{
+			[1] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Expel Harm",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 270,
+
+				Color =
+				{
+					B = 165 / 255,
+					G = 190 / 255,
+					R = 8 / 255
+				}
+			},
+
+			[2] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Renewing Mist",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 298,
+
+				Color =
+				{
+					B = 141 / 255,
+					G = 186 / 255,
+					R = 57 / 255
+				}
+			},
+
+			[3] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Chi Wave",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 326,
+
+				Color =
+				{
+					B = 223 / 255,
+					G = 251 / 255,
+					R = 61 / 255
+				}
+			},
+
+			[4] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Mana Tea",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 354,
+
+				Color =
+				{
+					B = 1,
+					G = 165 / 255,
+					R = 13 / 255
+				}
+			}
+		}
+	},
+
 	["ROGUE"] =
 	{
 		[1] =
