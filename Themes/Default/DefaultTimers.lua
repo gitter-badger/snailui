@@ -3,19 +3,200 @@
 
 Configuration.Themes.Default.Timers =
 {
+	["HUNTER"] =
+	{
+		[1] =
+		{
+			Anchor = "BOTTOM",
+			Height = 24,
+			Spell = "Serpent Sting",
+			Type = "Debuff",
+			Unit = "Target",
+			Width = 464,
+			X = 26,
+			Y = 298,
+
+			Color =
+			{
+				B = 30 / 255,
+				G = 115 / 255,
+				R = 79 / 255
+			}
+		},
+
+		["SURVIVAL"] =
+		{
+			[1] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Explosive Shot",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 326,
+
+				Color =
+				{
+					B = 33 / 255,
+					G = 138 / 255,
+					R = 235 / 255
+				}
+			},
+
+			[2] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Black Arrow",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 354,
+
+				Color =
+				{
+					B = 185 / 255,
+					G = 0,
+					R = 102 / 255
+				}
+			},
+
+			[3] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Dire Beast",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 124 / 255,
+					G = 107 / 255,
+					R = 66 / 255
+				}
+			},
+
+			[5] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Kill Shot",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 33 / 255,
+					G = 22 / 255,
+					R = 179 / 255
+				}
+			}
+		}
+	},
+
+	["MAGE"] =
+	{
+		["FIRE"] =
+		{
+			[1] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Living Bomb",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 242,
+
+				Color =
+				{
+					B = 16 / 255,
+					G = 204 / 255,
+					R = 247 / 255
+				}
+			},
+
+			[2] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				ShowAmount = true,
+				Spell = "Ignite",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 270,
+
+				Color =
+				{
+					B = 20 / 255,
+					G = 101 / 255,
+					R = 230 / 255
+				}
+			},
+
+			[3] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Inferno Blast",
+				Type = "Cooldown",
+				Width = 464,
+				X = 26,
+				Y = 298,
+
+				Color =
+				{
+					B = 13 / 255,
+					G = 33 / 255,
+					R = 220 / 255
+				}
+			},
+
+			[4] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				ShowAmount = true,
+				Spell = "Combustion",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 326,
+
+				Color =
+				{
+					B = 6 / 255,
+					G = 158 / 255,
+					R = 223 / 255
+				}
+			}
+		}
+	},
+
 	["MONK"] =
 	{
 		["MISTWEAVER"] =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
+				Anchor = "TOP",
+				AnchorToRaid = true,
 				Height = 24,
 				Spell = "Expel Harm",
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 270,
+				Y = 25,
 
 				Color =
 				{
@@ -27,13 +208,14 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
+				Anchor = "TOP",
+				AnchorToRaid = true,
 				Height = 24,
 				Spell = "Renewing Mist",
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 298,
+				Y = 53,
 
 				Color =
 				{
@@ -45,13 +227,14 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
+				Anchor = "TOP",
+				AnchorToRaid = true,
 				Height = 24,
 				Spell = "Chi Wave",
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 326,
+				Y = 81,
 
 				Color =
 				{
@@ -63,13 +246,14 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
+				Anchor = "TOP",
+				AnchorToRaid = true,
 				Height = 24,
 				Spell = "Mana Tea",
 				Type = "Cooldown",
 				Width = 464,
 				X = 26,
-				Y = 354,
+				Y = 109,
 
 				Color =
 				{

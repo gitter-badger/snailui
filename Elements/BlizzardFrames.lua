@@ -5,35 +5,58 @@ function HandleBlizzardFrames()
 	CompactRaidFrameContainer:UnregisterAllEvents()
 	CompactRaidFrameManager:UnregisterAllEvents()
 
-	ExtraActionBarFrame:ClearAllPoints()
-	ExtraActionBarFrame:SetPoint("TOP", UIParent, 0, -100)
+	local OriginalExtraActionBar_OnShow = ExtraActionBar_OnShow
 
-	ExtraActionBarFrame.ClearAllPoints = Blank
-	ExtraActionBarFrame.SetPoint = Blank
+	ExtraActionBar_OnShow = function(Self)
+		OriginalExtraActionBar_OnShow(Self)
 
-	GhostFrame:ClearAllPoints()
-	GhostFrame:SetPoint("TOP", 0, -100)
-	GhostFrame.OriginalSetPoint = ExtraActionBarFrame.SetPoint
-	GhostFrame.SetPoint = function()
-		GhostFrame:ClearAllPoints()
-		GhostFrame:OriginalSetPoint("TOP", 0, -100)
+		ExtraActionButton1:ClearAllPoints()
+		ExtraActionButton1:SetPoint("TOP", 0, -125)
 	end
 
-	VehicleSeatIndicator:ClearAllPoints()
-	VehicleSeatIndicator:SetPoint("BOTTOMRIGHT", WatchFrame, "BOTTOMLEFT", -4, 4)
-	VehicleSeatIndicator.OriginalSetPoint = VehicleSeatIndicator.SetPoint
-	VehicleSeatIndicator.SetPoint = function()
-		VehicleSeatIndicator:ClearAllPoints()
-		VehicleSeatIndicator:OriginalSetPoint("BOTTOMRIGHT", WatchFrame, "BOTTOMLEFT", -4, 4)
+	GhostFrame:HookScript("OnShow",
+		function(Self)
+			Self:SetPoint("TOP", 0, -125)
+		end
+	)
+
+	VehicleSeatIndicator:HookScript("OnShow",
+		function(Self)
+			Self:ClearAllPoints()
+			Self:SetPoint("BOTTOMRIGHT", WatchFrame, "BOTTOMLEFT", -4, 4)
+
+			Self.ClearAllPoints = Blank
+			Self.SetPoint = Blank
+
+			if ExtraButton then
+				if ExtraButton:GetAlpha() == 0 then
+					Self:Hide()
+				end
+			end
+		end
+	)
+
+	local OriginalWatchFrame_Update = WatchFrame_Update
+
+	WatchFrame_Update = function(Self)
+		OriginalWatchFrame_Update(Self)
+
+		if not Self then
+			Self = WatchFrame
+		end
+
+		Self:ClearAllPoints()
+		Self:SetPoint("BOTTOMRIGHT", -4, 4)
+
+		Self.ClearAllPoints = Blank
+		Self.SetPoint = Blank
 	end
 
-	WatchFrame:ClearAllPoints()
-	WatchFrame:SetPoint("BOTTOMRIGHT", -4, 4)
-	WatchFrame.OriginalSetPoint = WatchFrame.SetPoint
-	WatchFrame.SetPoint = function()
-		WatchFrame:ClearAllPoints()
-		WatchFrame:OriginalSetPoint("BOTTOMRIGHT", -4, 4)
-	end
+	WorldStateAlwaysUpFrame:HookScript("OnShow",
+		function(Self)
+			Self:SetPoint("TOP", 0, -25)
+		end
+	)
 
 	local OriginalPetBattleFrame_Display = PetBattleFrame_Display
 
@@ -44,7 +67,7 @@ function HandleBlizzardFrames()
 		Self:SetFrameStrata("HIGH")
 	end
 
-	local Frames =
+	Frames =
 	{
 		"CompactRaidFrameContainer",
 		"CompactRaidFrameManager",

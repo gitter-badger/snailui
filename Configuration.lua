@@ -3,6 +3,8 @@
 
 Configuration =
 {
+	GoTexture = "Interface\\AddOns\\SnailUI\\Media\\Go.tga",
+	GoTextureGlow = "Interface\\AddOns\\SnailUI\\Media\\GoGlow.tga",
 	InactiveAlpha = 0.25,
 	Texture = "Interface\\AddOns\\SnailUI\\Media\\SnailUI.tga",
 	Theme = "Default",

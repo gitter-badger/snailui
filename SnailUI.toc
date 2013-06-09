@@ -4,7 +4,7 @@
 ## Interface: 50300
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.7.4
+## Version: 0.8.1
 
 Configuration.lua
 Functions.lua
@@ -28,7 +28,6 @@ Elements\BlizzardFrames.lua
 Elements\Buffs.lua
 Elements\CastingBar.lua
 Elements\Chat.lua
-Elements\ChatBubbles.lua
 Elements\Colors.lua
 Elements\ConsoleVariables.lua
 Elements\DebuffIndicators.lua
@@ -36,10 +35,10 @@ Elements\ExperienceBar.lua
 Elements\ExtraButton.lua
 Elements\Focus.lua
 Elements\FocusTarget.lua
+Elements\GarbageCollector.lua
 Elements\HealingIndicators.lua
 Elements\HealthBar.lua
 Elements\InterfaceOptions.lua
-Elements\Loot.lua
 Elements\Meter.lua
 Elements\Minimap.lua
 Elements\NoTaint.lua
@@ -53,6 +52,7 @@ Elements\Tags.lua
 Elements\Target.lua
 Elements\TargetTarget.lua
 Elements\Timers.lua
+Elements\TimerTrackers.lua
 Elements\Tooltips.lua
 Elements\Unit.lua
 Elements\VendorAutoRepair.lua

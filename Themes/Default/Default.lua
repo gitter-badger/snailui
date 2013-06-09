@@ -182,7 +182,7 @@ Configuration.Themes.Default =
 		Configuration.Themes.Default["DRUID"]["BALANCE"] = DefaultWithClassBar
 		Configuration.Themes.Default["DRUID"]["FERAL"] = DefaultWithClassBar
 		Configuration.Themes.Default["DRUID"]["RESTORATION"] = DefaultHealer
-		Configuration.Themes.Default["HUNTER"] = DefaultWithPet
+		Configuration.Themes.Default["HUNTER"] = DefaultWithClassBarWithPet
 		Configuration.Themes.Default["MAGE"] = Configuration.Themes.Default
 		Configuration.Themes.Default["MAGE"]["FROST"] = DefaultWithPet
 		Configuration.Themes.Default["MONK"] = DefaultWithClassBar
@@ -280,19 +280,17 @@ Configuration.Themes.Default =
 					end
 				end
 			end
-		elseif (Class == "WARRIOR") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) then
-			DefaultWithClassBar.Player.PowerBar.Border = true
-			DefaultWithClassBar.Player.PowerBar.Height = 24
-			DefaultWithClassBar.Player.PowerBar.Width = 516
-			DefaultWithClassBar.Player.PowerBar.Y = 25
-		end
+		elseif (Class == "HUNTER") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) or (Class == "WARRIOR") then
+			local T = DefaultWithClassBar
 
-		if #Timers > 0 then
-			for I = 1, #Timers do
-				if ((Class == "MONK") and (Specialization == "MISTWEAVER")) or ((Class == "PALADIN") and (Specialization == "HOLY")) or ((Class == "PRIEST") and (Specialization == "HOLY")) then
-					GetConfiguration().Raid.Y = GetConfiguration().Raid.Y + 28
-				end
+			if Class == "HUNTER" then
+				T = DefaultWithClassBarWithPet
 			end
+
+			T.Player.PowerBar.Border = true
+			T.Player.PowerBar.Height = 24
+			T.Player.PowerBar.Width = 516
+			T.Player.PowerBar.Y = 25
 		end
 
 		if Go and (#Timers > 0) then
@@ -584,5 +582,14 @@ Configuration.Themes.Default =
 			X = 0,
 			Y = 3
 		}
+	},
+
+	TimerTrackers =
+	{
+		Anchor = "TOP",
+		Height = 24,
+		Width = 204,
+		X = 0,
+		Y = -33
 	}
 }

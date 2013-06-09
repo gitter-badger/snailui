@@ -1,7 +1,7 @@
 -- Snail.lua
 -- Written by Snail
 
-local Version = "0.7.4"
+local Version = "0.8.1"
 
 oUF:RegisterStyle("SnailUI", 
 	function(Self, Unit)
@@ -46,14 +46,13 @@ oUF:Factory(
 		HandleBlizzardFrames()
 		HandleBuffs()
 		HandleChat()
-		HandleChatBubbles()
 		HandleConsoleVariables()
 		HandleExperienceBar()
 		HandleExtraButton()
 		HandleFocus(Self)
 		HandleFocusTarget(Self)
+		HandleGarbageCollector()
 		HandleInterfaceOptions(Version)
-		HandleLoot()
 		HandleMeter()
 		HandleMinimap()
 		HandlePet(Self)
@@ -62,6 +61,7 @@ oUF:Factory(
 		HandleTarget(Self)
 		HandleTargetTarget(Self)
 		HandleTimers()
+		HandleTimerTrackers()
 		HandleTooltips()
 
 		Self:SetActiveStyle("SnailUI")

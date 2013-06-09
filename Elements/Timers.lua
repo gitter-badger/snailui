@@ -35,7 +35,13 @@ function HandleTimers()
 				TimerBars[I]:RegisterEvent("PLAYER_TARGET_CHANGED")
 				TimerBars[I]:RegisterEvent("SPELL_UPDATE_COOLDOWN")
 				TimerBars[I]:RegisterEvent("UNIT_AURA")
-				TimerBars[I]:SetPoint(Timers[I].Anchor, Timers[I].X, Timers[I].Y)
+
+				if Raid and Timers[I].AnchorToRaid then
+					TimerBars[I]:SetPoint(Timers[I].Anchor, Raid, Timers[I].X, Timers[I].Y)
+				else
+					TimerBars[I]:SetPoint(Timers[I].Anchor, Timers[I].X, Timers[I].Y)
+				end
+
 				TimerBars[I]:SetSize(Timers[I].Width - 6, Timers[I].Height - 6)
 				TimerBars[I]:SetStatusBarTexture(Configuration.Texture)
 				TimerBars[I]:SetStatusBarColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
@@ -85,6 +91,7 @@ function HandleTimers()
 					function(Self)
 						Self:SetScript("OnUpdate",
 							function(Self, ElapsedTime)
+								local SpellAmount
 								local SpellCount
 								local SpellDuration
 								local SpellExpires
@@ -92,7 +99,7 @@ function HandleTimers()
 								local SpellName
 
 								if Self.Timer.Type == "Buff" then
-									SpellName, _, SpellIcon, SpellCount, _, SpellDuration, SpellExpires = UnitBuff(Self.Timer.Unit, Self.Timer.Spell, nil, "PLAYER")
+									SpellName, _, SpellIcon, SpellCount, _, SpellDuration, SpellExpires, _, _, _, _, _, _, _, SpellAmount = UnitBuff(Self.Timer.Unit, Self.Timer.Spell, nil, "PLAYER")
 								elseif Self.Timer.Type == "Cooldown" then
 									SpellExpires, SpellDuration, Enabled = GetSpellCooldown(Self.Timer.Spell)
 
@@ -101,7 +108,7 @@ function HandleTimers()
 										SpellExpires = SpellExpires + SpellDuration
 									end
 								elseif Self.Timer.Type == "Debuff" then
-									SpellName, _, SpellIcon, SpellCount, _, SpellDuration, SpellExpires = UnitDebuff(Self.Timer.Unit, Self.Timer.Spell, nil, "PLAYER")
+									SpellName, _, SpellIcon, SpellCount, _, SpellDuration, SpellExpires, _, _, _, _, _, _, _, SpellAmount = UnitDebuff(Self.Timer.Unit, Self.Timer.Spell, nil, "PLAYER")
 								end
 
 								if SpellName then
@@ -141,6 +148,8 @@ function HandleTimers()
 
 									if SpellCount and (SpellCount > 1) then
 										Self.Text:SetText(SpellName .. ": " .. SpellCount)
+									elseif Self.ShowAmount then
+										Self.Text:SetText(SpellName .. ": " .. SpellAmount)
 									else
 										Self.Text:SetText(SpellName)
 									end
@@ -230,6 +239,10 @@ function HandleTimers()
 				end
 
 				TimerBars[I].Timer = Timers[I]
+
+				if Timers[I].ShowAmount then
+					TimerBars[I].ShowAmount = true
+				end
 			end
 		end
 	end

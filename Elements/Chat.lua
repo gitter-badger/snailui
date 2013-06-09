@@ -76,5 +76,88 @@ function HandleChat()
 
 		ChatFrame1EditBox:Hide()
 		ChatFrame1EditBox:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", -5, 6)
+
+		local Events =
+		{
+			"CHAT_MSG_BN_CONVERSATION",
+			"CHAT_MSG_BN_INLINE_TOAST_BROADCAST",
+
+			"CHAT_MSG_BN_WHISPER",
+			"CHAT_MSG_BN_WHISPER_INFORM",
+			"CHAT_MSG_CHANNEL",
+			"CHAT_MSG_DND",
+			"CHAT_MSG_EMOTE",
+			"CHAT_MSG_GUILD",
+			"CHAT_MSG_INSTANCE_CHAT",
+			"CHAT_MSG_INSTANCE_CHAT_LEADER",
+			"CHAT_MSG_OFFICER",
+			"CHAT_MSG_PARTY",
+			"CHAT_MSG_PARTY_LEADER",
+			"CHAT_MSG_RAID",
+			"CHAT_MSG_RAID_LEADER",
+			"CHAT_MSG_RAID_WARNING",
+			"CHAT_MSG_SAY",
+			"CHAT_MSG_WHISPER",
+			"CHAT_MSG_WHISPER_INFORM"
+		}
+
+		local Patterns =
+		{
+			"(https://%S+)",
+			"(http://%S+)",
+			"(www%.%S+)",
+			"(%w+%.%S+)",
+			"(%d+%.%d+%.%d+%.%d+:?%d*)"
+		}
+
+		for I = 1, #Events do
+			ChatFrame_AddMessageEventFilter(Events[I],
+				function(Self, Event, String, Sender, ...)
+					for I = 1, #Patterns do
+						local Result, Match = string.gsub(String, Patterns[I], "|cFFFFFFFF|Hsurl:%1|h[%1]|h|r")
+
+						if Match > 0 then
+							return false, Result, ...
+						end
+					end
+
+					if not Self.Events then
+						Self.Events = {}
+					end
+
+					if not Self.Events[Event] then
+						Self.Events[Event] = {}
+					end
+
+					if (not Self.Events[Event].RepeatMessages) or (Self.Events[Event].RepeatCount > 100) then
+						Self.Events[Event].RepeatCount = 0
+						Self.Events[Event].RepeatMessages = {}
+					end
+
+					Self.Events[Event].LastMessage = Self.Events[Event].RepeatMessages[Sender]
+
+					if Self.Events[Event].LastMessage == String then
+						return true
+					end
+
+					Self.Events[Event].RepeatMessages[Sender] = String
+					Self.Events[Event].RepeatCount = Self.Events[Event].RepeatCount + 1
+				end
+			)
+		end
+
+		local OriginalSetItemRef = SetItemRef
+
+		SetItemRef = function(Link, String, Button)
+			if string.sub(Link, 1, 4) == "surl" then
+				local Editbox = ChatEdit_ChooseBoxForSend()
+				ChatEdit_ActivateChat(Editbox)
+
+				Editbox:Insert(string.sub(Link, 6))
+				Editbox:HighlightText()
+			end
+
+			return OriginalSetItemRef(Link, String, Button)
+		end
 	end
 end
