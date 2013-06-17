@@ -13,7 +13,7 @@ A lot of aspects of SnailUI can be changed via the in game interface options (or
 
 Features
 - Fully supports any resolution (less than 1024x768 can look strange) and any multisample level
-- Theme based UI that offers tons of customization
+- Theme based UI
 - Supports all classes and specs, changing based on what your current spec is
 - Some specific talents are supported (Such as removing pet bars if you have Grimoire of Sacrifice for Warlocks)
 - A lot of Healbot-esque features are supported such as health prediction
@@ -32,6 +32,9 @@ Features
 - Buff/debuff/cooldown timers for each class/spec
 - Dispellable debuff indicators for raid frames
 - Healing indicators for raid frames
+- Automatically rolls greed on green items
+- Automated garbage collector that periodically frees up memory
+- Chat filters to reduce spam
 
 ------------------------------------------------------------------------------
 
