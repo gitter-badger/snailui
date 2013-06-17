@@ -3,118 +3,102 @@
 
 local Meter
 
-RAID_CLASS_COLORS["UNKNOWN"] =
-{
-	b = 1,
-	g = 0,
-	r = 1
-}
-
-if not MeterData then
-	MeterData =
-	{
-		Absorbs = {},
-		CombatTime = 0,
-		Data = {},
-		InCombat = nil,
-		Pets = {},
-		TotalDamage = 0,
-		TotalHealing = 0
-	}
-end
-
 local function RefreshTooltip(Self)
 	local APS
-	local Data = MeterData.Data[(Self.I - 1) + MeterData.Position]
+	local Unit = Data.Meter.Fights[Data.Meter.Fight][(Self.I - 1) + Data.Meter.Position]
 
-	if (Data.EndTime - Data.StartTime) > 0 then
-		APS = ShortNumber(math.floor((Data[MeterData.Mode] / (Data.EndTime - Data.StartTime)) + 0.05))
+	if (Unit.EndTime - Unit.StartTime) > 0 then
+		APS = ShortNumber(math.floor((Unit[Data.Meter.Mode] / (Unit.EndTime - Unit.StartTime)) + 0.05))
 	else
-		APS = ShortNumber(math.floor(Data[MeterData.Mode] + 0.05))
+		APS = ShortNumber(math.floor(Unit[Data.Meter.Mode] + 0.05))
 	end
 
 	GameTooltip_SetDefaultAnchor(GameTooltip, Self)
 
-	if Data.Realm:len() > 0 then
-		GameTooltip:AddDoubleLine(Data.Name .. "-" .. Data.Realm, ShortNumber(Data[MeterData.Mode]) .. " (" .. APS .. ")")
+	if Unit.Realm:len() > 0 then
+		GameTooltip:AddDoubleLine(Unit.Name .. "-" .. Unit.Realm .. GetActiveTime(Unit.EndTime - Unit.StartTime), ShortNumber(Unit[Data.Meter.Mode]) .. " (" .. APS .. ")")
 	else
-		GameTooltip:AddDoubleLine(Data.Name, ShortNumber(Data[MeterData.Mode]) .. " (" .. APS .. ")")
+		GameTooltip:AddDoubleLine(Unit.Name .. GetActiveTime(Unit.EndTime - Unit.StartTime), ShortNumber(Unit[Data.Meter.Mode]) .. " (" .. APS .. ")")
 	end
 
-	for Index, Spell in ipairs(Data[MeterData.Mode .. "Spells"]) do
-		if (Data.EndTime - Data.StartTime) > 0 then
-			APS = ShortNumber(math.floor((Spell.Amount / (Data.EndTime - Data.StartTime)) + 0.05))
+	for Index, Spell in ipairs(Unit[Data.Meter.Mode .. "Spells"]) do
+		if (Unit.EndTime - Unit.StartTime) > 0 then
+			APS = ShortNumber(math.floor((Spell.Amount / (Unit.EndTime - Unit.StartTime)) + 0.05))
 		else
 			APS = ShortNumber(math.floor(Spell.Amount + 0.05))
 		end
 
-		GameTooltip:AddDoubleLine(Index .. ". " .. Spell.SpellName, ShortNumber(Spell.Amount) .. " (" .. APS .. ", " .. string.format("%.1f", (Spell.Amount / Data[MeterData.Mode]) * 100) .. "%)", 1, 1, 1, 1, 1, 1)
+		GameTooltip:AddDoubleLine(Index .. ". " .. Spell.SpellName, ShortNumber(Spell.Amount) .. " (" .. APS .. ", " .. string.format("%.1f", (Spell.Amount / Unit[Data.Meter.Mode]) * 100) .. "%)", 1, 1, 1, 1, 1, 1)
 	end
 
 	GameTooltip:Show()
 end
 
 local function RefreshMeter(Self)
-	table.sort(MeterData.Data,
-		function(A, B)
-			if A[MeterData.Mode] and B[MeterData.Mode] then
-				return A[MeterData.Mode] > B[MeterData.Mode]
-			end
-
-			return nil
-		end
-	)
-
-	for _, Data in ipairs(MeterData.Data) do
-		table.sort(Data.DamageSpells,
+	if #Data.Meter.Fights > 0 then
+		table.sort(Data.Meter.Fights[Data.Meter.Fight],
 			function(A, B)
-				return A.Amount > B.Amount
+				if A[Data.Meter.Mode] and B[Data.Meter.Mode] then
+					return A[Data.Meter.Mode] > B[Data.Meter.Mode]
+				end
+
+				return nil
 			end
 		)
-	end
 
-	for _, Data in ipairs(MeterData.Data) do
-		table.sort(Data.HealingSpells,
-			function(A, B)
-				return A.Amount > B.Amount
-			end
-		)
-	end
+		for _, Unit in ipairs(Data.Meter.Fights[Data.Meter.Fight]) do
+			table.sort(Unit.DamageSpells,
+				function(A, B)
+					return A.Amount > B.Amount
+				end
+			)
+		end
 
-	local MaxAmount = 0
+		for _, Unit in ipairs(Data.Meter.Fights[Data.Meter.Fight]) do
+			table.sort(Unit.HealingSpells,
+				function(A, B)
+					return A.Amount > B.Amount
+				end
+			)
+		end
 
-	for I = 1, #MeterData.Data do
-		if MeterData.Data[I][MeterData.Mode] then
-			if MeterData.Data[I][MeterData.Mode] > MaxAmount then
-				MaxAmount = MeterData.Data[I][MeterData.Mode]
+		local MaxAmount = 0
+
+		for I = 1, #Data.Meter.Fights[Data.Meter.Fight] do
+			if Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode] then
+				if Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode] > MaxAmount then
+					MaxAmount = Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode]
+				end
 			end
 		end
-	end
 
-	for I = 1, #Self.Bars do
-		if MeterData.Data[(I - 1) + MeterData.Position] then
-			if MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode] then
-				if MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode] > 0 then
-					Self.Bars[I]:SetMinMaxValues(0, MaxAmount)
-					Self.Bars[I]:SetValue(MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode])
-					Self.Bars[I]:Show()
+		for I = 1, #Self.Bars do
+			if Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position] then
+				if Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode] then
+					if Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode] > 0 then
+						Self.Bars[I]:SetMinMaxValues(0, MaxAmount)
+						Self.Bars[I]:SetValue(Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode])
+						Self.Bars[I]:Show()
 
-					if MeterData.Data[(I - 1) + MeterData.Position].Hostile then
-						Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].b / 2)
-						Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].b / 2)
-						Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].b / 2)
+						if Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Hostile then
+							Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].b / 2)
+							Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].b / 2)
+							Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].r / 2, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].g / 2, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].b / 2)
+						else
+							Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].b)
+							Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].b)
+							Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Class or "UNKNOWN"].b)
+						end
+
+						Self.Bars[I].LeftText:SetText(Trim3(((I - 1) + Data.Meter.Position) .. ". " .. Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].Name))
+
+						if (Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].EndTime - Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].StartTime) > 0 then
+							Self.Bars[I].RightText:SetText(ShortNumber(Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode]) .. " (" .. ShortNumber(math.floor((Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode] / (Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].EndTime - Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position].StartTime)) + 0.05)) .. ")")
+						else
+							Self.Bars[I].RightText:SetText(ShortNumber(Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode]) .. " (" .. ShortNumber(math.floor(Data.Meter.Fights[Data.Meter.Fight][(I - 1) + Data.Meter.Position][Data.Meter.Mode] + 0.05)) .. ")")
+						end
 					else
-						Self.Bars[I]:SetStatusBarColor(RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].b)
-						Self.Bars[I].LeftText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].b)
-						Self.Bars[I].RightText:SetTextColor(RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].r, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].g, RAID_CLASS_COLORS[MeterData.Data[(I - 1) + MeterData.Position].Class or "UNKNOWN"].b)
-					end
-
-					Self.Bars[I].LeftText:SetText(Trim3(((I - 1) + MeterData.Position) .. ". " .. MeterData.Data[(I - 1) + MeterData.Position].Name))
-
-					if (MeterData.Data[(I - 1) + MeterData.Position].EndTime - MeterData.Data[(I - 1) + MeterData.Position].StartTime) > 0 then
-						Self.Bars[I].RightText:SetText(ShortNumber(MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode]) .. " (" .. ShortNumber(math.floor((MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode] / (MeterData.Data[(I - 1) + MeterData.Position].EndTime - MeterData.Data[(I - 1) + MeterData.Position].StartTime)) + 0.05)) .. ")")
-					else
-						Self.Bars[I].RightText:SetText(ShortNumber(MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode]) .. " (" .. ShortNumber(math.floor(MeterData.Data[(I - 1) + MeterData.Position][MeterData.Mode] + 0.05)) .. ")")
+						Self.Bars[I]:Hide()
 					end
 				else
 					Self.Bars[I]:Hide()
@@ -122,14 +106,12 @@ local function RefreshMeter(Self)
 			else
 				Self.Bars[I]:Hide()
 			end
-		else
-			Self.Bars[I]:Hide()
 		end
-	end
 
-	for I = 1, #GetConfiguration().Meter do
-		if Meter.Bars[I].Hovering then
-			RefreshTooltip(Meter.Bars[I])
+		for I = 1, #GetConfiguration().Meter do
+			if Meter.Bars[I].Hovering then
+				RefreshTooltip(Meter.Bars[I])
+			end
 		end
 	end
 end
@@ -138,24 +120,45 @@ function HandleMeter()
 	if GetConfiguration().Meter then
 		local LoginTime = time()
 
-		if not LogoutTime then
-			LogoutTime = 0
+		if not Options.LogoutTime then
+			Options.LogoutTime = 0
 		end
 
-		if (LoginTime - LogoutTime) >= 180 then
-			MeterData.Absorbs = {}
-			MeterData.Pets = {}
+		if not Data.Meter then
+			Data.Meter =
+			{
+				Absorbs = {},
+				Fight = 1,
+				InCombat = nil,
+				Mode = "Damage",
+				Pets = {},
+				Position = 1,
+
+				Fights =
+				{
+					[1] =
+					{
+						CombatTime = 0,
+						TotalDamage = 0,
+						TotalHealing = 0
+					}
+				}
+			}
 		end
 
-		if not MeterData.Mode then
-			MeterData.Mode = "Damage"
-		end
-
-		if not MeterData.Position then
-			MeterData.Position = 1
+		if (LoginTime - Options.LogoutTime) >= 180 then
+			Data.Meter.Absorbs = {}
+			Data.Meter.Pets = {}
 		end
 
 		local Class = select(2, UnitClass("Player"))
+
+		RAID_CLASS_COLORS["UNKNOWN"] =
+		{
+			b = 1,
+			g = 0,
+			r = 1
+		}
 
 		Meter = CreateFrame("Frame", nil, UIParent)
 		Meter:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -167,14 +170,25 @@ function HandleMeter()
 		Meter:SetScript("OnEvent",
 			function(Self, Event, ...)
 				if Event == "PLAYER_REGEN_DISABLED" then
-					MeterData.CombatTime = 0
-					MeterData.Data = {}
-					MeterData.InCombat = true
-					MeterData.Position = 1
-					MeterData.TotalDamage = 0
-					MeterData.TotalHealing = 0
+					Data.Meter.InCombat = true
+					Data.Meter.Position = 1
 
-					AddPet(MeterData.Pets, UnitGUID("Player"), UnitGUID("Pet"))
+					for I = 5, 1, -1 do
+						if I == 1 then
+							Data.Meter.Fights[I] =
+							{
+								CombatTime = 0,
+								TotalDamage = 0,
+								TotalHealing = 0
+							}
+						else
+							if Data.Meter.Fights[I - 1] and ((Data.Meter.Fights[I - 1].TotalDamage > 0) or (Data.Meter.Fights[I - 1].TotalHealing > 0)) then
+								Data.Meter.Fights[I] = Data.Meter.Fights[I - 1]
+							end
+						end
+					end
+
+					AddPet(Data.Meter.Pets, UnitGUID("Player"), UnitGUID("Pet"))
 
 					if GetNumGroupMembers() > 0 then
 						local InRaid = IsInRaid()
@@ -187,7 +201,7 @@ function HandleMeter()
 						end
 
 						for I = 1, GetNumGroupMembers() do
-							AddPet(MeterData.Pets, UnitGUID(Frame .. I), UnitGUID(Frame .. I .. "Pet"))
+							AddPet(Data.Meter.Pets, UnitGUID(Frame .. I), UnitGUID(Frame .. I .. "Pet"))
 						end
 					end
 
@@ -207,13 +221,13 @@ function HandleMeter()
 						end
 					)
 				elseif Event == "PLAYER_REGEN_ENABLED" then
-					MeterData.CombatTime = GetTime()
-					MeterData.InCombat = nil
-					Meter:SetScript("OnUpdate", nil)
+					Data.Meter.Fights[1].CombatTime = GetTime()
+					Data.Meter.InCombat = nil
 
+					Meter:SetScript("OnUpdate", nil)
 					RefreshMeter(Meter)
 				elseif Event == "PLAYER_LOGOUT" then
-					LogoutTime = time()
+					Options.LogoutTime = time()
 				elseif Event == "COMBAT_LOG_EVENT_UNFILTERED" then
 					local CombatEvent = select(2, ...)
 
@@ -231,16 +245,16 @@ function HandleMeter()
 								Type = select(15, ...)
 							end
 
-							if Amount and (Amount > 0) and MeterData.InCombat and (Type == "ABSORB") and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
+							if Amount and (Amount > 0) and Data.Meter.InCombat and (Type == "ABSORB") and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
 								local Class
-								local Data
 								local GUID = select(8, ...)
 								local IsPet
 								local Name
 								local Realm
+								local Unit
 
 								if (bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
-									GUID = GetPetOwner(MeterData.Pets, GUID)
+									GUID = GetPetOwner(Data.Meter.Pets, GUID)
 
 									if not GUID then
 										GUID = select(8, ...)
@@ -248,7 +262,7 @@ function HandleMeter()
 									end
 								end
 
-								Data = GetData(MeterData.Data, GUID)
+								Unit = GetUnit(Data.Meter.Fights[1], GUID)
 
 								if not IsPet then
 									_, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
@@ -258,8 +272,8 @@ function HandleMeter()
 									Name = select(9, ...)
 								end
 
-								if not Data then
-									MeterData.Data[#MeterData.Data + 1] =
+								if not Unit then
+									Data.Meter.Fights[1][#Data.Meter.Fights[1] + 1] =
 									{
 										Class = Class or "UNKNOWN",
 										Damage = 0,
@@ -273,15 +287,15 @@ function HandleMeter()
 										StartTime = GetTime()
 									}
 
-									Data = MeterData.Data[#MeterData.Data]
+									Unit = Data.Meter.Fights[1][#Data.Meter.Fights[1]]
 								end
 
-								if not MeterData.Absorbs then
-									MeterData.Absorbs = {}
+								if not Data.Meter.Absorbs then
+									Data.Meter.Absorbs = {}
 								end
 
-								if MeterData.Absorbs[GUID] then
-									for _, Info in pairs(MeterData.Absorbs[GUID]) do
+								if Data.Meter.Absorbs[GUID] then
+									for _, Info in pairs(Data.Meter.Absorbs[GUID]) do
 										local SpellName = select(1, GetSpellInfo(Info.Spell))
 
 										for I = 1, 40 do
@@ -295,7 +309,7 @@ function HandleMeter()
 													local IsPet
 													
 													if (bit.band(Info.SourceFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Info.SourceFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
-														SourceGUID = GetPetOwner(MeterData.Pets, SourceGUID)
+														SourceGUID = GetPetOwner(Data.Meter.Pets, SourceGUID)
 
 														if not GUID then
 															SourceGUID = Info.SourceGUID
@@ -303,9 +317,9 @@ function HandleMeter()
 														end
 													end
 
-													local SourceData = GetData(MeterData.Data, SourceGUID)
+													local SourceUnit = GetUnit(Data.Meter.Fights[1], SourceGUID)
 
-													if not SourceData then
+													if not SourceUnit then
 														local SourceClass
 														local SourceName
 														local SourceRealm
@@ -318,7 +332,7 @@ function HandleMeter()
 															SourceName = Info.SourceName
 														end
 
-														MeterData.Data[#MeterData.Data + 1] =
+														Data.Meter.Fights[1][#Data.Meter.Fights[1] + 1] =
 														{
 															Class = SourceClass or "UNKNOWN",
 															Damage = 0,
@@ -332,30 +346,30 @@ function HandleMeter()
 															StartTime = GetTime()
 														}
 
-														SourceData = MeterData.Data[#MeterData.Data]
+														SourceUnit = Data.Meter.Fights[1][#Data.Meter.Fights[1]]
 													end
 
-													local Spell = GetSpell(SourceData.HealingSpells, SpellName)
+													local Spell = GetSpell(SourceUnit.HealingSpells, SpellName)
 
 													if Spell then
 														Spell.Amount = Spell.Amount + (Info.Amount - BuffAmount)
 													else
-														SourceData.HealingSpells[#SourceData.HealingSpells + 1] =
+														SourceUnit.HealingSpells[#SourceUnit.HealingSpells + 1] =
 														{
 															Amount = Info.Amount - BuffAmount,
 															SpellName = SpellName
 														}
 													end
 
-													SourceData.Healing = SourceData.Healing + math.floor(Info.Amount - BuffAmount)
-													MeterData.TotalHealing = MeterData.TotalHealing + math.floor(Info.Amount - BuffAmount)
+													SourceUnit.Healing = SourceUnit.Healing + math.floor(Info.Amount - BuffAmount)
+													Data.Meter.Fights[1].TotalHealing = Data.Meter.Fights[1].TotalHealing + math.floor(Info.Amount - BuffAmount)
 													Info.Amount = BuffAmount
 
-													if MeterData.InCombat then
-														SourceData.EndTime = GetTime()
+													if Data.Meter.InCombat then
+														SourceUnit.EndTime = GetTime()
 													else
-														if SourceData.EndTime == 0 then
-															SourceData.EndTime = MeterData.CombatTime
+														if SourceUnit.EndTime == 0 then
+															SourceUnit.EndTime = Data.Meter.Fights[1].CombatTime
 														end
 													end
 												end
@@ -365,8 +379,8 @@ function HandleMeter()
 								end
 							end
 						elseif (CombatEvent == "DAMAGE_SHIELD") or (CombatEvent == "DAMAGE_SPLIT") or string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") or string.find(CombatEvent, "_DAMAGE") or string.find(CombatEvent, "_DRAIN") or string.find(CombatEvent, "_EXTRA_ATTACKS") or string.find(CombatEvent, "_HEAL") or string.find(CombatEvent, "_LEECH") then
-							local Data
 							local Flags
+							local Unit
 
 							if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
 								Flags = select(10, ...)
@@ -374,7 +388,7 @@ function HandleMeter()
 								Flags = select(6, ...)
 							end
 
-							if (MeterData.InCombat or ((string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED")))) and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
+							if (Data.Meter.InCombat or ((string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED")))) and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
 								local Class
 								local GUID
 								local IsPet
@@ -388,7 +402,7 @@ function HandleMeter()
 								end
 
 								if (bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
-									GUID = GetPetOwner(MeterData.Pets, GUID)
+									GUID = GetPetOwner(Data.Meter.Pets, GUID)
 
 									if not GUID then
 										if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
@@ -401,38 +415,6 @@ function HandleMeter()
 									end
 								end
 
-								Data = GetData(MeterData.Data, GUID)
-
-								if not Data then
-									if not IsPet then
-										_, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
-									end
-
-									if not Name then
-										if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
-											Name = select(9, ...)
-										else
-											Name = select(5, ...)
-										end
-									end
-
-									MeterData.Data[#MeterData.Data + 1] =
-									{
-										Class = Class or "UNKNOWN",
-										Damage = 0,
-										DamageSpells = {},
-										EndTime = 0,
-										GUID = GUID,
-										Healing = 0,
-										HealingSpells = {},
-										Name = Name or "UNKNOWN",
-										Realm = Realm or "",
-										StartTime = GetTime()
-									}
-
-									Data = MeterData.Data[#MeterData.Data]
-								end
-
 								local Amount
 								local Spell
 								local SpellName
@@ -441,8 +423,8 @@ function HandleMeter()
 									Amount = select(16, ...)
 
 									if Amount and (select(15, ...) == "BUFF") then
-										if not MeterData.Absorbs then
-											MeterData.Absorbs = {}
+										if not Data.Meter.Absorbs then
+											Data.Meter.Absorbs = {}
 										end
 
 										local SpellID = select(12, ...)
@@ -451,14 +433,14 @@ function HandleMeter()
 										local SourceName = select(5, ...)
 
 										if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") then
-											local Absorb = GetAbsorb(MeterData.Absorbs, GUID, SpellID, SourceGUID)
+											local Absorb = GetAbsorb(Data.Meter.Absorbs, GUID, SpellID, SourceGUID)
 
 											if Absorb then
 												Absorb.Amount = Amount
 												Absorb.SourceFlags = SourceFlags
 												Absorb.SourceName = SourceName
 											else
-												MeterData.Absorbs[GUID][#MeterData.Absorbs[GUID] + 1] =
+												Data.Meter.Absorbs[GUID][#Data.Meter.Absorbs[GUID] + 1] =
 												{
 													Amount = Amount,
 													SourceFlags = SourceFlags,
@@ -468,7 +450,7 @@ function HandleMeter()
 												}
 											end
 										elseif string.find(CombatEvent, "_AURA_REMOVED") then
-											local Absorb, AbsorbIndex = GetAbsorb(MeterData.Absorbs, GUID, SpellID, SourceGUID)
+											local Absorb, AbsorbIndex = GetAbsorb(Data.Meter.Absorbs, GUID, SpellID, SourceGUID)
 
 											if Absorb then
 												if Absorb.Amount > Amount then
@@ -477,7 +459,7 @@ function HandleMeter()
 													local SourceRealm
 
 													if (bit.band(SourceFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(SourceFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
-														SourceGUID = GetPetOwner(MeterData.Pets, SourceGUID)
+														SourceGUID = GetPetOwner(Data.Meter.Pets, SourceGUID)
 
 														if not SourceGUID then
 															SourceGUID = select(4, ...)
@@ -485,9 +467,9 @@ function HandleMeter()
 														end
 													end
 
-													local SourceData = GetData(MeterData.Data, SourceGUID)
+													local SourceUnit = GetUnit(Data.Meter.Fights[1], SourceGUID)
 
-													if not SourceData then
+													if not SourceUnit then
 														if not SourceIsPet then
 															_, SourceClass, _, _, _, SourceName, SourceRealm = GetPlayerInfoByGUID(SourceGUID)
 														end
@@ -496,7 +478,7 @@ function HandleMeter()
 															SourceName = select(5, ...)
 														end
 
-														MeterData.Data[#MeterData.Data + 1] =
+														Data.Meter.Fights[1][#Data.Meter.Fights[1] + 1] =
 														{
 															Class = SourceClass or "UNKNOWN",
 															Damage = 0,
@@ -510,41 +492,41 @@ function HandleMeter()
 															StartTime = GetTime()
 														}
 
-														SourceData = MeterData.Data[#MeterData.Data]
+														SourceUnit = Data.Meter.Fights[1][#Data.Meter.Fights[1]]
 													end
 
-													if MeterData.InCombat then
-														SourceData.EndTime = GetTime()
+													if Data.Meter.InCombat then
+														SourceUnit.EndTime = GetTime()
 													else
-														if SourceData.EndTime == 0 then
-															SourceData.EndTime = MeterData.CombatTime
+														if SourceUnit.EndTime == 0 then
+															SourceUnit.EndTime = Data.Meter.Fights[1].CombatTime
 														end
 													end
 
 													SpellName = select(13, ...)
-													Spell = GetSpell(SourceData.HealingSpells, SpellName)
+													Spell = GetSpell(SourceUnit.HealingSpells, SpellName)
 
 													if Spell then
 														Spell.Amount = Spell.Amount + (Absorb.Amount - Amount)
 													else
-														SourceData.HealingSpells[#SourceData.HealingSpells + 1] =
+														SourceUnit.HealingSpells[#SourceUnit.HealingSpells + 1] =
 														{
 															Amount = Absorb.Amount - Amount,
 															SpellName = SpellName
 														}
 													end
 
-													SourceData.Healing = SourceData.Healing + math.floor(Absorb.Amount - Amount)
-													MeterData.TotalHealing = MeterData.TotalHealing + math.floor(Absorb.Amount - Amount)
+													SourceUnit.Healing = SourceUnit.Healing + math.floor(Absorb.Amount - Amount)
+													Data.Meter.Fights[1].TotalHealing = Data.Meter.Fights[1].TotalHealing + math.floor(Absorb.Amount - Amount)
 
-													if not MeterData.InCombat then
+													if not Data.Meter.InCombat then
 														RefreshMeter(Meter)
 													end
 												end
 
-												MeterData.Absorbs[GUID][AbsorbIndex] = nil
+												Data.Meter.Absorbs[GUID][AbsorbIndex] = nil
 
-												table.sort(MeterData.Absorbs[GUID],
+												table.sort(Data.Meter.Absorbs[GUID],
 													function(A, B)
 														if A and B then
 															return A.Amount > B.Amount
@@ -554,19 +536,51 @@ function HandleMeter()
 													end
 												)
 
-												if #MeterData.Absorbs[GUID] == 0 then
-													MeterData.Absorbs[GUID] = nil
+												if #Data.Meter.Absorbs[GUID] == 0 then
+													Data.Meter.Absorbs[GUID] = nil
 												end
 											end
 										end
 									end
-								elseif MeterData.InCombat then
-									Data.EndTime = GetTime()
+								elseif Data.Meter.InCombat then
+									Unit = GetUnit(Data.Meter.Fights[1], GUID)
+
+									if not Unit then
+										if not IsPet then
+											_, Class, _, _, _, Name, Realm = GetPlayerInfoByGUID(GUID)
+										end
+
+										if not Name then
+											if string.find(CombatEvent, "_AURA_APPLIED") or string.find(CombatEvent, "_AURA_REFRESH") or string.find(CombatEvent, "_AURA_REMOVED") then
+												Name = select(9, ...)
+											else
+												Name = select(5, ...)
+											end
+										end
+
+										Data.Meter.Fights[1][#Data.Meter.Fights[1] + 1] =
+										{
+											Class = Class or "UNKNOWN",
+											Damage = 0,
+											DamageSpells = {},
+											EndTime = 0,
+											GUID = GUID,
+											Healing = 0,
+											HealingSpells = {},
+											Name = Name or "UNKNOWN",
+											Realm = Realm or "",
+											StartTime = GetTime()
+										}
+
+										Unit = Data.Meter.Fights[1][#Data.Meter.Fights[1]]
+									end
+
+									Unit.EndTime = GetTime()
 
 									if bit.band(Flags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
-										Data.Hostile = true
+										Unit.Hostile = true
 									else
-										Data.Hostile = nil
+										Unit.Hostile = nil
 									end
 
 									SpellName = (select(13, ...) or "Unknown")
@@ -574,20 +588,20 @@ function HandleMeter()
 									if SpellName ~= "Soul Link" then
 										if string.find(CombatEvent, "_HEAL") then
 											Amount = ((select(15, ...) or 0) + (select(17, ...) or 0)) - (select(16, ...) or 0)
-											Spell = GetSpell(Data.HealingSpells, SpellName)
+											Spell = GetSpell(Unit.HealingSpells, SpellName)
 
 											if Spell then
 												Spell.Amount = Spell.Amount + Amount
 											else
-												Data.HealingSpells[#Data.HealingSpells + 1] =
+												Unit.HealingSpells[#Unit.HealingSpells + 1] =
 												{
 													Amount = Amount,
 													SpellName = SpellName
 												}
 											end
 
-											Data.Healing = Data.Healing + Amount
-											MeterData.TotalHealing = MeterData.TotalHealing + Amount
+											Unit.Healing = Unit.Healing + Amount
+											Data.Meter.Fights[1].TotalHealing = Data.Meter.Fights[1].TotalHealing + Amount
 										else
 											if string.find(CombatEvent, "SWING") then
 												Amount = (select(12, ...) or 0)
@@ -611,26 +625,26 @@ function HandleMeter()
 												end
 											end
 
-											Spell = GetSpell(Data.DamageSpells, SpellName)
+											Spell = GetSpell(Unit.DamageSpells, SpellName)
 
 											if Spell then
 												Spell.Amount = Spell.Amount + Amount
 											else
-												Data.DamageSpells[#Data.DamageSpells + 1] =
+												Unit.DamageSpells[#Unit.DamageSpells + 1] =
 												{
 													Amount = Amount,
 													SpellName = SpellName
 												}
 											end
 
-											Data.Damage = Data.Damage + Amount
-											MeterData.TotalDamage = MeterData.TotalDamage + Amount
+											Unit.Damage = Unit.Damage + Amount
+											Data.Meter.Fights[1].TotalDamage = Data.Meter.Fights[1].TotalDamage + Amount
 										end
 									end
 								end
 							end
 						elseif string.find(CombatEvent, "_SUMMON") then
-							AddPet(MeterData.Pets, select(4, ...), select(8, ...))
+							AddPet(Data.Meter.Pets, select(4, ...), select(8, ...))
 						end
 					end
 				end
@@ -640,13 +654,13 @@ function HandleMeter()
 		Meter:SetScript("OnMouseWheel",
 			function(Self, Direction)
 				if Direction > 0 then
-					if MeterData.Position > 1 then
-						MeterData.Position = MeterData.Position - 1
+					if Data.Meter.Position > 1 then
+						Data.Meter.Position = Data.Meter.Position - 1
 						RefreshMeter(Self)
 					end
 				else
-					if MeterData.Position < (GetCount(MeterData.Data, MeterData.Mode) - (#Self.Bars - 1)) then
-						MeterData.Position = MeterData.Position + 1
+					if Data.Meter.Position < (GetCount(Data.Meter.Fights[Data.Meter.Fight], Data.Meter.Mode) - (#Self.Bars - 1)) then
+						Data.Meter.Position = Data.Meter.Position + 1
 						RefreshMeter(Self)
 					end
 				end
@@ -718,9 +732,9 @@ function HandleMeter()
 				Bars[I].LeftTextButton:SetAllPoints(Bars[I].LeftText)
 				Bars[I].LeftTextButton:SetScript("OnClick",
 					function(Self)
-						if MeterData.Mode == "Healing" then
-							MeterData.Mode = "Damage"
-							MeterData.Position = 1
+						if Data.Meter.Mode == "Healing" then
+							Data.Meter.Mode = "Damage"
+							Data.Meter.Position = 1
 
 							local Bar = Self:GetParent()
 
@@ -730,7 +744,7 @@ function HandleMeter()
 							Bar.RightText:Show()
 							Bar.RightTextButton:Show()
 
-							Bar.Text:SetText(MeterData.Mode)
+							Bar.Text:SetText((Data.Meter.Fight > 1) and Data.Meter.Mode .. " (" .. Data.Meter.Fight .. ")" or Data.Meter.Mode)
 							RefreshMeter(Bar:GetParent())
 						end
 					end
@@ -749,9 +763,9 @@ function HandleMeter()
 				Bars[I].RightTextButton:SetAllPoints(Bars[I].RightText)
 				Bars[I].RightTextButton:SetScript("OnClick",
 					function(Self)
-						if MeterData.Mode == "Damage" then
-							MeterData.Mode = "Healing"
-							MeterData.Position = 1
+						if Data.Meter.Mode == "Damage" then
+							Data.Meter.Mode = "Healing"
+							Data.Meter.Position = 1
 
 							local Bar = Self:GetParent()
 
@@ -761,7 +775,7 @@ function HandleMeter()
 							Bar.RightText:Hide()
 							Bar.RightTextButton:Hide()
 
-							Bar.Text:SetText(MeterData.Mode)
+							Bar.Text:SetText((Data.Meter.Fight > 1) and Data.Meter.Mode .. " (" .. Data.Meter.Fight .. ")" or Data.Meter.Mode)
 							RefreshMeter(Bar:GetParent())
 						end
 					end
@@ -770,7 +784,7 @@ function HandleMeter()
 				Bars[I].Text = Bars[I]:CreateFontString(nil, "OVERLAY")
 				Bars[I].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
 				Bars[I].Text:SetPoint("CENTER", 1, 0)
-				Bars[I].Text:SetText(MeterData.Mode)
+				Bars[I].Text:SetText((Data.Meter.Fight > 1) and Data.Meter.Mode .. " (" .. Data.Meter.Fight .. ")" or Data.Meter.Mode)
 				Bars[I].Text:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 				Bars[I].TextButton = CreateFrame("Button", nil, Bars[I])
@@ -778,7 +792,7 @@ function HandleMeter()
 				Bars[I].TextButton:SetAllPoints(Bars[I].Text)
 				Bars[I].TextButton:SetScript("OnClick",
 					function(Self)
-						if GetCount(MeterData.Data, MeterData.Mode) > 0 then
+						if GetCount(Data.Meter.Fights[Data.Meter.Fight], Data.Meter.Mode) > 0 then
 							local Type
 
 							if GetNumGroupMembers() > 0 then
@@ -795,8 +809,8 @@ function HandleMeter()
 								end
 							end
 
-							SendChatMessage("SnailUI / " .. MeterData.Mode, Type)
-							local Count = GetCount(MeterData.Data, MeterData.Mode)
+							SendChatMessage("SnailUI / " .. Data.Meter.Mode, Type)
+							local Count = GetCount(Data.Meter.Fights[Data.Meter.Fight], Data.Meter.Mode)
 
 							if Count > 10 then
 								Count = 10
@@ -805,25 +819,45 @@ function HandleMeter()
 							for I = 1, Count do
 								local APS
 
-								if (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime) > 0 then
-									APS = ShortNumber(math.floor((MeterData.Data[I][MeterData.Mode] / (MeterData.Data[I].EndTime - MeterData.Data[I].StartTime)) + 0.05))
+								if (Data.Meter.Fights[Data.Meter.Fight][I].EndTime - Data.Meter.Fights[Data.Meter.Fight][I].StartTime) > 0 then
+									APS = ShortNumber(math.floor((Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode] / (Data.Meter.Fights[Data.Meter.Fight][I].EndTime - Data.Meter.Fights[Data.Meter.Fight][I].StartTime)) + 0.05))
 								else
-									APS = ShortNumber(math.floor(MeterData.Data[I][MeterData.Mode] + 0.05))
+									APS = ShortNumber(math.floor(Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode] + 0.05))
 								end
 
-								if MeterData.Data[I].Realm:len() > 0 then
-									SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. "-" .. MeterData.Data[I].Realm .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. APS .. ")", Type)
+								if Data.Meter.Fights[Data.Meter.Fight][I].Realm:len() > 0 then
+									SendChatMessage(I .. ". " .. Data.Meter.Fights[Data.Meter.Fight][I].Name .. "-" .. Data.Meter.Fights[Data.Meter.Fight][I].Realm .. " " .. ShortNumber(Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode]) .. " (" .. APS .. ")", Type)
 								else
-									SendChatMessage(I .. ". " .. MeterData.Data[I].Name .. " " .. ShortNumber(MeterData.Data[I][MeterData.Mode]) .. " (" .. APS .. ")", Type)
+									SendChatMessage(I .. ". " .. Data.Meter.Fights[Data.Meter.Fight][I].Name .. " " .. ShortNumber(Data.Meter.Fights[Data.Meter.Fight][I][Data.Meter.Mode]) .. " (" .. APS .. ")", Type)
 								end
 							end
 						end
 					end
 				)
 
-				if MeterData.Mode == "Damage" then
+				Bars[I].TextButton:SetScript("OnMouseWheel",
+					function(Self, Direction)
+						local Bar = Self:GetParent()
+
+						if Direction > 0 then
+							if Data.Meter.Fight > 1 then
+								Data.Meter.Fight = Data.Meter.Fight - 1
+								Bar.Text:SetText((Data.Meter.Fight > 1) and Data.Meter.Mode .. " (" .. Data.Meter.Fight .. ")" or Data.Meter.Mode)
+								RefreshMeter(Bar:GetParent())
+							end
+						else
+							if Data.Meter.Fight < #Data.Meter.Fights then
+								Data.Meter.Fight = Data.Meter.Fight + 1
+								Bar.Text:SetText((Data.Meter.Fight > 1) and Data.Meter.Mode .. " (" .. Data.Meter.Fight .. ")" or Data.Meter.Mode)
+								RefreshMeter(Bar:GetParent())
+							end
+						end
+					end
+				)
+
+				if Data.Meter.Mode == "Damage" then
 					Bars[I].RightText:Show()
-				elseif MeterData.Mode == "Healing" then
+				elseif Data.Meter.Mode == "Healing" then
 					Bars[I].LeftText:Show()
 				end
 			else

@@ -299,7 +299,7 @@ Configuration.Themes.Default =
 			end
 		end
 
-		if not EnableSideBars then
+		if not Options.EnableSideBars then
 			GetConfiguration().ActionBars.Player3 = nil
 			GetConfiguration().ActionBars.Player4 = nil
 			GetConfiguration().Buffs.X = GetConfiguration().Buffs.X + 72

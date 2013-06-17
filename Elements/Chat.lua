@@ -81,12 +81,11 @@ function HandleChat()
 		{
 			"CHAT_MSG_BN_CONVERSATION",
 			"CHAT_MSG_BN_INLINE_TOAST_BROADCAST",
-
 			"CHAT_MSG_BN_WHISPER",
 			"CHAT_MSG_BN_WHISPER_INFORM",
 			"CHAT_MSG_CHANNEL",
-			"CHAT_MSG_DND",
 			"CHAT_MSG_EMOTE",
+			"CHAT_MSG_DND",
 			"CHAT_MSG_GUILD",
 			"CHAT_MSG_INSTANCE_CHAT",
 			"CHAT_MSG_INSTANCE_CHAT_LEADER",
@@ -103,24 +102,16 @@ function HandleChat()
 
 		local Patterns =
 		{
-			"(https://%S+)",
-			"(http://%S+)",
-			"(www%.%S+)",
-			"(%w+%.%S+)",
-			"(%d+%.%d+%.%d+%.%d+:?%d*)"
+			"https://%S+",
+			"http://%S+",
+			"www%.%S+",
+			"%w+%.%S+",
+			"%d+%.%d+%.%d+%.%d+:?%d*"
 		}
 
 		for I = 1, #Events do
 			ChatFrame_AddMessageEventFilter(Events[I],
 				function(Self, Event, String, Sender, ...)
-					for I = 1, #Patterns do
-						local Result, Match = string.gsub(String, Patterns[I], "|cFFFFFFFF|Hsurl:%1|h[%1]|h|r")
-
-						if Match > 0 then
-							return false, Result, ...
-						end
-					end
-
 					if not Self.Events then
 						Self.Events = {}
 					end
@@ -142,6 +133,31 @@ function HandleChat()
 
 					Self.Events[Event].RepeatMessages[Sender] = String
 					Self.Events[Event].RepeatCount = Self.Events[Event].RepeatCount + 1
+
+					if Options.HideGuildSpam then
+						local Match
+						local Result
+
+						if string.find(String, "<[%w%s]+>") then
+							return true
+						end
+
+						local Message = string.lower(String)
+
+						if string.find(Message, "Guild") or string.find(Message, "/") then
+							if string.find(Message, "Looking") or string.find(Message, "Recruiting") or string.find(Message, "LF") then
+								return true
+							end
+						end
+					end
+
+					for I = 1, #Patterns do
+						Result, Match = string.gsub(String, Patterns[I], "|cFFFFFFFF|hsurl:%1|h[%1]|h|r")
+
+						if Match > 0 then
+							return false, Result, ...
+						end
+					end
 				end
 			)
 		end

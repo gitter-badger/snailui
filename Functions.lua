@@ -57,6 +57,20 @@ function GetAbsorb(Absorbs, GUID, Spell, SourceGUID)
 	return nil, nil
 end
 
+function GetActiveTime(Time)
+	if Time > 60 then
+		local seconds = math.floor((Time - (math.floor((Time / 60) + 0.5) * 60)) + 0.5)
+
+		if seconds > 0 then
+			return " (" .. math.floor((Time / 60) + 0.5) .. "m " .. seconds .. "s)"
+		else
+			return " (" .. math.floor((Time / 60) + 0.5) .. "m)"
+		end
+	else
+		return " (" .. math.floor(Time + 0.5) .. "s)"
+	end
+end
+
 function GetConfiguration()
 	local Class = select(2, UnitClass("Player"))
 	local Specialization = GetSpecialization()
@@ -68,45 +82,33 @@ function GetConfiguration()
 		Specialization = nil
 	end
 
-	if Configuration.Themes[Theme] then
-		if Configuration.Themes[Theme][Class] then
+	if Configuration.Themes[Options.Theme] then
+		if Configuration.Themes[Options.Theme][Class] then
 			if Specialization then
-				if Configuration.Themes[Theme][Class][Specialization] then
-					return Configuration.Themes[Theme][Class][Specialization]
+				if Configuration.Themes[Options.Theme][Class][Specialization] then
+					return Configuration.Themes[Options.Theme][Class][Specialization]
 				end
 			end
 
-			return Configuration.Themes[Theme][Class]
+			return Configuration.Themes[Options.Theme][Class]
 		end
 
-		return Configuration.Themes[Theme]
+		return Configuration.Themes[Options.Theme]
 	end
 
 	return Configuration.Themes[Configuration.Theme]
 end
 
-function GetCount(Data, Mode)
+function GetCount(Fights, Mode)
 	local Count = 0
 
-	for I = 1, #Data do
-		if Data[I][Mode] > 0 then
+	for I = 1, #Fights do
+		if Fights[I][Mode] > 0 then
 			Count = Count + 1
 		end
 	end
 
 	return Count
-end
-
-function GetData(Data, GUID)
-	if Data and GUID then
-		for _, Unit in ipairs(Data) do
-			if Unit.GUID == GUID then
-				return Unit
-			end
-		end
-	end
-
-	return nil
 end
 
 function GetDispel(Dispels, Type)
@@ -195,4 +197,16 @@ function Trim3(String1)
 	end
 
 	return String1
+end
+
+function GetUnit(Fights, GUID)
+	if Fights and GUID then
+		for _, Unit in ipairs(Fights) do
+			if Unit.GUID == GUID then
+				return Unit
+			end
+		end
+	end
+
+	return nil
 end

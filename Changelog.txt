@@ -10,24 +10,27 @@ This is where I will document the changes made for SnailUI in each release.
 ------------------------------------------------------------------------------
 
 Version 0.8.1
+- Fixed a bug where the slash command wasn't working correctly
+- The meter will now show a player's active time in their tooltip to better detect afkers
+- The meter will now record the last 5 fights and can be viewed by scrolling over the Damage/Healing button
+- Most guild recruiting messages are now hidden by default, this can be changed in the in-game options
+- Action buttons now have a better looking appearance when pushed
 - Automated garbage collector added
 - Anti-spam measures for chat have been added
 - SnailUI will now automatically roll greed on green items
 - URL support for chat has been added
 - The focus bar has been changed for Hunters to appear similarly to a Warrior's rage bar
-- A snail will now replace the horde/alliance banners that show up before a battleground begins (right after the timer)
+- A snail will now replace the horde/alliance banners that show up before a battleground/challenge mode begins (right after the timer)
 - Vanilla theme removed
 - Battleground timers have been skinned
-- A few other blizzard frames have been moved to the top center of the screen
 - Fixed many other minor bugs
 - Fixed a bug where the extra action button sometimes was not displaying correctly
-- Achievement/dungeon frame moved to the top of the screen
 - Timers will now appear above the raid frames instead of below them for healers
 - Inactive opacity for frames changed from 10% to 25%
 - Life Cocoon healing indicator added
-- Hunter timers added
-- Monk timers added
-- Loot frame moved to the top of the screen
+- Mage timers started
+- Hunter timers started
+- Monk timers started
 - Fixed a bug where the buff frame was being moved under certain conditions
 - Fixed a bug where you were not able to change talents without disabling the UI
 

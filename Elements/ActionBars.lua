@@ -219,6 +219,7 @@ function HandleActionBars()
 					_G[Buttons[I] .. J]:ClearAllPoints()
 					_G[Buttons[I] .. J]:GetCheckedTexture():SetAlpha(0)
 					_G[Buttons[I] .. J]:GetCheckedTexture().SetAlpha = Blank
+					_G[Buttons[I] .. J]:GetPushedTexture():SetTexCoord(0.1, 0.9, 0.1, 0.9)
 					_G[Buttons[I] .. J]:SetNormalTexture(nil)
 					_G[Buttons[I] .. J]:SetSize(Bars[I].Width - 6, Bars[I].Height - 6)
 					_G[Buttons[I] .. J]:Show()

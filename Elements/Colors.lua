@@ -18,7 +18,7 @@ function HandleColors(Self)
 
 		Self.Background:SetTexture(Self.ClassColor.r, Self.ClassColor.g, Self.ClassColor.b)
 
-		if (Self.Frame == "Raid") or EnableThreatColorsOnAllFrames then
+		if (Self.Frame == "Raid") or Options.EnableThreatColorsOnAllFrames then
 			Self.ThreatLevel = UnitThreatSituation(Self.unit)
 
 			if Self.ThreatLevel and (Self.ThreatLevel > 0) then

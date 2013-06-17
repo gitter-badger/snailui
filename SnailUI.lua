@@ -10,7 +10,6 @@ oUF:RegisterStyle("SnailUI",
 		if GetConfiguration()[Unit] then
 			Self.Frame = Unit
 			
-			HandleBattlegroundAutoRelease(Self)
 			HandleBurningEmbersBar(Self)
 			HandleCastingBar(Self)
 			HandleChiBar(Self)
@@ -29,7 +28,6 @@ oUF:RegisterStyle("SnailUI",
 			HandleSoulShardsBar(Self)
 			HandleSpellRange(Self)
 			HandleUnit(Self)
-			HandleVendorAutoRepair(Self)
 		end
 	end
 )
@@ -41,8 +39,10 @@ oUF:Factory(
 		end
 
 		HandleActionBars()
+		HandleAutoGreed()
 		HandleBag()
 		HandleBank()
+		HandleBattlegroundAutoRelease()
 		HandleBlizzardFrames()
 		HandleBuffs()
 		HandleChat()
@@ -63,6 +63,7 @@ oUF:Factory(
 		HandleTimers()
 		HandleTimerTrackers()
 		HandleTooltips()
+		HandleVendorAutoRepair()
 
 		Self:SetActiveStyle("SnailUI")
 	end

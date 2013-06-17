@@ -20,7 +20,7 @@ function HandleExtraButton()
 					WatchFrame:Hide()
 					WorldStateAlwaysUpFrame:Hide()
 
-					if (not GetConfiguration().Raid.Shown) and (not EnableRaidFrames) then
+					if (not GetConfiguration().Raid.Shown) and Options.EnableRaidFrames then
 						Raid:Hide()
 					end
 
@@ -35,7 +35,7 @@ function HandleExtraButton()
 					WatchFrame:Show()
 					WorldStateAlwaysUpFrame:Show()
 
-					if (not GetConfiguration().Raid.shown) and (not EnableRaidFrames) then
+					if (not GetConfiguration().Raid.shown) and Options.EnableRaidFrames then
 						Raid:Show()
 					end
 

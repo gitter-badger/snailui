@@ -35,17 +35,17 @@ function HandleInterfaceOptions(Version)
 	FramesSubcategory.RaidEnabledCheckbox:SetPoint("TOPLEFT", 16, -119)
 	FramesSubcategory.RaidEnabledCheckbox:SetScript("OnClick",
 		function(Self)
-			if not EnableRaidFrames then
-				EnableRaidFrames = true
+			if Options.EnableRaidFrames then
+				Options.EnableRaidFrames = nil
 				Self:SetChecked(false)
 			else
-				EnableRaidFrames = nil
+				Options.EnableRaidFrames = true
 				Self:SetChecked(true)
 			end
 		end
 	)
 
-	if not EnableRaidFrames then
+	if Options.EnableRaidFrames then
 		FramesSubcategory.RaidEnabledCheckbox:SetChecked(true)
 	end
 
@@ -53,17 +53,17 @@ function HandleInterfaceOptions(Version)
 	FramesSubcategory.SideBarsEnabledCheckbox:SetPoint("TOPLEFT", 16, -73)
 	FramesSubcategory.SideBarsEnabledCheckbox:SetScript("OnClick",
 		function(Self)
-			if EnableSideBars then
-				EnableSideBars = nil
+			if Options.EnableSideBars then
+				Options.EnableSideBars = nil
 				Self:SetChecked(false)
 			else
-				EnableSideBars = true
+				Options.EnableSideBars = true
 				Self:SetChecked(true)
 			end
 		end
 	)
 
-	if EnableSideBars then
+	if Options.EnableSideBars then
 		FramesSubcategory.SideBarsEnabledCheckbox:SetChecked(true)
 	end
 
@@ -71,17 +71,17 @@ function HandleInterfaceOptions(Version)
 	FramesSubcategory.ThreatColorsCheckBox:SetPoint("TOPLEFT", 16, -165)
 	FramesSubcategory.ThreatColorsCheckBox:SetScript("OnClick",
 		function(Self)
-			if EnableThreatColorsOnAllFrames then
-				EnableThreatColorsOnAllFrames = nil
+			if Options.EnableThreatColorsOnAllFrames then
+				Options.EnableThreatColorsOnAllFrames = nil
 				Self:SetChecked(false)
 			else
-				EnableThreatColorsOnAllFrames = true
+				Options.EnableThreatColorsOnAllFrames = true
 				Self:SetChecked(true)
 			end
 		end
 	)
 
-	if EnableThreatColorsOnAllFrames then
+	if Options.EnableThreatColorsOnAllFrames then
 		FramesSubcategory.ThreatColorsCheckBox:SetChecked(true)
 	end
 
@@ -129,6 +129,24 @@ function HandleInterfaceOptions(Version)
 	GeneralSubcategory.name = "General"
 	GeneralSubcategory.parent = Category.name
 
+	GeneralSubcategory.HideGuildSpamCheckbox = CreateFrame("CheckButton", nil, GeneralSubcategory, "InterfaceOptionsCheckButtonTemplate")
+	GeneralSubcategory.HideGuildSpamCheckbox:SetPoint("TOPLEFT", 16, -73)
+	GeneralSubcategory.HideGuildSpamCheckbox:SetScript("OnClick",
+		function(Self)
+			if Options.HideGuildSpam then
+				Options.HideGuildSpam = nil
+				Self:SetChecked(false)
+			else
+				Options.HideGuildSpam = true
+				Self:SetChecked(true)
+			end
+		end
+	)
+
+	if Options.HideGuildSpam then
+		GeneralSubcategory.HideGuildSpamCheckbox:SetChecked(true)
+	end
+
 	GeneralSubcategory.Label1 = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 	GeneralSubcategory.Label1:SetJustifyH("LEFT")
 	GeneralSubcategory.Label1:SetPoint("TOPLEFT", 16, -16)
@@ -142,26 +160,36 @@ function HandleInterfaceOptions(Version)
 	GeneralSubcategory.Label3 = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	GeneralSubcategory.Label3:SetJustifyH("LEFT")
 	GeneralSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
-	GeneralSubcategory.Label3:SetText("Theme")
+	GeneralSubcategory.Label3:SetText("Hide guild advertisements")
+
+	GeneralSubcategory.Label4 = GeneralSubcategory.HideGuildSpamCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	GeneralSubcategory.Label4:SetJustifyH("LEFT")
+	GeneralSubcategory.Label4:SetPoint("RIGHT", 386, 0)
+	GeneralSubcategory.Label4:SetText("Hides most guild advertisements (unusual ads will sometimes get through)")
+
+	GeneralSubcategory.Label5 = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	GeneralSubcategory.Label5:SetJustifyH("LEFT")
+	GeneralSubcategory.Label5:SetPoint("TOPLEFT", 16, -108)
+	GeneralSubcategory.Label5:SetText("Theme")
 
 	GeneralSubcategory.ThemeDropdownMenu = CreateFrame("Frame", "ThemeDropdownMenu", GeneralSubcategory, "UIDropDownMenuTemplate")
-	GeneralSubcategory.ThemeDropdownMenu:SetPoint("TOPLEFT", 0, -73)
+	GeneralSubcategory.ThemeDropdownMenu:SetPoint("TOPLEFT", 0, -121)
 		
 	UIDropDownMenu_Initialize(GeneralSubcategory.ThemeDropdownMenu,
 		function(ThemeDropdownMenu, Level)
 			local Index = 1
 
-			for Key, _ in pairs(Configuration.Themes) do
+			for Theme, _ in pairs(Configuration.Themes) do
 				local Info = UIDropDownMenu_CreateInfo()
 
-				Info.text = Key
+				Info.text = Theme
 				Info.func = function(Self)
 					UIDropDownMenu_SetSelectedID(ThemeDropdownMenu, Self:GetID())
-					Theme = Themes[Self:GetID()]
+					Options.Theme = Themes[Self:GetID()]
 				end
 
-				Themes[Index] = Key
-				Themes[Key] = Index
+				Themes[Index] = Theme
+				Themes[Theme] = Index
 
 				Index = Index + 1
 				UIDropDownMenu_AddButton(Info, Level)
@@ -170,13 +198,14 @@ function HandleInterfaceOptions(Version)
 	)
 
 	UIDropDownMenu_JustifyText(GeneralSubcategory.ThemeDropdownMenu, "LEFT")
-	UIDropDownMenu_SetSelectedID(GeneralSubcategory.ThemeDropdownMenu, Themes[Theme])
+	UIDropDownMenu_SetSelectedID(GeneralSubcategory.ThemeDropdownMenu, Themes[Options.Theme])
 
 	InterfaceOptions_AddCategory(Category)
 	InterfaceOptions_AddCategory(GeneralSubcategory)
 	InterfaceOptions_AddCategory(FramesSubcategory)
 
 	SlashCmdList["SnailUI"] = function()
+		InterfaceOptionsFrame_OpenToCategory(Category)
 		InterfaceOptionsFrame_OpenToCategory(Category)
 	end
 

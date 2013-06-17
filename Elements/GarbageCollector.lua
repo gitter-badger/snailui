@@ -2,7 +2,7 @@
 -- Written by Snail
 
 function HandleGarbageCollector()
-	local EventCount
+	local EventCount = 0
 	local GarbageCollector = CreateFrame("Frame", nil, UIParent)
 
 	GarbageCollector:RegisterAllEvents()

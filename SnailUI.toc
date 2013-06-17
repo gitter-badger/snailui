@@ -1,6 +1,6 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
-## SavedVariables: EnableRaidFrames, EnableSideBars, EnableThreatColorsOnAllFrames, LogoutTime, MeterData, Theme
+## SavedVariables: Data, Options
 ## Interface: 50300
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
@@ -18,9 +18,8 @@ Themes\Default\DefaultWithClassBar.lua
 Themes\Default\DefaultHealerWithClassBar.lua
 Themes\Default\DefaultWithClassBarWithPet.lua
 
-Themes\Vanilla\Vanilla.lua
-
 Elements\ActionBars.lua
+Elements\AutoGreed.lua
 Elements\Bag.lua
 Elements\Bank.lua
 Elements\BattlegroundAutoRelease.lua

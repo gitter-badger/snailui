@@ -19,10 +19,18 @@ Configuration =
 	Themes = {}
 }
 
-if Configuration.EnableThreatColorsOnAllFrames then
-	EnableThreatColorsOnAllFrames = Configuration.EnableThreatColorsOnAllFrames
+if not Data then
+	Data = {}
 end
 
-if not Theme then
-	Theme = Configuration.Theme
+if not Options then
+	Options =
+	{
+		EnableRaidFrames = true,
+		HideGuildSpam = true
+	}
+end
+
+if not Options.Theme then
+	Options.Theme = Configuration.Theme
 end
