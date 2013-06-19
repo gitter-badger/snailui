@@ -102,11 +102,35 @@ function HandleChat()
 
 		local Patterns =
 		{
-			"https://%S+",
-			"http://%S+",
-			"www%.%S+",
-			"%w+%.%S+",
-			"%d+%.%d+%.%d+%.%d+:?%d*"
+			[1] =
+			{
+				"(%a+)://(%S+)",
+				"%1://%2"
+			},
+
+			[2] =
+			{
+				"([_A-Za-z0-9-%.]+)@([_A-Za-z0-9-]+)(%.+)([_A-Za-z0-9-%.]+)",
+				"%1@%2%3%4"
+			},
+
+			[3] =
+			{
+				"(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?):(%d%d?%d?%d?%d?)",
+				"%1.%2.%3.%4:%5"
+			},
+
+			[4] =
+			{
+				"(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)",
+				"%1.%2.%3.%4"
+			},
+
+			[5] =
+			{
+				"([_A-Za-z0-9-]+)%.(%S+)",
+				"%1.%2"
+			}
 		}
 
 		for I = 1, #Events do
@@ -144,18 +168,18 @@ function HandleChat()
 
 						local Message = string.lower(String)
 
-						if string.find(Message, "Guild") or string.find(Message, "/") then
-							if string.find(Message, "Looking") or string.find(Message, "Recruiting") or string.find(Message, "LF") then
+						if string.find(Message, "guild") or string.find(Message, "/") then
+							if string.find(Message, "looking") or string.find(Message, "recruiting") or string.find(Message, "lf") then
 								return true
 							end
 						end
 					end
 
 					for I = 1, #Patterns do
-						Result, Match = string.gsub(String, Patterns[I], "|cFFFFFFFF|hsurl:%1|h[%1]|h|r")
+						Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
 
 						if Match > 0 then
-							return false, Result, ...
+							return false, Result, Sender,...
 						end
 					end
 				end

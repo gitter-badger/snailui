@@ -4,7 +4,8 @@
 function HandleVendorAutoRepair()
 	local VendorAutoRepair = CreateFrame("Frame", nil, UIParent)
 
-	VendorAutoRepair:RegisterEvent("MERCHANT_SHOW",
+	VendorAutoRepair:RegisterEvent("MERCHANT_SHOW")
+	VendorAutoRepair:SetScript("OnEvent",
 		function(Self)
 			for I = 0, NUM_BAG_FRAMES do
 				for J = 1, GetContainerNumSlots(I) do
@@ -17,7 +18,7 @@ function HandleVendorAutoRepair()
 					end
 				end
 			end
-
+			
 			if CanMerchantRepair() then
 				local RepairCost = GetRepairAllCost()
 

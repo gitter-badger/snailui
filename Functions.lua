@@ -59,10 +59,10 @@ end
 
 function GetActiveTime(Time)
 	if Time > 60 then
-		local seconds = math.floor((Time - (math.floor((Time / 60) + 0.5) * 60)) + 0.5)
-
-		if seconds > 0 then
-			return " (" .. math.floor((Time / 60) + 0.5) .. "m " .. seconds .. "s)"
+		local Seconds = math.floor((Time % 60) + 0.5)
+		
+		if Seconds > 0 then
+			return " (" .. math.floor((Time / 60) + 0.5) .. "m " .. Seconds .. "s)"
 		else
 			return " (" .. math.floor((Time / 60) + 0.5) .. "m)"
 		end

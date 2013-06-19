@@ -492,9 +492,46 @@ Configuration.Themes.Default.Timers =
 					G = 168 / 255,
 					R = 167 / 255
 				}
-			},				
+			},
 
 			[10] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Dismantle",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 382,
+
+				Color =
+				{
+					B = 112 / 255,
+					G = 230 / 255,
+					R = 235 / 255
+				}
+			},
+
+			[12] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Recuperate",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 107 / 255,
+					G = 142 / 255,
+					R = 41 / 255
+				}
+			},
+
+			[13] =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
@@ -502,7 +539,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 410,
+				Y = 438,
 
 				Color =
 				{
@@ -754,9 +791,46 @@ Configuration.Themes.Default.Timers =
 					G = 168 / 255,
 					R = 167 / 255
 				}
-			},				
+			},
 
 			[14] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Dismantle",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 438,
+
+				Color =
+				{
+					B = 112 / 255,
+					G = 230 / 255,
+					R = 235 / 255
+				}
+			},
+
+			[15] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Recuperate",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 466,
+
+				Color =
+				{
+					B = 107 / 255,
+					G = 142 / 255,
+					R = 41 / 255
+				}
+			},
+
+			[16] =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
@@ -764,7 +838,7 @@ Configuration.Themes.Default.Timers =
 				Type = "Buff",
 				Width = 464,
 				X = 26,
-				Y = 466,
+				Y = 494,
 
 				Color =
 				{
@@ -969,11 +1043,48 @@ Configuration.Themes.Default.Timers =
 			{
 				Anchor = "BOTTOM",
 				Height = 24,
-				Spell = "Subterfuge",
+				Spell = "Dismantle",
+				Type = "Debuff",
+				Unit = "Target",
+				Width = 464,
+				X = 26,
+				Y = 410,
+
+				Color =
+				{
+					B = 112 / 255,
+					G = 230 / 255,
+					R = 235 / 255
+				}
+			},
+
+			[12] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Recuperate",
 				Type = "Buff",
 				Width = 464,
 				X = 26,
 				Y = 438,
+
+				Color =
+				{
+					B = 107 / 255,
+					G = 142 / 255,
+					R = 41 / 255
+				}
+			},
+
+			[13] =
+			{
+				Anchor = "BOTTOM",
+				Height = 24,
+				Spell = "Subterfuge",
+				Type = "Buff",
+				Width = 464,
+				X = 26,
+				Y = 466,
 
 				Color =
 				{

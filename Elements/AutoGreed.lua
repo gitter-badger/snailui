@@ -4,7 +4,8 @@
 function HandleAutoGreed()
 	local AutoGreed = CreateFrame("Frame", nil, UIParent)
 	
-	AutoGreed:RegisterEvent("START_LOOT_ROLL",
+	AutoGreed:RegisterEvent("START_LOOT_ROLL")
+	AutoGreed:SetScript("OnEvent",
 		function(Self, Event, Id)
 			local _, _, _, Quality, BoP = GetLootRollItemInfo(Id)
 

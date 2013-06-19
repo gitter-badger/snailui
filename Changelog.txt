@@ -9,6 +9,16 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.8.2
+- Dismantle timer added for Rogues
+- Recuperate timer added for Rogues
+- Fixed a bug where the auto vendor/repair module wasn't working under certain conditions
+- Fixed a bug where SnailUI wasn't rolling greed on green items under certain conditions
+- Fixed a bug where the meter's active time was not displaying correctly
+- Fixed a bug where chat urls were not working correctly
+
+------------------------------------------------------------------------------
+
 Version 0.8.1
 - Fixed a bug where the slash command wasn't working correctly
 - The meter will now show a player's active time in their tooltip to better detect afkers
