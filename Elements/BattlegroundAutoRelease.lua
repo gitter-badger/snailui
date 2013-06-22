@@ -4,22 +4,22 @@
 function HandleBattlegroundAutoRelease()
 	local BattlegroundAutoRelease = CreateFrame("Frame", nil, UIParent)
 	
-	BattlegroundAutoRelease:RegisterEvent("PLAYER_DEAD",
-		function(Self)
-			local InInstance, InstanceType = IsInInstance()
+	BattlegroundAutoRelease:RegisterEvent("PLAYER_DEAD")
+	BattlegroundAutoRelease:RegisterEvent("PLAYER_ENTERING_WORLD")
+	BattlegroundAutoRelease:SetScript("OnEvent",
+		function(Self, Event)
+			if Event == "PLAYER_DEAD" then
+				local InInstance, InstanceType = IsInInstance()
 
-			if InInstance then
-				if InstanceType == "pvp" then
-					RepopMe()
+				if InInstance then
+					if InstanceType == "pvp" then
+						RepopMe()
+					end
 				end
-			end
-		end
-	)
-
-	BattlegroundAutoRelease:RegisterEvent("PLAYER_ENTERING_WORLD",
-		function(Self)
-			if StaticPopup1:IsShown() and ((not UnitIsDead("Player")) or (UnitIsDead("Player") and UnitIsGhost("Player"))) then
-				StaticPopup_OnClick(StaticPopup1, StaticPopup1Button1:GetID())
+			else
+				if StaticPopup1:IsShown() and ((not UnitIsDead("Player")) or (UnitIsDead("Player") and UnitIsGhost("Player"))) then
+					StaticPopup_OnClick(StaticPopup1, StaticPopup1Button1:GetID())
+				end
 			end
 		end
 	)

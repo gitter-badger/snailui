@@ -9,6 +9,13 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.8.3
+- Gold selling related chat filters have been added
+- Fixed a bug where chat urls were sometimes displaying incorrectly
+- Fixed a bug where the battleground auto release wasn't working under certain conditions
+
+------------------------------------------------------------------------------
+
 Version 0.8.2
 - Dismantle timer added for Rogues
 - Recuperate timer added for Rogues

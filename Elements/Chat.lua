@@ -173,13 +173,19 @@ function HandleChat()
 								return true
 							end
 						end
+
+						if (string.find(Message, "gold") or string.find(Message, "g0ld") or string.find(Message, "rating") or string.find(Message, "qq")) and (string.find(Message, "wts") or string.find(Message, "cheap") or string.find(Message, "sell")) then
+							return true
+						end
 					end
 
-					for I = 1, #Patterns do
-						Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
+					if not string.find(String, "..") then
+						for I = 1, #Patterns do
+							Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
 
-						if Match > 0 then
-							return false, Result, Sender,...
+							if Match > 0 then
+								return false, Result, Sender,...
+							end
 						end
 					end
 				end
