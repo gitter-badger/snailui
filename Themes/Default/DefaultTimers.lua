@@ -5,16 +5,18 @@ Configuration.Themes.Default.Timers =
 {
 	["HUNTER"] =
 	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 298,
+
 		[1] =
 		{
-			Anchor = "BOTTOM",
-			Height = 24,
+			Priority = 1,
 			Spell = "Serpent Sting",
 			Type = "Debuff",
 			Unit = "Target",
-			Width = 464,
-			X = 26,
-			Y = 298,
 
 			Color =
 			{
@@ -28,13 +30,9 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 2,
 				Spell = "Explosive Shot",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -46,13 +44,9 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 3,
 				Spell = "Black Arrow",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
@@ -64,13 +58,9 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				Spell = "Dire Beast",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 382,
 
 				Color =
 				{
@@ -82,13 +72,9 @@ Configuration.Themes.Default.Timers =
 
 			[5] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Kill Shot",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 410,
 
 				Color =
 				{
@@ -102,18 +88,20 @@ Configuration.Themes.Default.Timers =
 
 	["MAGE"] =
 	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 242,
+
 		["FIRE"] =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 1,
 				Spell = "Living Bomb",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 242,
 
 				Color =
 				{
@@ -125,15 +113,11 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 2,
 				ShowAmount = true,
 				Spell = "Ignite",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 270,
 
 				Color =
 				{
@@ -145,13 +129,9 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 3,
 				Spell = "Inferno Blast",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -163,15 +143,11 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				ShowAmount = true,
 				Spell = "Combustion",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -185,18 +161,20 @@ Configuration.Themes.Default.Timers =
 
 	["MONK"] =
 	{
+		Anchor = "BOTTOM",
+		AnchorToRaid = true,
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 31,
+
 		["MISTWEAVER"] =
 		{
 			[1] =
 			{
-				Anchor = "TOP",
-				AnchorToRaid = true,
-				Height = 24,
+				Priority = 1,
 				Spell = "Expel Harm",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 25,
 
 				Color =
 				{
@@ -208,14 +186,9 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "TOP",
-				AnchorToRaid = true,
-				Height = 24,
+				Priority = 2,
 				Spell = "Renewing Mist",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 53,
 
 				Color =
 				{
@@ -227,14 +200,9 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "TOP",
-				AnchorToRaid = true,
-				Height = 24,
+				Priority = 3,
 				Spell = "Chi Wave",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 81,
 
 				Color =
 				{
@@ -246,14 +214,9 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "TOP",
-				AnchorToRaid = true,
-				Height = 24,
+				Priority = 4,
 				Spell = "Mana Tea",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 109,
 
 				Color =
 				{
@@ -267,35 +230,18 @@ Configuration.Themes.Default.Timers =
 
 	["ROGUE"] =
 	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 242,
+
 		[1] =
 		{
-			Anchor = "BOTTOM",
-			Height = 24,
-			Spell = "Rupture",
-			Type = "Debuff",
-			Unit = "Target",
-			Width = 464,
-			X = 26,
-			Y = 242,
-
-			Color =
-			{
-				B = 41 / 255,
-				G = 32 / 255,
-				R = 206 / 255
-			}
-		},
-
-		[2] =
-		{
-			Anchor = "BOTTOM",
-			Height = 24,
+			Priority = 1,
 			Spell = "Garrote",
 			Type = "Debuff",
 			Unit = "Target",
-			Width = 464,
-			X = 26,
-			Y = 242,
 
 			Color =
 			{
@@ -305,15 +251,26 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[4] =
+		[2] =
 		{
-			Anchor = "BOTTOM",
-			Height = 24,
+			Priority = 2,
+			Spell = "Rupture",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 41 / 255,
+				G = 32 / 255,
+				R = 206 / 255
+			}
+		},
+
+		[3] =
+		{
+			Priority = 3,
 			Spell = "Slice and Dice",
 			Type = "Buff",
-			Width = 464,
-			X = 26,
-			Y = 270,
 
 			Color =
 			{
@@ -323,17 +280,146 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
+		[4] =
+		{
+			Priority = 91,
+			Spell = "Recuperate",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 107 / 255,
+				G = 142 / 255,
+				R = 41 / 255
+			}
+		},
+
+		[5] =
+		{
+			Priority = 92,
+			Spell = "Gouge",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 215 / 255,
+				G = 212 / 255,
+				R = 213 / 255
+			}
+		},
+
+		[6] =
+		{
+			Priority = 93,
+			Spell = "Garrote - Silence",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 0,
+				G = 13 / 255,
+				R = 87 / 255
+			}
+		},
+
+		[7] =
+		{
+			Priority = 94,
+			Spell = "Cheap Shot",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 147 / 255,
+				G = 168 / 255,
+				R = 193 / 255
+			}
+		},
+
+		[8] =
+		{
+			Priority = 95,
+			Spell = "Kidney Shot",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 144 / 255,
+				G = 197 / 255,
+				R = 1
+			}
+		},
+
+		[9] =
+		{
+			Priority = 96,
+			Spell = "Blind",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 173 / 255,
+				G = 211 / 255,
+				R = 247 / 255
+			}
+		},
+
+		[10] =
+		{
+			Priority = 97,
+			Spell = "Dismantle",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 112 / 255,
+				G = 230 / 255,
+				R = 235 / 255
+			}
+		},
+
+		[11] =
+		{
+			Priority = 98,
+			Spell = "Sap",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 167 / 255,
+				G = 168 / 255,
+				R = 167 / 255
+			}
+		},
+
+		[12] =
+		{
+			Priority = 99,
+			Spell = "Subterfuge",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 132 / 255,
+				G = 103 / 255,
+				R = 79 / 255
+			}
+		},
+
 		["ASSASSINATION"] =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				Spell = "Envenom",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -345,14 +431,10 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Vendetta",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -364,188 +446,15 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 6,
 				Spell = "Shadow Blades",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
 					B = 1,
 					G = 0,
 					R = 143 / 255
-				}
-			},
-
-			[4] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Cheap Shot",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 147 / 255,
-					G = 168 / 255,
-					R = 193 / 255
-				}
-			},
-
-			[5] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Garrote - Silence",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 0,
-					G = 13 / 255,
-					R = 87 / 255
-				}
-			},
-
-			[6] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Kidney Shot",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 144 / 255,
-					G = 197 / 255,
-					R = 1
-				}
-			},
-
-			[7] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Blind",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 173 / 255,
-					G = 211 / 255,
-					R = 247 / 255
-				}
-			},
-
-			[8] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Gouge",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 215 / 255,
-					G = 212 / 255,
-					R = 213 / 255
-				}
-			},
-
-			[9] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Sap",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 167 / 255,
-					G = 168 / 255,
-					R = 167 / 255
-				}
-			},
-
-			[10] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Dismantle",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 112 / 255,
-					G = 230 / 255,
-					R = 235 / 255
-				}
-			},
-
-			[12] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Recuperate",
-				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 107 / 255,
-					G = 142 / 255,
-					R = 41 / 255
-				}
-			},
-
-			[13] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Subterfuge",
-				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 132 / 255,
-					G = 103 / 255,
-					R = 79 / 255
 				}
 			}
 		},
@@ -554,14 +463,10 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				Spell = "Revealing Strike",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -573,13 +478,9 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Shallow Insight",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -591,13 +492,9 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Moderate Insight",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -609,13 +506,9 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Deep Insight",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -627,13 +520,9 @@ Configuration.Themes.Default.Timers =
 
 			[5] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 6,
 				Spell = "Adrenaline Rush",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
@@ -645,31 +534,9 @@ Configuration.Themes.Default.Timers =
 
 			[6] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Blade Flurry",
-				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 382,
-
-				Color =
-				{
-					B = 34 / 255,
-					G = 88 / 255,
-					R = 226 / 255
-				}
-			},
-
-			[7] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 7,
 				Spell = "Shadow Blades",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 410,
 
 				Color =
 				{
@@ -679,172 +546,17 @@ Configuration.Themes.Default.Timers =
 				}
 			},
 
-			[8] =
+			[7] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Cheap Shot",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 147 / 255,
-					G = 168 / 255,
-					R = 193 / 255
-				}
-			},
-
-			[9] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Garrote - Silence",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 0,
-					G = 13 / 255,
-					R = 87 / 255
-				}
-			},
-
-			[10] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Kidney Shot",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 144 / 255,
-					G = 197 / 255,
-					R = 1
-				}
-			},
-
-			[11] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Blind",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 173 / 255,
-					G = 211 / 255,
-					R = 247 / 255
-				}
-			},
-
-			[12] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Gouge",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 215 / 255,
-					G = 212 / 255,
-					R = 213 / 255
-				}
-			},
-
-			[13] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Sap",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 167 / 255,
-					G = 168 / 255,
-					R = 167 / 255
-				}
-			},
-
-			[14] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Dismantle",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 112 / 255,
-					G = 230 / 255,
-					R = 235 / 255
-				}
-			},
-
-			[15] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Recuperate",
+				Priority = 8,
+				Spell = "Blade Flurry",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 466,
 
 				Color =
 				{
-					B = 107 / 255,
-					G = 142 / 255,
-					R = 41 / 255
-				}
-			},
-
-			[16] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Subterfuge",
-				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 494,
-
-				Color =
-				{
-					B = 132 / 255,
-					G = 103 / 255,
-					R = 79 / 255
+					B = 34 / 255,
+					G = 88 / 255,
+					R = 226 / 255
 				}
 			}
 		},
@@ -853,14 +565,10 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				Spell = "Hemorrhage",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -872,14 +580,10 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Find Weakness",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -891,13 +595,9 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 6,
 				Spell = "Shadow Dance",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
@@ -909,13 +609,9 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 7,
 				Spell = "Shadow Blades",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 382,
 
 				Color =
 				{
@@ -923,193 +619,26 @@ Configuration.Themes.Default.Timers =
 					G = 0,
 					R = 143 / 255
 				}
-			},
-
-			[5] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Cheap Shot",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 147 / 255,
-					G = 168 / 255,
-					R = 193 / 255
-				}
-			},
-
-			[6] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Garrote - Silence",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 0,
-					G = 13 / 255,
-					R = 87 / 255
-				}
-			},
-
-			[7] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Kidney Shot",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 144 / 255,
-					G = 197 / 255,
-					R = 1
-				}
-			},
-
-			[8] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Blind",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 173 / 255,
-					G = 211 / 255,
-					R = 247 / 255
-				}
-			},
-
-			[9] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Gouge",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 215 / 255,
-					G = 212 / 255,
-					R = 213 / 255
-				}
-			},
-
-			[10] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Sap",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 167 / 255,
-					G = 168 / 255,
-					R = 167 / 255
-				}
-			},
-
-			[11] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Dismantle",
-				Type = "Debuff",
-				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 410,
-
-				Color =
-				{
-					B = 112 / 255,
-					G = 230 / 255,
-					R = 235 / 255
-				}
-			},
-
-			[12] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Recuperate",
-				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 438,
-
-				Color =
-				{
-					B = 107 / 255,
-					G = 142 / 255,
-					R = 41 / 255
-				}
-			},
-
-			[13] =
-			{
-				Anchor = "BOTTOM",
-				Height = 24,
-				Spell = "Subterfuge",
-				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 466,
-
-				Color =
-				{
-					B = 132 / 255,
-					G = 103 / 255,
-					R = 79 / 255
-				}
 			}
 		}
 	},
 
 	["WARLOCK"] =
 	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 298,
+
 		["AFFLICTION"] =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 1,
 				Spell = "Unstable Affliction",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 270,
 
 				Color =
 				{
@@ -1121,14 +650,10 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 2,
 				Spell = "Corruption",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -1140,14 +665,10 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 3,
 				Spell = "Agony",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -1159,14 +680,10 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				Spell = "Haunt",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
@@ -1178,13 +695,9 @@ Configuration.Themes.Default.Timers =
 
 			[5] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Dark Soul: Misery",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 382,
 
 				Color =
 				{
@@ -1199,13 +712,9 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 1,
 				Spell = "Hand of Gul'dan",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 270,
 
 				Color =
 				{
@@ -1217,14 +726,10 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 2,
 				Spell = "Corruption",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -1236,14 +741,10 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 3,
 				Spell = "Doom",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -1255,13 +756,9 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 4,
 				Spell = "Dark Soul: Knowledge",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
@@ -1276,13 +773,9 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 1,
 				Spell = "Conflagrate",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 270,
 
 				Color =
 				{
@@ -1294,14 +787,10 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 2,
 				Spell = "Immolate",
 				Type = "Debuff",
 				Unit = "Target",
-				Width = 464,
-				X = 26,
-				Y = 298,
 
 				Color =
 				{
@@ -1313,13 +802,9 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 3,
 				Spell = "Rain of Fire",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 326,
 
 				Color =
 				{
@@ -1331,13 +816,9 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,				
+				Priority = 4,		
 				Spell = "Backdraft",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 354,
 
 				Color =
 				{
@@ -1349,13 +830,9 @@ Configuration.Themes.Default.Timers =
 
 			[5] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 5,
 				Spell = "Havoc",
 				Type = "Cooldown",
-				Width = 464,
-				X = 26,
-				Y = 382,
 
 				Color =
 				{
@@ -1367,13 +844,9 @@ Configuration.Themes.Default.Timers =
 
 			[6] =
 			{
-				Anchor = "BOTTOM",
-				Height = 24,
+				Priority = 6,
 				Spell = "Dark Soul: Instability",
 				Type = "Buff",
-				Width = 464,
-				X = 26,
-				Y = 410,
 
 				Color =
 				{

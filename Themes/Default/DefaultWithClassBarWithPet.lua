@@ -65,4 +65,3 @@ DefaultWithClassBarWithPet.Target.PowerBar.Width = 200
 DefaultWithClassBarWithPet.Target.Width = 204
 DefaultWithClassBarWithPet.Target.X = 156
 DefaultWithClassBarWithPet.Target.Y = 211
-DefaultWithClassBarWithPet.Target.CastingBar.Height = 259

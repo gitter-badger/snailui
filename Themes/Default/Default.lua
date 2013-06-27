@@ -211,6 +211,16 @@ Configuration.Themes.Default =
 		local Timers = {}
 
 		if GetConfiguration().Timers[Class] then
+			Timers.Anchor = GetConfiguration().Timers[Class].Anchor
+			Timers.Height = GetConfiguration().Timers[Class].Height
+			Timers.Width = GetConfiguration().Timers[Class].Width
+			Timers.X = GetConfiguration().Timers[Class].X
+			Timers.Y = GetConfiguration().Timers[Class].Y
+			
+			if GetConfiguration().Timers[Class].AnchorToRaid then
+				Timers.AnchorToRaid = GetConfiguration().Timers[Class].AnchorToRaid
+			end
+
 			if GetConfiguration().Timers[Class][Specialization] then
 				for I = 1, #GetConfiguration().Timers[Class][Specialization] do
 					Timers[#Timers + 1] = GetConfiguration().Timers[Class][Specialization][I]
@@ -222,10 +232,10 @@ Configuration.Themes.Default =
 			end
 		end
 
-		local Go
-
 		if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
-			Go = true
+			if #Timers > 0 then
+				Timers.Y = Timers.Y + 28
+			end
 		elseif Class == "MONK" then
 			local _, _, _, _, Selected = GetTalentInfo(8)
 
@@ -244,7 +254,9 @@ Configuration.Themes.Default =
 			if Selected == true then
 				Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
 			else
-				Go = true
+				if #Timers > 0 then
+					Timers.Y = Timers.Y + 28
+				end
 			end
 
 			if (#Timers > 0) and IsSpellKnown(101508) then
@@ -291,12 +303,6 @@ Configuration.Themes.Default =
 			T.Player.PowerBar.Height = 24
 			T.Player.PowerBar.Width = 516
 			T.Player.PowerBar.Y = 25
-		end
-
-		if Go and (#Timers > 0) then
-			for I = 1, #Timers do
-				Timers[I].Y = Timers[I].Y + 28
-			end
 		end
 
 		if not Options.EnableSideBars then
@@ -545,16 +551,6 @@ Configuration.Themes.Default =
 		Width = 256,
 		X = 130,
 		Y = 183,
-
-		CastingBar =
-		{
-			Anchor = "TOPRIGHT",
-			Height = 203,
-			Orientation = "VERTICAL",
-			Width = 10,
-			X = 11,
-			Y = -3
-		},
 
 		HealthBar =
 		{

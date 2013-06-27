@@ -66,4 +66,3 @@ DefaultWithPet.Target.PowerBar.Width = 200
 DefaultWithPet.Target.Width = 204
 DefaultWithPet.Target.X = 156
 DefaultWithPet.Target.Y = 211
-DefaultWithPet.Target.CastingBar.Height = 231

@@ -46,7 +46,7 @@ function HandleExtraButton()
 		)
 
 		if GetConfiguration().ExtraButton.HoverToShow then
-			ExtraButton:SetAlpha(0)
+			ExtraButton:SetAlpha(0.25)
 			ExtraButton:SetScript("OnEnter",
 				function(Self)
 					if not ExtraButton.Shown then
@@ -58,7 +58,7 @@ function HandleExtraButton()
 			ExtraButton:SetScript("OnLeave",
 				function(Self)
 					if not ExtraButton.Shown then
-						Self:SetAlpha(0)
+						Self:SetAlpha(0.25)
 					end
 				end
 			)

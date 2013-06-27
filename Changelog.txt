@@ -9,6 +9,15 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.8.4
+- A text file has been added to the base SnailUI folder that explains how to create your own theme
+- The 'Show Misc Frames' button will now rest at 25% opacity when inactive, instead of being hidden
+- Target casting bar has been removed
+- Timers no longer have static positions and instead move based on a priority system
+- Timers no longer overlap
+
+------------------------------------------------------------------------------
+
 Version 0.8.3
 - Gold selling related chat filters have been added
 - Fixed a bug where chat urls were sometimes displaying incorrectly
