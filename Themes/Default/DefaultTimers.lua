@@ -269,6 +269,21 @@ Configuration.Themes.Default.Timers =
 		[3] =
 		{
 			Priority = 3,
+			Spell = "Crimson Tempest",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 30 / 255,
+				G = 40 / 255,
+				R = 198 / 255
+			}
+		},
+
+		[4] =
+		{
+			Priority = 4,
 			Spell = "Slice and Dice",
 			Type = "Buff",
 
@@ -280,9 +295,9 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[4] =
+		[5] =
 		{
-			Priority = 91,
+			Priority = 90,
 			Spell = "Recuperate",
 			Type = "Buff",
 
@@ -294,7 +309,21 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[5] =
+		[6] =
+		{
+			Priority = 91,
+			Spell = "Feint",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 179 / 255,
+				G = 142 / 255,
+				R = 100 / 255
+			}
+		},
+
+		[7] =
 		{
 			Priority = 92,
 			Spell = "Gouge",
@@ -309,7 +338,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[6] =
+		[8] =
 		{
 			Priority = 93,
 			Spell = "Garrote - Silence",
@@ -324,7 +353,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[7] =
+		[9] =
 		{
 			Priority = 94,
 			Spell = "Cheap Shot",
@@ -339,7 +368,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[8] =
+		[10] =
 		{
 			Priority = 95,
 			Spell = "Kidney Shot",
@@ -354,7 +383,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[9] =
+		[11] =
 		{
 			Priority = 96,
 			Spell = "Blind",
@@ -369,7 +398,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[10] =
+		[12] =
 		{
 			Priority = 97,
 			Spell = "Dismantle",
@@ -384,7 +413,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[11] =
+		[13] =
 		{
 			Priority = 98,
 			Spell = "Sap",
@@ -399,7 +428,7 @@ Configuration.Themes.Default.Timers =
 			}
 		},
 
-		[12] =
+		[14] =
 		{
 			Priority = 99,
 			Spell = "Subterfuge",
@@ -417,7 +446,7 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Priority = 4,
+				Priority = 5,
 				Spell = "Envenom",
 				Type = "Buff",
 
@@ -431,7 +460,7 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Priority = 5,
+				Priority = 6,
 				Spell = "Vendetta",
 				Type = "Debuff",
 				Unit = "Target",
@@ -446,7 +475,7 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Priority = 6,
+				Priority = 7,
 				Spell = "Shadow Blades",
 				Type = "Buff",
 
@@ -463,7 +492,7 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Priority = 4,
+				Priority = 5,
 				Spell = "Revealing Strike",
 				Type = "Debuff",
 				Unit = "Target",
@@ -478,7 +507,7 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Priority = 5,
+				Priority = 6,
 				Spell = "Shallow Insight",
 				Type = "Buff",
 
@@ -492,7 +521,7 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Priority = 5,
+				Priority = 6,
 				Spell = "Moderate Insight",
 				Type = "Buff",
 
@@ -506,7 +535,7 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Priority = 5,
+				Priority = 6,
 				Spell = "Deep Insight",
 				Type = "Buff",
 
@@ -520,7 +549,7 @@ Configuration.Themes.Default.Timers =
 
 			[5] =
 			{
-				Priority = 6,
+				Priority = 7,
 				Spell = "Adrenaline Rush",
 				Type = "Buff",
 
@@ -534,7 +563,7 @@ Configuration.Themes.Default.Timers =
 
 			[6] =
 			{
-				Priority = 7,
+				Priority = 8,
 				Spell = "Shadow Blades",
 				Type = "Buff",
 
@@ -548,7 +577,7 @@ Configuration.Themes.Default.Timers =
 
 			[7] =
 			{
-				Priority = 8,
+				Priority = 9,
 				Spell = "Blade Flurry",
 				Type = "Buff",
 
@@ -565,7 +594,7 @@ Configuration.Themes.Default.Timers =
 		{
 			[1] =
 			{
-				Priority = 4,
+				Priority = 5,
 				Spell = "Hemorrhage",
 				Type = "Debuff",
 				Unit = "Target",
@@ -580,7 +609,7 @@ Configuration.Themes.Default.Timers =
 
 			[2] =
 			{
-				Priority = 5,
+				Priority = 6,
 				Spell = "Find Weakness",
 				Type = "Debuff",
 				Unit = "Target",
@@ -595,7 +624,7 @@ Configuration.Themes.Default.Timers =
 
 			[3] =
 			{
-				Priority = 6,
+				Priority = 7,
 				Spell = "Shadow Dance",
 				Type = "Buff",
 
@@ -609,7 +638,7 @@ Configuration.Themes.Default.Timers =
 
 			[4] =
 			{
-				Priority = 7,
+				Priority = 8,
 				Spell = "Shadow Blades",
 				Type = "Buff",
 

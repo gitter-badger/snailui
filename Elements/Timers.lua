@@ -19,7 +19,7 @@ local function SortTimers(Timers)
 		for I = 1, #Timers.Timers do
 			if Timers.Parent[Timers.Timers[I]]:IsShown() then
 				if Raid and Timers.Parent.Timers.AnchorToRaid then
-					Timers.Parent[Timers.Timers[I]]:SetPoint(Timers.Parent.Timers.Anchor, Raid, Timers.Parent.Timers.X, Timers.Parent.Timers.Y + (Timers.Parent.Timers.Height * (CurrentTimer - 1)) + ((CurrentTimer - 1) * 4))
+					Timers.Parent[Timers.Timers[I]]:SetPoint(Timers.Parent.Timers.Anchor, Raid, "TOP", Timers.Parent.Timers.X, Timers.Parent.Timers.Y + (Timers.Parent.Timers.Height * (CurrentTimer - 2)) + ((CurrentTimer - 1) * 4))
 				else
 					Timers.Parent[Timers.Timers[I]]:SetPoint(Timers.Parent.Timers.Anchor, Timers.Parent.Timers.X, Timers.Parent.Timers.Y + (Timers.Parent.Timers.Height * (CurrentTimer - 1)) + ((CurrentTimer - 1) * 4))
 				end

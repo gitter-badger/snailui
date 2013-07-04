@@ -162,14 +162,14 @@ function HandleChat()
 						local Match
 						local Result
 
-						if string.find(String, "<[%w%s]+>") then
+						if string.find(String, "<[%a%s]+>") then
 							return true
 						end
 
 						local Message = string.lower(String)
 
 						if string.find(Message, "guild") or string.find(Message, "/") then
-							if string.find(Message, "looking") or string.find(Message, "recruiting") or string.find(Message, "lf") then
+							if string.find(Message, "looking") or string.find(Message, "recruiting") or string.find(Message, "seeking") or string.find(Message, "lf") then
 								return true
 							end
 						end
@@ -179,7 +179,7 @@ function HandleChat()
 						end
 					end
 
-					if not string.find(String, "..") then
+					if not string.find(String, "..", nil, true) then
 						for I = 1, #Patterns do
 							Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
 

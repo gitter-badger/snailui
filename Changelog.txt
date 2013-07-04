@@ -9,6 +9,15 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.8.5
+- Fixed a bug where timers were not being displayed correctly for healers
+- Feint timer added for Rogues
+- Fixed a bug where the url chat filter wasn't working correctly
+- A few chat filters have been tweaked to be more accurate
+- Crimson Tempest timer added for Rogues
+
+------------------------------------------------------------------------------
+
 Version 0.8.4
 - A text file has been added to the base SnailUI folder that explains how to create your own theme
 - The 'Show Misc Frames' button will now rest at 25% opacity when inactive, instead of being hidden
