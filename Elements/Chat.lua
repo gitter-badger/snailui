@@ -128,8 +128,8 @@ function HandleChat()
 
 			[5] =
 			{
-				"([_A-Za-z0-9-]+)%.(%S+)",
-				"%1.%2"
+				"([_A-Za-z0-9-%.]+)%.([A-Za-z]+)([_A-Za-z0-9-+&@#/%?=~|!:,;]*)",
+				"%1.%2%3"
 			}
 		}
 
@@ -179,13 +179,11 @@ function HandleChat()
 						end
 					end
 
-					if not string.find(String, "..", nil, true) then
-						for I = 1, #Patterns do
-							Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
+					for I = 1, #Patterns do
+						Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
 
-							if Match > 0 then
-								return false, Result, Sender,...
-							end
+						if Match > 0 then
+							return false, Result, Sender,...
 						end
 					end
 				end

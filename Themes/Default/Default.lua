@@ -1,6 +1,8 @@
 -- Default.lua
 -- Written by Snail
 
+local FocusX = math.floor(GetScreenWidth() / 4)
+
 Configuration.Themes.Default = 
 {
 	ActionBars =
@@ -173,7 +175,87 @@ Configuration.Themes.Default =
 		Width = 204,
 		X = 0,
 		Y = -6
-	},	
+	},
+
+	Focus =
+	{
+		Anchor = "LEFT",
+		Height = 24,
+		Width = 256,
+		X = FocusX,
+		Y = 0,
+
+		CastingBar =
+		{
+			Anchor = "TOPLEFT",
+			Height = 24,
+			Orientation = "HORIZONTAL",
+			Width = 204,
+			X = 55,
+			Y = 25,
+
+			Spell =
+			{
+				Duration =
+				{
+					Anchor = "RIGHT",
+					X = -4,
+					Y = 0
+				},
+
+				Name =
+				{
+					Anchor = "LEFT",
+					X = 6,
+					Y = 0
+				},
+
+				Texture =
+				{
+					Anchor = "LEFT",
+					Height = 24,
+					Width = 48,
+					X = -52,
+					Y = 0,
+
+					TextureCoordinate =
+					{
+						Bottom = 0.7,
+						Left = 0.1,
+						Right = 0.9,
+						Top = 0.3
+					}
+				}
+			}
+		},
+
+		HealthBar =
+		{
+			Anchor = "TOP",
+			Height = 15,
+			Orientation = "HORIZONTAL",
+			Width = 252,
+			X = 0,
+			Y = -3,
+
+			Health =
+			{
+				Anchor ="CENTER",
+				X = 1,
+				Y = 0
+			}
+		},
+
+		PowerBar =
+		{
+			Anchor = "BOTTOM",
+			Height = 4,
+			Orientation = "HORIZONTAL",
+			Width = 252,
+			X = 0,
+			Y = 3
+		}
+	},
 
 	Initialize = function(Self)
 		Configuration.Themes.Default["DEATHKNIGHT"] = DefaultWithClassBar
@@ -222,6 +304,30 @@ Configuration.Themes.Default =
 			end
 
 			if GetConfiguration().Timers[Class][Specialization] then
+				if GetConfiguration().Timers[Class][Specialization].Anchor then
+					Timers.Anchor = GetConfiguration().Timers[Class][Specialization].Anchor
+				end
+
+				if GetConfiguration().Timers[Class][Specialization].Height then
+					Timers.Height = GetConfiguration().Timers[Class][Specialization].Height
+				end
+
+				if GetConfiguration().Timers[Class][Specialization].Width then
+					Timers.Width = GetConfiguration().Timers[Class][Specialization].Width
+				end
+
+				if GetConfiguration().Timers[Class][Specialization].X then
+					Timers.X = GetConfiguration().Timers[Class][Specialization].X
+				end
+
+				if GetConfiguration().Timers[Class][Specialization].Y then
+					Timers.Y = GetConfiguration().Timers[Class][Specialization].Y
+				end
+
+				if GetConfiguration().Timers[Class][Specialization].AnchorToRaid then
+					Timers.AnchorToRaid = GetConfiguration().Timers[Class][Specialization].AnchorToRaid
+				end
+				
 				for I = 1, #GetConfiguration().Timers[Class][Specialization] do
 					Timers[#Timers + 1] = GetConfiguration().Timers[Class][Specialization][I]
 				end
@@ -281,6 +387,13 @@ Configuration.Themes.Default =
 							B = 63 / 255,
 							G = 1,
 							R = 204 / 255
+						}
+					elseif Timers[I].Spell == "Molten Core" then
+						Timers[I].Color =
+						{
+							B = 22 / 255,
+							G = 231 / 255,
+							R = 217 / 255
 						}
 					elseif Timers[I].Spell == "Rain of Fire" then
 						Timers[I].Color =

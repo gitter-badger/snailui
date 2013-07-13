@@ -9,6 +9,21 @@ This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 
+Version 0.8.6
+- Frost Mage timers started
+- Fear timer added for Warlocks
+- Shadowflame timer added for Demonology Warlocks
+- Molten Core timer added for Demonology Warlocks
+- !NoTaint temporarily removed
+- A few timers will show under the focus frame in addition to their normal positions
+- Focus frame skinned
+- Death Knight timers started
+- Priest timers started
+- A few chat filters have been tweaked to be more accurate
+- Paladin timers started
+
+------------------------------------------------------------------------------
+
 Version 0.8.5
 - Fixed a bug where timers were not being displayed correctly for healers
 - Feint timer added for Rogues

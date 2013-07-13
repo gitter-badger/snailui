@@ -4,7 +4,7 @@
 ## Interface: 50300
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.8.5
+## Version: 0.8.6
 
 Configuration.lua
 Functions.lua
@@ -40,7 +40,6 @@ Elements\HealthBar.lua
 Elements\InterfaceOptions.lua
 Elements\Meter.lua
 Elements\Minimap.lua
-Elements\NoTaint.lua
 Elements\Pet.lua
 Elements\Player.lua
 Elements\Portrait.lua

@@ -3,6 +3,47 @@
 
 Configuration.Themes.Default.Timers =
 {
+	["DEATHKNIGHT"] =
+	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 242,
+
+		[1] =
+		{
+			Priority = 1,
+			ShowOnFocus = true,
+			Spell = "Blood Plague",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 220 / 255,
+				G = 3 / 255,
+				R = 193 / 255
+			}
+		},
+
+		[2] =
+		{
+			Priority = 2,
+			ShowOnFocus = true,
+			Spell = "Frost Fever",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 1,
+				G = 252 / 255,
+				R = 33 / 255
+			}
+		}
+	},
+
 	["HUNTER"] =
 	{
 		Anchor = "BOTTOM",
@@ -14,6 +55,7 @@ Configuration.Themes.Default.Timers =
 		[1] =
 		{
 			Priority = 1,
+			ShowOnFocus = true,
 			Spell = "Serpent Sting",
 			Type = "Debuff",
 			Unit = "Target",
@@ -31,6 +73,7 @@ Configuration.Themes.Default.Timers =
 			[1] =
 			{
 				Priority = 2,
+				ShowOnFocus = true,
 				Spell = "Explosive Shot",
 				Type = "Cooldown",
 
@@ -45,6 +88,7 @@ Configuration.Themes.Default.Timers =
 			[2] =
 			{
 				Priority = 3,
+				ShowOnFocus = true,
 				Spell = "Black Arrow",
 				Type = "Cooldown",
 
@@ -94,27 +138,29 @@ Configuration.Themes.Default.Timers =
 		X = 26,
 		Y = 242,
 
+		[1] =
+		{
+			Priority = 1,
+			ShowOnFocus = true,
+			Spell = "Living Bomb",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 16 / 255,
+				G = 204 / 255,
+				R = 247 / 255
+			}
+		},
+
 		["FIRE"] =
 		{
 			[1] =
 			{
-				Priority = 1,
-				Spell = "Living Bomb",
-				Type = "Debuff",
-				Unit = "Target",
-
-				Color =
-				{
-					B = 16 / 255,
-					G = 204 / 255,
-					R = 247 / 255
-				}
-			},
-
-			[2] =
-			{
 				Priority = 2,
 				ShowAmount = true,
+				ShowOnFocus = true,
 				Spell = "Ignite",
 				Type = "Debuff",
 				Unit = "Target",
@@ -127,7 +173,7 @@ Configuration.Themes.Default.Timers =
 				}
 			},
 
-			[3] =
+			[2] =
 			{
 				Priority = 3,
 				Spell = "Inferno Blast",
@@ -141,10 +187,11 @@ Configuration.Themes.Default.Timers =
 				}
 			},
 
-			[4] =
+			[3] =
 			{
 				Priority = 4,
 				ShowAmount = true,
+				ShowOnFocus = true,
 				Spell = "Combustion",
 				Type = "Debuff",
 				Unit = "Target",
@@ -154,6 +201,25 @@ Configuration.Themes.Default.Timers =
 					B = 6 / 255,
 					G = 158 / 255,
 					R = 223 / 255
+				}
+			}
+		},
+
+		["FROST"] =
+		{
+			Y = 270,
+
+			[1] =
+			{
+				Priority = 2,
+				Spell = "Icy Veins",
+				Type = "Buff",
+
+				Color =
+				{
+					B = 1,
+					G = 196 / 255,
+					R = 77 / 255
 				}
 			}
 		}
@@ -228,6 +294,176 @@ Configuration.Themes.Default.Timers =
 		}
 	},
 
+	["PALADIN"] =
+	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 242,
+
+		[1] =
+		{
+			Priority = 1,
+			Spell = "Crusader Strike",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 87 / 255,
+				G = 245 / 255,
+				R = 254 / 255
+			}
+		},
+
+		[2] =
+		{
+			Priority = 2,
+			Spell = "Judgment",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 74 / 255,
+				G = 186 / 255,
+				R = 222 / 255
+			}
+		},
+
+		[3] =
+		{
+			Priority = 3,
+			Spell = "Exorcism",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 0,
+				G = 114 / 255,
+				R = 231 / 255
+			}
+		},
+
+		[4] =
+		{
+			Priority = 4,
+			Spell = "Hammer of Wrath",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 223 / 255,
+				G = 218 / 255,
+				R = 57 / 255
+			}
+		},
+
+		["RETRIBUTION"] =
+		{
+			[1] =
+			{
+				Priority = 5,
+				Spell = "Inquisition",
+				Type = "Buff",
+
+				Color =
+				{
+					B = 149 / 255,
+					G = 251 / 255,
+					R = 1
+				}
+			}
+		}
+	},
+
+	["PRIEST"] =
+	{
+		Anchor = "BOTTOM",
+		Height = 24,
+		Width = 464,
+		X = 26,
+		Y = 270,
+
+		["SHADOW"] =
+		{
+			[1] =
+			{
+				Priority = 1,
+				Spell = "Mind Blast",
+				Type = "Cooldown",
+
+				Color =
+				{
+					B = 251 / 255,
+					G = 215 / 255,
+					R = 245 / 255
+				}
+			},
+
+			[2] =
+			{
+				Priority = 2,
+				ShowOnFocus = true,
+				Spell = "Vampiric Touch",
+				Type = "Debuff",
+				Unit = "Target",
+
+				Color =
+				{
+					B = 146 / 255,
+					G = 106 / 255,
+					R = 14 / 255
+				}
+			},
+
+			[3] =
+			{
+				Priority = 3,
+				ShowOnFocus = true,
+				Spell = "Shadow Word: Pain",
+				Type = "Debuff",
+				Unit = "Target",
+
+				Color =
+				{
+					B = 0,
+					G = 12 / 255,
+					R = 214 / 255
+				}
+			},
+
+			[4] =
+			{
+				Priority = 4,
+				Spell = "Shadow Word: Death",
+				Type = "Cooldown",
+
+				Color =
+				{
+					B = 4 / 255,
+					G = 4 / 255,
+					R = 142 / 255
+				}
+			},
+
+			[5] =
+			{
+				Priority = 5,
+				ShowOnFocus = true,
+				Spell = "Devouring Plague",
+				Type = "Debuff",
+				Unit = "Target",
+
+				Color =
+				{
+					B = 186 / 255,
+					G = 34 / 255,
+					R = 192 / 255
+				}
+			}
+		}
+	},
+
 	["ROGUE"] =
 	{
 		Anchor = "BOTTOM",
@@ -239,6 +475,7 @@ Configuration.Themes.Default.Timers =
 		[1] =
 		{
 			Priority = 1,
+			ShowOnFocus = true,
 			Spell = "Garrote",
 			Type = "Debuff",
 			Unit = "Target",
@@ -254,6 +491,7 @@ Configuration.Themes.Default.Timers =
 		[2] =
 		{
 			Priority = 2,
+			ShowOnFocus = true,
 			Spell = "Rupture",
 			Type = "Debuff",
 			Unit = "Target",
@@ -269,6 +507,7 @@ Configuration.Themes.Default.Timers =
 		[3] =
 		{
 			Priority = 3,
+			ShowOnFocus = true,
 			Spell = "Crimson Tempest",
 			Type = "Debuff",
 			Unit = "Target",
@@ -326,6 +565,7 @@ Configuration.Themes.Default.Timers =
 		[7] =
 		{
 			Priority = 92,
+			ShowOnFocus = true,
 			Spell = "Gouge",
 			Type = "Debuff",
 			Unit = "Target",
@@ -341,6 +581,7 @@ Configuration.Themes.Default.Timers =
 		[8] =
 		{
 			Priority = 93,
+			ShowOnFocus = true,
 			Spell = "Garrote - Silence",
 			Type = "Debuff",
 			Unit = "Target",
@@ -356,6 +597,7 @@ Configuration.Themes.Default.Timers =
 		[9] =
 		{
 			Priority = 94,
+			ShowOnFocus = true,
 			Spell = "Cheap Shot",
 			Type = "Debuff",
 			Unit = "Target",
@@ -371,6 +613,7 @@ Configuration.Themes.Default.Timers =
 		[10] =
 		{
 			Priority = 95,
+			ShowOnFocus = true,
 			Spell = "Kidney Shot",
 			Type = "Debuff",
 			Unit = "Target",
@@ -386,6 +629,7 @@ Configuration.Themes.Default.Timers =
 		[11] =
 		{
 			Priority = 96,
+			ShowOnFocus = true,
 			Spell = "Blind",
 			Type = "Debuff",
 			Unit = "Target",
@@ -401,6 +645,7 @@ Configuration.Themes.Default.Timers =
 		[12] =
 		{
 			Priority = 97,
+			ShowOnFocus = true,
 			Spell = "Dismantle",
 			Type = "Debuff",
 			Unit = "Target",
@@ -416,6 +661,7 @@ Configuration.Themes.Default.Timers =
 		[13] =
 		{
 			Priority = 98,
+			ShowOnFocus = true,
 			Spell = "Sap",
 			Type = "Debuff",
 			Unit = "Target",
@@ -461,6 +707,7 @@ Configuration.Themes.Default.Timers =
 			[2] =
 			{
 				Priority = 6,
+				ShowOnFocus = true,
 				Spell = "Vendetta",
 				Type = "Debuff",
 				Unit = "Target",
@@ -493,6 +740,7 @@ Configuration.Themes.Default.Timers =
 			[1] =
 			{
 				Priority = 5,
+				ShowOnFocus = true,
 				Spell = "Revealing Strike",
 				Type = "Debuff",
 				Unit = "Target",
@@ -595,6 +843,7 @@ Configuration.Themes.Default.Timers =
 			[1] =
 			{
 				Priority = 5,
+				ShowOnFocus = true,
 				Spell = "Hemorrhage",
 				Type = "Debuff",
 				Unit = "Target",
@@ -610,6 +859,7 @@ Configuration.Themes.Default.Timers =
 			[2] =
 			{
 				Priority = 6,
+				ShowOnFocus = true,
 				Spell = "Find Weakness",
 				Type = "Debuff",
 				Unit = "Target",
@@ -660,11 +910,28 @@ Configuration.Themes.Default.Timers =
 		X = 26,
 		Y = 298,
 
+		[1] =
+		{
+			Priority = 99,
+			ShowOnFocus = true,
+			Spell = "Fear",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 97 / 255,
+				G = 30 / 255,
+				R = 74 / 255
+			}
+		},
+
 		["AFFLICTION"] =
 		{
 			[1] =
 			{
 				Priority = 1,
+				ShowOnFocus = true,
 				Spell = "Unstable Affliction",
 				Type = "Debuff",
 				Unit = "Target",
@@ -680,6 +947,7 @@ Configuration.Themes.Default.Timers =
 			[2] =
 			{
 				Priority = 2,
+				ShowOnFocus = true,
 				Spell = "Corruption",
 				Type = "Debuff",
 				Unit = "Target",
@@ -695,6 +963,7 @@ Configuration.Themes.Default.Timers =
 			[3] =
 			{
 				Priority = 3,
+				ShowOnFocus = true,
 				Spell = "Agony",
 				Type = "Debuff",
 				Unit = "Target",
@@ -710,6 +979,7 @@ Configuration.Themes.Default.Timers =
 			[4] =
 			{
 				Priority = 4,
+				ShowOnFocus = true,
 				Spell = "Haunt",
 				Type = "Debuff",
 				Unit = "Target",
@@ -756,6 +1026,7 @@ Configuration.Themes.Default.Timers =
 			[2] =
 			{
 				Priority = 2,
+				ShowOnFocus = true,
 				Spell = "Corruption",
 				Type = "Debuff",
 				Unit = "Target",
@@ -771,6 +1042,7 @@ Configuration.Themes.Default.Timers =
 			[3] =
 			{
 				Priority = 3,
+				ShowOnFocus = true,
 				Spell = "Doom",
 				Type = "Debuff",
 				Unit = "Target",
@@ -786,6 +1058,36 @@ Configuration.Themes.Default.Timers =
 			[4] =
 			{
 				Priority = 4,
+				Spell = "Molten Core",
+				Type = "Buff",
+
+				Color =
+				{
+					B = 22 / 255,
+					G = 47 / 255,
+					R = 141 / 255
+				}
+			},
+
+			[5] =
+			{
+				Priority = 5,
+				ShowOnFocus = true,
+				Spell = "Shadowflame",
+				Type = "Debuff",
+				Unit = "Target",
+
+				Color =
+				{
+					B = 210 / 255,
+					G = 7 / 255,
+					R = 134 / 255
+				}
+			},
+
+			[6] =
+			{
+				Priority = 6,
 				Spell = "Dark Soul: Knowledge",
 				Type = "Buff",
 
@@ -817,6 +1119,7 @@ Configuration.Themes.Default.Timers =
 			[2] =
 			{
 				Priority = 2,
+				ShowOnFocus = true,
 				Spell = "Immolate",
 				Type = "Debuff",
 				Unit = "Target",
