@@ -283,6 +283,15 @@ Configuration.Themes.Default =
 		Configuration.Themes.Default["WARRIOR"] = DefaultWithClassBar
 
 		local Class = select(2, UnitClass("Player"))
+
+		if Class == "WARLOCK" then
+			local _, _, _, _, Selected = GetTalentInfo(15)
+
+			if Selected == true then
+				Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
+			end
+		end
+
 		local Specialization = GetSpecialization()
 
 		if Specialization then
@@ -340,7 +349,7 @@ Configuration.Themes.Default =
 
 		if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
 			if #Timers > 0 then
-				Timers.Y = Timers.Y + 28
+				GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y + 28
 			end
 		elseif Class == "MONK" then
 			local _, _, _, _, Selected = GetTalentInfo(8)
@@ -358,10 +367,8 @@ Configuration.Themes.Default =
 			local _, _, _, _, Selected = GetTalentInfo(15)
 
 			if Selected == true then
-				Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
-			else
 				if #Timers > 0 then
-					Timers.Y = Timers.Y + 28
+					GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y - 28
 				end
 			end
 

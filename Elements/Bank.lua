@@ -1,6 +1,8 @@
 -- Bank.lua
 -- Written by Snail
 
+local _
+
 function HandleBank()
 	if GetConfiguration().Bank then
 		local Class = select(2, UnitClass("Player"))

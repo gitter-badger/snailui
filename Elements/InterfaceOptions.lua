@@ -27,7 +27,8 @@ function HandleInterfaceOptions(Version)
 		"http://wowinterface.com/downloads/info20900-SnailUI"
 	)
 
-	FramesSubcategory = CreateFrame("Frame", nil, Category)
+	local FramesSubcategory = CreateFrame("Frame", nil, Category)
+
 	FramesSubcategory.name = "Frames"
 	FramesSubcategory.parent = Category.name
 
@@ -125,7 +126,8 @@ function HandleInterfaceOptions(Version)
 	FramesSubcategory.Label8:SetPoint("RIGHT", 423, 0)
 	FramesSubcategory.Label8:SetText("Color all frame borders based on the unit's threat level (Default: Raid frames only)")
 
-	GeneralSubcategory = CreateFrame("Frame", nil, Category)
+	local GeneralSubcategory = CreateFrame("Frame", nil, Category)
+
 	GeneralSubcategory.name = "General"
 	GeneralSubcategory.parent = Category.name
 

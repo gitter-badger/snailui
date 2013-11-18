@@ -1,6 +1,8 @@
 -- DebuffIndicators.lua
 -- Written by Snail
 
+local _
+
 function HandleDebuffIndicators(Self)
 	if (Self.Frame == "Raid") and GetConfiguration().DebuffIndicators then
 		local Class = select(2, UnitClass("Player"))

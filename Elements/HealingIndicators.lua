@@ -1,6 +1,8 @@
 -- HealingIndicators.lua
 -- Written by Snail
 
+local _
+
 function HandleHealingIndicators(Self)
 	if (Self.Frame == "Raid") and GetConfiguration().HealingIndicators then
 		local Class = select(2, UnitClass("Player"))

@@ -1,6 +1,8 @@
 -- Timers.lua
 -- Written by Snail
 
+local _
+
 local function SortTimers(Timers)
 	local FocusTimer = Focus and Timers.Parent.Timers.ShowOnFocus
 

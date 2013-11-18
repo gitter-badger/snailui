@@ -71,13 +71,14 @@ function HandleMinimap()
 			GameTimeFrame.Time:SetPoint("CENTER", 0, -2)
 			GameTimeFrame.Time:SetTextColor(0, 0, 0)
 
-			GameTimeFrame_SetDate = function()
-				local _, _, Day = CalendarGetDate()
-				
-				GameTimeFrame.Time:SetText(Day)
-			end
-
-			GameTimeFrame:SetText(nil)
+			hooksecurefunc("GameTimeFrame_SetDate",
+				function()
+					local _, _, Day = CalendarGetDate()
+					
+					GameTimeFrame:SetText(nil)
+					GameTimeFrame.Time:SetText(Day)
+				end
+			)
 		end
 
 		if GetConfiguration().Minimap.Clock then

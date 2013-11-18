@@ -73,11 +73,9 @@ function HandleTooltips()
 	GameTooltip.TransparentBackground:SetPoint("CENTER")
 	GameTooltip.TransparentBackground:SetTexture(0, 0, 0, 0.5)
 
-	local OriginalGameTooltip_SetDefaultAnchor = GameTooltip_SetDefaultAnchor
-
-	GameTooltip_SetDefaultAnchor = function(Self, Parent)
-		OriginalGameTooltip_SetDefaultAnchor(Self, Parent)
-
-		Self:SetPoint("BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -7, 7)
-	end
+	hooksecurefunc("GameTooltip_SetDefaultAnchor",
+		function(Self, Parent)
+			Self:SetPoint("BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -7, 7)
+		end
+	)
 end

@@ -4,12 +4,18 @@
 function HandleChat()
 	if GetConfiguration().Chat then
 		local Class = select(2, UnitClass("Player"))
-		local OriginalChatEdit_OnEscapePressed = ChatEdit_OnEscapePressed
 
-		ChatEdit_OnEscapePressed = function(Self)
-			OriginalChatEdit_OnEscapePressed(Self)
-			Self:Hide()
-		end
+		hooksecurefunc("ChatEdit_OnEnterPressed",
+			function(Self)
+				Self:Hide()
+			end
+		)
+
+		hooksecurefunc("ChatEdit_OnEscapePressed",
+			function(Self)
+				Self:Hide()
+			end
+		)
 
 		ChatFrame1:ClearAllPoints()
 		ChatFrame1:SetClampedToScreen(false)
@@ -180,7 +186,7 @@ function HandleChat()
 					end
 
 					for I = 1, #Patterns do
-						Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
+						local Result, Match = string.gsub(String, Patterns[I][1], "|cFFFFFFFF|Hsurl:".. Patterns[I][2] .. "|h[" .. Patterns[I][2] .. "]|h|r")
 
 						if Match > 0 then
 							return false, Result, Sender,...

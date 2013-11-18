@@ -1,37 +1,39 @@
 -- TimerTrackers.lua
 -- Written by Snail
 
+local _
+
 function HandleTimerTrackers()
 	if GetConfiguration().TimerTrackers then
-		StartTimer_SetGoTexture = function(Self)
-			Self.GoTexture:SetTexture(Configuration.GoTexture)
-			Self.GoTextureGlow:SetTexture(Configuration.GoTextureGlow)
-		end
+		hooksecurefunc("StartTimer_SetGoTexture",
+			function(Self)
+				Self.GoTexture:SetTexture(Configuration.GoTexture)
+				Self.GoTextureGlow:SetTexture(Configuration.GoTextureGlow)
+			end
+		)
 
-		local OriginalStartTimer_SetTexNumbers = StartTimer_SetTexNumbers
-
-		StartTimer_SetTexNumbers = function(Self, ...)
-			OriginalStartTimer_SetTexNumbers(Self, ...)
-
-			local Digits = {...}
-			local Parent
-			local Point
-			local RelativePoint
-			local X
-			local Y
-
-			for I = 1, #Digits do
-				Point, Parent, RelativePoint, X, Y = Digits[I]:GetPoint()
-
-				if I == 1 then
-					if Self.anchorCenter then
-						Digits[I]:SetPoint(Point, Parent, RelativePoint, X, 0)
-					else
-						Digits[I]:SetPoint(Point, Parent, RelativePoint, X, -floor((floor(Digits[I]:GetHeight() + 0.5) / 2) + 0.5))
+		hooksecurefunc("StartTimer_SetTexNumbers",
+			function(Self, ...)
+				local Digits = {...}
+				local Parent
+				local Point
+				local RelativePoint
+				local X
+				local Y
+	
+				for I = 1, #Digits do
+					Point, Parent, RelativePoint, X, Y = Digits[I]:GetPoint()
+	
+					if I == 1 then
+						if Self.anchorCenter then
+							Digits[I]:SetPoint(Point, Parent, RelativePoint, X, 0)
+						else
+							Digits[I]:SetPoint(Point, Parent, RelativePoint, X, -floor((floor(Digits[I]:GetHeight() + 0.5) / 2) + 0.5))
+						end
 					end
 				end
 			end
-		end
+		)
 
 		local function SkinTimer(Self)
 			local Bar

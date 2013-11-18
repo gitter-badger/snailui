@@ -1,7 +1,7 @@
 -- Meter.lua
 -- Written by Snail
 
-local Meter
+local Meter, _
 
 local function RefreshTooltip(Self)
 	local APS

@@ -1,6 +1,8 @@
 -- Functions.lua
 -- Written by Snail
 
+local _
+
 function AddPet(Pets, PlayerGUID, PetGUID)
 	if Pets and PlayerGUID and PetGUID then
 		if not Pets[PlayerGUID] then

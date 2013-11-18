@@ -212,6 +212,20 @@ Configuration.Themes.Default.Timers =
 			[1] =
 			{
 				Priority = 2,
+				Spell = "Frozen Orb",
+				Type = "Cooldown",
+
+				Color =
+				{
+					B = 252 / 255,
+					G = 190 / 255,
+					R = 38 / 255
+				}
+			},
+
+			[2] =
+			{
+				Priority = 3,
 				Spell = "Icy Veins",
 				Type = "Buff",
 
@@ -228,11 +242,10 @@ Configuration.Themes.Default.Timers =
 	["MONK"] =
 	{
 		Anchor = "BOTTOM",
-		AnchorToRaid = true,
 		Height = 24,
 		Width = 464,
 		X = 26,
-		Y = 31,
+		Y = 242,
 
 		["MISTWEAVER"] =
 		{
@@ -289,6 +302,23 @@ Configuration.Themes.Default.Timers =
 					B = 1,
 					G = 165 / 255,
 					R = 13 / 255
+				}
+			}
+		},
+
+		["WINDWALKER"] =
+		{
+			[1] =
+			{
+				Priority = 1,
+				Spell = "Tiger Power",
+				Type = "Buff",
+
+				Color =
+				{
+					B = 175 / 255,
+					G = 218 / 255,
+					R = 8 / 255
 				}
 			}
 		}
@@ -459,6 +489,21 @@ Configuration.Themes.Default.Timers =
 					B = 186 / 255,
 					G = 34 / 255,
 					R = 192 / 255
+				}
+			},
+
+			[6] =
+			{
+				Priority = 6,
+				ShowOnFocus = true,
+				Spell = "Halo",
+				Type = "Cooldown",
+
+				Color =
+				{
+					B = 173 / 255,
+					G = 85 / 255,
+					R = 193 / 255
 				}
 			}
 		}

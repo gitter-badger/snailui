@@ -2,21 +2,36 @@
 -- Written by Snail
 
 function HandleBlizzardFrames()
+	for I = 1, MAX_BOSS_FRAMES do
+		_G["Boss" .. I .. "TargetFrame"]:SetScript("OnShow",
+			function(Self)
+				Self:Hide()
+			end
+		)
+
+		_G["Boss" .. I .. "TargetFrame"]:Hide()
+	end
+
 	CompactRaidFrameContainer:UnregisterAllEvents()
 	CompactRaidFrameManager:UnregisterAllEvents()
 
-	local OriginalExtraActionBar_OnShow = ExtraActionBar_OnShow
-
-	ExtraActionBar_OnShow = function(Self)
-		OriginalExtraActionBar_OnShow(Self)
-
-		ExtraActionButton1:ClearAllPoints()
-		ExtraActionButton1:SetPoint("TOP", 0, -125)
-	end
+	ExtraActionButton1:HookScript("OnShow",
+		function(Self)
+			Self:ClearAllPoints()
+			Self:SetPoint("TOP", 0, -125)
+		end
+	)
 
 	GhostFrame:HookScript("OnShow",
 		function(Self)
 			Self:SetPoint("TOP", 0, -125)
+		end
+	)
+
+	hooksecurefunc("PetBattleFrame_Display",
+		function(Self)
+			Self:SetFrameLevel(10)
+			Self:SetFrameStrata("HIGH")
 		end
 	)
 
@@ -36,21 +51,12 @@ function HandleBlizzardFrames()
 		end
 	)
 
-	local OriginalWatchFrame_Update = WatchFrame_Update
-
-	WatchFrame_Update = function(Self)
-		OriginalWatchFrame_Update(Self)
-
-		if not Self then
-			Self = WatchFrame
+	WatchFrame:HookScript("OnUpdate",
+		function(Self)
+			Self:ClearAllPoints()
+			Self:SetPoint("BOTTOMRIGHT", -4, 4)
 		end
-
-		Self:ClearAllPoints()
-		Self:SetPoint("BOTTOMRIGHT", -4, 4)
-
-		Self.ClearAllPoints = Blank
-		Self.SetPoint = Blank
-	end
+	)
 
 	WorldStateAlwaysUpFrame:HookScript("OnShow",
 		function(Self)
@@ -58,16 +64,7 @@ function HandleBlizzardFrames()
 		end
 	)
 
-	local OriginalPetBattleFrame_Display = PetBattleFrame_Display
-
-	PetBattleFrame_Display = function(Self)
-		OriginalPetBattleFrame_Display(Self)
-
-		Self:SetFrameLevel(10)
-		Self:SetFrameStrata("HIGH")
-	end
-
-	Frames =
+	local Frames =
 	{
 		"CompactRaidFrameContainer",
 		"CompactRaidFrameManager",
@@ -79,16 +76,14 @@ function HandleBlizzardFrames()
 	local Textures = {}
 
 	if GetConfiguration().ActionBars then
-		local OriginalInterfaceOptions_UpdateMultiActionBars = InterfaceOptions_UpdateMultiActionBars
-
-		InterfaceOptions_UpdateMultiActionBars = function()
-			SHOW_MULTI_ACTIONBAR_1 = 1
-			SHOW_MULTI_ACTIONBAR_2 = 1
-			SHOW_MULTI_ACTIONBAR_3 = 1
-			SHOW_MULTI_ACTIONBAR_4 = 1
-
-			OriginalInterfaceOptions_UpdateMultiActionBars()
-		end
+		hooksecurefunc("InterfaceOptions_UpdateMultiActionBars",
+			function()
+				SHOW_MULTI_ACTIONBAR_1 = 1
+				SHOW_MULTI_ACTIONBAR_2 = 1
+				SHOW_MULTI_ACTIONBAR_3 = 1
+				SHOW_MULTI_ACTIONBAR_4 = 1
+			end
+		)
 
 		if GetConfiguration().ActionBars.Pet then
 			if GetConfiguration().ActionBars.Pet.Buttons < NUM_PET_ACTION_SLOTS then
@@ -101,8 +96,6 @@ function HandleBlizzardFrames()
 		end
 
 		if GetConfiguration().ActionBars.Player then
-			AchievementMicroButton_Update = Blank
-
 			Frames[#Frames + 1] = "AchievementMicroButton"
 			Frames[#Frames + 1] = "ActionBarDownButton"
 			Frames[#Frames + 1] = "ActionBarUpButton"
@@ -241,11 +234,21 @@ function HandleBlizzardFrames()
 		MultiBarBottomRight:Hide()
 		MultiBarLeft:Hide()
 
-		MultiBarBottomRight.OriginalShow = MultiBarBottomRight.Show
-		MultiBarBottomRight.Show = Blank
+		MultiBarBottomRight:HookScript("OnShow",
+			function(Self)
+				if not Self.EnableShow then
+					Self:Hide()
+				end
+			end
+		)
 
-		MultiBarLeft.OriginalShow = MultiBarLeft.Show
-		MultiBarLeft.Show = Blank
+		MultiBarLeft:HookScript("OnShow",
+			function(Self)
+				if not Self.EnableShow then
+					Self:Hide()
+				end
+			end
+		)
 
 		VehicleSeatIndicator:Hide()
 		WatchFrame:Hide()
@@ -265,8 +268,6 @@ function HandleBlizzardFrames()
 				Self:Hide()
 			end
 		)
-
-		_G[Frames[I]].Show = Blank
 	end
 
 	for I = 1, #Textures do

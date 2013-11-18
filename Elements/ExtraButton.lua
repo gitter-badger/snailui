@@ -12,35 +12,53 @@ function HandleExtraButton()
 		ExtraButton:SetScript("OnClick",
 			function(Self)
 				if Self.Shown then
-					BuffFrame:Hide()
-					MainMenuExpBar:Hide()
-					MultiBarBottomRight:Hide()
-					MultiBarLeft:Hide()
-					VehicleSeatIndicator:Hide()
-					WatchFrame:Hide()
-					WorldStateAlwaysUpFrame:Hide()
-
-					if (not GetConfiguration().Raid.Shown) and Options.EnableRaidFrames then
-						Raid:Hide()
+					if not InCombatLockdown() then
+						BuffFrame:Hide()
+						MainMenuExpBar:Hide()
+						
+						MultiBarBottomRight.EnableShow = nil
+						MultiBarLeft.EnableShow = nil
+	
+						MultiBarBottomRight:Hide()
+						MultiBarLeft:Hide()
+	
+						VehicleSeatIndicator:Hide()
+						WatchFrame:Hide()
+						WorldStateAlwaysUpFrame:Hide()
+	
+						if (not GetConfiguration().Raid.Shown) and Options.EnableRaidFrames then
+							Raid:Hide()
+						end
+	
+						Self.Bar.Text:SetText("Show Misc Frames")
+						Self.Shown = nil
+					else
+						print("Can't hide misc frames while in combat!")
 					end
-
-					Self.Bar.Text:SetText("Show Misc Frames")
-					Self.Shown = nil
 				else
-					BuffFrame:Show()
-					MainMenuExpBar:Show()
-					MultiBarBottomRight:OriginalShow()
-					MultiBarLeft:OriginalShow()
-					VehicleSeatIndicator:Show()
-					WatchFrame:Show()
-					WorldStateAlwaysUpFrame:Show()
-
-					if (not GetConfiguration().Raid.shown) and Options.EnableRaidFrames then
-						Raid:Show()
+					if not InCombatLockdown() then
+						BuffFrame:Show()
+						MainMenuExpBar:Show()
+	
+						MultiBarBottomRight.EnableShow = true
+						MultiBarLeft.EnableShow = true
+	
+						MultiBarBottomRight:Show()
+						MultiBarLeft:Show()
+	
+						VehicleSeatIndicator:Show()
+						WatchFrame:Show()
+						WorldStateAlwaysUpFrame:Show()
+	
+						if (not GetConfiguration().Raid.shown) and Options.EnableRaidFrames then
+							Raid:Show()
+						end
+	
+						Self.Bar.Text:SetText("Hide Misc Frames")
+						Self.Shown = true
+					else
+						print("Can't show misc frames while in combat!")
 					end
-
-					Self.Bar.Text:SetText("Hide Misc Frames")
-					Self.Shown = true
 				end
 			end
 		)
