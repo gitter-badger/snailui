@@ -1,9 +1,7 @@
-Readme.txt
-Written by Snail
+SnailUI
+Written by Snailsoft
 
 ------------------------------------------------------------------------------
-
-SnailUI
 
 SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you reported them in the comments or through Twitter. :)
 

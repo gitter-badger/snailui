@@ -1,11 +1,5 @@
-Changelog.txt
+SnailUI
 Written by Snail
-
-------------------------------------------------------------------------------
-
-Change log for SnailUI
-
-This is where I will document the changes made for SnailUI in each release.
 
 ------------------------------------------------------------------------------
 

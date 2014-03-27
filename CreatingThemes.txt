@@ -1,4 +1,4 @@
-CreatingThemes.txt
+Creating themes
 Written by Snail
 
 ------------------------------------------------------------------------------
