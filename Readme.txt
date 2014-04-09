@@ -38,10 +38,11 @@ Features
 
 Download
 
-You can download SnailUI at either of these sites:
+You can download SnailUI at any of these locations:
 
 WoW Interface: http://wowinterface.com/downloads/info20900-SnailUI
 Curse: http://curse.com/addons/wow/snailui
+GitHub: https://github.com/SnailXI/SnailUI/releases/latest
 
 You can also stay up to date with the cutting edge versions of SnailUI by visiting its GitHub repository here: https://github.com/SnailXI/SnailUI (The files here can change many times a day so it's not recommended to use this version of SnailUI unless you know what you are doing)
 
