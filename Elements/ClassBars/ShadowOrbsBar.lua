@@ -20,19 +20,16 @@ function HandleShadowOrbsBar(Self)
 		Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)
 		Self.ClassIcons.Background:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar.Width - 2, GetConfiguration()[Self.Frame].ShadowOrbsBar.Height - 2)
 
-		for I = 1, 5 do
+		for I = 1, #GetConfiguration()[Self.Frame].ShadowOrbsBar do
 			Self.ClassIcons[I] = Self:CreateTexture(Self, "LOW")
+			Self.ClassIcons[I]:SetPoint(GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Anchor, Self.ClassIcons, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].X, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Y)
+			Self.ClassIcons[I]:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Width - 2, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Height - 2)
+			Self.ClassIcons[I]:SetTexture(Configuration.Texture)
 
-			if I <= #GetConfiguration()[Self.Frame].ShadowOrbsBar then
-				Self.ClassIcons[I]:SetPoint(GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Anchor, Self.ClassIcons, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].X, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Y)
-				Self.ClassIcons[I]:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Width - 2, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Height - 2)
-				Self.ClassIcons[I]:SetTexture(Configuration.Texture)
-
-				Self.ClassIcons[I].Border = Self:CreateTexture(nil, "LOW")
-				Self.ClassIcons[I].Border:SetPoint("TOPLEFT", Self.ClassIcons[I], -1, 1)
-				Self.ClassIcons[I].Border:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Width, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Height)
-				Self.ClassIcons[I].Border:SetTexture(0, 0, 0)
-			end
+			Self.ClassIcons[I].Border = Self:CreateTexture(nil, "LOW")
+			Self.ClassIcons[I].Border:SetPoint("TOPLEFT", Self.ClassIcons[I], -1, 1)
+			Self.ClassIcons[I].Border:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Width, GetConfiguration()[Self.Frame].ShadowOrbsBar[I].Height)
+			Self.ClassIcons[I].Border:SetTexture(0, 0, 0)
 		end
 	end
 end
