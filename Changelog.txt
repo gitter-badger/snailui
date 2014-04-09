@@ -4,6 +4,7 @@ Written by Snail
 ------------------------------------------------------------------------------
 
 Version 0.10.2
+- Fixed a bug where the shadow orbs bar could sometimes load more than 3 shadow orbs
 - CreatingThemes.txt removed; added to the wiki
 
 ------------------------------------------------------------------------------
