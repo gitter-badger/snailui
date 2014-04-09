@@ -1,15 +1,17 @@
 SnailUI
-Written by Snailsoft
+Written by Snail
 
 ------------------------------------------------------------------------------
 
-Version 0.9.2
+Version 0.10.1
+- Store micro button is now hidden
 - You will now receive a warning when trying to show/hide misc frames in combat
 - Fixed many taint related bugs
 - Boss frames are now hidden
 - Fixed a bug where some timers were not aligned correctly
 - Fixed a bug where the Codex of Xerrath spell was not being recognized
 - Added several code improvements to lessen instances of taint
+- Updated for 5.4.7
 
 ------------------------------------------------------------------------------
 

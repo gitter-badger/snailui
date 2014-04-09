@@ -111,6 +111,7 @@ function HandleBlizzardFrames()
 			Frames[#Frames + 1] = "QuestLogMicroButton"
 			Frames[#Frames + 1] = "ReputationWatchBar"
 			Frames[#Frames + 1] = "SpellbookMicroButton"
+			Frames[#Frames + 1] = "StoreMicroButton"
 			Frames[#Frames + 1] = "TalentMicroButton"
 
 			if GetConfiguration().ActionBars.Player.Buttons < NUM_ACTIONBAR_BUTTONS then

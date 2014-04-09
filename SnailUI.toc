@@ -1,10 +1,10 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
 ## SavedVariables: Data, Options
-## Interface: 50400
+## Interface: 50470
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.9.2
+## Version: 0.10.1
 
 Configuration.lua
 Functions.lua
