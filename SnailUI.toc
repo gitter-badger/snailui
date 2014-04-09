@@ -11,12 +11,20 @@ Functions.lua
 
 Themes\Default\Default.lua
 Themes\Default\DefaultHealingIndicators.lua
-Themes\Default\DefaultTimers.lua
 Themes\Default\DefaultHealer.lua
 Themes\Default\DefaultWithPet.lua
 Themes\Default\DefaultWithClassBar.lua
 Themes\Default\DefaultHealerWithClassBar.lua
 Themes\Default\DefaultWithClassBarWithPet.lua
+
+Themes\Default\Timers\DeathKnight.lua
+Themes\Default\Timers\Hunter.lua
+Themes\Default\Timers\Mage.lua
+Themes\Default\Timers\Monk.lua
+Themes\Default\Timers\Paladin.lua
+Themes\Default\Timers\Priest.lua
+Themes\Default\Timers\Rogue.lua
+Themes\Default\Timers\Warlock.lua
 
 Elements\ActionBars.lua
 Elements\AutoGreed.lua

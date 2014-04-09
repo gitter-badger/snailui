@@ -4,6 +4,8 @@ Written by Snail
 ------------------------------------------------------------------------------
 
 Version 0.10.2
+- Timers split into separate files to make them easier to edit
+- Fixed a bug where the achievement dialog was reporting errors
 - Fixed a bug where the shadow orbs bar could sometimes load more than 3 shadow orbs
 - CreatingThemes.txt removed; added to the wiki
 

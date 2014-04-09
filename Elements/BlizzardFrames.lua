@@ -12,6 +12,8 @@ function HandleBlizzardFrames()
 		_G["Boss" .. I .. "TargetFrame"]:Hide()
 	end
 
+	AchievementMicroButton_Update = Blank
+
 	CompactRaidFrameContainer:UnregisterAllEvents()
 	CompactRaidFrameManager:UnregisterAllEvents()
 

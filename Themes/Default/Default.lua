@@ -700,6 +700,7 @@ Configuration.Themes.Default =
 		}
 	},
 
+	Timers = {},
 	TimerTrackers =
 	{
 		Anchor = "TOP",
