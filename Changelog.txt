@@ -3,6 +3,11 @@ Written by Snail
 
 ------------------------------------------------------------------------------
 
+Version 0.10.2
+- CreatingThemes.txt removed; added to the wiki
+
+------------------------------------------------------------------------------
+
 Version 0.10.1
 - Store micro button is now hidden
 - You will now receive a warning when trying to show/hide misc frames in combat

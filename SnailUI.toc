@@ -4,7 +4,7 @@
 ## Interface: 50470
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.10.1
+## Version: 0.10.2
 
 Configuration.lua
 Functions.lua
