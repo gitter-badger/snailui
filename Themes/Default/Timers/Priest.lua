@@ -9,6 +9,23 @@ Configuration.Themes.Default.Timers["PRIEST"] =
 	X = 26,
 	Y = 270,
 
+	["DISCIPLINE"] =
+	{
+		[1] =
+		{
+			Priority = 1,
+			Spell = "Penance",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 131 / 255,
+				G = 1,
+				R = 1
+			}
+		}
+	},
+
 	["SHADOW"] =
 	{
 		[1] =
