@@ -11,6 +11,10 @@ Configuration.Themes.Default.Timers["MONK"] =
 
 	["MISTWEAVER"] =
 	{
+		Anchor = "TOP",
+		AnchorToRaid = true,
+		Y = 49,
+		
 		[1] =
 		{
 			Priority = 1,

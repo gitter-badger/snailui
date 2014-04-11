@@ -11,6 +11,10 @@ Configuration.Themes.Default.Timers["PRIEST"] =
 
 	["DISCIPLINE"] =
 	{
+		Anchor = "TOP",
+		AnchorToRaid = true,
+		Y = 49,
+
 		[1] =
 		{
 			Priority = 1,

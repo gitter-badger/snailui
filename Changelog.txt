@@ -4,6 +4,7 @@ Written by Snail
 ------------------------------------------------------------------------------
 
 Version 0.10.2
+- Fixed a bug where timers were not being positioned correctly for healers
 - Fixed a bug where timers were not working correctly
 - Discipline Priest timers started
 - Timers split into separate files to make them easier to edit
