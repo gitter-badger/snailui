@@ -48,6 +48,34 @@ Configuration.Themes.Default.Timers["PRIEST"] =
 		[2] =
 		{
 			Priority = 2,
+			Spell = "Holy Fire",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 176 / 255,
+				G = 234 / 255,
+				R = 1
+			}
+		},
+
+		[3] =
+		{
+			Priority = 3,
+			Spell = "Evangelism",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 167 / 255,
+				G = 204 / 255,
+				R = 1
+			}
+		},
+
+		[4] =
+		{
+			Priority = 4,
 			Spell = "Spirit Shell",
 			Type = "Buff",
 

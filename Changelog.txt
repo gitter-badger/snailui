@@ -4,6 +4,8 @@ Written by Snail
 ------------------------------------------------------------------------------
 
 Version 0.10.3
+- Evangelism timer added for Discipline Priests
+- Holy Fire timer added for Discipline Priests
 - Spirit Shell timer added for Priests
 - Psychic Scream timer added for Priests
 - Website link added to the interface options
