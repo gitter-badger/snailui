@@ -9,6 +9,22 @@ Configuration.Themes.Default.Timers["PRIEST"] =
 	X = 26,
 	Y = 270,
 
+	[1] =
+	{
+		Priority = 99,
+		ShowOnFocus = true,
+		Spell = "Psychic Scream",
+		Type = "Debuff",
+		Unit = "Target",
+
+		Color =
+		{
+			B = 132 / 255,
+			G = 52 / 255,
+			R = 24 / 255
+		}
+	},
+
 	["DISCIPLINE"] =
 	{
 		Anchor = "TOP",
@@ -26,6 +42,20 @@ Configuration.Themes.Default.Timers["PRIEST"] =
 				B = 131 / 255,
 				G = 1,
 				R = 1
+			}
+		},
+
+		[2] =
+		{
+			Priority = 2,
+			Spell = "Spirit Shell",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 130 / 255,
+				G = 34 / 255,
+				R = 134 / 255
 			}
 		}
 	},

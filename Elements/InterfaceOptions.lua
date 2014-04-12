@@ -22,9 +22,11 @@ function HandleInterfaceOptions(Version)
 		"\n" ..
 		"Written by Snail" ..
 		"\n\n" ..
+		"http://wowinterface.com/downloads/info20900-SnailUI" ..
+		"\n" ..
 		"http://curse.com/addons/wow/snailui" ..
 		"\n" ..
-		"http://wowinterface.com/downloads/info20900-SnailUI"
+		"http://snailsoft.me"
 	)
 
 	local FramesSubcategory = CreateFrame("Frame", nil, Category)

@@ -271,6 +271,8 @@ function HandleBlizzardFrames()
 				Self:Hide()
 			end
 		)
+
+		_G[Frames[I]].Show = Blank
 	end
 
 	for I = 1, #Textures do
