@@ -3,7 +3,7 @@ Written by Snail
 
 ------------------------------------------------------------------------------
 
-SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bar, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you reported them in the comments or through Twitter. :)
+SnailUI is a pixel perfect UI, meaning everything is aligned perfectly. SnailUI skins almost everything, including the minimap, action bars, casting bars, etc. SnailUI is currently in a beta state, so there are probably plenty of bugs to be found. I would appreciate it if you reported them in the comments or through Twitter. :)
 
 A lot of aspects of SnailUI can be changed via the in game interface options (or by typing /SUI or /SnailUI) or via the lua files themselves. This UI is also using !NoTaint to fix talent related bugs and Tuk's warlock bars addon as a temporary fix until oUF is updated. Should you need to contact me, I can be found via Twitter. (@1Snail)
 
