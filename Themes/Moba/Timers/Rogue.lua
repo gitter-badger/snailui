@@ -1,7 +1,7 @@
 -- Rogue.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["ROGUE"] =
+Configuration.Themes.Moba.Timers["ROGUE"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

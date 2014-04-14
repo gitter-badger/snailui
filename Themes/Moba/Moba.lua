@@ -1,9 +1,9 @@
--- Default.lua
+-- Moba.lua
 -- Written by Snail
 
 local FocusX = math.floor(GetScreenWidth() / 4)
 
-Configuration.Themes.Default = 
+Configuration.Themes.Moba = 
 {
 	ActionBars =
 	{
@@ -258,29 +258,29 @@ Configuration.Themes.Default =
 	},
 
 	Initialize = function(Self)
-		Configuration.Themes.Default["DEATHKNIGHT"] = DefaultWithClassBar
-		Configuration.Themes.Default["DEATHKNIGHT"]["UNHOLY"] = DefaultWithClassBarWithPet
-		Configuration.Themes.Default["DRUID"] = Configuration.Themes.Default
-		Configuration.Themes.Default["DRUID"]["BALANCE"] = DefaultWithClassBar
-		Configuration.Themes.Default["DRUID"]["FERAL"] = DefaultWithClassBar
-		Configuration.Themes.Default["DRUID"]["RESTORATION"] = DefaultHealer
-		Configuration.Themes.Default["HUNTER"] = DefaultWithClassBarWithPet
-		Configuration.Themes.Default["MAGE"] = Configuration.Themes.Default
-		Configuration.Themes.Default["MAGE"]["FROST"] = DefaultWithPet
-		Configuration.Themes.Default["MONK"] = DefaultWithClassBar
-		Configuration.Themes.Default["MONK"]["MISTWEAVER"] = DefaultHealerWithClassBar
-		Configuration.Themes.Default["PALADIN"] = DefaultWithClassBar
-		Configuration.Themes.Default["PALADIN"]["HOLY"] = DefaultHealerWithClassBar
-		Configuration.Themes.Default["PRIEST"] = DefaultHealer
-		Configuration.Themes.Default["PRIEST"]["SHADOW"] = DefaultWithClassBar
-		Configuration.Themes.Default["ROGUE"] = DefaultWithClassBar
-		Configuration.Themes.Default["SHAMAN"] = Configuration.Themes.Default
-		Configuration.Themes.Default["SHAMAN"]["RESTORATION"] = DefaultHealer
-		Configuration.Themes.Default["WARLOCK"] = DefaultWithPet
-		Configuration.Themes.Default["WARLOCK"]["AFFLICTION"] = DefaultWithClassBarWithPet
-		Configuration.Themes.Default["WARLOCK"]["DEMONOLOGY"] = DefaultWithClassBarWithPet
-		Configuration.Themes.Default["WARLOCK"]["DESTRUCTION"] = DefaultWithClassBarWithPet
-		Configuration.Themes.Default["WARRIOR"] = DefaultWithClassBar
+		Configuration.Themes.Moba["DEATHKNIGHT"] = MobaWithClassBar
+		Configuration.Themes.Moba["DEATHKNIGHT"]["UNHOLY"] = MobaWithClassBarWithPet
+		Configuration.Themes.Moba["DRUID"] = Configuration.Themes.Moba
+		Configuration.Themes.Moba["DRUID"]["BALANCE"] = MobaWithClassBar
+		Configuration.Themes.Moba["DRUID"]["FERAL"] = MobaWithClassBar
+		Configuration.Themes.Moba["DRUID"]["RESTORATION"] = MobaHealer
+		Configuration.Themes.Moba["HUNTER"] = MobaWithClassBarWithPet
+		Configuration.Themes.Moba["MAGE"] = Configuration.Themes.Moba
+		Configuration.Themes.Moba["MAGE"]["FROST"] = MobaWithPet
+		Configuration.Themes.Moba["MONK"] = MobaWithClassBar
+		Configuration.Themes.Moba["MONK"]["MISTWEAVER"] = MobaHealerWithClassBar
+		Configuration.Themes.Moba["PALADIN"] = MobaWithClassBar
+		Configuration.Themes.Moba["PALADIN"]["HOLY"] = MobaHealerWithClassBar
+		Configuration.Themes.Moba["PRIEST"] = MobaHealer
+		Configuration.Themes.Moba["PRIEST"]["SHADOW"] = MobaWithClassBar
+		Configuration.Themes.Moba["ROGUE"] = MobaWithClassBar
+		Configuration.Themes.Moba["SHAMAN"] = Configuration.Themes.Moba
+		Configuration.Themes.Moba["SHAMAN"]["RESTORATION"] = MobaHealer
+		Configuration.Themes.Moba["WARLOCK"] = MobaWithPet
+		Configuration.Themes.Moba["WARLOCK"]["AFFLICTION"] = MobaWithClassBarWithPet
+		Configuration.Themes.Moba["WARLOCK"]["DEMONOLOGY"] = MobaWithClassBarWithPet
+		Configuration.Themes.Moba["WARLOCK"]["DESTRUCTION"] = MobaWithClassBarWithPet
+		Configuration.Themes.Moba["WARRIOR"] = MobaWithClassBar
 
 		local Class = select(2, UnitClass("Player"))
 
@@ -288,7 +288,7 @@ Configuration.Themes.Default =
 			local _, _, _, _, Selected = GetTalentInfo(15)
 
 			if Selected == true then
-				Configuration.Themes.Default["WARLOCK"] = DefaultWithClassBar
+				Configuration.Themes.Moba["WARLOCK"] = MobaWithClassBar
 			end
 		end
 
@@ -413,10 +413,10 @@ Configuration.Themes.Default =
 				end
 			end
 		elseif (Class == "HUNTER") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) or (Class == "WARRIOR") then
-			local T = DefaultWithClassBar
+			local T = MobaWithClassBar
 
 			if Class == "HUNTER" then
-				T = DefaultWithClassBarWithPet
+				T = MobaWithClassBarWithPet
 			end
 
 			T.Player.PowerBar.Border = true

@@ -1,7 +1,7 @@
 -- DeathKnight.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["DEATHKNIGHT"] =
+Configuration.Themes.Compact.Timers["DEATHKNIGHT"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

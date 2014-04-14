@@ -1,8 +1,8 @@
--- DefaultWithClassBar.lua
+-- MobaWithClassBar.lua
 -- Written by Snail
 
-DefaultWithClassBar = DeepCopy(Configuration.Themes.Default)
-DefaultWithClassBar.Player.BurningEmbersBar =
+MobaWithClassBar = DeepCopy(Configuration.Themes.Moba)
+MobaWithClassBar.Player.BurningEmbersBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -47,8 +47,8 @@ DefaultWithClassBar.Player.BurningEmbersBar =
 	}
 }
 
-DefaultWithClassBar.Player.CastingBar.Y = 53
-DefaultWithClassBar.Player.ChiBar =
+MobaWithClassBar.Player.CastingBar.Y = 53
+MobaWithClassBar.Player.ChiBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -93,7 +93,7 @@ DefaultWithClassBar.Player.ChiBar =
 	}
 }
 
-DefaultWithClassBar.Player.ChiBar2 =
+MobaWithClassBar.Player.ChiBar2 =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -147,7 +147,7 @@ DefaultWithClassBar.Player.ChiBar2 =
 	}
 }
 
-DefaultWithClassBar.Player.ComboPointsBar =
+MobaWithClassBar.Player.ComboPointsBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -201,7 +201,7 @@ DefaultWithClassBar.Player.ComboPointsBar =
 	}
 }
 
-DefaultWithClassBar.Player.EclipseBar =
+MobaWithClassBar.Player.EclipseBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -219,7 +219,7 @@ DefaultWithClassBar.Player.EclipseBar =
 	}
 }
 
-DefaultWithClassBar.Player.DemonicFuryBar =
+MobaWithClassBar.Player.DemonicFuryBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -237,10 +237,10 @@ DefaultWithClassBar.Player.DemonicFuryBar =
 	}
 }
 
-DefaultWithClassBar.Player.HealthBar.Anchor = "CENTER"
-DefaultWithClassBar.Player.HealthBar.Height = 20
-DefaultWithClassBar.Player.HealthBar.Y = 0
-DefaultWithClassBar.Player.HolyPowerBar =
+MobaWithClassBar.Player.HealthBar.Anchor = "CENTER"
+MobaWithClassBar.Player.HealthBar.Height = 20
+MobaWithClassBar.Player.HealthBar.Y = 0
+MobaWithClassBar.Player.HolyPowerBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -276,7 +276,7 @@ DefaultWithClassBar.Player.HolyPowerBar =
 	}
 }
 
-DefaultWithClassBar.Player.HolyPowerBar2 =
+MobaWithClassBar.Player.HolyPowerBar2 =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -330,12 +330,12 @@ DefaultWithClassBar.Player.HolyPowerBar2 =
 	}
 }
 
-DefaultWithClassBar.Player.PowerBar.Anchor = "TOPLEFT"
-DefaultWithClassBar.Player.PowerBar.Height = 6
-DefaultWithClassBar.Player.PowerBar.Width = 512
-DefaultWithClassBar.Player.PowerBar.X = 3
-DefaultWithClassBar.Player.PowerBar.Y = 11
-DefaultWithClassBar.Player.RunesBar =
+MobaWithClassBar.Player.PowerBar.Anchor = "TOPLEFT"
+MobaWithClassBar.Player.PowerBar.Height = 6
+MobaWithClassBar.Player.PowerBar.Width = 512
+MobaWithClassBar.Player.PowerBar.X = 3
+MobaWithClassBar.Player.PowerBar.Y = 11
+MobaWithClassBar.Player.RunesBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -398,7 +398,7 @@ DefaultWithClassBar.Player.RunesBar =
 	}
 }
 
-DefaultWithClassBar.Player.ShadowOrbsBar =
+MobaWithClassBar.Player.ShadowOrbsBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -434,7 +434,7 @@ DefaultWithClassBar.Player.ShadowOrbsBar =
 	}
 }
 
-DefaultWithClassBar.Player.SoulShardsBar =
+MobaWithClassBar.Player.SoulShardsBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,

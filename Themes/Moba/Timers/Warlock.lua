@@ -1,7 +1,7 @@
 -- Warlock.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["WARLOCK"] =
+Configuration.Themes.Moba.Timers["WARLOCK"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

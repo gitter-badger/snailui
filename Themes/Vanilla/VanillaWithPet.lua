@@ -1,8 +1,8 @@
--- DefaultWithPet.lua
+-- VanillaWithPet.lua
 -- Written by Snail
 
-DefaultWithPet = DeepCopy(Configuration.Themes.Default)
-DefaultWithPet.ActionBars.Pet =
+VanillaWithPet = DeepCopy(Configuration.Themes.Vanilla)
+VanillaWithPet.ActionBars.Pet =
 {
 	Anchor = "BOTTOM",
 	Buttons = 10,
@@ -20,7 +20,7 @@ DefaultWithPet.ActionBars.Pet =
 	}
 }
 
-DefaultWithPet.Pet =
+VanillaWithPet.Pet =
 {
 	Anchor = "BOTTOM",
 	Height = 24,
@@ -56,13 +56,13 @@ DefaultWithPet.Pet =
 	}
 }
 	
-DefaultWithPet.Player.HealthBar.Width = 200
-DefaultWithPet.Player.PowerBar.Width = 200
-DefaultWithPet.Player.Width = 204
-DefaultWithPet.Player.X = -156
-DefaultWithPet.Player.Y = 211
-DefaultWithPet.Target.HealthBar.Width = 200
-DefaultWithPet.Target.PowerBar.Width = 200
-DefaultWithPet.Target.Width = 204
-DefaultWithPet.Target.X = 156
-DefaultWithPet.Target.Y = 211
+VanillaWithPet.Player.HealthBar.Width = 200
+VanillaWithPet.Player.PowerBar.Width = 200
+VanillaWithPet.Player.Width = 204
+VanillaWithPet.Player.X = -156
+VanillaWithPet.Player.Y = 211
+VanillaWithPet.Target.HealthBar.Width = 200
+VanillaWithPet.Target.PowerBar.Width = 200
+VanillaWithPet.Target.Width = 204
+VanillaWithPet.Target.X = 156
+VanillaWithPet.Target.Y = 211

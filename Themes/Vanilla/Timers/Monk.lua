@@ -1,7 +1,7 @@
 -- Monk.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["MONK"] =
+Configuration.Themes.Vanilla.Timers["MONK"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

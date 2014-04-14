@@ -1,31 +1,47 @@
 ## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
 ## SavedVariables: Data, Options
-## Interface: 50470
+## Interface: 50400
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 0.10.3
+## Version: 0.11.1
 
 Configuration.lua
 Functions.lua
 
-Themes\Default\Default.lua
-Themes\Default\DefaultHealingIndicators.lua
+Themes\Compact\Compact.lua
 
-Themes\Default\Timers\DeathKnight.lua
-Themes\Default\Timers\Hunter.lua
-Themes\Default\Timers\Mage.lua
-Themes\Default\Timers\Monk.lua
-Themes\Default\Timers\Paladin.lua
-Themes\Default\Timers\Priest.lua
-Themes\Default\Timers\Rogue.lua
-Themes\Default\Timers\Warlock.lua
+Themes\Compact\Timers\DeathKnight.lua
+Themes\Compact\Timers\Hunter.lua
+Themes\Compact\Timers\Mage.lua
+Themes\Compact\Timers\Monk.lua
+Themes\Compact\Timers\Paladin.lua
+Themes\Compact\Timers\Priest.lua
+Themes\Compact\Timers\Rogue.lua
+Themes\Compact\Timers\Warlock.lua
 
-Themes\Default\DefaultHealer.lua
-Themes\Default\DefaultWithPet.lua
-Themes\Default\DefaultWithClassBar.lua
-Themes\Default\DefaultHealerWithClassBar.lua
-Themes\Default\DefaultWithClassBarWithPet.lua
+Themes\Compact\CompactHealer.lua
+Themes\Compact\CompactWithPet.lua
+Themes\Compact\CompactWithClassBar.lua
+Themes\Compact\CompactHealerWithClassBar.lua
+Themes\Compact\CompactWithClassBarWithPet.lua
+
+Themes\Vanilla\Vanilla.lua
+
+Themes\Vanilla\Timers\DeathKnight.lua
+Themes\Vanilla\Timers\Hunter.lua
+Themes\Vanilla\Timers\Mage.lua
+Themes\Vanilla\Timers\Monk.lua
+Themes\Vanilla\Timers\Paladin.lua
+Themes\Vanilla\Timers\Priest.lua
+Themes\Vanilla\Timers\Rogue.lua
+Themes\Vanilla\Timers\Warlock.lua
+
+Themes\Vanilla\VanillaHealer.lua
+Themes\Vanilla\VanillaWithPet.lua
+Themes\Vanilla\VanillaWithClassBar.lua
+Themes\Vanilla\VanillaHealerWithClassBar.lua
+Themes\Vanilla\VanillaWithClassBarWithPet.lua
 
 Elements\ActionBars.lua
 Elements\AutoGreed.lua

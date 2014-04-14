@@ -169,7 +169,7 @@ function HandleInterfaceOptions(Version)
 	GeneralSubcategory.Label4 = GeneralSubcategory.HideGuildSpamCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	GeneralSubcategory.Label4:SetJustifyH("LEFT")
 	GeneralSubcategory.Label4:SetPoint("RIGHT", 386, 0)
-	GeneralSubcategory.Label4:SetText("Hides most guild advertisements (unusual ads will sometimes get through)")
+	GeneralSubcategory.Label4:SetText("Hide most guild advertisements (unusual ads will sometimes get through)")
 
 	GeneralSubcategory.Label5 = GeneralSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	GeneralSubcategory.Label5:SetJustifyH("LEFT")

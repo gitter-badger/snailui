@@ -7,7 +7,7 @@ Configuration =
 	GoTextureGlow = "Interface\\AddOns\\SnailUI\\Media\\GoGlow.tga",
 	InactiveAlpha = 0.25,
 	Texture = "Interface\\AddOns\\SnailUI\\Media\\SnailUI.tga",
-	Theme = "Default",
+	Theme = "Compact",
 
 	Font =
 	{
@@ -32,5 +32,7 @@ if not Options then
 end
 
 if not Options.Theme then
+	Options.Theme = Configuration.Theme
+elseif Options.Theme == "Default" then
 	Options.Theme = Configuration.Theme
 end

@@ -1,7 +1,7 @@
 -- Paladin.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["PALADIN"] =
+Configuration.Themes.Compact.Timers["PALADIN"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

@@ -4,7 +4,7 @@
 local _
 
 function HandleHealingIndicators(Self)
-	if (Self.Frame == "Raid") and GetConfiguration().HealingIndicators then
+	if Self.Frame == "Raid" then
 		local Class = select(2, UnitClass("Player"))
 		local Specialization = GetSpecialization()
 
@@ -13,17 +13,108 @@ function HandleHealingIndicators(Self)
 			Specialization = Specialization:gsub("(.)", string.upper)
 		end
 
+		local AllHealingIndicators =
+		{
+			TextureCoordinate =
+			{
+				Bottom = 0.9,
+				Left = 0.1,
+				Right = 0.9,
+				Top = 0.1
+			},
+
+			["DRUID"] =
+			{
+				["RESTORATION"] =
+				{
+					"Lifebloom",
+					"Rejuvenation",
+					"Regrowth",
+					"Living Seed",
+					"Wild Growth",
+					"Cenarion Ward",
+					"Tranquility",
+					"Ironbark",
+					"Innervate"
+				}
+			},
+
+			["MONK"] =
+			{
+				["MISTWEAVER"] =
+				{
+					"Renewing Mist",
+					"Zen Sphere",
+					"Enveloping Mist",
+					"Life Cocoon",
+					"Soothing Mist"
+				}
+			},
+
+			["PALADIN"] =
+			{
+				["HOLY"] =
+				{
+					"Beacon of Light",
+					"Sacred Shield",
+					"Eternal Flame",
+					"Execution Sentence",
+					"Holy Prisim",
+					"Divine Plea",
+					"Illuminated Healing",
+					"Devotion Aura"
+				}
+			},
+
+			["PRIEST"] =
+			{
+				["DISCIPLINE"] =
+				{
+					"Renew",
+					"Prayer of Mending",
+					"Power Word: Shield",
+					"Weakened Soul",
+					"Divine Aegis",
+					"Grace",
+					"Power Word: Barrier",
+					"Angelic Bulwark"
+				},
+
+				["HOLY"] =
+				{
+					"Renew",
+					"Prayer of Mending",
+					"Power Word: Shield",
+					"Weakened Soul",
+					"Divine Hymn",
+					"Echo of Light",
+					"Angelic Bulwark"
+				}
+			},
+
+			["SHAMAN"] =
+			{
+				["RESTORATION"] =
+				{
+					"Earth Shield",
+					"Riptide",
+					"Earthliving Weapon",
+					"Spirit Link Totem"
+				}
+			}
+		}
+
 		local HealingIndicators = {}
 
-		if GetConfiguration().HealingIndicators[Class] then
-			if GetConfiguration().HealingIndicators[Class][Specialization] then
-				for I = 1, #GetConfiguration().HealingIndicators[Class][Specialization] do
-					HealingIndicators[#HealingIndicators + 1] = GetConfiguration().HealingIndicators[Class][Specialization][I]
+		if AllHealingIndicators[Class] then
+			if AllHealingIndicators[Class][Specialization] then
+				for I = 1, #AllHealingIndicators[Class][Specialization] do
+					HealingIndicators[#HealingIndicators + 1] = AllHealingIndicators[Class][Specialization][I]
 				end
 			end
 
-			for I = 1, #GetConfiguration().HealingIndicators[Class] do
-				HealingIndicators[#HealingIndicators + 1] = GetConfiguration().HealingIndicators[Class][I]
+			for I = 1, #AllHealingIndicators[Class] do
+				HealingIndicators[#HealingIndicators + 1] = AllHealingIndicators[Class][I]
 			end
 		end
 
@@ -149,7 +240,7 @@ function HandleHealingIndicators(Self)
 
 				Self.HealingIndicators[I].Icon = Self.HealingIndicators[I]:CreateTexture(nil, "LOW")
 				Self.HealingIndicators[I].Icon:SetPoint("CENTER")
-				Self.HealingIndicators[I].Icon:SetTexCoord(GetConfiguration().HealingIndicators.TextureCoordinate.Left, GetConfiguration().HealingIndicators.TextureCoordinate.Right, GetConfiguration().HealingIndicators.TextureCoordinate.Top, GetConfiguration().HealingIndicators.TextureCoordinate.Bottom)
+				Self.HealingIndicators[I].Icon:SetTexCoord(AllHealingIndicators.TextureCoordinate.Left, AllHealingIndicators.TextureCoordinate.Right, AllHealingIndicators.TextureCoordinate.Top, AllHealingIndicators.TextureCoordinate.Bottom)
 				Self.HealingIndicators[I].Icon:SetSize(GetConfiguration()[Self.Frame].Height - 6, GetConfiguration()[Self.Frame].Height - 6)
 
 				Self.HealingIndicators[I].Parent = Self

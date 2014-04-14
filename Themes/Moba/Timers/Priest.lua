@@ -1,7 +1,7 @@
 -- Priest.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["PRIEST"] =
+Configuration.Themes.Moba.Timers["PRIEST"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

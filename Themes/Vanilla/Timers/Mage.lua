@@ -1,7 +1,7 @@
 -- Mage.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["MAGE"] =
+Configuration.Themes.Vanilla.Timers["MAGE"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,

@@ -1,7 +1,7 @@
 -- Hunter.lua
 -- Written by Snail
 
-Configuration.Themes.Default.Timers["HUNTER"] =
+Configuration.Themes.Compact.Timers["HUNTER"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,
