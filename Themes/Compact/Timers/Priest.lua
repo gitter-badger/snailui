@@ -178,6 +178,20 @@ Configuration.Themes.Compact.Timers["PRIEST"] =
 				G = 85 / 255,
 				R = 193 / 255
 			}
+		},
+
+		[7] =
+		{
+			Priority = 6,
+			Spell = "Divine Star",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 247 / 255,
+				G = 73 / 255,
+				R = 148 / 255
+			}
 		}
 	}
 }

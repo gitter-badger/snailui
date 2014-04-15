@@ -27,15 +27,7 @@ Themes\Compact\CompactHealerWithClassBar.lua
 Themes\Compact\CompactWithClassBarWithPet.lua
 
 Themes\Vanilla\Vanilla.lua
-
-Themes\Vanilla\Timers\DeathKnight.lua
-Themes\Vanilla\Timers\Hunter.lua
-Themes\Vanilla\Timers\Mage.lua
-Themes\Vanilla\Timers\Monk.lua
-Themes\Vanilla\Timers\Paladin.lua
-Themes\Vanilla\Timers\Priest.lua
-Themes\Vanilla\Timers\Rogue.lua
-Themes\Vanilla\Timers\Warlock.lua
+Themes\Vanilla\VanillaTimers.lua
 
 Themes\Vanilla\VanillaHealer.lua
 Themes\Vanilla\VanillaWithPet.lua
@@ -65,6 +57,7 @@ Elements\HealthBar.lua
 Elements\InterfaceOptions.lua
 Elements\Meter.lua
 Elements\Minimap.lua
+Elements\NoTaint.lua
 Elements\Pet.lua
 Elements\Player.lua
 Elements\Portrait.lua

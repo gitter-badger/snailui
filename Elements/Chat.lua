@@ -180,7 +180,7 @@ function HandleChat()
 							end
 						end
 
-						if (string.find(Message, "gold") or string.find(Message, "g0ld") or string.find(Message, "rating") or string.find(Message, "qq")) and (string.find(Message, "wts") or string.find(Message, "cheap") or string.find(Message, "sell")) then
+						if (string.find(Message, "gold") or string.find(Message, "g0ld") or string.find(Message, "rating") or string.find(Message, "qq")) and (string.find(Message, "wts") or string.find(Message, "cheap") or string.find(Message, "sell") or string.find(Message, "qq:")) then
 							return true
 						end
 					end
