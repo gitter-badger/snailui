@@ -5,9 +5,14 @@ function HandleCastingBar(Self)
 	if GetConfiguration()[Self.Frame].CastingBar then
 		Self.Castbar = CreateFrame("StatusBar", nil, Self)
 		Self.Castbar:SetOrientation(GetConfiguration()[Self.Frame].CastingBar.Orientation)
-		Self.Castbar:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Anchor, GetConfiguration()[Self.Frame].CastingBar.X, GetConfiguration()[Self.Frame].CastingBar.Y)
 		Self.Castbar:SetSize(GetConfiguration()[Self.Frame].CastingBar.Width - 6, GetConfiguration()[Self.Frame].CastingBar.Height - 6)
 		Self.Castbar:SetStatusBarTexture(Configuration.Texture)
+
+		if GetConfiguration()[Self.Frame].CastingBar.Parent then
+			Self.Castbar:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Anchor, GetConfiguration()[Self.Frame].CastingBar.Parent, GetConfiguration()[Self.Frame].CastingBar.X, GetConfiguration()[Self.Frame].CastingBar.Y)
+		else
+			Self.Castbar:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Anchor, GetConfiguration()[Self.Frame].CastingBar.X, GetConfiguration()[Self.Frame].CastingBar.Y)
+		end
 
 		Self.Castbar.BackgroundBottom = Self.Castbar:CreateTexture(nil, "LOW")
 		Self.Castbar.BackgroundBottom:SetPoint("BOTTOM", 0, -2)

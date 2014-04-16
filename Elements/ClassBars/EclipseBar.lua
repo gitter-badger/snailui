@@ -12,8 +12,13 @@ function HandleEclipseBar(Self)
 
 	if GetConfiguration()[Self.Frame].EclipseBar and (Self.Frame == "Player") and (Class == "DRUID") and (Specialization == "BALANCE") then
 		Self.EclipseBar = CreateFrame("Frame", nil, Self)
-		Self.EclipseBar:SetPoint(GetConfiguration()[Self.Frame].EclipseBar.Anchor, GetConfiguration()[Self.Frame].EclipseBar.X, GetConfiguration()[Self.Frame].EclipseBar.Y)
 		Self.EclipseBar:SetSize(GetConfiguration()[Self.Frame].EclipseBar.Width - 2, GetConfiguration()[Self.Frame].EclipseBar.Height - 2)
+
+		if GetConfiguration()[Self.Frame].EclipseBar.Parent then
+			Self.EclipseBar:SetPoint(GetConfiguration()[Self.Frame].EclipseBar.Anchor, GetConfiguration()[Self.Frame].EclipseBar.Parent, GetConfiguration()[Self.Frame].EclipseBar.X, GetConfiguration()[Self.Frame].EclipseBar.Y)
+		else
+			Self.EclipseBar:SetPoint(GetConfiguration()[Self.Frame].EclipseBar.Anchor, GetConfiguration()[Self.Frame].EclipseBar.X, GetConfiguration()[Self.Frame].EclipseBar.Y)
+		end
 
 		Self.EclipseBar.Background = Self.EclipseBar:CreateTexture(nil, "BACKGROUND")
 		Self.EclipseBar.Background:SetPoint("TOPLEFT")

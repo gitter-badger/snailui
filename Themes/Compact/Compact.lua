@@ -258,29 +258,29 @@ Configuration.Themes.Compact =
 	},
 
 	Initialize = function(Self)
-		Configuration.Themes.Compact["DEATHKNIGHT"] = CompactWithClassBar
-		Configuration.Themes.Compact["DEATHKNIGHT"]["UNHOLY"] = CompactWithClassBarWithPet
-		Configuration.Themes.Compact["DRUID"] = Configuration.Themes.Compact
-		Configuration.Themes.Compact["DRUID"]["BALANCE"] = CompactWithClassBar
-		Configuration.Themes.Compact["DRUID"]["FERAL"] = CompactWithClassBar
-		Configuration.Themes.Compact["DRUID"]["RESTORATION"] = CompactHealer
-		Configuration.Themes.Compact["HUNTER"] = CompactWithClassBarWithPet
-		Configuration.Themes.Compact["MAGE"] = Configuration.Themes.Compact
-		Configuration.Themes.Compact["MAGE"]["FROST"] = CompactWithPet
-		Configuration.Themes.Compact["MONK"] = CompactWithClassBar
-		Configuration.Themes.Compact["MONK"]["MISTWEAVER"] = CompactHealerWithClassBar
-		Configuration.Themes.Compact["PALADIN"] = CompactWithClassBar
-		Configuration.Themes.Compact["PALADIN"]["HOLY"] = CompactHealerWithClassBar
-		Configuration.Themes.Compact["PRIEST"] = CompactHealer
-		Configuration.Themes.Compact["PRIEST"]["SHADOW"] = CompactWithClassBar
-		Configuration.Themes.Compact["ROGUE"] = CompactWithClassBar
-		Configuration.Themes.Compact["SHAMAN"] = Configuration.Themes.Compact
-		Configuration.Themes.Compact["SHAMAN"]["RESTORATION"] = CompactHealer
-		Configuration.Themes.Compact["WARLOCK"] = CompactWithPet
-		Configuration.Themes.Compact["WARLOCK"]["AFFLICTION"] = CompactWithClassBarWithPet
-		Configuration.Themes.Compact["WARLOCK"]["DEMONOLOGY"] = CompactWithClassBarWithPet
-		Configuration.Themes.Compact["WARLOCK"]["DESTRUCTION"] = CompactWithClassBarWithPet
-		Configuration.Themes.Compact["WARRIOR"] = CompactWithClassBar
+		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]				= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]["UNHOLY"]	= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["DRUID"]					= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["DRUID"]["BALANCE"]			= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["DRUID"]["FERAL"]			= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["DRUID"]["RESTORATION"]		= _G[Options.Theme .. "Healer"]
+		Configuration.Themes[Options.Theme]["HUNTER"]					= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["MAGE"]						= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["MAGE"]["FROST"]			= _G[Options.Theme .. "WithPet"]
+		Configuration.Themes[Options.Theme]["MONK"]						= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["MONK"]["MISTWEAVER"]		= _G[Options.Theme .. "HealerWithClassBar"]
+		Configuration.Themes[Options.Theme]["PALADIN"]					= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["PALADIN"]["HOLY"]			= _G[Options.Theme .. "HealerWithClassBar"]
+		Configuration.Themes[Options.Theme]["PRIEST"]					= _G[Options.Theme .. "Healer"]
+		Configuration.Themes[Options.Theme]["PRIEST"]["SHADOW"]			= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["ROGUE"]					= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["SHAMAN"]					= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["SHAMAN"]["RESTORATION"]	= _G[Options.Theme .. "Healer"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]					= _G[Options.Theme .. "WithPet"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]["AFFLICTION"]	= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]["DEMONOLOGY"]	= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]["DESTRUCTION"]	= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["WARRIOR"]					= _G[Options.Theme .. "WithClassBar"]
 
 		local Class = select(2, UnitClass("Player"))
 
@@ -288,7 +288,7 @@ Configuration.Themes.Compact =
 			local _, _, _, _, Selected = GetTalentInfo(15)
 
 			if Selected == true then
-				Configuration.Themes.Compact["WARLOCK"] = CompactWithClassBar
+				Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
 			end
 		end
 
@@ -413,10 +413,10 @@ Configuration.Themes.Compact =
 				end
 			end
 		elseif (Class == "HUNTER") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) or (Class == "WARRIOR") then
-			local T = CompactWithClassBar
+			local T = _G[Options.Theme .. "WithClassBar"]
 
 			if Class == "HUNTER" then
-				T = CompactWithClassBarWithPet
+				T = _G[Options.Theme .. "WithClassBarWithPet"]
 			end
 
 			T.Player.PowerBar.Border = true
@@ -430,6 +430,8 @@ Configuration.Themes.Compact =
 			GetConfiguration().ActionBars.Player4 = nil
 			GetConfiguration().Buffs.X = GetConfiguration().Buffs.X + 72
 		end
+
+		return Class, Specialization, Timers
 	end,
 
 	Meter =

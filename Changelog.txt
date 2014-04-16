@@ -4,12 +4,12 @@ Written by Snail
 ------------------------------------------------------------------------------
 
 Version 0.11.1
+- Holy Shock timer added for Holy Paladins
 - Divine Star timer added for Shadow Priests
 - Fixed a bug where NoTaint wasn't working correctly
 - Fixed a bug where groups were not sorted by their role
 - Raid frames for non-healers will now show up as a 10 row/4 column grid (40 units total)
 - Healing indicator settings have been removed from all themes and put into its main file
-- Vanilla theme added
 - Default theme renamed to Compact
 
 ------------------------------------------------------------------------------

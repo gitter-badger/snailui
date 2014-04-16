@@ -12,8 +12,13 @@ function HandleDemonicFuryBar(Self)
 
 	if GetConfiguration()[Self.Frame].DemonicFuryBar and (Self.Frame == "Player") and (Class == "WARLOCK") and (Specialization == "DEMONOLOGY") then
 		Self.WarlockSpecBars = CreateFrame("Frame", nil, Self)
-		Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].DemonicFuryBar.Anchor, GetConfiguration()[Self.Frame].DemonicFuryBar.X, GetConfiguration()[Self.Frame].DemonicFuryBar.Y)
 		Self.WarlockSpecBars:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar.Width - 2, GetConfiguration()[Self.Frame].DemonicFuryBar.Height - 2)
+
+		if GetConfiguration()[Self.Frame].DemonicFuryBar.Parent then
+			Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].DemonicFuryBar.Anchor, GetConfiguration()[Self.Frame].DemonicFuryBar.Parent, GetConfiguration()[Self.Frame].DemonicFuryBar.X, GetConfiguration()[Self.Frame].DemonicFuryBar.Y)
+		else
+			Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].DemonicFuryBar.Anchor, GetConfiguration()[Self.Frame].DemonicFuryBar.X, GetConfiguration()[Self.Frame].DemonicFuryBar.Y)
+		end
 
 		Self.warlockSpecBarsBackground = Self:CreateTexture(nil, "BACKGROUND")
 		Self.warlockSpecBarsBackground:SetPoint("TOPLEFT", Self.WarlockSpecBars)

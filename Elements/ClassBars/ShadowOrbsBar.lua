@@ -12,9 +12,14 @@ function HandleShadowOrbsBar(Self)
 
 	if GetConfiguration()[Self.Frame].ShadowOrbsBar and (Self.Frame == "Player") and (Class == "PRIEST") and (Specialization == "SHADOW") then
 		Self.ClassIcons = Self:CreateTexture(Self, "BACKGROUND")
-		Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].ShadowOrbsBar.Anchor, GetConfiguration()[Self.Frame].ShadowOrbsBar.X, GetConfiguration()[Self.Frame].ShadowOrbsBar.Y)
 		Self.ClassIcons:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar.Width, GetConfiguration()[Self.Frame].ShadowOrbsBar.Height)
 		Self.ClassIcons:SetTexture(0, 0, 0)
+
+		if GetConfiguration()[Self.Frame].ShadowOrbsBar.Parent then
+			Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].ShadowOrbsBar.Anchor, GetConfiguration()[Self.Frame].ShadowOrbsBar.Parent, GetConfiguration()[Self.Frame].ShadowOrbsBar.X, GetConfiguration()[Self.Frame].ShadowOrbsBar.Y)
+		else
+			Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].ShadowOrbsBar.Anchor, GetConfiguration()[Self.Frame].ShadowOrbsBar.X, GetConfiguration()[Self.Frame].ShadowOrbsBar.Y)
+		end
 
 		Self.ClassIcons.Background = Self:CreateTexture(nil, "LOW")
 		Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)

@@ -6,8 +6,13 @@ function HandlePowerBar(Self)
 		Self.Power = CreateFrame("StatusBar", nil, Self)
 		Self.Power.frequentUpdates = true
 		Self.Power:SetOrientation(GetConfiguration()[Self.Frame].PowerBar.Orientation)
-		Self.Power:SetPoint(GetConfiguration()[Self.Frame].PowerBar.Anchor, GetConfiguration()[Self.Frame].PowerBar.X, GetConfiguration()[Self.Frame].PowerBar.Y)
 		Self.Power:SetStatusBarTexture(Configuration.Texture)
+
+		if GetConfiguration()[Self.Frame].PowerBar.Parent then
+			Self.Power:SetPoint(GetConfiguration()[Self.Frame].PowerBar.Anchor, GetConfiguration()[Self.Frame].PowerBar.Parent, GetConfiguration()[Self.Frame].PowerBar.X, GetConfiguration()[Self.Frame].PowerBar.Y)
+		else
+			Self.Power:SetPoint(GetConfiguration()[Self.Frame].PowerBar.Anchor, GetConfiguration()[Self.Frame].PowerBar.X, GetConfiguration()[Self.Frame].PowerBar.Y)
+		end
 
 		local Class = select(2, UnitClass(Self.unit))
 

@@ -6,9 +6,14 @@ function HandleHolyPowerBar(Self)
 
 	if GetConfiguration()[Self.Frame].HolyPowerBar and (Self.Frame == "Player") and (Class == "PALADIN") then
 		Self.ClassIcons = Self:CreateTexture(Self, "BACKGROUND")
-		Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].HolyPowerBar.Anchor, GetConfiguration()[Self.Frame].HolyPowerBar.X, GetConfiguration()[Self.Frame].HolyPowerBar.Y)
 		Self.ClassIcons:SetSize(GetConfiguration()[Self.Frame].HolyPowerBar.Width, GetConfiguration()[Self.Frame].HolyPowerBar.Height)
 		Self.ClassIcons:SetTexture(0, 0, 0)
+
+		if GetConfiguration()[Self.Frame].HolyPowerBar.Parent then
+			Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].HolyPowerBar.Anchor, GetConfiguration()[Self.Frame].HolyPowerBar.Parent, GetConfiguration()[Self.Frame].HolyPowerBar.X, GetConfiguration()[Self.Frame].HolyPowerBar.Y)
+		else
+			Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].HolyPowerBar.Anchor, GetConfiguration()[Self.Frame].HolyPowerBar.X, GetConfiguration()[Self.Frame].HolyPowerBar.Y)
+		end
 
 		Self.ClassIcons.Background = Self:CreateTexture(nil, "BACKGROUND")
 		Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)

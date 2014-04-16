@@ -12,8 +12,13 @@ function HandleBurningEmbersBar(Self)
 
 	if GetConfiguration()[Self.Frame].BurningEmbersBar and (Self.Frame == "Player") and (Class == "WARLOCK") and (Specialization == "DESTRUCTION") then
 		Self.WarlockSpecBars = CreateFrame("Frame", nil, Self)
-		Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].BurningEmbersBar.Anchor, GetConfiguration()[Self.Frame].BurningEmbersBar.X, GetConfiguration()[Self.Frame].BurningEmbersBar.Y)
 		Self.WarlockSpecBars:SetSize(GetConfiguration()[Self.Frame].BurningEmbersBar.Width - 2, GetConfiguration()[Self.Frame].BurningEmbersBar.Height - 2)
+
+		if GetConfiguration()[Self.Frame].BurningEmbersBar.Parent then
+			Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].BurningEmbersBar.Anchor, GetConfiguration()[Self.Frame].BurningEmbersBar.Parent, GetConfiguration()[Self.Frame].BurningEmbersBar.X, GetConfiguration()[Self.Frame].BurningEmbersBar.Y)
+		else
+			Self.WarlockSpecBars:SetPoint(GetConfiguration()[Self.Frame].BurningEmbersBar.Anchor, GetConfiguration()[Self.Frame].BurningEmbersBar.X, GetConfiguration()[Self.Frame].BurningEmbersBar.Y)
+		end
 
 		Self.warlockSpecBarsBackground = Self:CreateTexture(nil, "BACKGROUND")
 		Self.warlockSpecBarsBackground:SetPoint("TOPLEFT", Self.WarlockSpecBars)

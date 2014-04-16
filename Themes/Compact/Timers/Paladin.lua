@@ -65,6 +65,23 @@ Configuration.Themes.Compact.Timers["PALADIN"] =
 		}
 	},
 
+	["HOLY"] =
+	{
+		[1] =
+		{
+			Priority = 5,
+			Spell = "Holy Shock",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 218 / 255,
+				G = 251 / 255,
+				R = 1
+			}
+		}
+	},
+
 	["RETRIBUTION"] =
 	{
 		[1] =

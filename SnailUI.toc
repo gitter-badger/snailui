@@ -26,15 +26,6 @@ Themes\Compact\CompactWithClassBar.lua
 Themes\Compact\CompactHealerWithClassBar.lua
 Themes\Compact\CompactWithClassBarWithPet.lua
 
-Themes\Vanilla\Vanilla.lua
-Themes\Vanilla\VanillaTimers.lua
-
-Themes\Vanilla\VanillaHealer.lua
-Themes\Vanilla\VanillaWithPet.lua
-Themes\Vanilla\VanillaWithClassBar.lua
-Themes\Vanilla\VanillaHealerWithClassBar.lua
-Themes\Vanilla\VanillaWithClassBarWithPet.lua
-
 Elements\ActionBars.lua
 Elements\AutoGreed.lua
 Elements\Bag.lua

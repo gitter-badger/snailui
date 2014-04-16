@@ -6,8 +6,13 @@ function HandleRunesBar(Self)
 
 	if GetConfiguration()[Self.Frame].RunesBar and (Self.Frame == "Player") and (Class == "DEATHKNIGHT") then
 		Self.Runes = CreateFrame("Frame", nil, Self)
-		Self.Runes:SetPoint(GetConfiguration()[Self.Frame].RunesBar.Anchor, GetConfiguration()[Self.Frame].RunesBar.X, GetConfiguration()[Self.Frame].RunesBar.Y)
 		Self.Runes:SetSize(GetConfiguration()[Self.Frame].RunesBar.Width - 2, GetConfiguration()[Self.Frame].RunesBar.Height - 2)
+
+		if GetConfiguration()[Self.Frame].RunesBar.Parent then
+			Self.Runes:SetPoint(GetConfiguration()[Self.Frame].RunesBar.Anchor, GetConfiguration()[Self.Frame].RunesBar.Parent, GetConfiguration()[Self.Frame].RunesBar.X, GetConfiguration()[Self.Frame].RunesBar.Y)
+		else
+			Self.Runes:SetPoint(GetConfiguration()[Self.Frame].RunesBar.Anchor, GetConfiguration()[Self.Frame].RunesBar.X, GetConfiguration()[Self.Frame].RunesBar.Y)
+		end
 
 		Self.Runes.Background = Self.Runes:CreateTexture(nil, "BACKGROUND")
 		Self.Runes.Background:SetPoint("TOPLEFT")

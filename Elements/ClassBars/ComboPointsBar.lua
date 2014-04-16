@@ -12,8 +12,13 @@ function HandleComboPointsBar(Self)
 
 	if GetConfiguration()[Self.Frame].ComboPointsBar and (Self.Frame == "Player") and ((Class == "ROGUE") or ((Class == "DRUID") and (Specialization == "FERAL"))) then
 		Self.CPoints = CreateFrame("Frame", nil, Self)
-		Self.CPoints:SetPoint(GetConfiguration()[Self.Frame].ComboPointsBar.Anchor, GetConfiguration()[Self.Frame].ComboPointsBar.X, GetConfiguration()[Self.Frame].ComboPointsBar.Y)
 		Self.CPoints:SetSize(GetConfiguration()[Self.Frame].ComboPointsBar.Width - 2, GetConfiguration()[Self.Frame].ComboPointsBar.Height - 2)
+
+		if GetConfiguration()[Self.Frame].ComboPointsBar.Parent then
+			Self.CPoints:SetPoint(GetConfiguration()[Self.Frame].ComboPointsBar.Anchor, GetConfiguration()[Self.Frame].ComboPointsBar.Parent, GetConfiguration()[Self.Frame].ComboPointsBar.X, GetConfiguration()[Self.Frame].ComboPointsBar.Y)
+		else
+			Self.CPoints:SetPoint(GetConfiguration()[Self.Frame].ComboPointsBar.Anchor, GetConfiguration()[Self.Frame].ComboPointsBar.X, GetConfiguration()[Self.Frame].ComboPointsBar.Y)
+		end
 
 		Self.CPoints.Background = Self.CPoints:CreateTexture(nil, "BACKGROUND")
 		Self.CPoints.Background:SetPoint("TOPLEFT")

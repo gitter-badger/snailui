@@ -6,9 +6,14 @@ function HandleChiBar(Self)
 
 	if GetConfiguration()[Self.Frame].ChiBar and (Self.Frame == "Player") and (Class == "MONK") then
 		Self.ClassIcons = Self:CreateTexture(Self, "BACKGROUND")
-		Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].ChiBar.Anchor, GetConfiguration()[Self.Frame].ChiBar.X, GetConfiguration()[Self.Frame].ChiBar.Y)
 		Self.ClassIcons:SetSize(GetConfiguration()[Self.Frame].ChiBar.Width, GetConfiguration()[Self.Frame].ChiBar.Height)
 		Self.ClassIcons:SetTexture(0, 0, 0)
+
+		if GetConfiguration()[Self.Frame].ChiBar.Parent then
+			Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].ChiBar.Anchor, GetConfiguration()[Self.Frame].ChiBar.Parent, GetConfiguration()[Self.Frame].ChiBar.X, GetConfiguration()[Self.Frame].ChiBar.Y)
+		else
+			Self.ClassIcons:SetPoint(GetConfiguration()[Self.Frame].ChiBar.Anchor, GetConfiguration()[Self.Frame].ChiBar.X, GetConfiguration()[Self.Frame].ChiBar.Y)
+		end
 
 		Self.ClassIcons.Background = Self:CreateTexture(nil, "BACKGROUND")
 		Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)
