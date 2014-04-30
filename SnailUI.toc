@@ -1,4 +1,4 @@
-## Author: Snail
+## Author: Snailsoft
 ## Dependencies: oUF, oUF_SpellRange
 ## SavedVariables: Data, Options
 ## Interface: 50400
