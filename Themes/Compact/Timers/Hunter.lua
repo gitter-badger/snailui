@@ -83,7 +83,7 @@ Configuration.Themes.Compact.Timers["HUNTER"] =
 			}
 		},
 
-		[5] =
+		[4] =
 		{
 			Priority = 5,
 			Spell = "Kill Shot",

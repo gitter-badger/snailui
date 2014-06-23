@@ -79,6 +79,10 @@ Configuration.Themes.Compact.Timers["PALADIN"] =
 
 	["HOLY"] =
 	{
+		Anchor = "TOP",
+		AnchorToRaid = true,
+		Y = 49,
+
 		[1] =
 		{
 			Priority = 5,

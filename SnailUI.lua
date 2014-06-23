@@ -13,7 +13,7 @@
 -- You should have received a copy of the GNU General Public License along
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 
-local Version = "0.11.1"
+local Version = "1.0.1"
 
 oUF:RegisterStyle("SnailUI", 
 	function(Self, Unit)

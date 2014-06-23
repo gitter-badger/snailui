@@ -13,7 +13,7 @@
 -- You should have received a copy of the GNU General Public License along
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Configuration.Themes.Compact.Timers["DEATHKNIGHT"] =
+Configuration.Themes.Compact.Timers["DRUID"] =
 {
 	Anchor = "BOTTOM",
 	Height = 24,
@@ -21,63 +21,53 @@ Configuration.Themes.Compact.Timers["DEATHKNIGHT"] =
 	X = 26,
 	Y = 242,
 
-	[1] =
+	["FERAL"] =
 	{
-		Priority = 1,
-		ShowOnFocus = true,
-		Spell = "Blood Plague",
-		Type = "Debuff",
-		Unit = "Target",
-
-		Color =
+		[1] =
 		{
-			B = 220 / 255,
-			G = 3 / 255,
-			R = 193 / 255
-		}
-	},
+			Priority = 1,
+			ShowOnFocus = true,
+			Spell = "Rake",
+			Type = "Debuff",
+			Unit = "Target",
 
-	[2] =
-	{
-		Priority = 2,
-		ShowOnFocus = true,
-		Spell = "Frost Fever",
-		Type = "Debuff",
-		Unit = "Target",
+			Color =
+			{
+				B = 52 / 255,
+				G = 68 / 255,
+				R = 180 / 255
+			}
+		},
 
-		Color =
+		[2] =
 		{
-			B = 1,
-			G = 252 / 255,
-			R = 33 / 255
-		}
-	},
+			Priority = 2,
+			ShowOnFocus = true,
+			Spell = "Rip",
+			Type = "Debuff",
+			Unit = "Target",
 
-	[3] =
-	{
-		Priority = 3,
-		Spell = "Death and Decay",
-		Type = "Cooldown",
+			Color =
+			{
+				B = 10 / 255,
+				G = 40 / 255,
+				R = 180 / 255
+			}
+		},
 
-		Color =
+		[3] =
 		{
-			B = 18 / 255,
-			G = 43 / 255,
-			R = 141 / 255
-		}
-	},
+			Priority = 3,
+			ShowOnFocus = true,
+			Spell = "Savage Roar",
+			Type = "Buff",
 
-	[4] =
-	{
-		Priority = 4,
-		Spell = "Soul Reaper",
-		Type = "Cooldown",
-
-		Color =
-		{
-			B = 160 / 255,
-			G = 137 / 255,
-			R = 74 / 255
+			Color =
+			{
+				B = 57 / 255,
+				G = 128 / 255,
+				R = 204 / 255
+			}
 		}
 	}
 }

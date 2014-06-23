@@ -204,6 +204,35 @@ Configuration.Themes.Compact.Timers["PRIEST"] =
 				G = 73 / 255,
 				R = 148 / 255
 			}
+		},
+
+		[8] =
+		{
+			Priority = 6,
+			Spell = "Cascade",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 247 / 255,
+				G = 73 / 255,
+				R = 148 / 255
+			}
+		},
+
+		[9] =
+		{
+			Priority = 7,
+			Spell = "Tempus Repit",
+			Type = "Buff",
+			Unit = "Player",
+
+			Color =
+			{
+				B = 176 / 255,
+				G = 222 / 255,
+				R = 1
+			}
 		}
 	}
 }

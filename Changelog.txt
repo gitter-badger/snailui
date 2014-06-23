@@ -3,6 +3,12 @@ Written by Snailsoft
 
 ------------------------------------------------------------------------------
 
+Version 1.0.1
+- You can now create your own timers through the interface menu
+- Premade timers have been removed
+
+------------------------------------------------------------------------------
+
 Version 0.11.1
 - Holy Shock timer added for Holy Paladins
 - Divine Star timer added for Shadow Priests
