@@ -70,6 +70,20 @@ Configuration.Themes.Compact.Timers["DEATHKNIGHT"] =
 	[4] =
 	{
 		Priority = 4,
+		Spell = "Plague Leech",
+		Type = "Cooldown",
+
+		Color =
+		{
+			B = 38 / 255,
+			G = 170 / 255,
+			R = 63 / 255
+		}
+	},
+
+	[5] =
+	{
+		Priority = 5,
 		Spell = "Soul Reaper",
 		Type = "Cooldown",
 
@@ -78,6 +92,23 @@ Configuration.Themes.Compact.Timers["DEATHKNIGHT"] =
 			B = 160 / 255,
 			G = 137 / 255,
 			R = 74 / 255
+		}
+	},
+
+	["FROST"] =
+	{
+		[1] =
+		{
+			Priority = 6,
+			Spell = "Pillar of Frost",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 234 / 255,
+				G = 179 / 255,
+				R = 98 / 255
+			}
 		}
 	}
 }

@@ -19,7 +19,70 @@ Configuration.Themes.Compact.Timers["DRUID"] =
 	Height = 24,
 	Width = 464,
 	X = 26,
-	Y = 242,
+	Y = 270,
+
+	["BALANCE"] =
+	{
+		[1] =
+		{
+			Priority = 1,
+			ShowOnFocus = true,
+			Spell = "Moonfire",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 185 / 255,
+				G = 85 / 255,
+				R = 156 / 255
+			}
+		},
+
+		[2] =
+		{
+			Priority = 2,
+			ShowOnFocus = true,
+			Spell = "Sunfire",
+			Type = "Debuff",
+			Unit = "Target",
+
+			Color =
+			{
+				B = 59 / 255,
+				G = 169 / 255,
+				R = 1
+			}
+		},
+
+		[3] =
+		{
+			Priority = 3,
+			Spell = "Starsurge",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 1,
+				G = 74 / 255,
+				R = 216 / 255
+			}
+		},
+
+		[4] =
+		{
+			Priority = 4,
+			Spell = "Starfall",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 243 / 255,
+				G = 192 / 255,
+				R = 187 / 255
+			}
+		}
+	},
 
 	["FERAL"] =
 	{
@@ -67,6 +130,55 @@ Configuration.Themes.Compact.Timers["DRUID"] =
 				B = 57 / 255,
 				G = 128 / 255,
 				R = 204 / 255
+			}
+		}
+	},
+
+	["RESTORATION"] =
+	{
+		Anchor = "TOP",
+		AnchorToRaid = true,
+		Y = 49,
+
+		[1] =
+		{
+			Priority = 1,
+			Spell = "Swiftmend",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 155 / 255,
+				G = 124 / 255,
+				R = 45 / 255
+			}
+		},
+
+		[2] =
+		{
+			Priority = 2,
+			Spell = "Wild Growth",
+			Type = "Cooldown",
+
+			Color =
+			{
+				B = 99 / 255,
+				G = 219 / 255,
+				R = 132 / 255
+			}
+		},
+
+		[3] =
+		{
+			Priority = 3,
+			Spell = "Sage Mender",
+			Type = "Buff",
+
+			Color =
+			{
+				B = 8 / 255,
+				G = 247 / 255,
+				R = 149 / 255
 			}
 		}
 	}

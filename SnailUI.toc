@@ -12,6 +12,7 @@ Functions.lua
 Themes\Compact\Compact.lua
 
 Themes\Compact\Timers\DeathKnight.lua
+Themes\Compact\Timers\Druid.lua
 Themes\Compact\Timers\Hunter.lua
 Themes\Compact\Timers\Mage.lua
 Themes\Compact\Timers\Monk.lua

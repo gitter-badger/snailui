@@ -37,6 +37,21 @@ Configuration.Themes.Compact.Timers["WARLOCK"] =
 		}
 	},
 
+	[2] =
+	{
+		Priority = 98,
+		Spell = "Tempus Repit",
+		Type = "Buff",
+		Unit = "Player",
+
+		Color =
+		{
+			B = 176 / 255,
+			G = 222 / 255,
+			R = 1
+		}
+	},
+
 	["AFFLICTION"] =
 	{
 		[1] =
