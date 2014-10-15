@@ -34,8 +34,8 @@ function HandleExtraButton()
 						MultiBarBottomRight:Hide()
 						MultiBarLeft:Hide()
 	
+						ObjectiveTrackerFrame:Hide()
 						VehicleSeatIndicator:Hide()
-						WatchFrame:Hide()
 						WorldStateAlwaysUpFrame:Hide()
 	
 						if (not GetConfiguration().Raid.Shown) and Options.EnableRaidFrames then
@@ -58,8 +58,8 @@ function HandleExtraButton()
 						MultiBarBottomRight:Show()
 						MultiBarLeft:Show()
 	
+						ObjectiveTrackerFrame:Show()
 						VehicleSeatIndicator:Show()
-						WatchFrame:Show()
 						WorldStateAlwaysUpFrame:Show()
 	
 						if (not GetConfiguration().Raid.shown) and Options.EnableRaidFrames then

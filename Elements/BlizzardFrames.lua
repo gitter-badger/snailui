@@ -26,6 +26,9 @@ function HandleBlizzardFrames()
 
 	AchievementMicroButton_Update = Blank
 
+	ActionButton_ShowGrid = Blank
+	ActionButton_UpdateUsable = Blank
+
 	CompactRaidFrameContainer:UnregisterAllEvents()
 	CompactRaidFrameManager:UnregisterAllEvents()
 
@@ -52,7 +55,7 @@ function HandleBlizzardFrames()
 	VehicleSeatIndicator:HookScript("OnShow",
 		function(Self)
 			Self:ClearAllPoints()
-			Self:SetPoint("BOTTOMRIGHT", WatchFrame, "BOTTOMLEFT", -4, 4)
+			Self:SetPoint("BOTTOMRIGHT", ObjectiveTrackerFrame, "BOTTOMLEFT", -4, 4)
 
 			Self.ClearAllPoints = Blank
 			Self.SetPoint = Blank
@@ -62,13 +65,6 @@ function HandleBlizzardFrames()
 					Self:Hide()
 				end
 			end
-		end
-	)
-
-	WatchFrame:HookScript("OnUpdate",
-		function(Self)
-			Self:ClearAllPoints()
-			Self:SetPoint("BOTTOMRIGHT", -4, 4)
 		end
 	)
 
@@ -120,8 +116,7 @@ function HandleBlizzardFrames()
 			Frames[#Frames + 1] = "HelpMicroButton"
 			Frames[#Frames + 1] = "LFDMicroButton"
 			Frames[#Frames + 1] = "MainMenuBarBackpackButton"
-			Frames[#Frames + 1] = "MainMenuMicroButton" 
-			Frames[#Frames + 1] = "PVPMicroButton"
+			Frames[#Frames + 1] = "MainMenuMicroButton"
 			Frames[#Frames + 1] = "QuestLogMicroButton"
 			Frames[#Frames + 1] = "ReputationWatchBar"
 			Frames[#Frames + 1] = "SpellbookMicroButton"
@@ -199,7 +194,16 @@ function HandleBlizzardFrames()
 
 	if GetConfiguration().Bank then
 		for I = 1, 7 do
-			Frames[#Frames + 1] = "BankFrameBag" .. I .. "HighlightFrame"
+			local Frame = BankSlotsFrame["Bag" .. I].HighlightFrame
+
+			Frame:Hide()
+			Frame:SetScript("OnShow",
+				function(Self)
+					Self:Hide()
+				end
+			)
+
+			Frame.Show = Blank
 		end
 	end
 
@@ -265,8 +269,8 @@ function HandleBlizzardFrames()
 			end
 		)
 
+		ObjectiveTrackerFrame:Hide()
 		VehicleSeatIndicator:Hide()
-		WatchFrame:Hide()
 		WorldStateAlwaysUpFrame:Hide()
 	end
 

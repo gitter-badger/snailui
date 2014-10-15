@@ -1,7 +1,7 @@
 ## Author: Snailsoft
 ## Dependencies: oUF, oUF_SpellRange
 ## SavedVariables: Data, Options
-## Interface: 50400
+## Interface: 60000
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
 ## Version: 1.0.1
@@ -10,16 +10,6 @@ Configuration.lua
 Functions.lua
 
 Themes\Compact\Compact.lua
-
-Themes\Compact\Timers\DeathKnight.lua
-Themes\Compact\Timers\Druid.lua
-Themes\Compact\Timers\Hunter.lua
-Themes\Compact\Timers\Mage.lua
-Themes\Compact\Timers\Monk.lua
-Themes\Compact\Timers\Paladin.lua
-Themes\Compact\Timers\Priest.lua
-Themes\Compact\Timers\Rogue.lua
-Themes\Compact\Timers\Warlock.lua
 
 Themes\Compact\CompactHealer.lua
 Themes\Compact\CompactWithPet.lua

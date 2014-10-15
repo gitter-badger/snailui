@@ -83,6 +83,7 @@ function HandleBag()
 			_G["CharacterBag" .. (I - 1) .. "Slot"].BackgroundTop:SetSize(GetConfiguration().Bag.Width + 2, 1)
 			_G["CharacterBag" .. (I - 1) .. "Slot"].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
+			_G["CharacterBag" .. (I - 1) .. "Slot"].IconBorder:SetAlpha(0)
 			_G["CharacterBag" .. (I - 1) .. "SlotIconTexture"]:SetTexCoord(GetConfiguration().Bag.TextureCoordinate.Left, GetConfiguration().Bag.TextureCoordinate.Right, GetConfiguration().Bag.TextureCoordinate.Top, GetConfiguration().Bag.TextureCoordinate.Bottom)
 		end
 
@@ -160,6 +161,8 @@ function HandleBag()
 						)
 					end
 				)
+
+				_G["ContainerFrame" .. I .. "Item" .. J].IconBorder:SetAlpha(0)
 
 				_G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:ClearAllPoints()
 				_G["ContainerFrame" .. I .. "Item" .. J .. "Count"]:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)

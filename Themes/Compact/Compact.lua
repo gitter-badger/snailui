@@ -42,6 +42,7 @@ Configuration.Themes.Compact =
 			Anchor = "BOTTOM",
 			Buttons = 10,
 			Height = 24,
+			UIParent = true,
 			Width = 48,
 			X = 0,
 			Y = 155,
@@ -117,7 +118,7 @@ Configuration.Themes.Compact =
 	Bank =
 	{
 		Anchor = "BOTTOMLEFT",
-		Columns = 8,
+		Columns = 7,
 		Height = 24,
 		Width = 48,
 		X = 5,
@@ -295,20 +296,21 @@ Configuration.Themes.Compact =
 		Configuration.Themes[Options.Theme]["WARRIOR"]					= _G[Options.Theme .. "WithClassBar"]
 
 		local Class = select(2, UnitClass("Player"))
-
-		if Class == "WARLOCK" then
-			local _, _, _, _, Selected = GetTalentInfo(15)
-
-			if Selected == true then
-				Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
-			end
-		end
-
 		local Specialization = GetSpecialization()
 
 		if Specialization then
 			Specialization = select(2, GetSpecializationInfo(Specialization))
 			Specialization = Specialization:gsub("(.)", string.upper)
+		end
+
+		if Class == "WARLOCK" then
+			if not Specialization == "DEMONOLOGY" then
+				local _, _, _, Selected = GetTalentInfo(5, 3, GetActiveSpecGroup())
+
+				if Selected == true then
+					Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
+				end
+			end
 		end
 
 		local Timers = {}
@@ -364,7 +366,7 @@ Configuration.Themes.Compact =
 				GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y + 28
 			end
 		elseif Class == "MONK" then
-			local _, _, _, _, Selected = GetTalentInfo(8)
+			local _, _, _, Selected = GetTalentInfo(3, 2, GetActiveSpecGroup())
 
 			if Selected == true then
 				GetConfiguration().Player.ChiBar = GetConfiguration().Player.ChiBar2
@@ -376,11 +378,13 @@ Configuration.Themes.Compact =
 				GetConfiguration().Player.HolyPowerBar = GetConfiguration().Player.HolyPowerBar2
 			end
 		elseif Class == "WARLOCK" then
-			local _, _, _, _, Selected = GetTalentInfo(15)
+			if not Specialization == "DEMONOLOGY" then
+				local _, _, _, Selected = GetTalentInfo(5, 3, GetActiveSpecGroup())
 
-			if Selected == true then
-				if #Timers > 0 then
-					GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y - 28
+				if Selected == true then
+					if #Timers > 0 then
+						GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y - 28
+					end
 				end
 			end
 

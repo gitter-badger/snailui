@@ -78,85 +78,102 @@ function HandleActionBars()
 			local Class = select(2, UnitClass("Player"))
 			local Texture
 
-			hooksecurefunc("ActionButton_UpdateUsable",
-				function(Self)
-					if Self.action then
-						local IsUsable, NotEnoughMana = IsUsableAction(Self.action)
-	
-						if IsUsable then
-							_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 1, 1)
-						elseif NotEnoughMana then
-							_G[Self:GetName() .. "Icon"]:SetVertexColor(0.5, 0.5, 0.5)
-						else
-							_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
-						end
-	
-						if ActionHasRange(Self.action) then
-							local Type, SpellID = GetActionInfo(Self.action)
-	
-							if Type == "macro" then
-								_, _, SpellID = GetMacroSpell(SpellID)
-							end
-	
-							local IsHarmful
-	
-							if Type == "item" then
-								IsHarmful = IsHarmfulItem
-							else
-								IsHarmful = IsHarmfulSpell
-							end
-	
-							if UnitIsConnected("Target") then
-								if IsActionInRange(Self.action) == 0 then
-									_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
-								elseif (UnitIsDeadOrGhost("Target") or not UnitCanAttack("Player", "Target")) and IsHarmful(GetSpellInfo(SpellID)) then
-									_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
-								end
-							else
-								if IsHarmful(GetSpellInfo(SpellID)) then
-									_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
-								end
-							end
-						end
+			local UpdateUsable = function(Self)
+				if Self.action then
+					local IsUsable, NotEnoughMana = IsUsableAction(Self.action)
+
+					if IsUsable then
+						_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 1, 1)
+					elseif NotEnoughMana then
+						_G[Self:GetName() .. "Icon"]:SetVertexColor(0.5, 0.5, 0.5)
 					else
-						if GetPetActionSlotUsable(Self:GetID()) then
-							_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 1, 1)
+						_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+					end
+
+					if ActionHasRange(Self.action) then
+						local Type, SpellID = GetActionInfo(Self.action)
+
+						if Type == "macro" then
+							_, _, SpellID = GetMacroSpell(SpellID)
+						end
+
+						local IsHarmful
+						local IsHelpful
+
+						if Type == "item" then
+							IsHarmful = IsHarmfulItem
+							IsHelpful = IsHelpfulItem
 						else
-							_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+							IsHarmful = IsHarmfulSpell
+							IsHelpful = IsHelpfulSpell
+						end
+
+						if UnitIsConnected("Target") then
+							if (not IsActionInRange(Self.action) or (UnitIsDeadOrGhost("Target") or not UnitCanAttack("Player", "Target"))) and (IsHarmful(GetSpellInfo(SpellID)) or IsHelpful(GetSpellInfo(SpellID))) then
+								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
+							end
+						else
+							if IsHarmful(GetSpellInfo(SpellID)) then
+								_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+							end
 						end
 					end
-	
-					if Self.BackgroundBottom and not Self.Hovering then
-						if Self.action then
-							Texture = GetActionTexture(Self.action)
+				else
+					if GetPetActionSlotUsable(Self:GetID()) then
+						_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 1, 1)
+					else
+						_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+					end
+
+					local Spell = select(1, GetPetActionInfo(Self:GetID()))
+
+					if SpellHasRange(Spell) then
+						if UnitIsConnected("Target") then
+							if IsSpellInRange(Spell) == 0 then
+								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
+							elseif (UnitIsDeadOrGhost("Target") or not UnitCanAttack("Player", "Target")) and IsHarmfulSpell(Spell) then
+								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
+							end
 						else
-							Texture = select(3, GetPetActionInfo(Self:GetID()))
-						end
-	
-						if Texture then
-							Self.BackgroundBottom:Show()
-							Self.BackgroundLeft:Show()
-							Self.BackgroundRight:Show()
-							Self.BackgroundTop:Show()
-	
-							Self.BorderBottom:Show()
-							Self.BorderLeft:Show()
-							Self.BorderRight:Show()
-							Self.BorderTop:Show()
-						else
-							Self.BackgroundBottom:Hide()
-							Self.BackgroundLeft:Hide()
-							Self.BackgroundRight:Hide()
-							Self.BackgroundTop:Hide()
-	
-							Self.BorderBottom:Hide()
-							Self.BorderLeft:Hide()
-							Self.BorderRight:Hide()
-							Self.BorderTop:Hide()
+							if IsHarmfulSpell(Spell) then
+								_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
+							end
 						end
 					end
 				end
-			)
+
+				if Self.BackgroundBottom and not Self.Hovering then
+					if Self.action then
+						Texture = GetActionTexture(Self.action)
+					else
+						Texture = select(3, GetPetActionInfo(Self:GetID()))
+					end
+
+					if Texture then
+						Self.BackgroundBottom:Show()
+						Self.BackgroundLeft:Show()
+						Self.BackgroundRight:Show()
+						Self.BackgroundTop:Show()
+
+						Self.BorderBottom:Show()
+						Self.BorderLeft:Show()
+						Self.BorderRight:Show()
+						Self.BorderTop:Show()
+					else
+						Self.BackgroundBottom:Hide()
+						Self.BackgroundLeft:Hide()
+						Self.BackgroundRight:Hide()
+						Self.BackgroundTop:Hide()
+
+						Self.BorderBottom:Hide()
+						Self.BorderLeft:Hide()
+						Self.BorderRight:Hide()
+						Self.BorderTop:Hide()
+					end
+				end
+			end
+
+			hooksecurefunc("ActionButton_UpdateUsable", UpdateUsable)
 
 			local function UpdateCooldownText(Self, ElapsedTime)
 				Self = Self:GetParent()
@@ -219,7 +236,7 @@ function HandleActionBars()
 
 						if (Self.Time + ElapsedTime) >= 0.1 then
 							for I = 1, Bars[Self.Index].Buttons do
-								ActionButton_UpdateUsable(_G[Buttons[Self.Index] .. I])
+								UpdateUsable(_G[Buttons[Self.Index] .. I])
 							end
 
 							Self.Time = 0
