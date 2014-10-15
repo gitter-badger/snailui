@@ -177,7 +177,10 @@ function HandleBank()
 				_G["ContainerFrame" .. I .. "Item" .. J].Border:SetSize(GetConfiguration().Bank.Width + 4, GetConfiguration().Bank.Height + 4)
 				_G["ContainerFrame" .. I .. "Item" .. J].Border:SetTexture(0, 0, 0)
 
+				_G["ContainerFrame" .. I .. "Item" .. J].JunkIcon:SetAlpha(0)
 				_G["ContainerFrame" .. I .. "Item" .. J].IconBorder:SetAlpha(0)
+
+				_G["ContainerFrame" .. I .. "Item" .. J].NewItemTexture.Show = Blank
 
 				_G["ContainerFrame" .. I .. "Item" .. J].Text = _G["ContainerFrame" .. I .. "Item" .. J .. "Cooldown"]:CreateFontString(nil, "OVERLAY")
 				_G["ContainerFrame" .. I .. "Item" .. J].Text:Hide()

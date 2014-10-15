@@ -89,7 +89,6 @@ function HandleHealingIndicators(Self)
 					"Power Word: Shield",
 					"Weakened Soul",
 					"Divine Aegis",
-					"Grace",
 					"Power Word: Barrier",
 					"Angelic Bulwark"
 				},
@@ -159,16 +158,17 @@ function HandleHealingIndicators(Self)
 						if Unit == Self.Parent.unit then
 							local BuffIcon
 							local BuffName
+							local BuffSource
 							local Debuff
 
-							BuffName, _, BuffIcon = UnitBuff(Self.Parent.unit, HealingIndicators[Self.I], nil, "PLAYER")
+							BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitBuff(Self.Parent.unit, HealingIndicators[Self.I], nil, "PLAYER")
 
 							if not BuffName then
-								BuffName, _, BuffIcon = UnitDebuff(Self.Parent.unit, HealingIndicators[Self.I])
+								BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitDebuff(Self.Parent.unit, HealingIndicators[Self.I])
 								Debuff = true
 							end
 
-							if BuffName then
+							if BuffName and (BuffSource == "player") then
 								Self.BuffName = BuffName
 								Self.Debuff = Debuff
 								Self.Icon:SetTexture(BuffIcon)
@@ -227,10 +227,6 @@ function HandleHealingIndicators(Self)
 								if BuffName then
 									if BuffExpires and (BuffExpires > GetTime()) then
 										Self.Text:SetText(math.ceil(BuffExpires - GetTime()))
-
-										if BuffCount and (BuffCount > 1) then
-											--
-										end
 									else
 										Self.Text:SetText("")
 									end

@@ -145,11 +145,13 @@ function HandleActionBars()
 						end
 
 						if UnitIsConnected("Target") then
-							if (not IsActionInRange(Self.action) or (UnitIsDeadOrGhost("Target") or not UnitCanAttack("Player", "Target"))) and (IsHarmful(GetSpellInfo(SpellID)) or IsHelpful(GetSpellInfo(SpellID))) then
+							if (not IsActionInRange(Self.action) or (UnitIsDeadOrGhost("Target") or not UnitCanAttack("Player", "Target"))) and IsHarmful(GetSpellInfo(SpellID)) then
+								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
+							elseif (not IsActionInRange(Self.action) or (UnitIsDeadOrGhost("Target"))) and IsHelpful(GetSpellInfo(SpellID)) then
 								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
 							end
 						else
-							if (IsHarmful(GetSpellInfo(SpellID)) or IsHelpful(GetSpellInfo(SpellID))) then
+							if IsHarmful(GetSpellInfo(SpellID)) or IsHelpful(GetSpellInfo(SpellID)) then
 								_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
 							end
 						end

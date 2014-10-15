@@ -4,10 +4,10 @@ Written by Snailsoft
 ------------------------------------------------------------------------------
 
 Version 1.0.1
+- Fixed a bug where healing indicators were showing other players' spells
 - Pet action buttons now update (based on range, hostile, etc.) like player action buttons
 - Updated for 6.0
-- You can now create your own timers through the interface menu
-- Premade timers have been removed
+- Premade timers have been removed (You will be able to create your own timers in the next update)
 
 ------------------------------------------------------------------------------
 
