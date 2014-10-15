@@ -59,8 +59,8 @@ function HandleBank()
 			BankSlotsFrame["Bag" .. I].Border:SetSize(GetConfiguration().Bank.Width + 4, GetConfiguration().Bank.Height + 4)
 			BankSlotsFrame["Bag" .. I].Border:SetTexture(0, 0, 0)
 
+			BankSlotsFrame["Bag" .. I].icon:SetTexCoord(GetConfiguration().Bank.TextureCoordinate.Left, GetConfiguration().Bank.TextureCoordinate.Right, GetConfiguration().Bank.TextureCoordinate.Top, GetConfiguration().Bank.TextureCoordinate.Bottom)
 			BankSlotsFrame["Bag" .. I].IconBorder:SetAlpha(0)
-			--BankSlotsFrame["Bag" .. I .. "Texture"]:SetTexCoord(GetConfiguration().Bank.TextureCoordinate.Left, GetConfiguration().Bank.TextureCoordinate.Right, GetConfiguration().Bank.TextureCoordinate.Top, GetConfiguration().Bank.TextureCoordinate.Bottom)
 		end
 
 		for I = NUM_BANKGENERIC_SLOTS, 1, -1 do
@@ -236,6 +236,14 @@ function HandleBank()
 
 		if BankFrame:GetNumRegions() > 0 then
 			for _, Region in pairs({BankFrame:GetRegions()}) do
+				if Region.GetTexture and Region:GetTexture() then
+					Region:SetTexture(nil)
+				end
+			end
+		end
+
+		if BankSlotsFrame:GetNumRegions() > 0 then
+			for _, Region in pairs({BankSlotsFrame:GetRegions()}) do
 				if Region.GetTexture and Region:GetTexture() then
 					Region:SetTexture(nil)
 				end

@@ -49,12 +49,12 @@ local function SortTimers(Timers)
 	end
 end
 
-local function CreateTimers(TimerBars, Timers)
+local function CreateTimers(TimerBars)
 	local Class = select(2, UnitClass("Player"))
 
-	TimerBars.Timers = Timers
+	TimerBars.Timers = Options.Timers[UnitGUID("Player")]
 
-	for I = 1, #Timers do
+	for I = 1, #Options.Timers[UnitGUID("Player")] do
 		TimerBars[I] = CreateFrame("StatusBar", nil, UIParent)
 		TimerBars[I]:Hide()
 		TimerBars[I]:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -63,9 +63,9 @@ local function CreateTimers(TimerBars, Timers)
 		TimerBars[I]:RegisterEvent("SPELL_UPDATE_COOLDOWN")
 		TimerBars[I]:RegisterEvent("UNIT_AURA")
 
-		TimerBars[I]:SetSize(Timers.Width - 6, Timers.Height - 6)
+		TimerBars[I]:SetSize(Options.Timers[UnitGUID("Player")].Width - 6, Options.Timers[UnitGUID("Player")].Height - 6)
 		TimerBars[I]:SetStatusBarTexture(Configuration.Texture)
-		TimerBars[I]:SetStatusBarColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
+		TimerBars[I]:SetStatusBarColor(Options.Timers[UnitGUID("Player")][I].Color.R, Options.Timers[UnitGUID("Player")][I].Color.G, Options.Timers[UnitGUID("Player")][I].Color.B)
 		TimerBars[I]:SetScript("OnEvent",
 			function(Self, Event, Unit)
 				if not Self.Timer.Unit then
@@ -168,57 +168,57 @@ local function CreateTimers(TimerBars, Timers)
 
 		TimerBars[I].BackgroundBottom = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].BackgroundBottom:SetPoint("BOTTOM", 0, -2)
-		TimerBars[I].BackgroundBottom:SetSize(Timers.Width - 2, 1)
+		TimerBars[I].BackgroundBottom:SetSize(Options.Timers[UnitGUID("Player")].Width - 2, 1)
 		TimerBars[I].BackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].BackgroundLeft = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].BackgroundLeft:SetPoint("LEFT", -2, 0)
-		TimerBars[I].BackgroundLeft:SetSize(1, Timers.Height - 4)
+		TimerBars[I].BackgroundLeft:SetSize(1, Options.Timers[UnitGUID("Player")].Height - 4)
 		TimerBars[I].BackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].BackgroundRight = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].BackgroundRight:SetPoint("RIGHT", 2, 0)
-		TimerBars[I].BackgroundRight:SetSize(1, Timers.Height - 4)
+		TimerBars[I].BackgroundRight:SetSize(1, Options.Timers[UnitGUID("Player")].Height - 4)
 		TimerBars[I].BackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].BackgroundTop = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].BackgroundTop:SetPoint("TOP", 0, 2)
-		TimerBars[I].BackgroundTop:SetSize(Timers.Width - 2, 1)
+		TimerBars[I].BackgroundTop:SetSize(Options.Timers[UnitGUID("Player")].Width - 2, 1)
 		TimerBars[I].BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].Border = TimerBars[I]:CreateTexture(nil, "BACKGROUND")
 		TimerBars[I].Border:SetPoint("TOPLEFT", -3, 3)
-		TimerBars[I].Border:SetSize(Timers.Width, Timers.Height)
+		TimerBars[I].Border:SetSize(Options.Timers[UnitGUID("Player")].Width, Options.Timers[UnitGUID("Player")].Height)
 		TimerBars[I].Border:SetTexture(0, 0, 0)
 
 		TimerBars[I].Icon = TimerBars[I]:CreateTexture(nil, "LOW")
-		TimerBars[I].Icon:SetPoint("LEFT", -(Timers.Height * 2) - 4, 0)
-		TimerBars[I].Icon:SetSize((Timers.Height * 2) - 6, Timers.Height - 6)
+		TimerBars[I].Icon:SetPoint("LEFT", -(Options.Timers[UnitGUID("Player")].Height * 2) - 4, 0)
+		TimerBars[I].Icon:SetSize((Options.Timers[UnitGUID("Player")].Height * 2) - 6, Options.Timers[UnitGUID("Player")].Height - 6)
 		TimerBars[I].Icon:SetTexCoord(0.1, 0.9, 0.3, 0.7)
 
 		TimerBars[I].IconBackgroundBottom = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].IconBackgroundBottom:SetPoint("BOTTOM", TimerBars[I].Icon, 0, -2)
-		TimerBars[I].IconBackgroundBottom:SetSize((Timers.Height * 2) - 2, 1)
+		TimerBars[I].IconBackgroundBottom:SetSize((Options.Timers[UnitGUID("Player")].Height * 2) - 2, 1)
 		TimerBars[I].IconBackgroundBottom:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].IconBackgroundLeft = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].IconBackgroundLeft:SetPoint("LEFT", TimerBars[I].Icon, -2, 0)
-		TimerBars[I].IconBackgroundLeft:SetSize(1, Timers.Height - 4)
+		TimerBars[I].IconBackgroundLeft:SetSize(1, Options.Timers[UnitGUID("Player")].Height - 4)
 		TimerBars[I].IconBackgroundLeft:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].IconBackgroundRight = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].IconBackgroundRight:SetPoint("RIGHT", TimerBars[I].Icon, 2, 0)
-		TimerBars[I].IconBackgroundRight:SetSize(1, Timers.Height - 4)
+		TimerBars[I].IconBackgroundRight:SetSize(1, Options.Timers[UnitGUID("Player")].Height - 4)
 		TimerBars[I].IconBackgroundRight:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].IconBackgroundTop = TimerBars[I]:CreateTexture(nil, "LOW")
 		TimerBars[I].IconBackgroundTop:SetPoint("TOP", TimerBars[I].Icon, 0, 2)
-		TimerBars[I].IconBackgroundTop:SetSize((Timers.Height * 2) - 2, 1)
+		TimerBars[I].IconBackgroundTop:SetSize((Options.Timers[UnitGUID("Player")].Height * 2) - 2, 1)
 		TimerBars[I].IconBackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
 
 		TimerBars[I].IconBorder = TimerBars[I]:CreateTexture(nil, "BACKGROUND")
 		TimerBars[I].IconBorder:SetPoint("TOPLEFT", TimerBars[I].Icon, -3, 3)
-		TimerBars[I].IconBorder:SetSize(Timers.Height * 2, Timers.Height)
+		TimerBars[I].IconBorder:SetSize(Options.Timers[UnitGUID("Player")].Height * 2, Options.Timers[UnitGUID("Player")].Height)
 		TimerBars[I].IconBorder:SetTexture(0, 0, 0)
 
 		TimerBars[I].Parent = TimerBars
@@ -227,56 +227,39 @@ local function CreateTimers(TimerBars, Timers)
 		TimerBars[I].Text:SetJustifyH("LEFT")
 		TimerBars[I].Text:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
 		TimerBars[I].Text:SetPoint("LEFT", 6, 0)
-		TimerBars[I].Text:SetTextColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
+		TimerBars[I].Text:SetTextColor(Options.Timers[UnitGUID("Player")][I].Color.R, Options.Timers[UnitGUID("Player")][I].Color.G, Options.Timers[UnitGUID("Player")][I].Color.B)
 
 		TimerBars[I].Time = TimerBars[I]:CreateFontString(nil, "OVERLAY")
 		TimerBars[I].Time:SetJustifyH("RIGHT")
 		TimerBars[I].Time:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
 		TimerBars[I].Time:SetPoint("RIGHT", -4, 0)
-		TimerBars[I].Time:SetTextColor(Timers[I].Color.R, Timers[I].Color.G, Timers[I].Color.B)
+		TimerBars[I].Time:SetTextColor(Options.Timers[UnitGUID("Player")][I].Color.R, Options.Timers[UnitGUID("Player")][I].Color.G, Options.Timers[UnitGUID("Player")][I].Color.B)
 
-		TimerBars[I].Timer = Timers[I]
+		TimerBars[I].Timer = Options.Timers[UnitGUID("Player")][I]
 		TimerBars[I].Timers = {}
 
-		for J = 1, #Timers do
+		for J = 1, #Options.Timers[UnitGUID("Player")] do
 			TimerBars[I].Timers[#TimerBars[I].Timers + 1] = J
 		end
 	end
 end
 
 function HandleTimers()
-	if GetConfiguration().Timers then
-		local Class = select(2, UnitClass("Player"))
-		local Specialization = GetSpecialization()
-
-		if Specialization then
-			Specialization = select(2, GetSpecializationInfo(Specialization))
-			Specialization = Specialization:gsub("(.)", string.upper)
-		end
-
+	if Options.Timers[UnitGUID("Player")] then
 		local FocusTimers = {}
 
-		if Focus and GetConfiguration().Timers[Class] then
+		if Focus and Options.Timers[UnitGUID("Player")] then
 			FocusTimers.Anchor = "BOTTOMRIGHT"
-			FocusTimers.Height = GetConfiguration().Timers[Class].Height
+			FocusTimers.Height = Options.Timers[UnitGUID("Player")].Height
 			FocusTimers.ShowOnFocus = true
 			FocusTimers.Width = GetConfiguration().Focus.Width - 52
 			FocusTimers.X = -3
 			FocusTimers.Y = -(GetConfiguration().Focus.Height + 1)
 
-			for I = 1, #GetConfiguration().Timers[Class] do
-				if GetConfiguration().Timers[Class][I].ShowOnFocus then
-					FocusTimers[#FocusTimers + 1] = DeepCopy(GetConfiguration().Timers[Class][I])
+			for I = 1, #Options.Timers[UnitGUID("Player")] do
+				if Options.Timers[UnitGUID("Player")][I].ShowOnFocus then
+					FocusTimers[#FocusTimers + 1] = DeepCopy(Options.Timers[UnitGUID("Player")][I])
 					FocusTimers[#FocusTimers].Unit = "Focus"
-				end
-			end
-
-			if GetConfiguration().Timers[Class][Specialization] then
-				for I = 1, #GetConfiguration().Timers[Class][Specialization] do
-					if GetConfiguration().Timers[Class][Specialization][I].ShowOnFocus then
-						FocusTimers[#FocusTimers + 1] = DeepCopy(GetConfiguration().Timers[Class][Specialization][I])
-						FocusTimers[#FocusTimers].Unit = "Focus"
-					end
 				end
 			end
 		end
@@ -287,58 +270,10 @@ function HandleTimers()
 			CreateTimers(FocusTimerBars, FocusTimers)
 		end
 
-		local Timers = {}
-
-		if GetConfiguration().Timers[Class] then
-			Timers.Anchor = GetConfiguration().Timers[Class].Anchor
-			Timers.Height = GetConfiguration().Timers[Class].Height
-			Timers.Width = GetConfiguration().Timers[Class].Width
-			Timers.X = GetConfiguration().Timers[Class].X
-			Timers.Y = GetConfiguration().Timers[Class].Y
-
-			if GetConfiguration().Timers[Class].AnchorToRaid then
-				Timers.AnchorToRaid = GetConfiguration().Timers[Class].AnchorToRaid
-			end
-
-			for I = 1, #GetConfiguration().Timers[Class] do
-				Timers[#Timers + 1] = GetConfiguration().Timers[Class][I]
-			end
-
-			if GetConfiguration().Timers[Class][Specialization] then
-				if GetConfiguration().Timers[Class][Specialization].Anchor then
-					Timers.Anchor = GetConfiguration().Timers[Class][Specialization].Anchor
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].Height then
-					Timers.Height = GetConfiguration().Timers[Class][Specialization].Height
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].Width then
-					Timers.Width = GetConfiguration().Timers[Class][Specialization].Width
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].X then
-					Timers.X = GetConfiguration().Timers[Class][Specialization].X
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].Y then
-					Timers.Y = GetConfiguration().Timers[Class][Specialization].Y
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].AnchorToRaid then
-					Timers.AnchorToRaid = GetConfiguration().Timers[Class][Specialization].AnchorToRaid
-				end
-
-				for I = 1, #GetConfiguration().Timers[Class][Specialization] do
-					Timers[#Timers + 1] = GetConfiguration().Timers[Class][Specialization][I]
-				end
-			end
-		end
-
-		if #Timers > 0 then
+		if #Options.Timers[UnitGUID("Player")] > 0 then
 			local TimerBars = CreateFrame("Frame", nil, UIParent)
 			
-			CreateTimers(TimerBars, Timers)
+			CreateTimers(TimerBars)
 		end
 	end
 end

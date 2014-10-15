@@ -101,11 +101,45 @@ function HandleActionBars()
 						local IsHelpful
 
 						if Type == "item" then
-							IsHarmful = IsHarmfulItem
-							IsHelpful = IsHelpfulItem
+							IsHarmful = function(Item)
+								local Value = IsHarmfulItem(Item)
+
+								if Value == nil then
+									return true
+								end
+
+								return Value
+							end
+
+							IsHelpful = function(Item)
+								local Value = IsHelpfulItem(Item)
+
+								if Value == nil then
+									return true
+								end
+
+								return Value
+							end
 						else
-							IsHarmful = IsHarmfulSpell
-							IsHelpful = IsHelpfulSpell
+							IsHarmful = function(Spell)
+								local Value = IsHarmfulSpell(Spell)
+
+								if Value == nil then
+									return true
+								end
+
+								return Value
+							end
+
+							IsHelpful = function(Spell)
+								local Value = IsHelpfulSpell(Spell)
+
+								if Value == nil then
+									return true
+								end
+
+								return Value
+							end
 						end
 
 						if UnitIsConnected("Target") then
@@ -113,7 +147,7 @@ function HandleActionBars()
 								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
 							end
 						else
-							if IsHarmful(GetSpellInfo(SpellID)) then
+							if (IsHarmful(GetSpellInfo(SpellID)) or IsHelpful(GetSpellInfo(SpellID))) then
 								_G[Self:GetName() .. "Icon"]:SetVertexColor(0.4, 0.4, 0.4)
 							end
 						end
@@ -127,7 +161,7 @@ function HandleActionBars()
 
 					local Spell = select(1, GetPetActionInfo(Self:GetID()))
 
-					if SpellHasRange(Spell) then
+					if not string.find(Spell, "_") and SpellHasRange(Spell) then
 						if UnitIsConnected("Target") then
 							if IsSpellInRange(Spell) == 0 then
 								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)

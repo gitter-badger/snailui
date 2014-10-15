@@ -51,6 +51,32 @@ function DeepCopy(Object)
 	return Copy(Object)
 end
 
+function Dump(Object, Name, Depth)
+	if not Depth then
+		Depth = 0
+	end
+
+	if not Name then
+		Name = "Parent"
+	end
+	
+	local Prefix = ""
+
+	for I = 1, Depth do
+		Prefix = Prefix .. "-"
+	end
+
+	print(Prefix .. Name)
+
+	for Index, Value in pairs(Object) do
+		if type(Value) == "table" then
+			Dump(Value, Index, Depth + 1)
+		elseif type(Value) == "userdata" then
+			Dump({Value}, Index, Depth + 1)
+		end
+	end
+end
+
 function GetAbsorb(Absorbs, GUID, Spell, SourceGUID)
 	if Absorbs[GUID] then
 		for Index, Absorb in pairs(Absorbs[GUID]) do

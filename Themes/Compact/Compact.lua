@@ -271,29 +271,29 @@ Configuration.Themes.Compact =
 	},
 
 	Initialize = function(Self)
-		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]				= _G[Options.Theme .. "WithClassBar"]
-		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]["UNHOLY"]	= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]			= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]["UNHOLY"]		= _G[Options.Theme .. "WithClassBarWithPet"]
 		Configuration.Themes[Options.Theme]["DRUID"]					= Configuration.Themes[Options.Theme]
 		Configuration.Themes[Options.Theme]["DRUID"]["BALANCE"]			= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["DRUID"]["FERAL"]			= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["DRUID"]["RESTORATION"]		= _G[Options.Theme .. "Healer"]
-		Configuration.Themes[Options.Theme]["HUNTER"]					= _G[Options.Theme .. "WithClassBarWithPet"]
-		Configuration.Themes[Options.Theme]["MAGE"]						= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["HUNTER"]				= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["MAGE"]					= Configuration.Themes[Options.Theme]
 		Configuration.Themes[Options.Theme]["MAGE"]["FROST"]			= _G[Options.Theme .. "WithPet"]
-		Configuration.Themes[Options.Theme]["MONK"]						= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["MONK"]					= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["MONK"]["MISTWEAVER"]		= _G[Options.Theme .. "HealerWithClassBar"]
-		Configuration.Themes[Options.Theme]["PALADIN"]					= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["PALADIN"]				= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["PALADIN"]["HOLY"]			= _G[Options.Theme .. "HealerWithClassBar"]
-		Configuration.Themes[Options.Theme]["PRIEST"]					= _G[Options.Theme .. "Healer"]
+		Configuration.Themes[Options.Theme]["PRIEST"]				= _G[Options.Theme .. "Healer"]
 		Configuration.Themes[Options.Theme]["PRIEST"]["SHADOW"]			= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["ROGUE"]					= _G[Options.Theme .. "WithClassBar"]
-		Configuration.Themes[Options.Theme]["SHAMAN"]					= Configuration.Themes[Options.Theme]
-		Configuration.Themes[Options.Theme]["SHAMAN"]["RESTORATION"]	= _G[Options.Theme .. "Healer"]
-		Configuration.Themes[Options.Theme]["WARLOCK"]					= _G[Options.Theme .. "WithPet"]
-		Configuration.Themes[Options.Theme]["WARLOCK"]["AFFLICTION"]	= _G[Options.Theme .. "WithClassBarWithPet"]
-		Configuration.Themes[Options.Theme]["WARLOCK"]["DEMONOLOGY"]	= _G[Options.Theme .. "WithClassBarWithPet"]
-		Configuration.Themes[Options.Theme]["WARLOCK"]["DESTRUCTION"]	= _G[Options.Theme .. "WithClassBarWithPet"]
-		Configuration.Themes[Options.Theme]["WARRIOR"]					= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["SHAMAN"]				= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["SHAMAN"]["RESTORATION"]		= _G[Options.Theme .. "Healer"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]				= _G[Options.Theme .. "WithPet"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]["AFFLICTION"]		= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]["DEMONOLOGY"]		= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["WARLOCK"]["DESTRUCTION"]		= _G[Options.Theme .. "WithClassBarWithPet"]
+		Configuration.Themes[Options.Theme]["WARRIOR"]				= _G[Options.Theme .. "WithClassBar"]
 
 		local Class = select(2, UnitClass("Player"))
 		local Specialization = GetSpecialization()
@@ -313,57 +313,9 @@ Configuration.Themes.Compact =
 			end
 		end
 
-		local Timers = {}
-
-		if GetConfiguration().Timers[Class] then
-			Timers.Anchor = GetConfiguration().Timers[Class].Anchor
-			Timers.Height = GetConfiguration().Timers[Class].Height
-			Timers.Width = GetConfiguration().Timers[Class].Width
-			Timers.X = GetConfiguration().Timers[Class].X
-			Timers.Y = GetConfiguration().Timers[Class].Y
-			
-			if GetConfiguration().Timers[Class].AnchorToRaid then
-				Timers.AnchorToRaid = GetConfiguration().Timers[Class].AnchorToRaid
-			end
-
-			if GetConfiguration().Timers[Class][Specialization] then
-				if GetConfiguration().Timers[Class][Specialization].Anchor then
-					Timers.Anchor = GetConfiguration().Timers[Class][Specialization].Anchor
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].Height then
-					Timers.Height = GetConfiguration().Timers[Class][Specialization].Height
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].Width then
-					Timers.Width = GetConfiguration().Timers[Class][Specialization].Width
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].X then
-					Timers.X = GetConfiguration().Timers[Class][Specialization].X
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].Y then
-					Timers.Y = GetConfiguration().Timers[Class][Specialization].Y
-				end
-
-				if GetConfiguration().Timers[Class][Specialization].AnchorToRaid then
-					Timers.AnchorToRaid = GetConfiguration().Timers[Class][Specialization].AnchorToRaid
-				end
-				
-				for I = 1, #GetConfiguration().Timers[Class][Specialization] do
-					Timers[#Timers + 1] = GetConfiguration().Timers[Class][Specialization][I]
-				end
-			end
-
-			for I = 1, #GetConfiguration().Timers[Class] do
-				Timers[#Timers + 1] = GetConfiguration().Timers[Class][I]
-			end
-		end
-
 		if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
-			if #Timers > 0 then
-				GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y + 28
+			if #Options.Timers[UnitGUID("Player")] > 0 then
+				Options.Timers[UnitGUID("Player")].Y = Options.Timers[UnitGUID("Player")].Y + 28
 			end
 		elseif Class == "MONK" then
 			local _, _, _, Selected = GetTalentInfo(3, 2, GetActiveSpecGroup())
@@ -382,44 +334,44 @@ Configuration.Themes.Compact =
 				local _, _, _, Selected = GetTalentInfo(5, 3, GetActiveSpecGroup())
 
 				if Selected == true then
-					if #Timers > 0 then
-						GetConfiguration().Timers[Class].Y = GetConfiguration().Timers[Class].Y - 28
+					if #Options.Timers[UnitGUID("Player")] > 0 then
+						Options.Timers[UnitGUID("Player")].Y = Options.Timers[UnitGUID("Player")].Y - 28
 					end
 				end
 			end
 
-			if (#Timers > 0) and IsSpellKnown(101508) then
-				for I = 1, #Timers do
-					if Timers[I].Spell == "Backdraft" then
-						Timers[I].Color =
+			if (#Options.Timers[UnitGUID("Player")] > 0) and IsSpellKnown(101508) then
+				for I = 1, #Options.Timers[UnitGUID("Player")] do
+					if Options.Timers[UnitGUID("Player")][I].Spell == "Backdraft" then
+						Options.Timers[UnitGUID("Player")][I].Color =
 						{
 							B = 57 / 255,
 							G = 241 / 255,
 							R = 127 / 255
 						}
-					elseif Timers[I].Spell == "Conflagrate" then
-						Timers[I].Color =
+					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Conflagrate" then
+						Options.Timers[UnitGUID("Player")][I].Color =
 						{
 							B = 10 / 255,
 							G = 221 / 255,
 							R = 153 / 255
 						}
-					elseif Timers[I].Spell == "Immolate" then
-						Timers[I].Color =
+					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Immolate" then
+						Options.Timers[UnitGUID("Player")][I].Color =
 						{
 							B = 63 / 255,
 							G = 1,
 							R = 204 / 255
 						}
-					elseif Timers[I].Spell == "Molten Core" then
-						Timers[I].Color =
+					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Molten Core" then
+						Options.Timers[UnitGUID("Player")][I].Color =
 						{
 							B = 22 / 255,
 							G = 231 / 255,
 							R = 217 / 255
 						}
-					elseif Timers[I].Spell == "Rain of Fire" then
-						Timers[I].Color =
+					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Rain of Fire" then
+						Options.Timers[UnitGUID("Player")][I].Color =
 						{
 							B = 13 / 255,
 							G = 182 / 255,
@@ -447,7 +399,7 @@ Configuration.Themes.Compact =
 			GetConfiguration().Buffs.X = GetConfiguration().Buffs.X + 72
 		end
 
-		return Class, Specialization, Timers
+		return Class, Specialization
 	end,
 
 	Meter =
@@ -718,7 +670,6 @@ Configuration.Themes.Compact =
 		}
 	},
 
-	Timers = {},
 	TimerTrackers =
 	{
 		Anchor = "TOP",
