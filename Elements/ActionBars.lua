@@ -1,3 +1,4 @@
+--
 -- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
@@ -12,6 +13,7 @@
 --
 -- You should have received a copy of the GNU General Public License along
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
+--
 
 local _
 
@@ -161,7 +163,7 @@ function HandleActionBars()
 
 					local Spell = select(1, GetPetActionInfo(Self:GetID()))
 
-					if not string.find(Spell, "_") and SpellHasRange(Spell) then
+					if Spell and SpellHasRange(Spell) then
 						if UnitIsConnected("Target") then
 							if IsSpellInRange(Spell) == 0 then
 								_G[Self:GetName() .. "Icon"]:SetVertexColor(1, 0.2, 0.2)
