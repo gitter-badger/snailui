@@ -3,6 +3,11 @@ Written by Snailsoft
 
 ------------------------------------------------------------------------------
 
+Version 1.0.1b
+- Fixed a bug where SnailUI wouldn't load for certain classes
+
+------------------------------------------------------------------------------
+
 Version 1.0.1
 - Fixed a bug where healing indicators were showing other players' spells
 - Pet action buttons now update (based on range, hostile, etc.) like player action buttons

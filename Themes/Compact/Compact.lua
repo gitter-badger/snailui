@@ -316,7 +316,7 @@ Configuration.Themes.Compact =
 		end
 
 		if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
-			if #Options.Timers[UnitGUID("Player")] > 0 then
+			if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) then
 				Options.Timers[UnitGUID("Player")].Y = Options.Timers[UnitGUID("Player")].Y + 28
 			end
 		elseif Class == "MONK" then
@@ -336,13 +336,13 @@ Configuration.Themes.Compact =
 				local _, _, _, Selected = GetTalentInfo(5, 3, GetActiveSpecGroup())
 
 				if Selected == true then
-					if #Options.Timers[UnitGUID("Player")] > 0 then
+					if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) then
 						Options.Timers[UnitGUID("Player")].Y = Options.Timers[UnitGUID("Player")].Y - 28
 					end
 				end
 			end
 
-			if (#Options.Timers[UnitGUID("Player")] > 0) and IsSpellKnown(101508) then
+			if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) and IsSpellKnown(101508) then
 				for I = 1, #Options.Timers[UnitGUID("Player")] do
 					if Options.Timers[UnitGUID("Player")][I].Spell == "Backdraft" then
 						Options.Timers[UnitGUID("Player")][I].Color =

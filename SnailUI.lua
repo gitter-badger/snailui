@@ -15,7 +15,7 @@
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 --
 
-local Version = "1.0.1"
+local Version = "1.0.1b"
 
 oUF:RegisterStyle("SnailUI", 
 	function(Self, Unit)
