@@ -319,12 +319,423 @@ function HandleInterfaceOptions(Version)
 	HealingIndicatorsSubcategory.HIInputBox:SetPoint("TOPLEFT", 22, -73)
 	HealingIndicatorsSubcategory.HIInputBox:SetWidth(126)
 
+	if not Options.Timers then
+		Options.Timers = {}
+	end
+
+	if not Options.Timers[UnitGUID("Player")] then
+		Options.Timers[UnitGUID("Player")] =
+		{
+			Anchor = "BOTTOM",
+			Height = 24,
+			Width = 464,
+			X = 26,
+			Y = 242
+		}
+	end
+
+	local TimersSubcategory = CreateFrame("Frame", nil, Category)
+
+	TimersSubcategory.name = "Timers"
+	TimersSubcategory.parent = Category.name
+	TimersSubcategory.okay = function(Self)
+		Options.Timers[UnitGUID("Player")].Anchor = Anchors[UIDropDownMenu_GetSelectedID(AnchorDropdownMenu)]
+		Options.Timers[UnitGUID("Player")].Height = tonumber(HeightInputBox:GetText())
+		Options.Timers[UnitGUID("Player")].Width = tonumber(WidthInputBox:GetText())
+		Options.Timers[UnitGUID("Player")].X = tonumber(XInputBox:GetText())
+		Options.Timers[UnitGUID("Player")].Y = tonumber(YInputBox:GetText())
+	end
+
+	TimersSubcategory.Label1 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+	TimersSubcategory.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.Label1:SetPoint("TOPLEFT", 16, -16)
+	TimersSubcategory.Label1:SetText("Timers")
+
+	TimersSubcategory.Label2 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+	TimersSubcategory.Label2:SetJustifyH("LEFT")
+	TimersSubcategory.Label2:SetPoint("TOPLEFT", 16, -36)
+	TimersSubcategory.Label2:SetText("Timer options for SnailUI")
+
+	TimersSubcategory.Label3 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label3:SetJustifyH("LEFT")
+	TimersSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
+	TimersSubcategory.Label3:SetText("Anchor")
+
+	TimersSubcategory.Label4 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label4:SetJustifyH("LEFT")
+	TimersSubcategory.Label4:SetPoint("TOPLEFT", 157, -60)
+	TimersSubcategory.Label4:SetText("Width")
+
+	TimersSubcategory.Label5 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label5:SetJustifyH("LEFT")
+	TimersSubcategory.Label5:SetPoint("TOPLEFT", 260, -60)
+	TimersSubcategory.Label5:SetText("Height")
+
+	TimersSubcategory.Label6 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label6:SetJustifyH("LEFT")
+	TimersSubcategory.Label6:SetPoint("TOPLEFT", 370, -60)
+	TimersSubcategory.Label6:SetText("Position (Use increments of [X: 52 | Y: 28])")
+
+	TimersSubcategory.Label7 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label7:SetJustifyH("LEFT")
+	TimersSubcategory.Label7:SetPoint("TOPLEFT", 16, -111)
+	TimersSubcategory.Label7:SetText("Spell name")
+
+	TimersSubcategory.Label8 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label8:SetJustifyH("LEFT")
+	TimersSubcategory.Label8:SetPoint("TOPLEFT", 156, -111)
+	TimersSubcategory.Label8:SetText("Type")
+
+	TimersSubcategory.Label9 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label9:SetJustifyH("LEFT")
+	TimersSubcategory.Label9:SetPoint("TOPLEFT", 297, -111)
+	TimersSubcategory.Label9:SetText("Unit")
+
+	TimersSubcategory.Label10 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label10:SetJustifyH("LEFT")
+	TimersSubcategory.Label10:SetPoint("TOPLEFT", 438, -111)
+	TimersSubcategory.Label10:SetText("Priority")
+
+	TimersSubcategory.Label11 = TimersSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	TimersSubcategory.Label11:SetJustifyH("LEFT")
+	TimersSubcategory.Label11:SetPoint("TOPLEFT", 16, -158)
+	TimersSubcategory.Label11:SetText("Color")
+
+	TimersSubcategory.AnchorDropdownMenu = CreateFrame("Frame", "AnchorDropdownMenu", TimersSubcategory, "UIDropDownMenuTemplate")
+	TimersSubcategory.AnchorDropdownMenu:SetPoint("TOPLEFT", 0, -75)
+
+	Anchors =
+	{
+		"BOTTOM",
+		"BOTTOMLEFT",
+		"BOTTOMRIGHT",
+		"CENTER",
+		"TOP",
+		"TOPLEFT",
+		"TOPRIGHT"
+	}
+
+	UIDropDownMenu_Initialize(AnchorDropdownMenu,
+		function(AnchorDropdownMenu, Level)
+			for I = 1, #Anchors do
+				local Info = UIDropDownMenu_CreateInfo()
+
+				Info.text = Anchors[I]
+				Info.func = function(Self)
+					UIDropDownMenu_SetSelectedID(AnchorDropdownMenu, Self:GetID())
+				end
+
+				UIDropDownMenu_AddButton(Info, Level)
+			end
+		end
+	)
+
+	local AnchorIndex
+
+	for I = 1, #Anchors do
+		if Options.Timers[UnitGUID("Player")].Anchor == Anchors[I] then
+			AnchorIndex = I
+		end
+	end
+
+	UIDropDownMenu_JustifyText(TimersSubcategory.AnchorDropdownMenu, "LEFT")
+	UIDropDownMenu_SetSelectedID(TimersSubcategory.AnchorDropdownMenu, AnchorIndex or 1)
+
+	TimersSubcategory.WidthInputBox = CreateFrame("EditBox", "WidthInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.WidthInputBox:SetAutoFocus(false)
+	TimersSubcategory.WidthInputBox:SetHeight(29)
+	TimersSubcategory.WidthInputBox:SetPoint("TOPLEFT", 163, -73)
+	TimersSubcategory.WidthInputBox:SetText(Options.Timers[UnitGUID("Player")].Width)
+	TimersSubcategory.WidthInputBox:SetCursorPosition(0)
+	TimersSubcategory.WidthInputBox:SetWidth(88)
+
+	TimersSubcategory.HeightInputBox = CreateFrame("EditBox", "HeightInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.HeightInputBox:SetAutoFocus(false)
+	TimersSubcategory.HeightInputBox:SetHeight(29)
+	TimersSubcategory.HeightInputBox:SetPoint("LEFT", TimersSubcategory.WidthInputBox, "RIGHT", 15, 0)
+	TimersSubcategory.HeightInputBox:SetText(Options.Timers[UnitGUID("Player")].Height)
+	TimersSubcategory.HeightInputBox:SetCursorPosition(0)
+	TimersSubcategory.HeightInputBox:SetWidth(88)
+
+	TimersSubcategory.XInputBox = CreateFrame("EditBox", "XInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.XInputBox:SetAutoFocus(false)
+	TimersSubcategory.XInputBox:SetHeight(29)
+	TimersSubcategory.XInputBox:SetPoint("LEFT", TimersSubcategory.HeightInputBox, "RIGHT", 22, 0)
+	TimersSubcategory.XInputBox:SetText(Options.Timers[UnitGUID("Player")].X)
+	TimersSubcategory.XInputBox:SetCursorPosition(0)
+	TimersSubcategory.XInputBox:SetWidth(88)
+
+	TimersSubcategory.XInputBox.Label1 = TimersSubcategory.XInputBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.XInputBox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.XInputBox.Label1:SetPoint("RIGHT", TimersSubcategory.XInputBox, "LEFT", -5, 0)
+	TimersSubcategory.XInputBox.Label1:SetText("X: ")
+
+	TimersSubcategory.YInputBox = CreateFrame("EditBox", "YInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.YInputBox:SetAutoFocus(false)
+	TimersSubcategory.YInputBox:SetHeight(29)
+	TimersSubcategory.YInputBox:SetPoint("LEFT", TimersSubcategory.XInputBox, "RIGHT", 21, 0)
+	TimersSubcategory.YInputBox:SetText(Options.Timers[UnitGUID("Player")].Y)
+	TimersSubcategory.YInputBox:SetCursorPosition(0)
+	TimersSubcategory.YInputBox:SetWidth(88)
+
+	TimersSubcategory.YInputBox.Label1 = TimersSubcategory.YInputBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.YInputBox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.YInputBox.Label1:SetPoint("RIGHT", TimersSubcategory.YInputBox, "LEFT", -5, 0)
+	TimersSubcategory.YInputBox.Label1:SetText("Y: ")
+
+	TimersSubcategory.SpellNameInputBox = CreateFrame("EditBox", "SpellNameInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.SpellNameInputBox:SetAutoFocus(false)
+	TimersSubcategory.SpellNameInputBox:SetHeight(29)
+	TimersSubcategory.SpellNameInputBox:SetPoint("TOPLEFT", 22, -123)
+	TimersSubcategory.SpellNameInputBox:SetWidth(126)
+
+	TimersSubcategory.TypeDropdownMenu = CreateFrame("Frame", "TypeDropdownMenu", TimersSubcategory, "UIDropDownMenuTemplate")
+	TimersSubcategory.TypeDropdownMenu:SetPoint("TOPLEFT", 140, -125)
+
+	Types =
+	{
+		"Buff",
+		"Cooldown",
+		"Debuff"
+	}
+
+	UIDropDownMenu_Initialize(TypeDropdownMenu,
+		function(TypeDropdownMenu, Level)
+			for I = 1, #Types do
+				local Info = UIDropDownMenu_CreateInfo()
+
+				Info.text = Types[I]
+				Info.func = function(Self)
+					UIDropDownMenu_SetSelectedID(TypeDropdownMenu, Self:GetID())
+				end
+
+				UIDropDownMenu_AddButton(Info, Level)
+			end
+		end
+	)
+
+	UIDropDownMenu_JustifyText(TimersSubcategory.TypeDropdownMenu, "LEFT")
+	UIDropDownMenu_SetSelectedID(TimersSubcategory.TypeDropdownMenu, 1)
+
+	TimersSubcategory.UnitDropdownMenu = CreateFrame("Frame", "UnitDropdownMenu", TimersSubcategory, "UIDropDownMenuTemplate")
+	TimersSubcategory.UnitDropdownMenu:SetPoint("LEFT", TimersSubcategory.TypeDropdownMenu, "RIGHT", 101, 0)
+
+	Units =
+	{
+		"Player",
+		"Focus",
+		"Target"
+	}
+
+	UIDropDownMenu_Initialize(UnitDropdownMenu,
+		function(UnitDropdownMenu, Level)
+			for I = 1, #Units do
+				local Info = UIDropDownMenu_CreateInfo()
+
+				Info.text = Units[I]
+				Info.func = function(Self)
+					UIDropDownMenu_SetSelectedID(UnitDropdownMenu, Self:GetID())
+				end
+
+				UIDropDownMenu_AddButton(Info, Level)
+			end
+		end
+	)
+
+	UIDropDownMenu_JustifyText(TimersSubcategory.UnitDropdownMenu, "LEFT")
+	UIDropDownMenu_SetSelectedID(TimersSubcategory.UnitDropdownMenu, 1)
+
+	TimersSubcategory.PriorityInputBox = CreateFrame("EditBox", "PriorityInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.PriorityInputBox:SetAutoFocus(false)
+	TimersSubcategory.PriorityInputBox:SetHeight(29)
+	TimersSubcategory.PriorityInputBox:SetPoint("TOPLEFT", TimersSubcategory.UnitDropdownMenu, "TOPRIGHT", 123, 2)
+	TimersSubcategory.PriorityInputBox:SetText("1")
+	TimersSubcategory.PriorityInputBox:SetCursorPosition(0)
+	TimersSubcategory.PriorityInputBox:SetWidth(88)
+
+	TimersSubcategory.RInputBox = CreateFrame("EditBox", "RInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.RInputBox:SetAutoFocus(false)
+	TimersSubcategory.RInputBox:SetHeight(29)
+	TimersSubcategory.RInputBox:SetPoint("TOPLEFT", 34, -170)
+	TimersSubcategory.RInputBox:SetWidth(88)
+
+	TimersSubcategory.RInputBox.Label1 = TimersSubcategory.RInputBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.RInputBox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.RInputBox.Label1:SetPoint("RIGHT", TimersSubcategory.RInputBox, "LEFT", -4, 0)
+	TimersSubcategory.RInputBox.Label1:SetText("R: ")
+
+	TimersSubcategory.GInputBox = CreateFrame("EditBox", "GInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.GInputBox:SetAutoFocus(false)
+	TimersSubcategory.GInputBox:SetHeight(29)
+	TimersSubcategory.GInputBox:SetPoint("LEFT", TimersSubcategory.RInputBox, "RIGHT", 21, 0)
+	TimersSubcategory.GInputBox:SetWidth(88)
+
+	TimersSubcategory.GInputBox.Label1 = TimersSubcategory.GInputBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.GInputBox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.GInputBox.Label1:SetPoint("RIGHT", TimersSubcategory.GInputBox, "LEFT", -4, 0)
+	TimersSubcategory.GInputBox.Label1:SetText("G: ")
+
+	TimersSubcategory.BInputBox = CreateFrame("EditBox", "BInputBox", TimersSubcategory, "InputBoxTemplate")
+	TimersSubcategory.BInputBox:SetAutoFocus(false)
+	TimersSubcategory.BInputBox:SetHeight(29)
+	TimersSubcategory.BInputBox:SetPoint("LEFT", TimersSubcategory.GInputBox, "RIGHT", 20, 0)
+	TimersSubcategory.BInputBox:SetWidth(88)
+
+	TimersSubcategory.BInputBox.Label1 = TimersSubcategory.BInputBox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.BInputBox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.BInputBox.Label1:SetPoint("RIGHT", TimersSubcategory.BInputBox, "LEFT", -4, 0)
+	TimersSubcategory.BInputBox.Label1:SetText("B: ")
+
+	TimersSubcategory.ShowColorPickerButton = CreateFrame("Button", "ShowColorPickerButton", TimersSubcategory, "UIPanelButtonTemplate")
+	TimersSubcategory.ShowColorPickerButton:SetPoint("LEFT", TimersSubcategory.BInputBox, "RIGHT", 9, 0)
+	TimersSubcategory.ShowColorPickerButton:SetSize(96, 21)
+	TimersSubcategory.ShowColorPickerButton:SetText("Pick Color")
+	TimersSubcategory.ShowColorPickerButton:SetScript("OnClick",
+		function(Self)
+			ColorPickerFrame.cancelFunc = function()
+				RInputBox:SetText(ColorPickerFrame.previousValues[1])
+				GInputBox:SetText(ColorPickerFrame.previousValues[2])
+				BInputBox:SetText(ColorPickerFrame.previousValues[3])
+			end
+
+			ColorPickerFrame.func = function()
+				local R, G, B = ColorPickerFrame:GetColorRGB()
+
+				RInputBox:SetText(R * OpacitySliderFrame:GetValue())
+				GInputBox:SetText(G * OpacitySliderFrame:GetValue())
+				BInputBox:SetText(B * OpacitySliderFrame:GetValue())
+			end
+
+			ColorPickerFrame.previousValues = {RInputBox:GetText(), GInputBox:GetText(), BInputBox:GetText(), 1}
+			ColorPickerFrame:Show()
+		end
+	)
+
+	TimersSubcategory.ShowOnFocusCheckbox = CreateFrame("CheckButton", "ShowOnFocusCheckbox", TimersSubcategory, "InterfaceOptionsCheckButtonTemplate")
+	TimersSubcategory.ShowOnFocusCheckbox:SetPoint("LEFT", TimersSubcategory.ShowColorPickerButton, "RIGHT", 6, 0)
+	TimersSubcategory.ShowOnFocusCheckbox:SetScript("OnClick",
+		function(Self)
+			if not Self:GetChecked() then
+				Self:SetChecked(false)
+			else
+				Self:SetChecked(true)
+			end
+		end
+	)
+
+	TimersSubcategory.ShowOnFocusCheckbox.Label1 = TimersSubcategory.ShowOnFocusCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.ShowOnFocusCheckbox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.ShowOnFocusCheckbox.Label1:SetPoint("LEFT", TimersSubcategory.BInputBox, "RIGHT", 142, 0)
+	TimersSubcategory.ShowOnFocusCheckbox.Label1:SetText("Show on focus frame")
+
+	local ReloadTimerDropdownMenu = function()
+		UIDropDownMenu_Initialize(TimerDropdownMenu,
+			function(TimerDropdownMenu, Level)
+				for Index, Timer in ipairs(Options.Timers[UnitGUID("Player")]) do
+					local Info = UIDropDownMenu_CreateInfo()
+
+					Info.text = Timer.Spell
+					Info.func = function(Self)
+						UIDropDownMenu_SetSelectedID(TimerDropdownMenu, Self:GetID())
+					end
+
+					UIDropDownMenu_AddButton(Info, Level)
+				end
+			end
+		)
+
+		UIDropDownMenu_SetSelectedID(TimersSubcategory.TimerDropdownMenu, 1)
+	end
+
+	TimersSubcategory.CreateTimerButton = CreateFrame("Button", "CreateTimerButton", TimersSubcategory, "UIPanelButtonTemplate")
+	TimersSubcategory.CreateTimerButton:SetPoint("TOPLEFT", 15, -201)
+	TimersSubcategory.CreateTimerButton:SetSize(96, 21)
+	TimersSubcategory.CreateTimerButton:SetText("Create")
+	TimersSubcategory.CreateTimerButton:SetScript("OnClick",
+		function(Self)
+			local Found = false
+
+			for Index, Timer in ipairs(Options.Timers[UnitGUID("Player")]) do
+				if (Timer.Spell == SpellNameInputBox:GetText()) and (Timer.Type == Types[UIDropDownMenu_GetSelectedID(TypeDropdownMenu)]) and (Timer.Unit == Units[UIDropDownMenu_GetSelectedID(UnitDropdownMenu)]) then
+					Found = true
+				end
+			end
+
+			if (not Found) and (SpellNameInputBox:GetText() ~= "") and (RInputBox:GetText() ~= "") and (GInputBox:GetText() ~= "") and (BInputBox:GetText() ~= "") then
+				Options.Timers[UnitGUID("Player")][#Options.Timers[UnitGUID("Player")] + 1] =
+				{
+						Priority = tonumber(PriorityInputBox:GetText()),
+						ShowOnFocus = ShowOnFocusCheckbox:GetChecked(),
+						Spell = SpellNameInputBox:GetText(),
+						Type = Types[UIDropDownMenu_GetSelectedID(TypeDropdownMenu)],
+						Unit = Units[UIDropDownMenu_GetSelectedID(UnitDropdownMenu)],
+
+						Color =
+						{
+							R = tonumber(RInputBox:GetText()),
+							G = tonumber(GInputBox:GetText()),
+							B = tonumber(BInputBox:GetText())
+						}
+				}
+
+				PriorityInputBox:SetText("1")
+				PriorityInputBox:SetCursorPosition(0)
+				PriorityInputBox:ClearFocus()
+
+				SpellNameInputBox:SetText("")
+				SpellNameInputBox:SetCursorPosition(0)
+				SpellNameInputBox:ClearFocus()
+
+				RInputBox:SetText("")
+				RInputBox:SetCursorPosition(0)
+				RInputBox:ClearFocus()
+
+				GInputBox:SetText("")
+				GInputBox:SetCursorPosition(0)
+				GInputBox:ClearFocus()
+
+				BInputBox:SetText("")
+				BInputBox:SetCursorPosition(0)
+				BInputBox:ClearFocus()
+
+				ReloadTimerDropdownMenu()
+			end
+		end
+	)
+
+	TimersSubcategory.DeleteTimerButton = CreateFrame("Button", "DeleteTimerButton", TimersSubcategory, "UIPanelButtonTemplate")
+	TimersSubcategory.DeleteTimerButton:SetPoint("LEFT", TimersSubcategory.CreateTimerButton, "RIGHT", 8, 0)
+	TimersSubcategory.DeleteTimerButton:SetSize(96, 21)
+	TimersSubcategory.DeleteTimerButton:SetText("Delete")
+	TimersSubcategory.DeleteTimerButton:SetScript("OnClick",
+		function(Self)
+			if #Options.Timers[UnitGUID("Player")] > 0 then
+				for I = UIDropDownMenu_GetSelectedID(TimerDropdownMenu), (#Options.Timers[UnitGUID("Player")] - 1) do
+					Options.Timers[UnitGUID("Player")][I] = Options.Timers[UnitGUID("Player")][I + 1]
+				end
+
+				Options.Timers[UnitGUID("Player")][#Options.Timers[UnitGUID("Player")]] = nil
+				ReloadTimerDropdownMenu()
+			end
+		end
+	)
+
+	TimersSubcategory.TimerDropdownMenu = CreateFrame("Frame", "TimerDropdownMenu", TimersSubcategory, "UIDropDownMenuTemplate")
+	TimersSubcategory.TimerDropdownMenu:SetPoint("TOPLEFT", TimersSubcategory.DeleteTimerButton, "TOPRIGHT", -9, 1)
+
+	ReloadTimerDropdownMenu()
+
+	UIDropDownMenu_JustifyText(TimersSubcategory.TimerDropdownMenu, "LEFT")
+	UIDropDownMenu_SetSelectedID(TimersSubcategory.TimerDropdownMenu, 1)
+
 	InterfaceOptions_AddCategory(Category)
 	InterfaceOptions_AddCategory(GeneralSubcategory)
 	InterfaceOptions_AddCategory(FramesSubcategory)
 	InterfaceOptions_AddCategory(HealingIndicatorsSubcategory)
+	InterfaceOptions_AddCategory(TimersSubcategory)
 
 	SlashCmdList["SnailUI"] = function()
+
 		InterfaceOptionsFrame_OpenToCategory(Category)
 		InterfaceOptionsFrame_OpenToCategory(Category)
 	end

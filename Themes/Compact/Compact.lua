@@ -17,7 +17,7 @@
 
 local FocusX = math.floor(GetScreenWidth() / 4)
 
-Configuration.Themes.Compact = 
+Configuration.Themes.Compact =
 {
 	ActionBars =
 	{
@@ -325,47 +325,6 @@ Configuration.Themes.Compact =
 					Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
 				end
 			end
-			
-			if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) and IsSpellKnown(101508) then
-				for I = 1, #Options.Timers[UnitGUID("Player")] do
-					if Options.Timers[UnitGUID("Player")][I].Spell == "Backdraft" then
-						Options.Timers[UnitGUID("Player")][I].Color =
-						{
-							B = 57 / 255,
-							G = 241 / 255,
-							R = 127 / 255
-						}
-					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Conflagrate" then
-						Options.Timers[UnitGUID("Player")][I].Color =
-						{
-							B = 10 / 255,
-							G = 221 / 255,
-							R = 153 / 255
-						}
-					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Immolate" then
-						Options.Timers[UnitGUID("Player")][I].Color =
-						{
-							B = 63 / 255,
-							G = 1,
-							R = 204 / 255
-						}
-					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Molten Core" then
-						Options.Timers[UnitGUID("Player")][I].Color =
-						{
-							B = 22 / 255,
-							G = 231 / 255,
-							R = 217 / 255
-						}
-					elseif Options.Timers[UnitGUID("Player")][I].Spell == "Rain of Fire" then
-						Options.Timers[UnitGUID("Player")][I].Color =
-						{
-							B = 13 / 255,
-							G = 182 / 255,
-							R = 141 / 255
-						}
-					end
-				end
-			end
 		elseif (Class == "HUNTER") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) or (Class == "WARRIOR") then
 			local T = _G[Options.Theme .. "WithClassBar"]
 
@@ -499,7 +458,7 @@ Configuration.Themes.Compact =
 			Y = 0
 		},
 	},
-	
+
 	Player =
 	{
 		Anchor = "BOTTOM",

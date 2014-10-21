@@ -250,7 +250,7 @@ function HandleTimers()
 	if not Options.Timers then
 		Options.Timers = {}
 	end
-	
+
 	if not Options.Timers[UnitGUID("Player")] then
 		Options.Timers[UnitGUID("Player")] =
 		{
@@ -282,13 +282,13 @@ function HandleTimers()
 
 	if Focus and (#FocusTimers > 0) then
 		local FocusTimerBars = CreateFrame("Frame", nil, UIParent)
-		
+
 		CreateTimers(FocusTimerBars, FocusTimers)
 	end
 
 	if #Options.Timers[UnitGUID("Player")] > 0 then
 		local TimerBars = CreateFrame("Frame", nil, UIParent)
-		
+
 		CreateTimers(TimerBars)
 	end
 end
