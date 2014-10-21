@@ -16,7 +16,9 @@
 --
 
 function HandleConsoleVariables()
+	SetCVar("alwaysShowActionBars", "0")
 	SetCVar("consolidateBuffs", "0")
+	SetCVar("countdownForCooldowns", "0")
 	SetCVar("ShowClassColorInNameplate", "1")
 	SetCVar("showArenaEnemyFrames", "0")
 	SetCVar("useUiScale", "0")

@@ -192,7 +192,7 @@ function HandleInterfaceOptions(Version)
 
 	GeneralSubcategory.ThemeDropdownMenu = CreateFrame("Frame", "ThemeDropdownMenu", GeneralSubcategory, "UIDropDownMenuTemplate")
 	GeneralSubcategory.ThemeDropdownMenu:SetPoint("TOPLEFT", 0, -121)
-		
+
 	UIDropDownMenu_Initialize(GeneralSubcategory.ThemeDropdownMenu,
 		function(ThemeDropdownMenu, Level)
 			local Index = 1
@@ -218,9 +218,111 @@ function HandleInterfaceOptions(Version)
 	UIDropDownMenu_JustifyText(GeneralSubcategory.ThemeDropdownMenu, "LEFT")
 	UIDropDownMenu_SetSelectedID(GeneralSubcategory.ThemeDropdownMenu, Themes[Options.Theme])
 
+	local HealingIndicatorsSubcategory = CreateFrame("Frame", nil, Category)
+
+	HealingIndicatorsSubcategory.name = "Healing Indicators"
+	HealingIndicatorsSubcategory.parent = Category.name
+
+	HealingIndicatorsSubcategory.Label1 = HealingIndicatorsSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+	HealingIndicatorsSubcategory.Label1:SetJustifyH("LEFT")
+	HealingIndicatorsSubcategory.Label1:SetPoint("TOPLEFT", 16, -16)
+	HealingIndicatorsSubcategory.Label1:SetText("Healing Indicators")
+
+	HealingIndicatorsSubcategory.Label2 = HealingIndicatorsSubcategory:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+	HealingIndicatorsSubcategory.Label2:SetJustifyH("LEFT")
+	HealingIndicatorsSubcategory.Label2:SetPoint("TOPLEFT", 16, -36)
+	HealingIndicatorsSubcategory.Label2:SetText("Healing indicator options for SnailUI")
+
+	HealingIndicatorsSubcategory.Label3 = HealingIndicatorsSubcategory:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	HealingIndicatorsSubcategory.Label3:SetJustifyH("LEFT")
+	HealingIndicatorsSubcategory.Label3:SetPoint("TOPLEFT", 16, -60)
+	HealingIndicatorsSubcategory.Label3:SetText("Spell name")
+
+	local ReloadHIDropdownMenu = function()
+		UIDropDownMenu_Initialize(HIDropdownMenu,
+			function(HIDropdownMenu, Level)
+				for I = 1, #Options.HealingIndicators[UnitGUID("Player")] do
+					local Info = UIDropDownMenu_CreateInfo()
+
+					Info.text = Options.HealingIndicators[UnitGUID("Player")][I]
+					Info.func = function(Self)
+						UIDropDownMenu_SetSelectedID(HIDropdownMenu, Self:GetID())
+					end
+
+					UIDropDownMenu_AddButton(Info, Level)
+				end
+			end
+		)
+
+		UIDropDownMenu_SetSelectedID(HealingIndicatorsSubcategory.HIDropdownMenu, 1)
+	end
+
+	HealingIndicatorsSubcategory.HICreateButton = CreateFrame("Button", "HICreateButton", HealingIndicatorsSubcategory, "UIPanelButtonTemplate")
+	HealingIndicatorsSubcategory.HICreateButton:SetPoint("TOPLEFT", 16, -108)
+	HealingIndicatorsSubcategory.HICreateButton:SetSize(96, 21)
+	HealingIndicatorsSubcategory.HICreateButton:SetText("Create")
+	HealingIndicatorsSubcategory.HICreateButton:SetScript("OnClick",
+		function(Self)
+			local Found = false
+
+			for I = 1, #Options.HealingIndicators[UnitGUID("Player")] do
+				if Options.HealingIndicators[UnitGUID("Player")][I] == HIInputBox:GetText() then
+					Found = true
+				end
+			end
+
+			if (not Found) and (HIInputBox:GetText() ~= "") then
+				Options.HealingIndicators[UnitGUID("Player")][#Options.HealingIndicators[UnitGUID("Player")] + 1] = HIInputBox:GetText()
+
+				HIInputBox:SetText("")
+				HIInputBox:ClearFocus()
+
+				ReloadHIDropdownMenu()
+			end
+		end
+	)
+
+	HealingIndicatorsSubcategory.HIDeleteButton = CreateFrame("Button", "HIDeleteButton", HealingIndicatorsSubcategory, "UIPanelButtonTemplate")
+	HealingIndicatorsSubcategory.HIDeleteButton:SetPoint("TOPLEFT", 158, -108)
+	HealingIndicatorsSubcategory.HIDeleteButton:SetSize(96, 21)
+	HealingIndicatorsSubcategory.HIDeleteButton:SetText("Delete")
+	HealingIndicatorsSubcategory.HIDeleteButton:SetScript("OnClick",
+		function(Self)
+			if #Options.HealingIndicators[UnitGUID("Player")] > 0 then
+				for I = UIDropDownMenu_GetSelectedID(HIDropdownMenu), (#Options.HealingIndicators[UnitGUID("Player")] - 1) do
+					Options.HealingIndicators[UnitGUID("Player")][I] = Options.HealingIndicators[UnitGUID("Player")][I + 1]
+				end
+
+				Options.HealingIndicators[UnitGUID("Player")][#Options.HealingIndicators[UnitGUID("Player")]] = nil
+				ReloadHIDropdownMenu()
+			end
+		end
+	)
+
+	HealingIndicatorsSubcategory.HIDropdownMenu = CreateFrame("Frame", "HIDropdownMenu", HealingIndicatorsSubcategory, "UIDropDownMenuTemplate")
+	HealingIndicatorsSubcategory.HIDropdownMenu:SetPoint("TOPLEFT", 142, -75)
+
+	if not Options.HealingIndicators then
+		Options.HealingIndicators = {}
+	end
+
+	if not Options.HealingIndicators[UnitGUID("Player")] then
+		Options.HealingIndicators[UnitGUID("Player")] = {}
+	end
+
+	UIDropDownMenu_JustifyText(HealingIndicatorsSubcategory.HIDropdownMenu, "LEFT")
+	ReloadHIDropdownMenu()
+
+	HealingIndicatorsSubcategory.HIInputBox = CreateFrame("EditBox", "HIInputBox", HealingIndicatorsSubcategory, "InputBoxTemplate")
+	HealingIndicatorsSubcategory.HIInputBox:SetAutoFocus(false)
+	HealingIndicatorsSubcategory.HIInputBox:SetHeight(29)
+	HealingIndicatorsSubcategory.HIInputBox:SetPoint("TOPLEFT", 22, -73)
+	HealingIndicatorsSubcategory.HIInputBox:SetWidth(126)
+
 	InterfaceOptions_AddCategory(Category)
 	InterfaceOptions_AddCategory(GeneralSubcategory)
 	InterfaceOptions_AddCategory(FramesSubcategory)
+	InterfaceOptions_AddCategory(HealingIndicatorsSubcategory)
 
 	SlashCmdList["SnailUI"] = function()
 		InterfaceOptionsFrame_OpenToCategory(Category)

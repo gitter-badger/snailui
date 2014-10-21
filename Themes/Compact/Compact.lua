@@ -305,21 +305,7 @@ Configuration.Themes.Compact =
 			Specialization = Specialization:gsub("(.)", string.upper)
 		end
 
-		if Class == "WARLOCK" then
-			if not Specialization == "DEMONOLOGY" then
-				local _, _, _, Selected = GetTalentInfo(5, 3, GetActiveSpecGroup())
-
-				if Selected == true then
-					Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
-				end
-			end
-		end
-
-		if (Class == "DEATHKNIGHT") and (Specialization == "UNHOLY") then
-			if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) then
-				Options.Timers[UnitGUID("Player")].Y = Options.Timers[UnitGUID("Player")].Y + 28
-			end
-		elseif Class == "MONK" then
+		if Class == "MONK" then
 			local _, _, _, Selected = GetTalentInfo(3, 2, GetActiveSpecGroup())
 
 			if Selected == true then
@@ -332,16 +318,14 @@ Configuration.Themes.Compact =
 				GetConfiguration().Player.HolyPowerBar = GetConfiguration().Player.HolyPowerBar2
 			end
 		elseif Class == "WARLOCK" then
-			if not Specialization == "DEMONOLOGY" then
+			if Specialization ~= "DEMONOLOGY" then
 				local _, _, _, Selected = GetTalentInfo(5, 3, GetActiveSpecGroup())
 
 				if Selected == true then
-					if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) then
-						Options.Timers[UnitGUID("Player")].Y = Options.Timers[UnitGUID("Player")].Y - 28
-					end
+					Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
 				end
 			end
-
+			
 			if Options.Timers[UnitGUID("Player")] and (#Options.Timers[UnitGUID("Player")] > 0) and IsSpellKnown(101508) then
 				for I = 1, #Options.Timers[UnitGUID("Player")] do
 					if Options.Timers[UnitGUID("Player")][I].Spell == "Backdraft" then

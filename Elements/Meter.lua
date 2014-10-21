@@ -259,7 +259,7 @@ function HandleMeter()
 								Type = select(15, ...)
 							end
 
-							if Amount and (Amount > 0) and Data.Meter.InCombat and (Type == "ABSORB") and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
+							if Amount and (type(Amount) == "number") and (Amount > 0) and Data.Meter.InCombat and (Type == "ABSORB") and ((bit.band(Flags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) or (bit.band(Flags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0)) then
 								local Class
 								local GUID = select(8, ...)
 								local IsPet

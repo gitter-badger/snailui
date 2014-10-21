@@ -3,6 +3,15 @@ Written by Snailsoft
 
 ------------------------------------------------------------------------------
 
+Version 1.0.2
+- Made a couple console variables/interface options to always be off (to maintain SnailUI's look and feel)
+- Fixed a bug where SnailUI was not recognizing GoSac for warlocks
+- The meter now shows max hits/crits/multistrikes
+- You can now create your own healing indicators through the interface options
+- You can now create your own timers through the interface options
+
+------------------------------------------------------------------------------
+
 Version 1.0.1b
 - Fixed a bug where SnailUI wouldn't load for certain classes
 

@@ -54,6 +54,9 @@ function HandleBlizzardFrames()
 		end
 	)
 
+	SetInsertItemsLeftToRight(false)
+	SetSortBagsRightToLeft(false)
+
 	VehicleSeatIndicator:HookScript("OnShow",
 		function(Self)
 			Self:ClearAllPoints()

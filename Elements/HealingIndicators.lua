@@ -19,119 +19,15 @@ local _
 
 function HandleHealingIndicators(Self)
 	if Self.Frame == "Raid" then
-		local Class = select(2, UnitClass("Player"))
-		local Specialization = GetSpecialization()
-
-		if Specialization then
-			Specialization = select(2, GetSpecializationInfo(Specialization))
-			Specialization = Specialization:gsub("(.)", string.upper)
+		if not Options.HealingIndicators then
+			Options.HealingIndicators = {}
+		end
+		
+		if not Options.HealingIndicators[UnitGUID("Player")] then
+			Options.HealingIndicators[UnitGUID("Player")] = {}
 		end
 
-		local AllHealingIndicators =
-		{
-			TextureCoordinate =
-			{
-				Bottom = 0.9,
-				Left = 0.1,
-				Right = 0.9,
-				Top = 0.1
-			},
-
-			["DRUID"] =
-			{
-				["RESTORATION"] =
-				{
-					"Lifebloom",
-					"Rejuvenation",
-					"Regrowth",
-					"Living Seed",
-					"Wild Growth",
-					"Cenarion Ward",
-					"Tranquility",
-					"Ironbark",
-					"Innervate"
-				}
-			},
-
-			["MONK"] =
-			{
-				["MISTWEAVER"] =
-				{
-					"Renewing Mist",
-					"Zen Sphere",
-					"Enveloping Mist",
-					"Life Cocoon",
-					"Soothing Mist"
-				}
-			},
-
-			["PALADIN"] =
-			{
-				["HOLY"] =
-				{
-					"Beacon of Light",
-					"Sacred Shield",
-					"Eternal Flame",
-					"Execution Sentence",
-					"Holy Prisim",
-					"Divine Plea",
-					"Illuminated Healing",
-					"Devotion Aura"
-				}
-			},
-
-			["PRIEST"] =
-			{
-				["DISCIPLINE"] =
-				{
-					"Renew",
-					"Prayer of Mending",
-					"Power Word: Shield",
-					"Weakened Soul",
-					"Divine Aegis",
-					"Power Word: Barrier",
-					"Angelic Bulwark"
-				},
-
-				["HOLY"] =
-				{
-					"Renew",
-					"Prayer of Mending",
-					"Power Word: Shield",
-					"Weakened Soul",
-					"Divine Hymn",
-					"Echo of Light",
-					"Angelic Bulwark"
-				}
-			},
-
-			["SHAMAN"] =
-			{
-				["RESTORATION"] =
-				{
-					"Earth Shield",
-					"Riptide",
-					"Earthliving Weapon",
-					"Spirit Link Totem"
-				}
-			}
-		}
-
-		local HealingIndicators = {}
-
-		if AllHealingIndicators[Class] then
-			if AllHealingIndicators[Class][Specialization] then
-				for I = 1, #AllHealingIndicators[Class][Specialization] do
-					HealingIndicators[#HealingIndicators + 1] = AllHealingIndicators[Class][Specialization][I]
-				end
-			end
-
-			for I = 1, #AllHealingIndicators[Class] do
-				HealingIndicators[#HealingIndicators + 1] = AllHealingIndicators[Class][I]
-			end
-		end
-
-		if #HealingIndicators > 0 then
+		if #Options.HealingIndicators[UnitGUID("Player")] > 0 then
 			Self.HealingIndicators = CreateFrame("Frame", nil, Self)
 
 			if Self.DebuffIndicators then
@@ -143,7 +39,7 @@ function HandleHealingIndicators(Self)
 
 			Self.HealingIndicators.ShownIndicators = 0
 
-			for I = 1, #HealingIndicators do
+			for I = 1, #Options.HealingIndicators[UnitGUID("Player")] do
 				Self.HealingIndicators[I] = CreateFrame("Frame", nil, Self.HealingIndicators)
 				Self.HealingIndicators[I]:Hide()
 				Self.HealingIndicators[I]:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -161,10 +57,10 @@ function HandleHealingIndicators(Self)
 							local BuffSource
 							local Debuff
 
-							BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitBuff(Self.Parent.unit, HealingIndicators[Self.I], nil, "PLAYER")
+							BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitBuff(Self.Parent.unit, Options.HealingIndicators[UnitGUID("Player")][Self.I], nil, "PLAYER")
 
 							if not BuffName then
-								BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitDebuff(Self.Parent.unit, HealingIndicators[Self.I])
+								BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitDebuff(Self.Parent.unit, Options.HealingIndicators[UnitGUID("Player")][Self.I], nil, "PLAYER")
 								Debuff = true
 							end
 
@@ -189,7 +85,7 @@ function HandleHealingIndicators(Self)
 
 						local Count = 1
 
-						for J = 1, #HealingIndicators do
+						for J = 1, #Options.HealingIndicators[UnitGUID("Player")] do
 							if Self:GetParent()[J].Shown then
 								Self:GetParent()[J]:SetPoint("LEFT", ((Count - 1) * (GetConfiguration()[Self.Frame].Height - 6)) + ((Count - 1) * 1), 0)
 								Count = Count + 1
@@ -206,7 +102,7 @@ function HandleHealingIndicators(Self)
 
 						local Count = 1
 
-						for J = 1, #HealingIndicators do
+						for J = 1, #Options.HealingIndicators[UnitGUID("Player")] do
 							if Self:GetParent()[J].Shown then
 								Self:GetParent()[J]:SetPoint("LEFT", ((Count - 1) * (GetConfiguration()[Self.Frame].Height - 6)) + ((Count - 1) * 1), 0)
 								Count = Count + 1
@@ -250,7 +146,7 @@ function HandleHealingIndicators(Self)
 
 				Self.HealingIndicators[I].Icon = Self.HealingIndicators[I]:CreateTexture(nil, "LOW")
 				Self.HealingIndicators[I].Icon:SetPoint("CENTER")
-				Self.HealingIndicators[I].Icon:SetTexCoord(AllHealingIndicators.TextureCoordinate.Left, AllHealingIndicators.TextureCoordinate.Right, AllHealingIndicators.TextureCoordinate.Top, AllHealingIndicators.TextureCoordinate.Bottom)
+				Self.HealingIndicators[I].Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 				Self.HealingIndicators[I].Icon:SetSize(GetConfiguration()[Self.Frame].Height - 6, GetConfiguration()[Self.Frame].Height - 6)
 
 				Self.HealingIndicators[I].Parent = Self

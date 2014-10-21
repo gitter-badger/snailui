@@ -247,35 +247,48 @@ local function CreateTimers(TimerBars)
 end
 
 function HandleTimers()
-	if Options.Timers[UnitGUID("Player")] then
-		local FocusTimers = {}
+	if not Options.Timers then
+		Options.Timers = {}
+	end
+	
+	if not Options.Timers[UnitGUID("Player")] then
+		Options.Timers[UnitGUID("Player")] =
+		{
+			Anchor = "BOTTOM",
+			Height = 24,
+			Width = 464,
+			X = 26,
+			Y = 242
+		}
+	end
 
-		if Focus and Options.Timers[UnitGUID("Player")] then
-			FocusTimers.Anchor = "BOTTOMRIGHT"
-			FocusTimers.Height = Options.Timers[UnitGUID("Player")].Height
-			FocusTimers.ShowOnFocus = true
-			FocusTimers.Width = GetConfiguration().Focus.Width - 52
-			FocusTimers.X = -3
-			FocusTimers.Y = -(GetConfiguration().Focus.Height + 1)
+	local FocusTimers = {}
 
-			for I = 1, #Options.Timers[UnitGUID("Player")] do
-				if Options.Timers[UnitGUID("Player")][I].ShowOnFocus then
-					FocusTimers[#FocusTimers + 1] = DeepCopy(Options.Timers[UnitGUID("Player")][I])
-					FocusTimers[#FocusTimers].Unit = "Focus"
-				end
+	if Focus and Options.Timers[UnitGUID("Player")] then
+		FocusTimers.Anchor = "BOTTOMRIGHT"
+		FocusTimers.Height = Options.Timers[UnitGUID("Player")].Height
+		FocusTimers.ShowOnFocus = true
+		FocusTimers.Width = GetConfiguration().Focus.Width - 52
+		FocusTimers.X = -3
+		FocusTimers.Y = -(GetConfiguration().Focus.Height + 1)
+
+		for I = 1, #Options.Timers[UnitGUID("Player")] do
+			if Options.Timers[UnitGUID("Player")][I].ShowOnFocus then
+				FocusTimers[#FocusTimers + 1] = DeepCopy(Options.Timers[UnitGUID("Player")][I])
+				FocusTimers[#FocusTimers].Unit = "Focus"
 			end
 		end
+	end
 
-		if Focus and (#FocusTimers > 0) then
-			local FocusTimerBars = CreateFrame("Frame", nil, UIParent)
-			
-			CreateTimers(FocusTimerBars, FocusTimers)
-		end
+	if Focus and (#FocusTimers > 0) then
+		local FocusTimerBars = CreateFrame("Frame", nil, UIParent)
+		
+		CreateTimers(FocusTimerBars, FocusTimers)
+	end
 
-		if #Options.Timers[UnitGUID("Player")] > 0 then
-			local TimerBars = CreateFrame("Frame", nil, UIParent)
-			
-			CreateTimers(TimerBars)
-		end
+	if #Options.Timers[UnitGUID("Player")] > 0 then
+		local TimerBars = CreateFrame("Frame", nil, UIParent)
+		
+		CreateTimers(TimerBars)
 	end
 end
