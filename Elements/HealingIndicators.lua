@@ -22,17 +22,13 @@ function HandleHealingIndicators(Self)
 		if not Options.HealingIndicators then
 			Options.HealingIndicators = {}
 		end
-		
+
 		if not Options.HealingIndicators[UnitGUID("Player")] then
 			Options.HealingIndicators[UnitGUID("Player")] = {}
 		end
 
 		if #Options.HealingIndicators[UnitGUID("Player")] > 0 then
 			Self.HealingIndicators = CreateFrame("Frame", nil, Self)
-
-			if Self.DebuffIndicators then
-				Self.DebuffIndicators:SetPoint("LEFT", Self.HealingIndicators, "RIGHT", 1, 0)
-			end
 
 			Self.HealingIndicators:SetFrameLevel(Self:GetFrameLevel() + 2)
 			Self.HealingIndicators:SetPoint("LEFT", 3, 0)
@@ -42,38 +38,59 @@ function HandleHealingIndicators(Self)
 			for I = 1, #Options.HealingIndicators[UnitGUID("Player")] do
 				Self.HealingIndicators[I] = CreateFrame("Frame", nil, Self.HealingIndicators)
 				Self.HealingIndicators[I]:Hide()
+				Self.HealingIndicators[I]:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 				Self.HealingIndicators[I]:RegisterEvent("PLAYER_ENTERING_WORLD")
 				Self.HealingIndicators[I]:RegisterEvent("UNIT_AURA")
 				Self.HealingIndicators[I]:SetSize(GetConfiguration()[Self.Frame].Height - 6, GetConfiguration()[Self.Frame].Height - 6)
 				Self.HealingIndicators[I]:SetScript("OnEvent",
-					function(Self, Event, Unit)
-						if not Unit then
-							Unit = Self.Parent.unit
-						end
+					function(Self, Event, Unit, ...)
+						local CombatEvent = select(1, ...)
 
-						if Unit == Self.Parent.unit then
-							local BuffIcon
-							local BuffName
-							local BuffSource
-							local Debuff
-
-							BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitBuff(Self.Parent.unit, Options.HealingIndicators[UnitGUID("Player")][Self.I], nil, "PLAYER")
-
-							if not BuffName then
-								BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitDebuff(Self.Parent.unit, Options.HealingIndicators[UnitGUID("Player")][Self.I], nil, "PLAYER")
-								Debuff = true
+						if ((Event == "COMBAT_LOG_EVENT_UNFILTERED") and CombatEvent and string.find(CombatEvent, "_AURA")) or (Event ~= "COMBAT_LOG_EVENT_UNFILTERED") then
+							if not Unit then
+								Unit = Self.Parent.unit
 							end
 
-							if BuffName and (BuffSource == "player") then
-								Self.BuffName = BuffName
-								Self.Debuff = Debuff
-								Self.Icon:SetTexture(BuffIcon)
+							if Unit == Self.Parent.unit then
+								local BuffIcon
+								local BuffName
+								local BuffSource
+								local Debuff
 
-								Self:Show()
+								BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitBuff(Self.Parent.unit, Options.HealingIndicators[UnitGUID("Player")][Self.I], nil, "PLAYER")
+
+								if not BuffName then
+									BuffName, _, BuffIcon, _, _, _, _, BuffSource = UnitDebuff(Self.Parent.unit, Options.HealingIndicators[UnitGUID("Player")][Self.I], nil, "PLAYER")
+									Debuff = true
+								end
+
+								if BuffName and (BuffSource == "player") then
+									Self.BuffName = BuffName
+									Self.Debuff = Debuff
+									Self.Icon:SetTexture(BuffIcon)
+
+									Self:Hide()
+									Self:Show()
+								end
 							end
 						end
 					end
 				)
+
+				Self.HealingIndicators[I].UpdatePoints = function(Self)
+					local Count = 1
+
+					if Self.Parent.DebuffIndicators:IsShown() then
+						Count = Count + 1
+					end
+
+					for J = 1, #Options.HealingIndicators[UnitGUID("Player")] do
+						if Self:GetParent()[J].Shown then
+							Self:GetParent()[J]:SetPoint("LEFT", ((Count - 1) * (GetConfiguration()[Self.Frame].Height - 6)) + ((Count - 1) * 1), 0)
+							Count = Count + 1
+						end
+					end
+				end
 
 				Self.HealingIndicators[I]:SetScript("OnHide",
 					function(Self)
@@ -83,14 +100,7 @@ function HandleHealingIndicators(Self)
 						Self:SetScript("OnUpdate", nil)
 						Self.Shown = nil
 
-						local Count = 1
-
-						for J = 1, #Options.HealingIndicators[UnitGUID("Player")] do
-							if Self:GetParent()[J].Shown then
-								Self:GetParent()[J]:SetPoint("LEFT", ((Count - 1) * (GetConfiguration()[Self.Frame].Height - 6)) + ((Count - 1) * 1), 0)
-								Count = Count + 1
-							end
-						end
+						Self:UpdatePoints(Self)
 					end
 				)
 
@@ -98,17 +108,10 @@ function HandleHealingIndicators(Self)
 					function(Self)
 						Self:GetParent().ShownIndicators = Self:GetParent().ShownIndicators + 1
 						Self:GetParent():SetSize((Self:GetParent().ShownIndicators * (GetConfiguration()[Self.Frame].Height - 6)) + ((Self:GetParent().ShownIndicators - 1) * 1), GetConfiguration()[Self.Frame].Height - 6)
+
 						Self.Shown = true
 
-						local Count = 1
-
-						for J = 1, #Options.HealingIndicators[UnitGUID("Player")] do
-							if Self:GetParent()[J].Shown then
-								Self:GetParent()[J]:SetPoint("LEFT", ((Count - 1) * (GetConfiguration()[Self.Frame].Height - 6)) + ((Count - 1) * 1), 0)
-								Count = Count + 1
-							end
-						end
-
+						Self:UpdatePoints(Self)
 						Self:SetScript("OnUpdate",
 							function(Self, ElapsedTime)
 								local BuffExpires

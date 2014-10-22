@@ -16,6 +16,7 @@
 --
 
 oUF.Tags.Events["SnailUI:EclipseDirection"] = "ECLIPSE_DIRECTION_CHANGE"
+oUF.Tags.Events["SnailUI:DemonicFury"] = "UNIT_POWER"
 oUF.Tags.Events["SnailUI:Health"] = "UNIT_HEALTH UNIT_HEAL_PREDICTION"
 oUF.Tags.Events["SnailUI:SmallHealth"] = "UNIT_HEALTH UNIT_HEAL_PREDICTION"
 
@@ -29,6 +30,10 @@ oUF.Tags.Methods["SnailUI:EclipseDirection"] = function(Unit)
 	end
 
 	return nil
+end
+
+oUF.Tags.Methods["SnailUI:DemonicFury"] = function(Unit)
+	return UnitPower("Player", SPELL_POWER_DEMONIC_FURY)
 end
 
 oUF.Tags.Methods["SnailUI:Health"] = function(Unit)

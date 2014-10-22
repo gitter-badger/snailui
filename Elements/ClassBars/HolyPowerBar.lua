@@ -33,6 +33,8 @@ function HandleHolyPowerBar(Self)
 		Self.ClassIcons.Background:SetPoint("TOPLEFT", Self.ClassIcons, 1, -1)
 		Self.ClassIcons.Background:SetSize(GetConfiguration()[Self.Frame].HolyPowerBar.Width - 2, GetConfiguration()[Self.Frame].HolyPowerBar.Height - 2)
 
+		Self.ClassIcons.UpdateTexture = Blank
+
 		for I = 1, 5 do
 			Self.ClassIcons[I] = Self:CreateTexture(Self, "LOW")
 

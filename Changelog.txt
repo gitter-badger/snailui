@@ -3,6 +3,13 @@ Written by Snailsoft
 
 ------------------------------------------------------------------------------
 
+Version 1.0.3
+- The Demonic Fury bar for Warlocks now displays the exact amount of fury you have
+- Fixed a bug where class bars were not working for Monks and Paladins
+- Fixed a bug where certain debuffs were not being displayed for those who can dispel them
+
+------------------------------------------------------------------------------
+
 Version 1.0.2
 - Made a couple console variables/interface options to always be off (to maintain SnailUI's look and feel)
 - Fixed a bug where SnailUI was not recognizing GoSac for warlocks

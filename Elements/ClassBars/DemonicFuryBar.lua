@@ -53,6 +53,14 @@ function HandleDemonicFuryBar(Self)
 			Self.warlockSpecBarsBorder[I]:SetPoint("TOPLEFT", Self.WarlockSpecBars[I], -1, 1)
 			Self.warlockSpecBarsBorder[I]:SetSize(GetConfiguration()[Self.Frame].DemonicFuryBar[I].Width, GetConfiguration()[Self.Frame].DemonicFuryBar[I].Height)
 			Self.warlockSpecBarsBorder[I]:SetTexture(0, 0, 0)
+
+			Self.WarlockSpecBars[I].Fury = Self.WarlockSpecBars[I]:CreateFontString(nil, "OVERLAY")
+			Self.WarlockSpecBars[I].Fury.frequentUpdates = true
+			Self.WarlockSpecBars[I].Fury:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
+			Self.WarlockSpecBars[I].Fury:SetPoint("TOP", Self.warlockSpecBarsBorder, 1, -((GetConfiguration()[Self.Frame].DemonicFuryBar[I].Height - 2) / 2) + 1)
+			Self.WarlockSpecBars[I].Fury:SetTextColor(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
+
+			Self:Tag(Self.WarlockSpecBars[I].Fury, "[SnailUI:DemonicFury]")
 		end
 	end
 end

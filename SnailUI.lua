@@ -15,15 +15,15 @@
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 --
 
-local Version = "1.0.2"
+local Version = "1.0.3"
 
-oUF:RegisterStyle("SnailUI", 
+oUF:RegisterStyle("SnailUI",
 	function(Self, Unit)
 		Unit = Unit:gsub("(.)", string.upper, 1)
-		
+
 		if GetConfiguration()[Unit] then
 			Self.Frame = Unit
-			
+
 			HandleBurningEmbersBar(Self)
 			HandleCastingBar(Self)
 			HandleChiBar(Self)
@@ -31,7 +31,7 @@ oUF:RegisterStyle("SnailUI",
 			HandleComboPointsBar(Self)
 			HandleDebuffIndicators(Self)
 			HandleDemonicFuryBar(Self)
-			HandleEclipseBar(Self)			
+			HandleEclipseBar(Self)
 			HandleHealingIndicators(Self)
 			HandleHealthBar(Self)
 			HandleHolyPowerBar(Self)

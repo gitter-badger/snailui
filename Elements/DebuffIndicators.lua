@@ -49,23 +49,15 @@ function HandleDebuffIndicators(Self)
 			["MONK"] =
 			{
 				"Disease",
-				"Poison",
-
-				["MISTWEAVER"] =
-				{
-					"Magic"
-				}
+				"Magic",
+				"Poison"
 			},
 
 			["PALADIN"] =
 			{
 				"Disease",
 				"Poison",
-
-				["HOLY"] =
-				{
-					"Magic"
-				}
+				"Magic"
 			},
 
 			["PRIEST"] =
@@ -94,7 +86,7 @@ function HandleDebuffIndicators(Self)
 			}
 		}
 
-		if DispelTypes[Class] then			
+		if DispelTypes[Class] then
 			if DispelTypes[Class][Specialization] then
 				for I = 1, #DispelTypes[Class][Specialization] do
 					Dispels[#Dispels + 1] = DispelTypes[Class][Specialization][I]
@@ -109,31 +101,37 @@ function HandleDebuffIndicators(Self)
 		if #Dispels > 0 then
 			Self.DebuffIndicators = CreateFrame("Frame", nil, Self)
 			Self.DebuffIndicators:Hide()
+			Self.DebuffIndicators:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			Self.DebuffIndicators:RegisterEvent("PLAYER_ENTERING_WORLD")
 			Self.DebuffIndicators:RegisterEvent("UNIT_AURA")
 			Self.DebuffIndicators:SetFrameLevel(Self:GetFrameLevel() + 2)
 			Self.DebuffIndicators:SetPoint("LEFT", 3, 0)
 			Self.DebuffIndicators:SetSize(GetConfiguration()[Self.Frame].Height - 6, GetConfiguration()[Self.Frame].Height - 6)
 			Self.DebuffIndicators:SetScript("OnEvent",
-				function(Self, Event, Unit)
-					if not Unit then
-						Unit = Self.Parent.unit
-					end
+				function(Self, Event, Unit, ...)
+					local CombatEvent = select(1, ...)
 
-					if Unit == Self.Parent.unit then
-						local DebuffIcon
-						local DebuffName
+					if ((Event == "COMBAT_LOG_EVENT_UNFILTERED") and CombatEvent and string.find(CombatEvent, "_AURA")) or (Event ~= "COMBAT_LOG_EVENT_UNFILTERED") then
+						if not Unit then
+							Unit = Self.Parent.unit
+						end
 
-						for I = 40, 1, -1 do
-							DebuffName, _, DebuffIcon, _, DebuffType = UnitDebuff(Self.Parent.unit, I)
+						if Unit == Self.Parent.unit then
+							local DebuffIcon
+							local DebuffName
 
-							if DebuffName and GetDispel(Self.Dispels, DebuffType) then
-								I = 1
+							for I = 40, 1, -1 do
+								DebuffName, _, DebuffIcon, _, DebuffType = UnitDebuff(Self.Parent.unit, I)
 
-								Self.DebuffName = DebuffName
-								Self.Icon:SetTexture(DebuffIcon)
+								if DebuffName and GetDispel(Self.Dispels, DebuffType) then
+									I = 1
 
-								Self:Show()
+									Self.DebuffName = DebuffName
+									Self.Icon:SetTexture(DebuffIcon)
+
+									Self:Hide()
+									Self:Show()
+								end
 							end
 						end
 					end
@@ -145,6 +143,12 @@ function HandleDebuffIndicators(Self)
 					Self:SetScript("OnUpdate", nil)
 					Self.Parent.ShowingDebuffIndicators = nil
 					Self.Parent.SpellRange.Update(Self.Parent, Self.Parent.InRange)
+
+					if Self.Parent.HealingIndicators then
+						for I = 1, #Self.Parent.HealingIndicators do
+							Self.Parent.HealingIndicators[I]:UpdatePoints(Self.Parent.HealingIndicators[I])
+						end
+					end
 				end
 			)
 
@@ -153,6 +157,12 @@ function HandleDebuffIndicators(Self)
 					Self.Parent.ShowingDebuffIndicators = true
 					Self.Parent.SpellRange.Update(Self.Parent, Self.Parent.InRange)
 
+					if Self.Parent.HealingIndicators then
+						for I = 1, #Self.Parent.HealingIndicators do
+							Self.Parent.HealingIndicators[I]:UpdatePoints(Self.Parent.HealingIndicators[I])
+						end
+					end
+
 					Self:SetScript("OnUpdate",
 						function(Self, ElapsedTime)
 							local DebuffName, _, _, _, _, _, DebuffExpires = UnitDebuff(Self.Parent.unit, Self.DebuffName)
@@ -160,10 +170,6 @@ function HandleDebuffIndicators(Self)
 							if DebuffName then
 								if DebuffExpires and (DebuffExpires > GetTime()) then
 									Self.Text:SetText(math.ceil(DebuffExpires - GetTime()))
-
-									if DebuffCount and (DebuffCount > 1) then
-										--
-									end
 								else
 									Self.Text:SetText("")
 								end
