@@ -255,6 +255,7 @@ function HandleTimers()
 		Options.Timers[UnitGUID("Player")] =
 		{
 			Anchor = "BOTTOM",
+			AnchorToRaid = false,
 			Height = 24,
 			Width = 464,
 			X = 26,
