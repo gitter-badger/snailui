@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -34,10 +34,10 @@ function HandleTimerTrackers()
 				local RelativePoint
 				local X
 				local Y
-	
+
 				for I = 1, #Digits do
 					Point, Parent, RelativePoint, X, Y = Digits[I]:GetPoint()
-	
+
 					if I == 1 then
 						if Self.anchorCenter then
 							Digits[I]:SetPoint(Point, Parent, RelativePoint, X, 0)
@@ -65,7 +65,7 @@ function HandleTimerTrackers()
 					Timer.ClearAllPoints = Blank
 					Timer.SetPoint = Blank
 
-					Bar = Timer.bar					
+					Bar = Timer.bar
 					Bar:SetPoint("CENTER")
 					Bar:SetSize(GetConfiguration().TimerTrackers.Width - 6, GetConfiguration().TimerTrackers.Height - 6)
 					Bar:SetStatusBarTexture(Configuration.Texture)

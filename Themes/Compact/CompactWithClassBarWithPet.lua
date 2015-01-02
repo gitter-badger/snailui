@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -69,7 +69,7 @@ CompactWithClassBarWithPet.Pet =
 		Y = 3
 	}
 }
-	
+
 CompactWithClassBarWithPet.Player.HealthBar.Width = 200
 CompactWithClassBarWithPet.Player.Width = 204
 CompactWithClassBarWithPet.Player.X = -156

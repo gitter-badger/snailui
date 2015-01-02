@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -61,7 +61,7 @@ function Dump(Object, Name, Depth)
 	if not Name then
 		Name = "Parent"
 	end
-	
+
 	local Prefix = ""
 
 	for I = 1, Depth do
@@ -102,7 +102,7 @@ end
 function GetActiveTime(Time)
 	if Time > 60 then
 		local Seconds = math.floor((Time % 60) + 0.5)
-		
+
 		if Seconds > 0 then
 			return " (" .. math.floor((Time / 60) + 0.5) .. "m " .. Seconds .. "s)"
 		else

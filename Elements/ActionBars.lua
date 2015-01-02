@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -419,18 +419,18 @@ function HandleActionBars()
 						_G[Buttons[I] .. J .. "Cooldown"].Time = 0.1
 						_G[Buttons[I] .. J .. "Cooldown"]:SetScript("OnUpdate", UpdateCooldownText)
 					end
-					
+
 					_G[Buttons[I] .. J .. "Count"]:SetAlpha(0)
 					_G[Buttons[I] .. J .. "Count"].SetAlpha = Blank
 
 					_G[Buttons[I] .. J .. "FlyoutBorder"]:SetAlpha(0)
-					_G[Buttons[I] .. J .. "FlyoutBorderShadow"]:SetAlpha(0) 
+					_G[Buttons[I] .. J .. "FlyoutBorderShadow"]:SetAlpha(0)
 
 					_G[Buttons[I] .. J .. "HotKey"]:SetAlpha(0)
 					_G[Buttons[I] .. J .. "HotKey"].SetAlpha = Blank
 
 					_G[Buttons[I] .. J .. "Icon"]:SetTexCoord(Bars[I].TextureCoordinate.Left, Bars[I].TextureCoordinate.Right, Bars[I].TextureCoordinate.Top, Bars[I].TextureCoordinate.Bottom)
-					
+
 					_G[Buttons[I] .. J .. "Name"]:SetAlpha(0)
 					_G[Buttons[I] .. J .. "Name"].SetAlpha = Blank
 

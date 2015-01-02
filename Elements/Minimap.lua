@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -88,7 +88,7 @@ function HandleMinimap()
 			hooksecurefunc("GameTimeFrame_SetDate",
 				function()
 					local _, _, Day = CalendarGetDate()
-					
+
 					GameTimeFrame:SetText(nil)
 					GameTimeFrame.Time:SetText(Day)
 				end

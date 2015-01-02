@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -321,7 +321,7 @@ function HandleMeter()
 
 												if BuffAmount and BuffCasterGUID and (BuffCasterGUID == SourceGUID) and (BuffName == SpellName) and (Info.Amount ~= BuffAmount) then
 													local IsPet
-													
+
 													if (bit.band(Info.SourceFlags, COMBATLOG_OBJECT_TYPE_GUARDIAN) ~= 0) or (bit.band(Info.SourceFlags, COMBATLOG_OBJECT_TYPE_PET) ~= 0) then
 														SourceGUID = GetPetOwner(Data.Meter.Pets, SourceGUID)
 

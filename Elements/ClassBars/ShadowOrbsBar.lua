@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -40,7 +40,7 @@ function HandleShadowOrbsBar(Self)
 		Self.ClassIcons.Background:SetSize(GetConfiguration()[Self.Frame].ShadowOrbsBar.Width - 2, GetConfiguration()[Self.Frame].ShadowOrbsBar.Height - 2)
 
 		Self.ClassIcons.UpdateTexture = Blank
-		
+
 		for I = 1, 5 do
 			Self.ClassIcons[I] = Self:CreateTexture(Self, "LOW")
 

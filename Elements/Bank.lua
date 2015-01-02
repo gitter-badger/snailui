@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -310,7 +310,7 @@ function HandleBank()
 					else
 						_G["ContainerFrame" .. I .. "Item" .. J]:SetPoint("BOTTOMRIGHT", BankFrame.Bag, -(2 + ((CurrentColumn - 1) * (GetConfiguration().Bank.Width + 1))), 27 + ((CurrentRow - 1) * (GetConfiguration().Bank.Height + 1)))
 					end
-					
+
 					if CurrentColumn == GetConfiguration().Bank.Columns then
 						CurrentColumn = 1
 						CurrentRow = CurrentRow + 1
@@ -339,7 +339,7 @@ function HandleBank()
 					_G["BankFrameItem" .. I].BackgroundLeft:SetPoint("LEFT", _G["BankFrameItem" .. I], -2, 0)
 					_G["BankFrameItem" .. I].BackgroundLeft:SetSize(1, GetConfiguration().Bank.Height)
 				end
-				
+
 				if CurrentColumn == GetConfiguration().Bank.Columns then
 					CurrentColumn = 1
 					CurrentRow = CurrentRow + 1

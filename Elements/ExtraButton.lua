@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -18,7 +18,7 @@
 function HandleExtraButton()
 	if GetConfiguration().ExtraButton then
 		local Class = select(2, UnitClass("Player"))
-		
+
 		ExtraButton = CreateFrame("Button", nil, UIParent)
 		ExtraButton:RegisterForClicks("AnyUp")
 		ExtraButton:SetPoint(GetConfiguration().ExtraButton.Anchor, GetConfiguration().ExtraButton.X, GetConfiguration().ExtraButton.Y)
@@ -29,21 +29,21 @@ function HandleExtraButton()
 					if not InCombatLockdown() then
 						BuffFrame:Hide()
 						MainMenuExpBar:Hide()
-						
+
 						MultiBarBottomRight.EnableShow = nil
 						MultiBarLeft.EnableShow = nil
-	
+
 						MultiBarBottomRight:Hide()
 						MultiBarLeft:Hide()
-	
+
 						ObjectiveTrackerFrame:Hide()
 						VehicleSeatIndicator:Hide()
 						WorldStateAlwaysUpFrame:Hide()
-	
+
 						if (not GetConfiguration().Raid.Shown) and Options.EnableRaidFrames then
 							Raid:Hide()
 						end
-	
+
 						Self.Bar.Text:SetText("Show Misc Frames")
 						Self.Shown = nil
 					else
@@ -53,21 +53,21 @@ function HandleExtraButton()
 					if not InCombatLockdown() then
 						BuffFrame:Show()
 						MainMenuExpBar:Show()
-	
+
 						MultiBarBottomRight.EnableShow = true
 						MultiBarLeft.EnableShow = true
-	
+
 						MultiBarBottomRight:Show()
 						MultiBarLeft:Show()
-	
+
 						ObjectiveTrackerFrame:Show()
 						VehicleSeatIndicator:Show()
 						WorldStateAlwaysUpFrame:Show()
-	
+
 						if (not GetConfiguration().Raid.shown) and Options.EnableRaidFrames then
 							Raid:Show()
 						end
-	
+
 						Self.Bar.Text:SetText("Hide Misc Frames")
 						Self.Shown = true
 					else

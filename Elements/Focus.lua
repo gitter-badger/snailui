@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -17,7 +17,7 @@
 
 function HandleFocus(Self)
 	if GetConfiguration().Focus then
-		Focus = Self:Spawn("Focus")		
+		Focus = Self:Spawn("Focus")
 		Focus:SetPoint(GetConfiguration().Focus.Anchor, GetConfiguration().Focus.X, GetConfiguration().Focus.Y)
 	end
 end

@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -18,7 +18,7 @@
 function HandleTargetTarget(Self)
 	if GetConfiguration().TargetTarget then
 		local TargetTarget = Self:Spawn("TargetTarget")
-		
+
 		TargetTarget:SetPoint(GetConfiguration().TargetTarget.Anchor, GetConfiguration().TargetTarget.X, GetConfiguration().TargetTarget.Y)
 	end
 end

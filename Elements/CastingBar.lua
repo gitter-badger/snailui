@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -55,7 +55,7 @@ function HandleCastingBar(Self)
 				Self.Castbar.Time:SetJustifyH("RIGHT")
 				Self.Castbar.Time:SetFont(Configuration.Font.Name, Configuration.Font.Size, Configuration.Font.Outline)
 				Self.Castbar.Time:SetPoint(GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.Anchor, GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.X, GetConfiguration()[Self.Frame].CastingBar.Spell.Duration.Y)
-			
+
 				local function HandleText(Self, Text)
 					Self.Time:SetFormattedText("%.1f", Text)
 				end
