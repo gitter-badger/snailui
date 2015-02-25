@@ -3,6 +3,12 @@ Written by Snailsoft
 
 ------------------------------------------------------------------------------
 
+Version 1.1.0
+- Updated for 6.1
+- The default theme now supports Lone Wolf for Hunters
+
+------------------------------------------------------------------------------
+
 Version 1.0.3
 - The Demonic Fury bar for Warlocks now displays the exact amount of fury you have
 - Fixed a bug where class bars were not working for Monks and Paladins

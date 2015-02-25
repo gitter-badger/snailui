@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -17,7 +17,7 @@
 
 local FocusX = math.floor(GetScreenWidth() / 4)
 
-Configuration.Themes.Compact =
+Configuration.Themes.Default =
 {
 	ActionBars =
 	{
@@ -275,20 +275,20 @@ Configuration.Themes.Compact =
 	Initialize = function(Self)
 		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]			= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["DEATHKNIGHT"]["UNHOLY"]		= _G[Options.Theme .. "WithClassBarWithPet"]
-		Configuration.Themes[Options.Theme]["DRUID"]					= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["DRUID"]				= Configuration.Themes[Options.Theme]
 		Configuration.Themes[Options.Theme]["DRUID"]["BALANCE"]			= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["DRUID"]["FERAL"]			= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["DRUID"]["RESTORATION"]		= _G[Options.Theme .. "Healer"]
 		Configuration.Themes[Options.Theme]["HUNTER"]				= _G[Options.Theme .. "WithClassBarWithPet"]
-		Configuration.Themes[Options.Theme]["MAGE"]					= Configuration.Themes[Options.Theme]
+		Configuration.Themes[Options.Theme]["MAGE"]				= Configuration.Themes[Options.Theme]
 		Configuration.Themes[Options.Theme]["MAGE"]["FROST"]			= _G[Options.Theme .. "WithPet"]
-		Configuration.Themes[Options.Theme]["MONK"]					= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["MONK"]				= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["MONK"]["MISTWEAVER"]		= _G[Options.Theme .. "HealerWithClassBar"]
 		Configuration.Themes[Options.Theme]["PALADIN"]				= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["PALADIN"]["HOLY"]			= _G[Options.Theme .. "HealerWithClassBar"]
 		Configuration.Themes[Options.Theme]["PRIEST"]				= _G[Options.Theme .. "Healer"]
 		Configuration.Themes[Options.Theme]["PRIEST"]["SHADOW"]			= _G[Options.Theme .. "WithClassBar"]
-		Configuration.Themes[Options.Theme]["ROGUE"]					= _G[Options.Theme .. "WithClassBar"]
+		Configuration.Themes[Options.Theme]["ROGUE"]				= _G[Options.Theme .. "WithClassBar"]
 		Configuration.Themes[Options.Theme]["SHAMAN"]				= Configuration.Themes[Options.Theme]
 		Configuration.Themes[Options.Theme]["SHAMAN"]["RESTORATION"]		= _G[Options.Theme .. "Healer"]
 		Configuration.Themes[Options.Theme]["WARLOCK"]				= _G[Options.Theme .. "WithPet"]
@@ -305,7 +305,15 @@ Configuration.Themes.Compact =
 			Specialization = Specialization:gsub("(.)", string.upper)
 		end
 
-		if Class == "MONK" then
+		if Class == "HUNTER" then
+			if Specialization ~= "BEAST MASTERY" then
+				local _, _, _, Selected = GetTalentInfo(7, 3, GetActiveSpecGroup())
+
+				if Selected == true then
+					Configuration.Themes[Options.Theme]["HUNTER"] = _G[Options.Theme .. "WithClassBar"]
+				end
+			end
+		elseif Class == "MONK" then
 			local _, _, _, Selected = GetTalentInfo(3, 2, GetActiveSpecGroup())
 
 			if Selected == true then
@@ -325,17 +333,13 @@ Configuration.Themes.Compact =
 					Configuration.Themes[Options.Theme]["WARLOCK"] = _G[Options.Theme .. "WithClassBar"]
 				end
 			end
-		elseif (Class == "HUNTER") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) or (Class == "WARRIOR") then
-			local T = _G[Options.Theme .. "WithClassBar"]
-
-			if Class == "HUNTER" then
-				T = _G[Options.Theme .. "WithClassBarWithPet"]
-			end
-
-			T.Player.PowerBar.Border = true
-			T.Player.PowerBar.Height = 24
-			T.Player.PowerBar.Width = 516
-			T.Player.PowerBar.Y = 25
+		end
+		
+		if (Class == "HUNTER") or ((Class == "DRUID") and (Specialization == "GUARDIAN")) or (Class == "WARRIOR") then
+			Configuration.Themes[Options.Theme][Class].Player.PowerBar.Border = true
+			Configuration.Themes[Options.Theme][Class].Player.PowerBar.Height = 24
+			Configuration.Themes[Options.Theme][Class].Player.PowerBar.Width = 516
+			Configuration.Themes[Options.Theme][Class].Player.PowerBar.Y = 25
 		end
 
 		if not Options.EnableSideBars then

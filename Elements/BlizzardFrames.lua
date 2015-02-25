@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -115,7 +115,7 @@ function HandleBlizzardFrames()
 			Frames[#Frames + 1] = "ActionBarDownButton"
 			Frames[#Frames + 1] = "ActionBarUpButton"
 			Frames[#Frames + 1] = "CharacterMicroButton"
-			Frames[#Frames + 1] = "CompanionsMicroButton"
+			Frames[#Frames + 1] = "CollectionsMicroButton"
 			Frames[#Frames + 1] = "EJMicroButton"
 			Frames[#Frames + 1] = "GuildMicroButton"
 			Frames[#Frames + 1] = "HelpMicroButton"

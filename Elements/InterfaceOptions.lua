@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2015 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -34,13 +34,11 @@ function HandleInterfaceOptions(Version)
 		"\n\n" ..
 		"Version " .. Version ..
 		"\n" ..
-		"Written by Snailsoft" ..
+		"Written by Snail" ..
 		"\n\n" ..
 		"http://wowinterface.com/downloads/info20900-SnailUI" ..
 		"\n" ..
-		"http://curse.com/addons/wow/snailui" ..
-		"\n" ..
-		"http://snailsoft.me"
+		"http://curse.com/addons/wow/snailui"
 	)
 
 	local FramesSubcategory = CreateFrame("Frame", nil, Category)
