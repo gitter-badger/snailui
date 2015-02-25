@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 --
 
-CompactWithClassBarWithPet = DeepCopy(CompactWithClassBar)
-CompactWithClassBarWithPet.ActionBars.Pet =
+DefaultWithClassBarWithPet = DeepCopy(DefaultWithClassBar)
+DefaultWithClassBarWithPet.ActionBars.Pet =
 {
 	Anchor = "BOTTOM",
 	Buttons = 10,
@@ -34,7 +34,7 @@ CompactWithClassBarWithPet.ActionBars.Pet =
 	}
 }
 
-CompactWithClassBarWithPet.Pet =
+DefaultWithClassBarWithPet.Pet =
 {
 	Anchor = "BOTTOM",
 	Height = 24,
@@ -69,14 +69,14 @@ CompactWithClassBarWithPet.Pet =
 		Y = 3
 	}
 }
-	
-CompactWithClassBarWithPet.Player.HealthBar.Width = 200
-CompactWithClassBarWithPet.Player.Width = 204
-CompactWithClassBarWithPet.Player.X = -156
-CompactWithClassBarWithPet.Player.Y = 211
 
-CompactWithClassBarWithPet.Target.HealthBar.Width = 200
-CompactWithClassBarWithPet.Target.PowerBar.Width = 200
-CompactWithClassBarWithPet.Target.Width = 204
-CompactWithClassBarWithPet.Target.X = 156
-CompactWithClassBarWithPet.Target.Y = 211
+DefaultWithClassBarWithPet.Player.HealthBar.Width = 200
+DefaultWithClassBarWithPet.Player.Width = 204
+DefaultWithClassBarWithPet.Player.X = -156
+DefaultWithClassBarWithPet.Player.Y = 211
+
+DefaultWithClassBarWithPet.Target.HealthBar.Width = 200
+DefaultWithClassBarWithPet.Target.PowerBar.Width = 200
+DefaultWithClassBarWithPet.Target.Width = 204
+DefaultWithClassBarWithPet.Target.X = 156
+DefaultWithClassBarWithPet.Target.Y = 211

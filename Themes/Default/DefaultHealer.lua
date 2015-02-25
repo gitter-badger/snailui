@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -15,19 +15,19 @@
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 --
 
-CompactHealer = DeepCopy(Configuration.Themes.Compact)
+DefaultHealer = DeepCopy(Configuration.Themes.Default)
 
-CompactHealer.Raid.Anchor = "BOTTOM"
-CompactHealer.Raid.BuffIcons = true
-CompactHealer.Raid.Columns = 8
-CompactHealer.Raid.Height = 24
-CompactHealer.Raid.Rows = 5
-CompactHealer.Raid.Shown = true
-CompactHealer.Raid.Width = 100
-CompactHealer.Raid.X = 0
-CompactHealer.Raid.Y = 239
+DefaultHealer.Raid.Anchor = "BOTTOM"
+DefaultHealer.Raid.BuffIcons = true
+DefaultHealer.Raid.Columns = 8
+DefaultHealer.Raid.Height = 24
+DefaultHealer.Raid.Rows = 5
+DefaultHealer.Raid.Shown = true
+DefaultHealer.Raid.Width = 100
+DefaultHealer.Raid.X = 0
+DefaultHealer.Raid.Y = 239
 
-CompactHealer.Raid.HealthBar.Health.SmallText = nil
-CompactHealer.Raid.HealthBar.Height = 20
-CompactHealer.Raid.HealthBar.Orientation = "HORIZONTAL"
-CompactHealer.Raid.HealthBar.Width = 96
+DefaultHealer.Raid.HealthBar.Health.SmallText = nil
+DefaultHealer.Raid.HealthBar.Height = 20
+DefaultHealer.Raid.HealthBar.Orientation = "HORIZONTAL"
+DefaultHealer.Raid.HealthBar.Width = 96
