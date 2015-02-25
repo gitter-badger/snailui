@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
 -- with this program. If not, see <http://www.gnu.org/licenses/>.
 --
 
-CompactWithClassBar = DeepCopy(Configuration.Themes.Compact)
-CompactWithClassBar.Player.BurningEmbersBar =
+DefaultWithClassBar = DeepCopy(Configuration.Themes.Default)
+DefaultWithClassBar.Player.BurningEmbersBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -61,8 +61,8 @@ CompactWithClassBar.Player.BurningEmbersBar =
 	}
 }
 
-CompactWithClassBar.Player.CastingBar.Y = 53
-CompactWithClassBar.Player.ChiBar =
+DefaultWithClassBar.Player.CastingBar.Y = 53
+DefaultWithClassBar.Player.ChiBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -107,7 +107,7 @@ CompactWithClassBar.Player.ChiBar =
 	}
 }
 
-CompactWithClassBar.Player.ChiBar2 =
+DefaultWithClassBar.Player.ChiBar2 =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -161,7 +161,7 @@ CompactWithClassBar.Player.ChiBar2 =
 	}
 }
 
-CompactWithClassBar.Player.ComboPointsBar =
+DefaultWithClassBar.Player.ComboPointsBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -215,7 +215,7 @@ CompactWithClassBar.Player.ComboPointsBar =
 	}
 }
 
-CompactWithClassBar.Player.EclipseBar =
+DefaultWithClassBar.Player.EclipseBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -233,7 +233,7 @@ CompactWithClassBar.Player.EclipseBar =
 	}
 }
 
-CompactWithClassBar.Player.DemonicFuryBar =
+DefaultWithClassBar.Player.DemonicFuryBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -251,10 +251,10 @@ CompactWithClassBar.Player.DemonicFuryBar =
 	}
 }
 
-CompactWithClassBar.Player.HealthBar.Anchor = "CENTER"
-CompactWithClassBar.Player.HealthBar.Height = 20
-CompactWithClassBar.Player.HealthBar.Y = 0
-CompactWithClassBar.Player.HolyPowerBar =
+DefaultWithClassBar.Player.HealthBar.Anchor = "CENTER"
+DefaultWithClassBar.Player.HealthBar.Height = 20
+DefaultWithClassBar.Player.HealthBar.Y = 0
+DefaultWithClassBar.Player.HolyPowerBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -290,7 +290,7 @@ CompactWithClassBar.Player.HolyPowerBar =
 	}
 }
 
-CompactWithClassBar.Player.HolyPowerBar2 =
+DefaultWithClassBar.Player.HolyPowerBar2 =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -344,12 +344,12 @@ CompactWithClassBar.Player.HolyPowerBar2 =
 	}
 }
 
-CompactWithClassBar.Player.PowerBar.Anchor = "TOPLEFT"
-CompactWithClassBar.Player.PowerBar.Height = 6
-CompactWithClassBar.Player.PowerBar.Width = 512
-CompactWithClassBar.Player.PowerBar.X = 3
-CompactWithClassBar.Player.PowerBar.Y = 11
-CompactWithClassBar.Player.RunesBar =
+DefaultWithClassBar.Player.PowerBar.Anchor = "TOPLEFT"
+DefaultWithClassBar.Player.PowerBar.Height = 6
+DefaultWithClassBar.Player.PowerBar.Width = 512
+DefaultWithClassBar.Player.PowerBar.X = 3
+DefaultWithClassBar.Player.PowerBar.Y = 11
+DefaultWithClassBar.Player.RunesBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -412,7 +412,7 @@ CompactWithClassBar.Player.RunesBar =
 	}
 }
 
-CompactWithClassBar.Player.ShadowOrbsBar =
+DefaultWithClassBar.Player.ShadowOrbsBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -448,7 +448,7 @@ CompactWithClassBar.Player.ShadowOrbsBar =
 	}
 }
 
-CompactWithClassBar.Player.SoulShardsBar =
+DefaultWithClassBar.Player.SoulShardsBar =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,

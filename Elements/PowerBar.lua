@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012-2014 Snailsoft <http://www.snailsoft.me/>
+-- Copyright (C) 2012-2015 Snail <https://github.com/snail23/snailui/>
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU General Public License as published by the
@@ -52,14 +52,14 @@ function HandlePowerBar(Self)
 			Self.Power.BackgroundTop:SetPoint("TOP", 0, 2)
 			Self.Power.BackgroundTop:SetSize(GetConfiguration()[Self.Frame].PowerBar.Width - 2, 1)
 			Self.Power.BackgroundTop:SetTexture(RAID_CLASS_COLORS[Class].r, RAID_CLASS_COLORS[Class].g, RAID_CLASS_COLORS[Class].b)
-			
+
 			Self.Power.Border = Self.Power:CreateTexture(nil, "BACKGROUND")
 			Self.Power.Border:SetPoint("TOPLEFT", -3, 3)
 			Self.Power.Border:SetSize(GetConfiguration()[Self.Frame].PowerBar.Width, GetConfiguration()[Self.Frame].PowerBar.Height)
 			Self.Power.Border:SetTexture(0, 0, 0)
 		else
-			Self.Power:SetSize(GetConfiguration()[Self.Frame].PowerBar.Width - 2, GetConfiguration()[Self.Frame].PowerBar.Height - 2)					
-			
+			Self.Power:SetSize(GetConfiguration()[Self.Frame].PowerBar.Width - 2, GetConfiguration()[Self.Frame].PowerBar.Height - 2)
+
 			Self.Power.Border = Self.Power:CreateTexture(nil, "LOW")
 			Self.Power.Border:SetPoint("TOPLEFT", -1, 1)
 			Self.Power.Border:SetSize(GetConfiguration()[Self.Frame].PowerBar.Width, GetConfiguration()[Self.Frame].PowerBar.Height)

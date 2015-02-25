@@ -1,21 +1,21 @@
-## Author: Snailsoft
+## Author: Snail
 ## Dependencies: oUF, oUF_SpellRange
 ## SavedVariables: Data, Options
-## Interface: 60000
+## Interface: 60100
 ## Notes: Snail's minimalistic UI
 ## Title: SnailUI
-## Version: 1.0.3
+## Version: 1.1.0
 
 Configuration.lua
 Functions.lua
 
-Themes\Compact\Compact.lua
+Themes\Default\Default.lua
 
-Themes\Compact\CompactHealer.lua
-Themes\Compact\CompactWithPet.lua
-Themes\Compact\CompactWithClassBar.lua
-Themes\Compact\CompactHealerWithClassBar.lua
-Themes\Compact\CompactWithClassBarWithPet.lua
+Themes\Default\DefaultHealer.lua
+Themes\Default\DefaultWithPet.lua
+Themes\Default\DefaultWithClassBar.lua
+Themes\Default\DefaultHealerWithClassBar.lua
+Themes\Default\DefaultWithClassBarWithPet.lua
 
 Elements\ActionBars.lua
 Elements\AutoGreed.lua
