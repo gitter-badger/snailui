@@ -107,7 +107,7 @@ DefaultWithClassBar.Player.ChiBar =
 	}
 }
 
-DefaultWithClassBar.Player.ChiBar2 =
+DefaultWithClassBar.Player.ChiBar5 =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -158,6 +158,114 @@ DefaultWithClassBar.Player.ChiBar2 =
 		Width = 102,
 		X = -3,
 		Y = -3
+	}
+}
+
+DefaultWithClassBar.Player.ChiBar =
+{
+	Anchor = "TOPLEFT",
+	Height = 24,
+	Width = 516,
+	X = 0,
+	Y = 28,
+
+	[1] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 127,
+		X = 3,
+		Y = -3
+	},
+
+	[2] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 128,
+		X = -64,
+		Y = -3
+	},
+
+	[3] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 128,
+		X = 65,
+		Y = -3
+	},
+
+	[4] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 126,
+		X = -3,
+		Y = -3
+	}
+}
+
+DefaultWithClassBar.Player.ChiBar6 =
+{
+	Anchor = "TOPLEFT",
+	Height = 24,
+	Width = 516,
+	X = 0,
+	Y = 28,
+
+	[1] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 85,
+		X = 2,
+		Y = -2
+	},
+
+	[2] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 84,
+		X = 88,
+		Y = -2
+	},
+
+	[3] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 84,
+		X = -43,
+		Y = -2
+	},
+
+	[4] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 84,
+		X = 42,
+		Y = -2
+	},
+
+	[5] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 85,
+		X = -88,
+		Y = -2
+	},
+
+	[6] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 85,
+		X = -2,
+		Y = -2
 	}
 }
 
@@ -290,7 +398,7 @@ DefaultWithClassBar.Player.HolyPowerBar =
 	}
 }
 
-DefaultWithClassBar.Player.HolyPowerBar2 =
+DefaultWithClassBar.Player.HolyPowerBar5 =
 {
 	Anchor = "TOPLEFT",
 	Height = 24,
@@ -443,6 +551,60 @@ DefaultWithClassBar.Player.ShadowOrbsBar =
 		Anchor = "TOPRIGHT",
 		Height = 13,
 		Width = 170,
+		X = -3,
+		Y = -3
+	}
+}
+
+DefaultWithClassBar.Player.ShadowOrbsBar5 =
+{
+	Anchor = "TOPLEFT",
+	Height = 24,
+	Width = 516,
+	X = 0,
+	Y = 28,
+
+	[1] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 102,
+		X = 3,
+		Y = -3
+	},
+
+	[2] =
+	{
+		Anchor = "TOPLEFT",
+		Height = 13,
+		Width = 102,
+		X = 106,
+		Y = -3
+	},
+
+	[3] =
+	{
+		Anchor = "TOP",
+		Height = 13,
+		Width = 100,
+		X = 0,
+		Y = -3
+	},
+
+	[4] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 102,
+		X = -106,
+		Y = -3
+	},
+
+	[5] =
+	{
+		Anchor = "TOPRIGHT",
+		Height = 13,
+		Width = 102,
 		X = -3,
 		Y = -3
 	}

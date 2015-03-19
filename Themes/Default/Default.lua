@@ -317,13 +317,23 @@ Configuration.Themes.Default =
 			local _, _, _, Selected = GetTalentInfo(3, 2, GetActiveSpecGroup())
 
 			if Selected == true then
-				GetConfiguration().Player.ChiBar = GetConfiguration().Player.ChiBar2
+				GetConfiguration().Player.ChiBar = GetConfiguration().Player.ChiBar5
+				
+				if IsSpellKnown(157411) and (Specialization == "WINDWALKER") then
+					GetConfiguration().Player.ChiBar = GetConfiguration().Player.ChiBar6
+				end
+			elseif IsSpellKnown(157411) and (Specialization == "WINDWALKER") then
+				GetConfiguration().Player.ChiBar = GetConfiguration().Player.ChiBar5
 			end
 		elseif Class == "PALADIN" then
 			local Level = UnitLevel("Player")
 
 			if Level and (Level >= 85) then
-				GetConfiguration().Player.HolyPowerBar = GetConfiguration().Player.HolyPowerBar2
+				GetConfiguration().Player.HolyPowerBar = GetConfiguration().Player.HolyPowerBar5
+			end
+		elseif (Class == "PRIEST") and (Specialization == "SHADOW") then
+			if IsSpellKnown(157217) then
+				GetConfiguration().Player.ShadowOrbsBar = GetConfiguration().Player.ShadowOrbsBar5
 			end
 		elseif Class == "WARLOCK" then
 			if Specialization ~= "DEMONOLOGY" then

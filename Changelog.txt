@@ -1,5 +1,12 @@
 SnailUI
-Written by Snailsoft
+Written by Snail
+
+------------------------------------------------------------------------------
+
+Version 1.2.0
+- Empowered Chi is now supported for Windwalker Monks
+- Enhanced Shadow Orbs is now supported for Shadow Priests
+- A new checkbox under the timer options has been added to align the timers to the raid frame (mainly intended for healers)
 
 ------------------------------------------------------------------------------
 
