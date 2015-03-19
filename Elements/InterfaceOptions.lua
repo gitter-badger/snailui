@@ -644,6 +644,45 @@ function HandleInterfaceOptions(Version)
 
 		UIDropDownMenu_SetSelectedID(TimersSubcategory.TimerDropdownMenu, 1)
 	end
+	
+	TimersSubcategory.AnchorToRaidFrameCheckbox = CreateFrame("CheckButton", "AnchorToRaidFrameCheckbox", TimersSubcategory, "InterfaceOptionsCheckButtonTemplate")
+	TimersSubcategory.AnchorToRaidFrameCheckbox:SetChecked(Options.Timers[UnitGUID("Player")].AnchorToRaid)
+	TimersSubcategory.AnchorToRaidFrameCheckbox:SetPoint("LEFT", TimersSubcategory.PriorityInputBox, "RIGHT", 6, 0)
+	TimersSubcategory.AnchorToRaidFrameCheckbox:SetScript("OnClick",
+		function(Self)
+			if not Options.Timers[UnitGUID("Player")].AnchorToRaid then
+				Self:SetChecked(true)
+				Options.Timers[UnitGUID("Player")].AnchorToRaid = true
+			else
+				Self:SetChecked(false)
+				Options.Timers[UnitGUID("Player")].AnchorToRaid = false
+			end
+		end
+	)
+
+	TimersSubcategory.AnchorToRaidFrameCheckbox.Label1 = TimersSubcategory.ShowOnFocusCheckbox:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	TimersSubcategory.AnchorToRaidFrameCheckbox.Label1:SetJustifyH("LEFT")
+	TimersSubcategory.AnchorToRaidFrameCheckbox.Label1:SetPoint("LEFT", TimersSubcategory.PriorityInputBox, "RIGHT", 37, 0)
+	TimersSubcategory.AnchorToRaidFrameCheckbox.Label1:SetText("Align to\nraid")
+
+	local ReloadTimerDropdownMenu = function()
+		UIDropDownMenu_Initialize(TimerDropdownMenu,
+			function(TimerDropdownMenu, Level)
+				for Index, Timer in ipairs(Options.Timers[UnitGUID("Player")]) do
+					local Info = UIDropDownMenu_CreateInfo()
+
+					Info.text = Timer.Spell
+					Info.func = function(Self)
+						UIDropDownMenu_SetSelectedID(TimerDropdownMenu, Self:GetID())
+					end
+
+					UIDropDownMenu_AddButton(Info, Level)
+				end
+			end
+		)
+
+		UIDropDownMenu_SetSelectedID(TimersSubcategory.TimerDropdownMenu, 1)
+	end
 
 	TimersSubcategory.CreateTimerButton = CreateFrame("Button", "CreateTimerButton", TimersSubcategory, "UIPanelButtonTemplate")
 	TimersSubcategory.CreateTimerButton:SetPoint("TOPLEFT", 15, -201)
