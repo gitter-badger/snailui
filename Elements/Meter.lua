@@ -606,7 +606,7 @@ function HandleMeter()
 
 											if Spell then
 												Spell.Amount = Spell.Amount + Amount
-											else
+											elseif Amount > 0 then
 												Unit.HealingSpells[#Unit.HealingSpells + 1] =
 												{
 													Amount = Amount,
@@ -643,7 +643,7 @@ function HandleMeter()
 
 											if Spell then
 												Spell.Amount = Spell.Amount + Amount
-											else
+											elseif Amount > 0 then
 												Unit.DamageSpells[#Unit.DamageSpells + 1] =
 												{
 													Amount = Amount,

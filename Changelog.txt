@@ -3,6 +3,14 @@ Written by Snail
 
 ------------------------------------------------------------------------------
 
+Version 1.2.1
+- Fixed a bug where buffs were not able to be tracked for targets
+- Fixed a bug where the damage meter was adding spells that did 0 damage/healing
+- Fixed a bug where healing indicators were showing other players' spells
+- Fixed a bug where healing indicators were not showing stacks
+
+------------------------------------------------------------------------------
+
 Version 1.2.0
 - Empowered Chi is now supported for Windwalker Monks
 - Enhanced Shadow Orbs is now supported for Shadow Priests

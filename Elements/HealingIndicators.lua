@@ -118,14 +118,18 @@ function HandleHealingIndicators(Self)
 								local BuffName
 
 								if Self.Debuff then
-									BuffName, _, _, _, _, _, BuffExpires = UnitDebuff(Self.Parent.unit, Self.BuffName)
+									BuffName, _, _, BuffCount, _, _, BuffExpires = UnitDebuff(Self.Parent.unit, Self.BuffName)
 								else
-									BuffName, _, _, _, _, _, BuffExpires  = UnitBuff(Self.Parent.unit, Self.BuffName)
+									BuffName, _, _, BuffCount, _, _, BuffExpires  = UnitBuff(Self.Parent.unit, Self.BuffName, nil, "PLAYER")
 								end
 
 								if BuffName then
 									if BuffExpires and (BuffExpires > GetTime()) then
-										Self.Text:SetText(math.ceil(BuffExpires - GetTime()))
+										if BuffCount and (BuffCount > 0) then
+											Self.Text:SetText(BuffCount)
+										else
+											Self.Text:SetText(math.ceil(BuffExpires - GetTime()))
+										end
 									else
 										Self.Text:SetText("")
 									end

@@ -88,7 +88,7 @@ local function CreateTimers(TimerBars)
 
 				if Unit == Self.Timer.Unit then
 					if Self.Timer.Type == "Buff" then
-						if UnitBuff(Unit, Self.Timer.Spell, nil, "PLAYER") then
+						if UnitBuff(Unit, Self.Timer.Spell) then
 							Self:Show()
 						end
 					elseif Self.Timer.Type == "Cooldown" then
@@ -124,7 +124,7 @@ local function CreateTimers(TimerBars)
 						local SpellName
 
 						if Self.Timer.Type == "Buff" then
-							SpellName, _, SpellIcon, SpellCount, _, SpellDuration, SpellExpires, _, _, _, _, _, _, _, SpellAmount = UnitBuff(Self.Timer.Unit, Self.Timer.Spell, nil, "PLAYER")
+							SpellName, _, SpellIcon, SpellCount, _, SpellDuration, SpellExpires, _, _, _, _, _, _, _, SpellAmount = UnitBuff(Self.Timer.Unit, Self.Timer.Spell)
 						elseif Self.Timer.Type == "Cooldown" then
 							SpellExpires, SpellDuration, Enabled = GetSpellCooldown(Self.Timer.Spell)
 
