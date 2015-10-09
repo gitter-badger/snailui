@@ -56,3 +56,5 @@ You can create your own theme for SnailUI by following this guide: https://githu
 Installation
 
 Read: SnailUI relies on both oUF and oUF_SpellRange, so make sure that these 2 addons are installed before continuing. To install SnailUI, just unzip the SnailUI folder into your World of Warcraft / Interface / Addons folder and you are good to go.
+
+Join the chat at https://gitter.im/snail23/snailui
